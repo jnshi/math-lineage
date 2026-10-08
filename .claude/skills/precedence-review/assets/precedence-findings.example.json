@@ -1,0 +1,242 @@
+{
+  "format": "math-lineage/precedence-findings",
+  "format_version": 1,
+  "_note": "Example trimmed from a real review (4 of its 12 findings, one of each kind: Strong (A), Partial (A) with indirect credit, Partial (B), Major (C)). Omit this _note field in real files.",
+  "preprint": {
+    "id": "OAI:Critical-mixing-in-the-Sherrington-Kirkpatrick-model-September-25-2026",
+    "title": "Critical mixing in the Sherrington–Kirkpatrick model",
+    "date": "2026-09-25",
+    "path": "preprints/Critical-mixing-in-the-Sherrington-Kirkpatrick-model-September-25-2026",
+    "companions": [
+      {
+        "id": "OAI:Critical-slowing-down-in-the-Sherrington-Kirkpatrick-model-September-24-2026",
+        "cited_as": "AcceptedCritical"
+      },
+      {
+        "id": "OAI:A-spectral-gap-throughout-the-high-temperature-Sherrington-Kirkpatrick-phase-September-24-2026",
+        "cited_as": "AcceptedGap"
+      }
+    ]
+  },
+  "review": {
+    "date": "2026-10-08",
+    "report_pdf": "precedence-findings.pdf",
+    "report_tex": "precedence-findings.tex",
+    "locator_convention": "Preprint locations use the compiled numbering and page numbers of paper.pdf. Source locators refer to the version identified by the source's arXiv id or DOI."
+  },
+  "definitions": {
+    "category": {
+      "A": "Unattributed reuse: a technique, construction, identity, estimate or body of theory from an identifiable earlier paper is reused without credit for that content.",
+      "B": "Same-problem precedence: earlier, uncited partial progress on the same problem, such as a weaker or special-case version of a statement the preprint proves.",
+      "C": "Structural: a published result would replace or substantially shorten a large part of the argument."
+    },
+    "grade": {
+      "Strong": "(A/B) The earlier technique is reused essentially intact without credit for that content.",
+      "Partial": "(A/B) Only a fragment is reused, or the credit is present but only indirect.",
+      "Major": "(C) A route, a section, or a component of the main theorem becomes a citation.",
+      "Moderate": "(C) A multi-page chain of lemmas becomes a citation."
+    },
+    "source_status": {
+      "not_cited": "The work is not in the preprint's bibliography.",
+      "cited_for_other_content": "The work is in the preprint's bibliography but is not cited for this content.",
+      "credited_in_part": "The preprint cites the work for part of this content only.",
+      "credited_elsewhere": "The preprint cites the work for this content at other locations, but not where the content is used.",
+      "credited_indirectly": "The preprint cites a location (e.g. a companion lemma) that itself credits the work for this content."
+    }
+  },
+  "sources": {
+    "ElAlaouiMontanariSellke2022": {
+      "authors": [
+        "A. El Alaoui",
+        "A. Montanari",
+        "M. Sellke"
+      ],
+      "title": "Sampling from the Sherrington–Kirkpatrick Gibbs measure via algorithmic stochastic localization",
+      "year": 2022,
+      "venue": "FOCS 2022",
+      "arxiv": "2203.05093",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "DuHuang2026-FreeEnergy": {
+      "authors": [
+        "H. Du",
+        "B. Huang"
+      ],
+      "title": "Fluctuations of the Sherrington–Kirkpatrick free energy at critical temperature",
+      "year": 2026,
+      "venue": "preprint",
+      "arxiv": "2607.02172",
+      "doi": null,
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "DuHuang2026CriticalFluctuations"
+    },
+    "Wang2026": {
+      "authors": [
+        "S. Wang"
+      ],
+      "title": "Optimal mixing of Glauber dynamics for the Sherrington–Kirkpatrick model at β<1/2",
+      "year": 2026,
+      "venue": "preprint",
+      "arxiv": "2608.22159",
+      "doi": null,
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "Wang2026OptimalMixing"
+    },
+    "ElAlaouiGaitonde2022": {
+      "authors": [
+        "A. El Alaoui",
+        "J. Gaitonde"
+      ],
+      "title": "Bounds on the covariance matrix of the Sherrington–Kirkpatrick model",
+      "year": 2022,
+      "venue": "preprint",
+      "arxiv": "2212.02445",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "HermonPeres2016": {
+      "authors": [
+        "J. Hermon",
+        "Y. Peres"
+      ],
+      "title": "A characterization of L2 mixing and hypercontractivity via hitting times and maximal inequalities",
+      "year": 2016,
+      "venue": "Probab. Theory Related Fields 170 (2018) 769–800",
+      "arxiv": "1609.07557",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "DiaconisSaloffCoste1996": {
+      "authors": [
+        "P. Diaconis",
+        "L. Saloff-Coste"
+      ],
+      "title": "Logarithmic Sobolev inequalities for finite Markov chains",
+      "year": 1996,
+      "venue": "Ann. Appl. Probab. 6(3) (1996) 695–750",
+      "arxiv": null,
+      "doi": "10.1214/aoap/1034968224",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "DSC1996"
+    },
+    "GoelMontenegroTetali2005": {
+      "authors": [
+        "S. Goel",
+        "R. Montenegro",
+        "P. Tetali"
+      ],
+      "title": "Mixing time bounds via the spectral profile",
+      "year": 2005,
+      "venue": "Electron. J. Probab. 11 (2006) 1–26",
+      "arxiv": "math/0505690",
+      "doi": "10.1214/EJP.v11-300",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "GMT2006"
+    }
+  },
+  "findings": [
+    {
+      "id": "S1",
+      "category": "A",
+      "grade": "Strong",
+      "technique": "El Alaoui–Montanari–Sellke planted stochastic-localization framework for SK",
+      "summary": "The preprint studies the SK Gibbs measure inside the EAMS framework: a Gaussian observation of a Gibbs sample, the TAP equation with the observation as field, and the planted law with its likelihood transfer to ordinary disorder.",
+      "preprint_locations": [
+        "§3 (p. 7)",
+        "§4.1",
+        "§5.1",
+        "used throughout §§8–14 and §17"
+      ],
+      "credit_in_preprint": "Not cited. A companion credits EAMS for this combination, in a passage the preprint does not cite.",
+      "sources": [
+        {
+          "key": "ElAlaouiMontanariSellke2022",
+          "locators": "(1.4), (4.12); (2.3), (4.53); §4.1, Prop. 4.2, (4.14)",
+          "role": "Gaussian observation process, TAP equation at the observation field, planted law and likelihood transfer",
+          "status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "P1",
+      "category": "A",
+      "grade": "Partial",
+      "technique": "Wang's signed two-spin curvature estimate",
+      "summary": "The curvature inequality behind route 1's terminal spectral gap is Wang's signed two-spin estimate summed over pairs, imported through a companion lemma.",
+      "preprint_locations": [
+        "§3 (p. 8)",
+        "proof of Proposition 13.6 (pp. 102–103)"
+      ],
+      "credit_in_preprint": "Indirectly, via a companion lemma that credits Wang. The preprint's own citation of Wang is for his β<1/2 mixing theorem.",
+      "sources": [
+        {
+          "key": "Wang2026",
+          "locators": "Lemma 3.4 and proof of Thm. 1.2, pp. 10–13",
+          "role": "signed two-spin curvature estimate and its summation over pairs",
+          "status": "credited_indirectly"
+        }
+      ]
+    },
+    {
+      "id": "P4",
+      "category": "B",
+      "grade": "Partial",
+      "technique": "Critical-temperature bounds on the SK partition function and covariance",
+      "summary": "Earlier versions exist of the partition-function lower bound (7.5) (stronger), the covariance lower bound (7.6) (weaker), and the bottom-scale covariance bound (12.8) (only an s=0, ordinary-law analogue with log n).",
+      "preprint_locations": [
+        "(7.5) and (7.6), §7.1 (p. 29)",
+        "(12.8) of Proposition 12.4 (p. 77)"
+      ],
+      "credit_in_preprint": "(7.5) indirectly, via Du–Huang's Theorem 1.6; otherwise not cited.",
+      "sources": [
+        {
+          "key": "DuHuang2026-FreeEnergy",
+          "locators": "Thms. 1.3–1.4, p. 3",
+          "role": "free-energy CLT and critical overlap bound",
+          "status": "cited_for_other_content"
+        },
+        {
+          "key": "ElAlaouiGaitonde2022",
+          "locators": "Prop. 4.5, p. 11",
+          "role": "critical covariance bound",
+          "status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "C1",
+      "category": "C",
+      "grade": "Major",
+      "technique": "Log-Sobolev constant from the support profile (Hermon–Peres characterization)",
+      "summary": "The support profile at the end of route 1 already gives the log-Sobolev exponent by the Hermon–Peres characterization, so the spectral-cap route is not needed for Theorem 1.1.",
+      "preprint_locations": [
+        "Theorem 14.2 (p. 111)",
+        "§§15–19 (pp. 112–183), ending in Theorem 19.3",
+        "§2 (p. 7)"
+      ],
+      "impact": "About 70 pages (§§15–19) become unnecessary for Theorem 1.1.",
+      "credit_in_preprint": null,
+      "sources": [
+        {
+          "key": "HermonPeres2016",
+          "locators": "Thm. 1.2, p. 3 (arXiv v3)",
+          "role": "κ ≤ t_LS < 17κ: the support profile gives the log-Sobolev constant",
+          "status": "not_cited"
+        },
+        {
+          "key": "DiaconisSaloffCoste1996",
+          "locators": "Cor. 3.11, p. 728",
+          "role": "log-Sobolev constant from L² mixing, up to a factor log n",
+          "status": "cited_for_other_content"
+        },
+        {
+          "key": "GoelMontenegroTetali2005",
+          "locators": "Lemma 4.2 and the remark after it, p. 15 (arXiv v1)",
+          "role": "converse: the log-Sobolev inequality gives the support profile",
+          "status": "cited_for_other_content"
+        }
+      ]
+    }
+  ]
+}

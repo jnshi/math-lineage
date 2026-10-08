@@ -1,0 +1,32 @@
+\documentclass[11pt]{article}
+\input{parts/preamble}
+
+\title{Uncredited precedence in\\ ``{PREPRINT TITLE}''\\[4pt]
+\large ({PREPRINT AUTHOR LINE}, {PREPRINT DATE})}
+\date{{DATE OF THE FINAL REVISION}}
+
+\begin{document}
+\maketitle
+
+\input{parts/summary}
+
+\tableofcontents
+
+\input{parts/about}
+\input{parts/overview}
+
+\section{Strong findings}\label{sec:strong}
+\input{findings/S1-slug}
+% one \input per Strong finding, in reading order or by significance
+
+\section{Partial findings}\label{sec:partial}
+\input{findings/P1-slug}
+% Partial findings, including (B) same-problem precedence
+
+\section{Structural finding}\label{sec:structural}
+\input{findings/C1-slug}
+% use "Structural findings" for more than one; drop the section if there are none
+
+\input{parts/bibliography}
+
+\end{document}

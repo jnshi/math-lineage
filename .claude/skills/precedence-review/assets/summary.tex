@@ -1,0 +1,38 @@
+\section*{Summary of findings}
+
+Grades and categories are defined in Section~\ref{sec:about}. Locations refer
+to the preprint's compiled numbering. ``Credited?'' says what the preprint
+cites for the reused content; it does not apply to structural findings.
+
+\begin{center}\footnotesize
+\begin{xltabular}{\linewidth}{@{}l l >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{0.2\linewidth} >{\raggedright\arraybackslash}p{0.2\linewidth}@{}}
+\toprule
+ID & Grade & Technique or result (earlier source) & In the preprint & Credited?\\
+\midrule
+\endhead
+\hyperref[f:S1]{S1} & \grade{Strong} &
+{NAMED TECHNIQUE: WHAT EXACTLY IS REUSED} \cite{SourceKey} &
+{COMPILED LOCATIONS, e.g. \S3, Lemma~8.2 (p.~32); recurs in \S\S8--14} &
+Not cited\\
+\addlinespace
+% ... one row per Strong finding, \addlinespace between rows
+\midrule
+\hyperref[f:P1]{P1} & \grade{Partial} &
+{TECHNIQUE} \cite{SourceKey} &
+{LOCATIONS} &
+Indirectly, via a companion lemma that credits {AUTHOR}\\
+\addlinespace
+\hyperref[f:P2]{P2} & \grade{Partial} (B) &
+{EARLIER RESULT ON THE SAME PROBLEM} \cite{SourceKey} &
+{LOCATIONS} &
+Not cited for these results\\
+\midrule
+\hyperref[f:C1]{C1} & \grade{Major} (C) &
+{WHAT BECOMES A CITATION, AND BY WHICH RESULT} \cite{SourceKey} &
+{THE SPAN, e.g. \S\S15--19 (pp.~112--183)} &
+---\\
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\clearpage
