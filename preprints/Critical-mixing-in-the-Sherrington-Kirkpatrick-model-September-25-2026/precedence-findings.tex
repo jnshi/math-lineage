@@ -1,0 +1,3251 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,tabularx,longtable,array}
+\usepackage{xltabular}% tabularx-style tables that can break across pages
+\usepackage{enumitem}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{cite}% sorts and compresses numeric citations
+\usepackage[colorlinks=true,linkcolor=Blue,citecolor=Blue,urlcolor=Blue]{hyperref}
+
+% ---------------------------------------------------------------------
+% Shared notation
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\Lgen}{\mathcal{L}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Ent}{Ent}
+\DeclareMathOperator{\KL}{KL}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\ran}{ran}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\ip}[2]{\langle #1,#2\rangle}
+% Locators.  \ploc{compiled locator}{TeX file:line} cites the preprint (or a
+% companion).  Only the compiled locator (section, equation, lemma, page of the
+% PDF) is printed.  The TeX file:line is kept in the source for maintainers and
+% never appears in the PDF.  \sloc{key}{locator} cites a source by its citation key.
+\newcommand{\ploc}[2]{#1}
+\newcommand{\sloc}[2]{\cite[#2]{#1}}
+\newcommand{\grade}[1]{\textsc{#1}}
+% Uniform list and table styling across all findings.
+\setlist{itemsep=2pt,topsep=3pt,parsep=0pt,leftmargin=1.6em}
+\setlist[enumerate]{label=\arabic*.}
+\setlist[itemize]{label=\textbullet}
+\renewcommand{\arraystretch}{1.15}
+% ---------------------------------------------------------------------
+
+\title{Uncredited precedence in\\ ``Critical mixing in the Sherrington--Kirkpatrick model''\\[4pt]
+\large (OpenAI preprint, September 25, 2026)}
+\date{October 8, 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Summary of findings}
+
+Grades and categories are defined in Section~\ref{sec:about}. Locations refer
+to the preprint's compiled numbering. ``Credited?'' says what the preprint
+cites for the reused content; it does not apply to the structural finding C1.
+
+\begin{center}\footnotesize
+\begin{xltabular}{\linewidth}{@{}l l >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{0.2\linewidth} >{\raggedright\arraybackslash}p{0.2\linewidth}@{}}
+\toprule
+ID & Grade & Technique or result (earlier source) & In the preprint & Credited?\\
+\midrule
+\endhead
+\hyperref[f:S1]{S1} & \grade{Strong} &
+Planted stochastic-localization framework for SK: Gaussian observation of a
+Gibbs sample, TAP equation with the observation as field, planted law and
+likelihood transfer \cite{ElAlaouiMontanariSellke2022-SamplingSKAlgorithmicSL} &
+\S3, \S4.1, \S5.1; used throughout \S\S8--14, \S17 &
+Not cited\\
+\addlinespace
+\hyperref[f:S2]{S2} & \grade{Strong} &
+Spherical saddle-point method with a field, with its critical saddle analysis
+and two-replica form
+\cite{BaikLee2015-FluctuationsSphericalSKFreeEnergy,BaikEtAl2020-SphericalSpinGlassExternalField,Landon2020-CriticalSphericalSKFreeEnergy,NguyenSosoe2018-OverlapCLTNearCriticalSphericalSK,DuHuang2026-CriticalSKFreeEnergyFluctuations} &
+\S5.3: (5.4), (5.5), Lemmas~5.3--5.4; (7.2); recurs in \S\S6--7, 11--12, 15, 19 &
+Not cited (Du--Huang cited only for their \S3 comparison, not for the representation of their \S4)\\
+\addlinespace
+\hyperref[f:S3]{S3} & \grade{Strong} &
+Br\'ezin--Hikami duality for GOE characteristic polynomials with an external
+source: the exact identity and its Grassmann derivation
+\cite{BrezinHikami2001-CharPolyRealSymmetric} &
+Lemma~8.2 (p.~32); ``proved here'' at the opening of \S8 (p.~30) &
+Not cited; derived ``for completeness''\\
+\addlinespace
+\hyperref[f:S4]{S4} & \grade{Strong} &
+One-step Polchinski renormalization apparatus (renormalized potential,
+fluctuation measure, Hessian identity, Brascamp--Lieb bound), composed across
+scales by the semigroup property; trickle-down form
+\cite{BauerschmidtBodineau2019-SineGordonMultiscaleBakryEmery,BauerschmidtBodineauDagallier2023-PolchinskiIntroduction,AnariKoehlerVuong2024-TrickleDownLocalizationSchemes} &
+Each cap step, \S\S16.1--16.2: (16.3)--(16.4), (16.11), (16.14)--(16.15); iterated in Theorem~18.6 &
+Not cited for this (AKV cited only for an SK threshold)\\
+\addlinespace
+\hyperref[f:S5]{S5} & \grade{Strong} &
+Capacity--measure criterion for the log-Sobolev inequality, with dyadic slicing
+\cite{BartheRoberto2003-SobolevInequalitiesRealLine,BartheEtAl2004-InterpolatedInequalitiesOrliczIsoperimetry,BakryEtAl1995-SobolevInequalitiesInDisguise} &
+Lemma~19.1 (pp.~172--173); slicing also in the proof of Theorem~14.2 &
+Only Barthe--Roberto's Lemma~4, for the last step\\
+\midrule
+\hyperref[f:P1]{P1} & \grade{Partial} &
+Signed two-spin curvature estimate and its summation over pairs
+\cite{Wang2026-OptimalMixingGlauberSKBetaHalf} &
+\S3 (p.~8); proof of Proposition~13.6 (pp.~102--103) &
+Indirectly, via a companion lemma that credits Wang\\
+\addlinespace
+\hyperref[f:P2]{P2} & \grade{Partial} &
+Density bounds for weighted chi-square sums
+\cite{BobkovNaumovUlyanov2020-DensityMaxWeightedChiSquare,GotzeEtAl2017-LargeBallGaussianComparison} &
+Lemma~5.2; \S5.3; Lemma~10.1; (15.5) &
+Not cited\\
+\addlinespace
+\hyperref[f:P3]{P3} & \grade{Partial} &
+Fixed-spectrum Haar second moment: the two-eigenvalue reduction of
+Bhattacharya--Sen and the overlap-cell comparison of Du--Huang
+\cite{BhattacharyaSen2015-OrthogonalMeanFieldSpinGlasses,DuHuang2026-CriticalSKFreeEnergyFluctuations} &
+(6.3) and the pair estimate, \S6.1 (pp.~21--22); recurs in \S\S7--18 &
+Bhattacharya--Sen not cited; Du--Huang cited in \S\S1, 7, 12.4, 15.4, not in \S6\\
+\addlinespace
+\hyperref[f:P4]{P4} & \grade{Partial} (B) &
+Earlier critical-temperature bounds on the partition function (stronger than
+(7.5)) and the covariance (weaker than (7.6), or only at $s=0$)
+\cite{DuHuang2026-CriticalSKFreeEnergyFluctuations,ElAlaouiGaitonde2022-CovarianceMatrixSK} &
+(7.5), (7.6); Proposition~12.4 &
+(7.5) indirectly, via Du--Huang's Theorem~1.6; otherwise not cited\\
+\addlinespace
+\hyperref[f:P5]{P5} & \grade{Partial} (B) &
+Local convexity of the TAP free energy at positive observation times
+\cite{Celentano2022-SudakovFerniquePostAMPTAPConvexity} &
+(13.1), Proposition~13.4; Lemma~17.3; Proposition~17.5 &
+Not cited\\
+\addlinespace
+\hyperref[f:P6]{P6} & \grade{Partial} &
+Large-field reduction to sparse principal submatrices
+\cite{BandeiraElAlaouiRodder2026-GlauberHighOverlapGibbs} &
+\S19.4 (p.~178); proof of Proposition~13.6 &
+Not cited (indirectly at \S13.4, via a companion lemma)\\
+\midrule
+\hyperref[f:C1]{C1} & \grade{Major} (C) &
+The spectral-cap route is not needed for the log-Sobolev exponent: the support
+profile already gives it
+\cite{HermonPeres2016-L2MixingHypercontractivityHitting,DiaconisSaloffCoste1996-LogSobolevFiniteMarkovChains} &
+\S\S15--19 (pp.~112--183), versus Theorem~14.2 &
+---\\
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\clearpage
+
+\tableofcontents
+
+\section{About this document}\label{sec:about}
+
+\paragraph{The preprint.}
+The preprint is \emph{Critical mixing in the Sherrington--Kirkpatrick model},
+dated September~25, 2026, with author line ``OpenAI''
+\cite{OAI-CriticalMixing}. It is one of 722 manuscripts in the
+\texttt{openai/math} release, all produced by an unreleased internal OpenAI
+model. It proves that heat-bath Glauber dynamics for the zero-field Gaussian
+SK model at the critical inverse temperature $\beta=1$ mixes in time
+$n^{2/3+o(1)}$, and that the relaxation time and the inverse log-Sobolev
+constant have the same exponent. Section~\ref{sec:overview} summarizes the
+paper and fixes the notation used throughout this document. The preprint
+relies on two companion preprints from the same release,
+\cite{OAI-AcceptedCritical} and \cite{OAI-AcceptedGap}, which it cites as
+\texttt{AcceptedCritical} and \texttt{AcceptedGap}. They are not treated as
+prior literature here.
+
+\paragraph{What counts as a finding.}
+This document reports only:
+\begin{description}[leftmargin=1.5em,font=\normalfont\bfseries]
+\item[(A) Unattributed reuse.] A technique, construction, identity, estimate or
+body of theory developed in an identifiable earlier paper is reused without
+attribution: either nothing is cited, or the citation given covers something
+else or something narrower than what is reused.
+\item[(B) Same-problem precedence.] Earlier, uncited partial progress on the
+same problem, such as a weaker or special-case version of a statement the
+preprint proves.
+\item[(C) Structural.] A published result would replace or substantially
+shorten a large part of the argument, or contradicts a claim the preprint
+makes about why part of the argument is necessary.
+\end{description}
+Related work whose omission is a judgment call, textbook tools, and ``should
+cite the original rather than a later source'' quibbles are not reported.
+
+\paragraph{Grades.}
+\begin{description}[leftmargin=1.5em,font=\normalfont\bfseries]
+\item[\grade{Strong}.] The earlier technique is reused essentially intact
+without credit for that content. This holds even when the preprint combines it
+with new ingredients or applies it in a new setting. New ingredients are
+listed as differences and do not lower the grade.
+\item[\grade{Partial}.] Only a fragment of the earlier technique is reused, or
+the credit is present but only indirectly.
+\end{description}
+Structural findings (C) are graded by impact instead:
+\begin{description}[leftmargin=1.5em,font=\normalfont\bfseries]
+\item[\grade{Major}.] A route, a section, or a component of the main theorem
+becomes a citation.
+\item[\grade{Moderate}.] A multi-page chain of lemmas becomes a citation.
+\end{description}
+Grades measure how completely the \emph{earlier technique} is reused, not how
+much of the preprint's argument it accounts for. Credit counts as indirect
+only when the preprint cites a source, or a companion preprint, \emph{for that
+specific content}, and the cited location itself covers or credits the
+original. Citing the same paper nearby for a different result does not count.
+When the preprint re-proves something itself, credit given in a companion's
+parallel proof does not transfer. This matters because the preprint states
+that its spectral, spherical and cap estimates ``are proved below''
+(preprint \S3, p.~7).
+
+\paragraph{How to check a claim.}
+Locations in the preprint and its companions use their compiled numbering
+(sections, equations, theorems, lemmas, propositions) and, where helpful, page
+numbers in their PDFs. Locations in other sources give the theorem, equation
+and page of the version listed in the bibliography. Each finding ends with a
+short checklist of the passages to put side by side.
+\section{The preprint in brief, and notation}\label{sec:overview}
+
+This section fixes notation shared by all findings. Section numbers \S1--\S20
+refer to the preprint.
+
+\subsection{Model, dynamics and main theorem}
+
+Let $J^\circ$ be symmetric with zero diagonal and independent entries
+$J^\circ_{ij}\sim N(0,1/n)$ for $i<j$. The Gibbs law on
+$\Omega_n=\{-1,1\}^n$ is
+\[
+ \mu_J(x)=Z_J^{-1}\exp\bigl(\tfrac12 x^{\mathsf T}J^\circ x\bigr),
+\]
+which is SK at inverse temperature $\beta=1$ and zero field. Adjoining
+independent diagonal entries $J_{ii}\sim N(0,2/n)$ gives a GOE matrix $J$. This
+leaves $\mu_J$ unchanged, since $x_i^2=1$, and makes the eigenframe of $J$
+Haar-distributed given the eigenvalues \ploc{(\S2)}{model.tex:20--27}. The
+GOE spectral density vanishes like $\sqrt{2-\lambda}$ at the upper edge, so a
+window of width $u$ below the edge holds about $nu^{3/2}$ eigenvalues. This
+edge geometry produces the critical scale $n^{-2/3}$ and the exponent $2/3$.
+
+With $Q_i$ the heat-bath update at site $i$ (conditional expectation given
+$x_{-i}$), the generator, the one-update kernel and the Dirichlet form are
+\[
+ \Lgen_J=\sum_{i=1}^n(Q_i-I),\qquad P_J=\tfrac1n\sum_{i=1}^nQ_i,\qquad
+ \D_J(f)=\sum_{i=1}^n\mu_J\bigl[\Var_{\mu_J}(f\mid x_{-i})\bigr].
+\]
+$R_J=\sup\Var_{\mu_J}(f)/\D_J(f)$ is the relaxation time, and
+$C_{\mathrm{LS},J}=\sup\Ent_{\mu_J}(f^2)/\D_J(f)$ is the inverse log-Sobolev
+constant.
+
+\begin{quote}
+\textbf{Theorem 1.1.}\ploc{}{introduction.tex:54--65} In probability over the
+disorder, $t_{\mathrm{mix},J}=n^{2/3+o(1)}$, $k_{\mathrm{mix},J}=n^{5/3+o(1)}$,
+$R_J=n^{2/3+o(1)}$ and $C_{\mathrm{LS},J}=n^{2/3+o(1)}$.
+\end{quote}
+
+The preprint proves the upper bounds. The lower bounds come from the companion
+\cite{OAI-AcceptedCritical}.
+
+\subsection{Gaussian observations and the planted law}
+
+A Gaussian observation of a spin configuration $X$ with precision $B\succeq0$
+is $Y=BX+B^{1/2}G$, with $G$ standard Gaussian. The posterior adds $Y$ to the
+field and subtracts $B$ from the interaction matrix
+\ploc{(\S2)}{model.tex:29--41}. In the isotropic case one samples
+$X\sim\mu_J$ and observes
+\[
+ h_s=sX+B_s,\qquad r=\sqrt s,\qquad k=nr^3,
+\]
+with $B_s$ a standard Brownian motion. The posterior is the field tilt
+$\mu_s=\mu_{h_s}$, with covariance $\Sigma_s$. The scale $k=ns^{3/2}$ counts,
+up to a constant, the GOE eigenvalues within $s$ of the edge.
+
+Partition functions are normalized by probability measures:
+\[
+ Z(h)=\int e^{x^{\mathsf T}Jx/2+h^{\mathsf T}x}\,d\pi_{\mathrm c}(x),
+ \qquad
+ Z_{\mathrm o}(h)=\int e^{x^{\mathsf T}Jx/2+h^{\mathsf T}x}\,d\pi_{\mathrm o}(x),
+\]
+where $\pi_{\mathrm c}$ is uniform on the cube and $\pi_{\mathrm o}$ is uniform
+on the sphere of radius $\sqrt n$. Then $\E Z(0)=e^{n/4}$. The \emph{planted
+law} size-biases the disorder by $Z(0)/\E Z(0)$. Under it, $X$ is uniform on
+the cube and $J=W+XX^{\mathsf T}/n$, with $W$ an independent GOE matrix
+\ploc{(\S5.1)}{profile-spectral.tex:40--65}. Estimates proved under the
+planted law are transferred back to the ordinary law with explicit probability
+cost.
+
+\subsection{Route 1: isotropic observations and a support profile (\S5--\S14)}
+
+The first route proves the \emph{support profile}
+\ploc{(Theorem~14.2)}{profile-entropy.tex, prof:support-profile}: for every
+fixed $\omega>0$, on one disorder event of probability tending to one,
+\[
+ \D_J(f)\;\ge\;c_\omega\,n^{-2/3-\omega}\,\log(1/p)\,\mu_J(f^2)
+ \qquad\text{for all } f\ne0 \text{ with } p:=\mu_J(f\ne0)\le\tfrac12 .
+\]
+Its stages are:
+\begin{itemize}
+\item \S5--\S7: resolvent estimates near the GOE edge, comparison of the cube
+with the sphere, and the polylogarithmic edge window;
+\item \S8--\S10: Kac--Rice counts of the roots of the TAP-type field equation
+\[
+ y+(1-q)m-Jm=h_s,\qquad m=\tanh y,\qquad q=\norm m^2/n,
+\]
+which is TAP stationarity at $\beta=1$ with the observation as the field;
+\item \S11: a signed comparison of two spin and two Gaussian replica integrals,
+which gives $\norm{\Sigma_s}\le(1+\epsilon)/s$ on most orientations of each
+root orbit;
+\item \S12--\S13: amplification of these covariance bounds backward along the
+observation path, started from estimates at positive times;
+\item \S14: entropy localization, which turns the covariance bounds into the
+support profile.
+\end{itemize}
+
+\subsection{Route 2: spectral caps and a log-Sobolev inequality (\S15--\S19)}
+
+The second route proves $\Ent_{\mu_J}(f^2)\le n^{2/3+\rho}\D_J(f)$ for every
+fixed $\rho>0$, with probability tending to one. It observes only near-edge
+directions, using a matrix precision. With eigenvalue gaps $d=2I-J$, a scale
+$p$ defines
+\[
+ P_p=\one_{\{d\le p^2\}},\quad k_p=np^3,\quad M_p=\sqrt{np},\quad
+ B_p=(p^2-d)_+,\quad J_p=J-B_p
+\]
+\ploc{(\S15.1)}{cap-static.tex:38--45}. Observing with precision $B_p$ flattens
+the top of the spectrum: on the cap $\ran P_p$, the matrix $J_p$ equals
+$(2-p^2)I$. The potential $\phi_p(h)=\log Z_{J_p}(h)$ has the capped Gibbs mean
+as its gradient and the capped covariance as its Hessian. The spherical
+comparison resolvent is $R_p=(\max(d,p^2)+\alpha)^{-1}$, with $\alpha$ fixed by
+$\Tr R_p+\norm{R_ph}^2=n$. An induction from larger to smaller caps
+($c=\gamma p$) controls the projected Hessian $K_p$ through a negative
+``radial deficit'' in $p^2(K_p-R_p)$ along the field direction (\S16).
+Initialization uses a small-field TAP expansion (\S17) and an auxiliary
+potential (\S18). Entropy retention along the forward observation process,
+followed by a capacity-and-layers argument, gives the log-Sobolev inequality
+(\S19).
+
+\subsection{From functional inequalities to mixing (\S20)}
+
+Section~20 converts either endpoint into worst-start mixing bounds, citing
+Goel--Montenegro--Tetali, Diaconis--Saloff-Coste and Bobkov--Tetali. The factor
+$n$ between per-site time and attempted updates comes from $\Lgen_J=n(P_J-I)$.
+
+\section{Strong findings}\label{sec:strong}
+% =====================================================================
+% Finding S1 (Strong): the El Alaoui--Montanari--Sellke planted
+% observation framework for SK (observation, TAP at the observation
+% field, planted law with likelihood transfer).
+% =====================================================================
+\subsection{S1. Gaussian observation, TAP at the observation field, and planted likelihood transfer for SK (El Alaoui--Montanari--Sellke)}\label{f:S1}
+
+\paragraph{Summary.}
+The preprint \cite{OAI-CriticalMixing} studies the SK Gibbs measure inside the
+sampling framework of El~Alaoui, Montanari and Sellke (``EAMS'')
+\cite{ElAlaouiMontanariSellke2022-SamplingSKAlgorithmicSL}: a Gaussian
+observation of a Gibbs sample, the TAP equation with the observation as field,
+and a planted law (the GOE size-biased by the SK partition function) with its
+likelihood transfer to ordinary disorder
+\sloc{ElAlaouiMontanariSellke2022-SamplingSKAlgorithmicSL}{(1.4), (4.12); (2.3), (4.53); \S4.1, Proposition~4.2, (4.14)}.
+The preprint sets this up in \ploc{\S3, \S4.1 and \S5.1}{accepted-inputs.tex:17--30; proof-overview.tex:47--50; profile-spectral.tex:31--48},
+and both routes rest on it (\S8--\S14, \S17). The preprint never cites EAMS;
+the companion credits EAMS for this combination only in a passage of its
+introduction \sloc{OAI-AcceptedGap}{\S1, p.~4} that the preprint does not
+cite. Grade: \grade{Strong}, because the observation process, the TAP equation
+at the observation field, and the planted law with its likelihood transfer
+appear together and coincide with EAMS's at $\beta=1$.
+
+\paragraph{Setup.}
+Section~\ref{sec:overview} defines $J$, $J^\circ$, $h_s$, $\mu_s$, $Z(h)$, the
+field equation and the planted law. This finding also needs:
+\begin{itemize}
+\item \emph{Likelihood transfer.} The planted law is the ordinary law ($J$ GOE,
+$X\sim\mu_J$, $h_s=sX+B_s$) size-biased by $L(J):=Z(0)/\E Z(0)$, with the
+same conditional law of $(X,h_s)$ given $J$
+\ploc{(\S5.1)}{profile-spectral.tex:31--48}. For the conditional probability
+$q_J(b)$ of a failure event and a spectral event $\mathcal G$,
+\[
+ \E_{\rm ord}\bigl[\one_{\{\mathcal G,\,L\ge n^{-C}\}}\,q_J(b)\bigr]
+ \le n^C\,\E_{\rm pl}\bigl[\one_{\mathcal G}\,q_J(b)\bigr]
+ \qquad\text{\ploc{(proof of Proposition~14.1, p.~107)}{profile-entropy.tex:240--248}},
+\]
+and $L\ge n^{-C}$ with ordinary probability $1-o(1)$ by
+\ploc{(7.5)}{profile-spectral.tex:1343--1347}.
+\item \emph{TAP field map.} For interaction variance $j/n$ ($j=\beta^2$) and a
+\emph{field variable} $y\in\R^n$ (not the observation)
+\ploc{(\S3, p.~7)}{accepted-inputs.tex:17--23},
+\[
+ m=\tanh y,\quad q=n^{-1}\norm m^2,\quad V_y=\operatorname{diag}(1-m_i^2),\quad
+ F_{J,h}(y)=y-h+[j(1-q)I-J]m .
+\]
+The field equation is $F_{J,h_s}(y)=0$ at $j=1$
+\ploc{(\S4.1)}{proof-overview.tex:47--50}; \S13 uses $J^\circ$, and \S17 uses
+$J_*=\beta W_{\rm off}$ \ploc{(17.1)}{cap-classical.tex:13--21}.
+\item \emph{Stable-field hypothesis.}
+$H_J(y,A)=I+A^{1/2}\bigl[j(1-q)I-J-2jmm^{\mathsf T}/n\bigr]A^{1/2}\succ cI$ for
+all $y$ with $\norm{F_{J,h}(y)}\le\rho_0\sqrt n$ and all diagonal
+$0\le A\le(1+\eta)I$ near $V_y$
+\ploc{(\S3, p.~7; (13.1); (17.2))}{accepted-inputs.tex:21--30; profile-positive.tex:16--30; cap-classical.tex:24--38}.
+It gives a unique root $y_*$, $\norm{y-y_*}\le C\norm{F_{J,h}(y)}$
+\ploc{(proof of Proposition~13.5)}{profile-positive.tex:1024--1033}, and
+$\norm{\mu_hX-\tanh y_*}\le C$ \ploc{(3.2)}{accepted-inputs.tex:44--55}.
+\end{itemize}
+
+\paragraph{Role in the argument.}
+Both routes need the mean, covariance and Dirichlet form of $\mu_s$, an SK
+measure at field $h_s$. At a stable field, (3.2) (from
+\sloc{OAI-AcceptedGap}{proof of Proposition~7.2}) puts the mean near
+$\tanh y_*$, and Propositions~13.5 and~17.1 bound the covariance. Stability of
+observation fields, and rarity of small-overlap approximate roots, are proved
+by Kac--Rice under the planted law, where $(J,h_s)$ is jointly Gaussian given
+$X$ (\S8--\S11; \ploc{Proposition~13.4}{profile-positive.tex:442--466};
+\ploc{Lemma~17.3}{cap-classical.tex:298--314}), and moved to ordinary disorder
+by $L$. Route~1 does this at every observation time $s$, with exceptional
+rates in $k=ns^{3/2}$, down to the critical scale; Route~2 does it at its
+boundary scale (\S17) to start the cap induction. The transfer recurs in
+\ploc{the proof of Lemma~17.3}{cap-classical.tex:444--449} and, in reverse with
+$\E L^2\le C(n+1)$, in \ploc{\S13.4}{profile-positive.tex:1704--1716}.
+
+\paragraph{The earlier technique.}
+EAMS sample from SK for $\beta<1/2$ by simulating the observation process of a
+Gibbs sample, whose drift is the posterior mean, computed by AMP and natural
+gradient descent on the TAP free energy; the analysis runs under a planted
+model. In their bold notation, $\boldsymbol y$ is the observation (the
+preprint's $h_s$); we write $\mathcal F_{\rm TAP}$ and $\mathrm H$ for their
+TAP free energy and binary entropy.
+\begin{itemize}
+\item \emph{Model and observation.} $\boldsymbol A\sim\mathsf{GOE}(n)$ in the
+normalization of $J$, and
+$\mu_{\boldsymbol A,\boldsymbol y}(\boldsymbol x)\propto
+\exp\{\frac\beta2\ip{\boldsymbol x}{\boldsymbol A\boldsymbol x}+\ip{\boldsymbol y}{\boldsymbol x}\}$
+on $\{\pm1\}^n$ \sloc{ElAlaouiMontanariSellke2022-SamplingSKAlgorithmicSL}{(1.1), (2.1)}.
+Given $\boldsymbol A$, the SDE
+$d\boldsymbol y=\boldsymbol m(\boldsymbol y,t)\,dt+d\boldsymbol B$,
+$\boldsymbol y(0)=0$, has the law of $t\boldsymbol x+\bar{\boldsymbol B}(t)$ with
+$\boldsymbol x\sim\mu_{\boldsymbol A}$
+\sloc{ElAlaouiMontanariSellke2022-SamplingSKAlgorithmicSL}{(1.4), p.~3; (4.12), pp.~11--12}.
+\item \emph{TAP free energy with the observation as field}
+\sloc{ElAlaouiMontanariSellke2022-SamplingSKAlgorithmicSL}{(2.3), p.~5; (4.53), p.~20}:
+\begin{align*}
+ \mathcal F_{\rm TAP}(\boldsymbol m;\boldsymbol y,q)&=-\tfrac\beta2\ip{\boldsymbol m}{\boldsymbol A\boldsymbol m}
+ -\ip{\boldsymbol y}{\boldsymbol m}-\textstyle\sum_{i}\mathrm H(m_i)
+ -\tfrac n4\beta^2(1-q)\bigl(1+q-2Q(\boldsymbol m)\bigr),\\
+ \nabla\mathcal F_{\rm TAP}&=-\beta\boldsymbol A\boldsymbol m-\boldsymbol y
+ +\operatorname{arctanh}(\boldsymbol m)+\beta^2(1-q)\boldsymbol m,
+\end{align*}
+with $Q(\boldsymbol m)=\frac1n\norm{\boldsymbol m}^2$ and $q=q_*(\beta,t)$ the
+state-evolution fixed point. By the AMP analysis (Algorithm~1, p.~5;
+Lemma~4.11) and local strong convexity (Lemma~4.12), Lemma~4.10 (p.~20) gives
+a unique stationary point near the AMP output, close to the Gibbs mean and
+Lipschitz in $\boldsymbol y$.
+\item \emph{Planted model and likelihood}
+\sloc{ElAlaouiMontanariSellke2022-SamplingSKAlgorithmicSL}{\S4.1, (4.1)--(4.9), pp.~10--11; Proposition~4.2; (4.14), p.~12}.
+Under $\mu_{\rm pl}$, $\boldsymbol x$ is uniform,
+$\boldsymbol A=\frac\beta n\boldsymbol x\boldsymbol x^{\mathsf T}+\boldsymbol W$
+with $\boldsymbol W\sim\mathsf{GOE}(n)$, $\mu_{\rm pl}(\cdot\mid\boldsymbol A)=\mu_{\boldsymbol A}$,
+and the disorder marginal is $\mu_{\mathsf{GOE}}(d\boldsymbol A)\,Z_{\mathsf{SK}}(\boldsymbol A)$,
+$Z_{\mathsf{SK}}(\boldsymbol A)=2^{-n}\sum_{\boldsymbol x}
+e^{\frac\beta2\ip{\boldsymbol x}{\boldsymbol A\boldsymbol x}-\beta^2n/4}$.
+Under $\mathbb Q$, $\boldsymbol A$ is GOE and $\boldsymbol y$ solves the SDE;
+under $\P$, $\boldsymbol A\sim\mu_{\rm pl}(\cdot\mid\boldsymbol x_0)$ and
+$\boldsymbol y(t)=t\boldsymbol x_0+\boldsymbol B(t)$. Then
+$d\P/d\mathbb Q\,(\boldsymbol A,\boldsymbol y)=Z_{\mathsf{SK}}(\boldsymbol A)$, and
+for $\beta<1$ contiguity carries results from $\P$ to $\mathbb Q$.
+\end{itemize}
+
+\paragraph{Correspondence.}
+At $\beta=1$: $\boldsymbol A=J$, $\boldsymbol y(t)=h_s$ with $t=s$,
+$\boldsymbol x_0=X$, $\boldsymbol W=W$; in general $\beta\boldsymbol A=J$,
+$\beta^2=j$.
+
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{1.75cm}%
+>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Object & Preprint & EAMS \cite{ElAlaouiMontanariSellke2022-SamplingSKAlgorithmicSL}\\
+\midrule
+Observation
+& $h_s=sX+B_s$, $X\sim\mu_J$; posterior $\mu_{h_s}$ \ploc{(\S5.1)}{profile-spectral.tex:15--38}
+& $t\boldsymbol x+\bar{\boldsymbol B}(t)$, $\boldsymbol x\sim\mu_{\boldsymbol A}$; $\mu_{\boldsymbol A,\boldsymbol y}$ ((2.1), (4.12))\\
+\addlinespace
+Likelihood
+& $L(J)=Z(0)/\E Z(0)$, $\E Z(0)=e^{n/4}$ \ploc{(\S5.1; named $L$ in \S13.4 and \S14)}{profile-spectral.tex:41--43; profile-positive.tex:1704--1710; profile-entropy.tex:240--248}
+& $Z_{\mathsf{SK}}(\boldsymbol A)$ ((4.6))\\
+\addlinespace
+Planted law
+& size bias by $L$; $J=W+XX^{\mathsf T}/n$ \ploc{(\S5.1)}{profile-spectral.tex:40--48}
+& size bias by $Z_{\mathsf{SK}}$; $\boldsymbol A=\frac\beta n\boldsymbol x\boldsymbol x^{\mathsf T}+\boldsymbol W$ ((4.3)--(4.5), (4.9))\\
+\addlinespace
+Transfer
+& display in Setup \ploc{(Prop.~14.1)}{profile-entropy.tex:240--248}; restriction to $Z/\E Z\ge e^{-\delta n}$ \ploc{(Lemma~17.3)}{cap-classical.tex:444--449}
+& $d\P/d\mathbb Q=Z_{\mathsf{SK}}$ (Prop.~4.2, (4.14))\\
+\addlinespace
+Field eq.
+& $F_{J,h}(y)=0$ \ploc{(\S3)}{accepted-inputs.tex:20}; $y+(1-q)m-Jm=h_s$ \ploc{(\S4.1)}{proof-overview.tex:47--50}
+& $\nabla\mathcal F_{\rm TAP}(\boldsymbol m;\boldsymbol y,q)=0$ ((4.53))\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\noindent Substituting the dictionary into (4.53) with EAMS's $\boldsymbol m$
+set to $m=\tanh y$ and $q=n^{-1}\norm m^2$ gives
+\[
+ \underbrace{y-h+[j(1-q)I-J]m}_{F_{J,h}(y)}
+ =\underbrace{\operatorname{arctanh}(m)-h-Jm+j(1-q)m}_{\nabla\mathcal F_{\rm TAP}(m;h,q)},
+\]
+so the field equation is EAMS's TAP stationarity at the observation, with $q$
+evaluated at $m$ rather than fixed at $q_*$. Finally,
+$Z(0)/\E Z(0)=2^{-n}\sum_xe^{x^{\mathsf T}Jx/2-n/4}=Z_{\mathsf{SK}}(J)$ at
+$\beta=1$, so the planted and ordinary laws at time $s$ are EAMS's $\P$ and
+$\mathbb Q$ at $t=s$, and the transfer display is (4.14),
+$\E_{\P}[F]=\E_{\mathbb Q}[Z_{\mathsf{SK}}F]$, on $\{L\ge n^{-C}\}$.
+
+\paragraph{What is new in the preprint.}
+\begin{itemize}
+\item Work at $\beta=1$, with explicit likelihood costs ((7.5),
+$\E L^2\le C(n+1)$, $\log Z-\log\E Z=o(n)$) in place of contiguity, which it
+disclaims \ploc{(\S4)}{proof-overview.tex:18--20}.
+\item Stability on the whole approximate-root region, proved at $\beta=1$ by
+Kac--Rice counts under the planted law (set-up credited to
+\cite{FanMeiMontanari2018-TAPFreeEnergyVariationalInference,CelentanoFanMei2021-LocalConvexityTAPZ2Sync})
+with new shrinking-overlap estimates.
+\item Covariance and Dirichlet-form control down to the critical scale,
+matrix-precision observations, and the Haar-frame identity for
+$Z(Uc)/Z_{\rm o}(Uc)$ \ploc{(\S5.1)}{profile-spectral.tex:54--65}.
+\end{itemize}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item \emph{Observation.} \ploc{\S5.1, p.~12}{profile-spectral.tex:15--38}
+against EAMS (1.4), p.~3, and (4.12), pp.~11--12.
+\item \emph{Planted law.} \ploc{\S5.1, p.~12}{profile-spectral.tex:40--48}
+against EAMS (4.3)--(4.6), p.~10, and (4.9), p.~11; check that
+$\E Z(0)=e^{n/4}$ gives $Z(0)/\E Z(0)=Z_{\mathsf{SK}}(J)$ at $\beta=1$.
+\item \emph{Likelihood transfer.} The display in
+\ploc{the proof of Proposition~14.1 (p.~107)}{profile-entropy.tex:240--248} and
+\ploc{the transfer paragraph closing the proof of Lemma~17.3 (p.~145)}{cap-classical.tex:444--449}
+against EAMS Proposition~4.2, p.~11, and (4.14), p.~12.
+\item \emph{Field equation.} \ploc{\S3, p.~7}{accepted-inputs.tex:20} and
+\ploc{\S4.1, p.~9}{proof-overview.tex:47--50} against EAMS (4.53), p.~20, via
+the identity above.
+\end{enumerate}
+\subsection{S2. The spherical saddle-point method with a field (Kosterlitz--Thouless--Jones, Baik et al., Landon, Du--Huang), in one- and two-replica form}\label{f:S2}
+
+\paragraph{Summary.}
+The preprint's spherical reference model is built on the
+Kosterlitz--Thouless--Jones (KTJ) saddle-point representation of the
+spherical partition function with a field
+\sloc{BaikEtAl2020-SphericalSpinGlassExternalField}{Lemma~3.1}, in the
+Gaussian-conditioned-on-its-radius form evaluated at the mean radius
+\sloc{DuHuang2026-CriticalSKFreeEnergyFluctuations}{proof of Prop.~4.4}.
+A stronger form of its critical saddle location, with the same two-step
+proof, is \sloc{Landon2020-CriticalSphericalSKFreeEnergy}{Prop.~3.1 and Lemma~3.4},
+and its normalization bound is a weak form of Landon's Theorem~1.1. These are
+\ploc{(5.4), (5.5) and Lemmas~5.3--5.4 in \S5.3}{profile-spectral.tex:364--656}.
+Applied to two independent replicas, the same representation
+Fourier-inverts the joint law of their squared lengths and overlap
+\ploc{((7.2) and the paragraph after it, p.~27)}{profile-spectral.tex:1182--1213},
+as in \sloc{DuHuang2026-CriticalSKFreeEnergyFluctuations}{Lemma~4.3; proof of Prop.~4.5};
+the Laplace (double-contour) form is
+\sloc{NguyenSosoe2018-OverlapCLTNearCriticalSphericalSK}{Lemma~4} and, with
+a field, \sloc{BaikEtAl2020-SphericalSpinGlassExternalField}{Lemma~3.3}.
+The method recurs in \S6--\S7, \S11--\S12, \S15 and \S19. The
+preprint cites none of KTJ, Baik--Lee, Baik et al., Landon or
+Nguyen--Sosoe, and cites the companion \cite{OAI-AcceptedCritical} only for
+other content. It cites
+\sloc{DuHuang2026-CriticalSKFreeEnergyFluctuations}{Thm.~1.6 and \S3.3}
+\ploc{at the head of \S7 (p.~26)}{profile-spectral.tex:1133--1135} for the
+zero-field partition-function comparison, but that section uses their \S4
+only through its conclusion (their Prop.~3.1), and \S4, which contains the
+representation, is not cited.
+\textbf{Grade: \grade{Strong}}, because the saddle equation, the one- and
+two-replica representations and the shell formula agree term by term after
+renaming, and Landon proves a stronger saddle location by the same two
+steps.
+
+\paragraph{Setup.}
+Shared notation is in Section~\ref{sec:overview}. For a field $h$, the
+preprint's \emph{saddle} is the unique $\lambda>\lambda_{\max}(J)$ with
+\[
+ D=(\lambda-J)^{-1},\qquad m_{\mathrm o}=Dh,\qquad \Tr D+\norm{m_{\mathrm o}}^2=n,
+\]
+the preprint's \ploc{(5.4)}{profile-spectral.tex:367--377}; as a function of
+$\lambda$ the left side decreases strictly from $\infty$ to $0$. The preprint states, without proof, that
+the spherical Gibbs law
+$\propto e^{x^{\mathsf T}Jx/2+h^{\mathsf T}x}\pi_{\mathrm o}(dx)$ is
+precisely $N(m_{\mathrm o},D)$ conditioned on $\norm x^2=n$. A superscript
+$0$ marks zero field, so $\Tr D^0=n$. The eigenvalues of $J$ are
+$\lambda_1\ge\dots\ge\lambda_n$, with unit eigenvectors $v_k$; put
+$\hat h_k=\ip{v_k}{h}$ and $D_k=(\lambda-\lambda_k)^{-1}$. Write $f_{m,C}(t)$ for the density
+of $\norm Y^2$ at $t$ when $Y\sim N(m,C)$, and $f_C=f_{0,C}$. With
+$\ell=\log\log(n+1000)$ and $d_0=n^{-1/3}\ell$,
+\ploc{(5.5)}{profile-spectral.tex:379--386} derives $|\lambda^0-2|\le Cd_0^2$
+and $\norm{D^0}=(\lambda^0-\lambda_{\max}(J))^{-1}\le Cnd_0$ from the edge
+bounds \ploc{(5.1) of Lemma~5.1}{profile-spectral.tex:89--106} in two steps:
+at $2+Cd_0^2$ the normalized trace deficit $1-\frac1n\Tr(2+Cd_0^2-J)^{-1}$ is of order
+$d_0$, so $\lambda^0<2+Cd_0^2$; at distance $c/(nd_0)$ above
+$\lambda_{\max}(J)$ the top pole alone closes that deficit.
+
+For two replicas put $L=n^{2/3}$. Independent Gaussian replicas
+$x_a=m_{\mathrm o}+D^{1/2}\eta_a$ ($a=1,2$, $\eta_a$ white) have the Gram
+statistic $\mathsf G=\bigl((x_a^{\mathsf T}x_b-n\delta_{ab})/L\bigr)_{a,b}$,
+the preprint's \ploc{(7.2)}{profile-spectral.tex:1184--1193}, and
+characteristic function $\varphi(T)=\E\,e^{\mathrm i\Tr(T\mathsf G)}$,
+$T\in\mathrm{Sym}_2(\R)$. Two independent spherical replicas are these
+conditioned on $\mathsf G_{11}=\mathsf G_{22}=0$, so their overlap
+$x_1^{\mathsf T}x_2/L$ has density
+$f_{\mathsf G}(0,0,u)/(f_{\mathsf G_{11}}(0)f_{\mathsf G_{22}}(0))$ at $u$.
+
+\paragraph{Role in the argument.}
+In Route~1 the sphere is the reference model for the cube
+\ploc{(\S5.1)}{profile-spectral.tex:54--65}, and the representation puts
+the spherical posterior in closed form, with covariance at most
+$(1+o(1))D$ \ploc{(5.6)}{profile-spectral.tex:460--465}.
+\ploc{Lemma~5.4}{profile-spectral.tex:563--655} locates the saddle under
+the observation field, $\lambda=2+(1\pm\epsilon)s$ and
+$\norm{m_{\mathrm o}}^2=(1\pm2\epsilon)nr$ up to probability
+$e^{-c_\epsilon k}$, so $\norm D\approx1/s$, the target scale of
+\ploc{Proposition~11.1}{profile-local.tex:14--49}; it is used in
+\ploc{\S11}{profile-local.tex:74--76} and
+\ploc{\S12}{profile-amplification.tex:955--961}.
+\ploc{Lemma~5.3}{profile-spectral.tex:520--561} proves
+$e^{n/4}n^{-C}\le Z_{\mathrm o}(0)\le e^{n/4+o(n)}$ from the shell formula
+below, bounding its density ratio by Lemma~5.2 (finding P2,
+Section~\ref{f:P2}).
+\ploc{Proposition~7.1}{profile-spectral.tex:1142--1328} compares cube and
+sphere at the edge: outside Haar mass $o(1)$,
+$Z(h)/Z_{\mathrm o}(h)=1+o(1)$, and the second moments about
+$m_{\mathrm o}$ agree up to operator-norm errors. In its proof only the
+cube--cube term of a four-term signed identity for
+$H_U(x)=(x-m_{\mathrm o})(x-m_{\mathrm o})^{\mathsf T}-D$
+\ploc{(p.~27)}{profile-spectral.tex:1215--1242} is a lattice sum;
+comparing it with the integral needs bounds on the spherical pair-overlap
+density, with the insertion, and on its $u$-derivatives, which the
+two-replica representation supplies. Combined with Lemma~5.3,
+Proposition~7.1 yields $Z(0)\ge n^{-C}e^{n/4}$
+\ploc{(7.5)}{profile-spectral.tex:1341--1347}, which undoes the planted
+size bias; by itself it supplies the moment errors used for
+\ploc{Proposition~12.3}{profile-amplification.tex:805--818}. The
+one-replica device recurs, uncited, in
+\ploc{\S6.1}{profile-spectral.tex:818--826}, in the proofs of
+\ploc{Proposition~11.1 and Lemma~11.2}{profile-local.tex:128--138; 907--913},
+in the capped saddle defining $R_p$ \ploc{(15.3)}{cap-static.tex:118--135},
+in \ploc{(15.14)--(15.15)}{cap-static.tex:573--595} and in
+\ploc{(19.9)}{cap-entropy.tex:246--281}; the two-replica device in the
+proofs of \ploc{Lemma~11.4}{profile-local.tex:1078--1130},
+\ploc{Proposition~12.4 (several replicas)}{profile-amplification.tex:1265--1272}
+and \ploc{Proposition~15.1 (an off-diagonal tilt)}{cap-static.tex:539--546}.
+
+\paragraph{The earlier technique.}
+\emph{The KTJ representation.} Fourier-inverting the constraint
+$\norm\sigma^2=N$ on a standard Gaussian turns the spherical partition
+function into one contour integral over the Lagrange multiplier $z$
+\cite{NL-KosterlitzThoulessJones1976}.
+\sloc{BaikLee2015-FluctuationsSphericalSKFreeEnergy}{Lemma~1.3, p.~5} state
+it at zero field and
+\sloc{BaikEtAl2020-SphericalSpinGlassExternalField}{Lemma~3.1, p.~11} with
+a field. There $M$ is GOE with variances $(1+\delta_{ij})/N$, eigenvalues
+$\lambda_1\ge\dots\ge\lambda_N$ and eigenvectors $u_i$;
+$\mathcal H(\sigma)=-\frac12\sigma\cdot M\sigma-h\,g\cdot\sigma$ and
+$Z_N=\int e^{-\beta\mathcal H}d\omega_N$, with $\omega_N$ normalized on the
+sphere of radius $\sqrt N$ (eqs.~(1.1)--(1.4)). For every $\gamma>\lambda_1$,
+\begin{gather*}
+ Z_N=C_N\int_{\gamma-i\infty}^{\gamma+i\infty}e^{\frac N2G(z)}dz,\qquad
+ C_N=\frac{\Gamma(N/2)}{2\pi i(N\beta/2)^{N/2-1}},\\
+ G(z)=\beta z-\frac1N\sum_{i=1}^N\log(z-\lambda_i)+\frac{h^2\beta}N\sum_{i=1}^N\frac{n_i^2}{z-\lambda_i},
+ \qquad n_i=u_i\cdot g .
+\end{gather*}
+By their eq.~(5.3) (p.~17), $G'$ increases from $-\infty$ to $\beta$ on
+$(\lambda_1,\infty)$, so a unique saddle $\gamma>\lambda_1$ solves
+$G'(\gamma)=0$.
+
+\emph{The density-at-the-mean form.} Instead of steepest descent through
+$\gamma$ (Baik--Lee, Landon), one can stop at the saddle: the Gibbs law is the Gaussian $N(0,(\gamma-M)^{-1})$ conditioned on its
+squared radius, and $Z$ is a Gaussian normalization times that radius's
+density at $N$, which at the saddle is its mean. Du and Huang use the
+preprint's normalization, with their $W$ (not the planted noise) in place
+of $J$. In
+\sloc{DuHuang2026-CriticalSKOverlapDistribution}{\S1.2, eq.~(1.7), pp.~4--5},
+$\gamma$ solves $\sum_i(\gamma-\lambda_i)^{-1}=N$ and $\mu^{\rm sph}_{N,1}$
+is precisely the law of $\xi\sim N(0,(\gamma I-W)^{-1})$ conditioned on
+$\norm\xi^2=N$. In the proof of
+\sloc{DuHuang2026-CriticalSKFreeEnergyFluctuations}{Prop.~4.4, p.~22}, from
+the KTJ formula (their Lemma~4.2, p.~18, with
+$C_N=\Gamma(N/2)/(N/2)^{N/2-1}$), they set $a_k=\gamma-\lambda_k$ and
+$\Xi_W=\sum_k\xi_k^2/a_k$ with $\xi_k$ i.i.d.\ $N(0,1)$, so
+$\E\,\Xi_W=N$, and obtain the identity displayed below, where $\rho_W$ is
+the density of $\Xi_W$.
+
+\emph{Landon at criticality.}
+\sloc{Landon2020-CriticalSphericalSKFreeEnergy}{eqs.~(2.3)--(2.5), pp.~4--5}
+takes $H$ GOE with variances $1/N$ and $2/N$ and normalizes $Z_N(\beta)$ on
+the sphere of radius $\sqrt N$, so $Z_N(1)$ is $Z_{\mathrm o}(0)$ with
+$J=H$; the saddle solves $\beta=\frac1N\sum_i(\gamma-\lambda_i)^{-1}$
+(eq.~(3.2), p.~9). At $\beta=1$, Prop.~3.1 (eq.~(3.3), p.~9) and Lemma~3.4
+(p.~10) put both $N^{2/3}(\gamma-\lambda_1)$ and $N^{2/3}(\gamma-2)$ in
+$[C_\varepsilon^{-1},C_\varepsilon]$ with probability at least
+$1-\varepsilon$, in two steps. By eq.~(3.7), above the edge
+$\frac1N\sum_j(E-\lambda_j)^{-1}$ falls below $1$ by at least
+$cN^{-1/3}\sqrt{N^{2/3}(E-2)}-N^{-1/3}$, which bounds $\gamma$ from above;
+the top-pole term $N^{-1/3}/(N^{2/3}(E-\lambda_1))$ of the decomposition
+(3.5) (Lemma~3.2) closes this deficit near $\lambda_1$, which bounds
+$\gamma-\lambda_1$ from below. Thm.~1.1 (eq.~(1.6),
+p.~2) is the critical central limit theorem
+$(\log Z_N(1)-\frac N4+\frac1{12}\log N)/\sqrt{\frac16\log N}\Rightarrow N(0,1)$,
+where $f(1)=\frac14$ is the limiting free energy (eq.~(1.3), p.~1), computed
+at zero field by KTJ
+\sloc{BaikEtAl2020-SphericalSpinGlassExternalField}{p.~4}.
+
+\emph{Two replicas.} In Laplace form, for spherical SK at zero field (any
+$\beta>0$),
+\sloc{NguyenSosoe2018-OverlapCLTNearCriticalSphericalSK}{Lemma~4, eqs.~(3.2)--(3.4), p.~6}
+write $\langle e^{tR_{12}}\rangle$, normalized by the square of the
+one-replica integral,
+as a double integral over $z,w\in\gamma+\mathrm i\R$ with kernel
+$(z-\lambda_i)(w-\lambda_i)-t^2/(4\beta^2N^2)$.
+\sloc{BaikEtAl2020-SphericalSpinGlassExternalField}{Lemma~3.3, eqs.~(3.5)--(3.6), p.~12; App.~A, pp.~70--71}
+add the field: $\langle e^{\eta\mathfrak R}\rangle$ is the ratio of
+$\iint e^{\frac N2\mathcal G_{\mathfrak R}(z,w;a)}$ at $a=\eta/(\beta N)$
+and at $a=0$, where $\mathcal G_{\mathfrak R}$ has kernel
+$(z-\lambda_i)(w-\lambda_i)-a^2$ and field term
+$\frac{h^2\beta}N\sum_in_i^2(z+w-2\lambda_i+2a)/\bigl((z-\lambda_i)(w-\lambda_i)-a^2\bigr)$.
+In Fourier/density form, at $\beta=1$ and $h=0$,
+\sloc{DuHuang2026-CriticalSKFreeEnergyFluctuations}{Lemma~4.3, p.~19}
+write the partition function $Z^{\rm sph}_{N,2}$ of two orthogonal
+spherical replicas as an integral over $(\gamma,\gamma,0)+(\mathrm i\R)^3$
+with kernel
+$\det(Z-\lambda_kI_2)$, $Z=\bigl(\begin{smallmatrix}z_1&w\\w&z_2\end{smallmatrix}\bigr)$.
+In the proof of their Prop.~4.5 (pp.~23--24), with $(g_k,h_k)$ i.i.d.\
+$N(0,I_2)$, $T_1=\sum_kg_k^2/a_k$, $T_2=\sum_kh_k^2/a_k$ and
+$T_3=2\sum_kg_kh_k/a_k$, they compute
+$\E\,e^{-\frac{\mathrm i}2(t_1T_1+t_2T_2+sT_3)}$ as a product of $2\times2$
+determinants (below) and invert it:
+$Z^{\rm sph}_{N,2}=C_{N,2}e^{N\gamma-\log\det(\gamma-W)}\cdot8\rho_{W,2}(N,N,0)$,
+with $\rho_{W,2}$ the density of $(T_1,T_2,T_3)$.
+
+\paragraph{Correspondence.}
+At $\beta=1$ and $N=n$; at $h=0$ also $\lambda^0=\gamma$ and $D^0_k=1/a_k$:
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Preprint & Earlier work\\
+\midrule
+$J$ (GOE, variances $1/n$, $2/n$) \ploc{(\S5.1)}{profile-spectral.tex:15--17}; field $h$; $Z_{\mathrm o}(h)$
+ & $M$, $h\,g$, $Z_N$ (Baik et al., eqs.~(1.1), (1.4), p.~2; GOE on p.~3); $H$, $Z_N(1)$ (Landon, eqs.~(2.3), (2.5)); $W$, $Z^{\rm sph}_N$ (Du--Huang)\\
+\addlinespace
+saddle $\lambda$; $D=(\lambda-J)^{-1}$ \ploc{(5.4)}{profile-spectral.tex:369--372}
+ & saddle $\gamma$; $\sum_i(\gamma-\lambda_i)^{-1}=\Tr(\gamma-M)^{-1}$ (Baik et al., eq.~(5.3))\\
+\addlinespace
+Gibbs law is $N(m_{\mathrm o},D)$ conditioned on $\norm x^2=n$ \ploc{(\S5.3, p.~17)}{profile-spectral.tex:374--376}
+ & zero field: Du--Huang, overlap paper, eq.~(1.7)\\
+\addlinespace
+$f_{D^0}(n)$; $f_I(n)$
+ & $\rho_W(N)$; the $\chi^2_N$ density at $N$, implicit in $C_N$ (Du--Huang, Lemma~4.2, p.~18; $2C_N=e^{-N/2}/f_I(N)$)\\
+\addlinespace
+saddle location (5.5), proved from (5.1) \ploc{(p.~17)}{profile-spectral.tex:379--386}
+ & Landon, Prop.~3.1 and Lemma~3.4, proved from (3.5) and (3.7)\\
+\addlinespace
+Lemma~5.3 \ploc{(5.7)}{profile-spectral.tex:520--524}; its constant $\frac14$ \ploc{(p.~19)}{profile-spectral.tex:552--557}
+ & Landon, Thm.~1.1; $f(1)=\frac14$ (eq.~(1.3))\\
+\addlinespace
+Gaussian replicas, $\mathsf G$ \ploc{((7.2), p.~27)}{profile-spectral.tex:1184--1193}; overlap density at $u$
+ & $(T_1,T_2,T_3)=(n+L\mathsf G_{11},n+L\mathsf G_{22},2L\mathsf G_{12})$ at $h=0$; $Z^{\rm sph}_{N,2}/(Z^{\rm sph}_N)^2\propto\rho_{W,2}(N,N,0)/\rho_W(N)^2$ (Du--Huang, pp.~22--24)\\
+\addlinespace
+frequency $T\in\mathrm{Sym}_2(\R)$; noncentral factor \ploc{(p.~27)}{profile-spectral.tex:1197--1210}
+ & $\Theta=-2T/L$ (Du--Huang, proof of Prop.~4.5); field term of Baik et al.\ (3.5)\\
+\addlinespace
+off-diagonal tilt \ploc{(proofs of Lemma~11.4 and Proposition~15.1)}{profile-local.tex:1127--1130; cap-static.tex:539--546}
+ & Nguyen--Sosoe, Lemma~4, (3.8)--(3.10); Baik et al., Lemma~3.3\\
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\noindent The key formulas:
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}X|X@{}}
+\toprule
+\textbf{Preprint} & \textbf{Earlier work}\\
+\midrule
+Saddle \ploc{(5.4)}{profile-spectral.tex:369--371}:
+\[\Tr(\lambda-J)^{-1}+\norm{(\lambda-J)^{-1}h}^2=n\]
+&
+Baik et al., $N\,G'(\gamma)=0$ at $\beta=1$, field $hg$:
+\[\sum_i\frac1{\gamma-\lambda_i}+\sum_i\frac{(hn_i)^2}{(\gamma-\lambda_i)^2}=N\]\\
+\addlinespace
+Shell formula \ploc{(p.~19)}{profile-spectral.tex:530--534}:
+\[\log Z_{\mathrm o}(0)=\tfrac{n(\lambda^0-1)}2-\tfrac12\log\det(\lambda^0-J)+\log\tfrac{f_{D^0}(n)}{f_I(n)}\]
+&
+Du--Huang, proof of Prop.~4.4:
+\[Z^{\rm sph}_N=C_N\,e^{\frac{N\gamma}2-\frac12\log\det(\gamma-W)}\cdot2\rho_W(N)\]\\
+\bottomrule
+\end{xltabular}
+\end{center}
+With a field, the same computation gives, for every $\lambda>\lambda_{\max}(J)$,
+\[
+ \log Z_{\mathrm o}(h)=\tfrac{n(\lambda-1)}2-\tfrac12\log\det(\lambda-J)
+ +\tfrac12h^{\mathsf T}Dh+\log\frac{f_{Dh,D}(n)}{f_I(n)} ,
+\]
+and Fourier inversion of the noncentral $\chi^2$ characteristic function
+turns it into Baik et al.'s contour integral on $\Re z=\lambda$. The
+preprint's (15.14)--(15.15) is this identity with $J_p$ for $J$ and
+$\lambda=2+\alpha$.
+
+For two replicas at $h=0$, put
+$\Theta=\bigl(\begin{smallmatrix}t_1&s\\s&t_2\end{smallmatrix}\bigr)=-2T/L$.
+The preprint's (undisplayed) transform \ploc{(p.~27)}{profile-spectral.tex:1188--1204}
+equals Du--Huang's integrand
+$e^{\mathrm iN(t_1+t_2)/2}\E\,e^{-\frac{\mathrm i}2(t_1T_1+t_2T_2+sT_3)}$:
+\[
+ \varphi(T)=e^{-\mathrm in\Tr T/L}\prod_k\det\bigl(I_2-\tfrac{2\mathrm i}LD^0_kT\bigr)^{-1/2}
+ =e^{\mathrm iN(t_1+t_2)/2}\prod_k\det\bigl(I_2+\tfrac{\mathrm i}{a_k}\Theta\bigr)^{-1/2},
+\]
+so its Fourier inversion is theirs, evaluated at $(0,0,u)$ instead of
+$(0,0,0)$; with $Z=\lambda I_2-2\mathrm iT/L$ each factor is
+$(\lambda-\lambda_k)\det(Z-\lambda_kI_2)^{-1/2}$, the Lemma~4.3 kernel. A
+field multiplies $\varphi(T)$ by the noncentral factor
+$e^{\Psi(Z)-\Psi(\lambda I_2)}$, where
+$\Psi(Z)=\frac12\sum_k\hat h_k^2\,\one^{\mathsf T}(Z-\lambda_kI_2)^{-1}\one$.
+For $Z=\bigl(\begin{smallmatrix}z&-a\\-a&w\end{smallmatrix}\bigr)$ and
+$\hat h_i=hn_i$,
+$\one^{\mathsf T}(Z-\lambda_iI_2)^{-1}\one=(z+w-2\lambda_i+2a)/\det(Z-\lambda_iI_2)$,
+so $\Psi(Z)$ is $\frac N2$ times Baik et al.'s field term at $\beta=1$.
+
+\paragraph{What is new in the preprint.}
+\begin{itemize}
+\item The applications: the saddle under the planted observation field at
+criticality, with tails at scale $k=nr^3$ (Lemma~5.4), and the capped and
+frozen versions in \S15--\S19.
+\item The edge inputs: tridiagonal-model bounds (Lemma~5.1) replace
+rigidity and a log-determinant central limit theorem. Against Landon's
+results, (5.5) loses powers of $\ell$, and (5.7) loses a polynomial factor
+below and $e^{o(n)}$ above.
+\item In the two-replica form: a general overlap $u$ with fixed-order
+$u$-derivatives, at fixed spectrum (Du--Huang need only $(N,N,0)$, and
+their kernel bounds average over the GOE using log-concavity,
+\sloc{DuHuang2026-CriticalSKFreeEnergyFluctuations}{Lemma~3.3, Cor.~3.4});
+a field in the Fourier/density form; and the insertions $H_U$, with a Wick
+analysis under the complex tilt
+$\Delta_T=(I-2\mathrm iT\otimes D/L)^{-1}-I$
+\ploc{((7.3)--(7.4), p.~28)}{profile-spectral.tex:1244--1276}.
+\end{itemize}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item Compare the saddle and representation
+\ploc{(5.4) and the sentence after it}{profile-spectral.tex:367--377} with
+\sloc{BaikEtAl2020-SphericalSpinGlassExternalField}{Lemma~3.1, p.~11; eq.~(5.3), p.~17}
+at $\beta=1$ with $hg=h$, and with
+\sloc{DuHuang2026-CriticalSKOverlapDistribution}{eq.~(1.7), pp.~4--5}.
+\item Compare the shell formula
+\ploc{(proof of Lemma~5.3, p.~19)}{profile-spectral.tex:528--535} with
+\sloc{DuHuang2026-CriticalSKFreeEnergyFluctuations}{Lemma~4.2, p.~18; proof of Prop.~4.4, p.~22}:
+take logarithms and use $2C_N=e^{-N/2}/f_I(N)$. Then compare
+\ploc{(15.15)}{cap-static.tex:587--589} with Baik et al.'s Lemma~3.1 at
+$\gamma=2+\alpha$ and $M=J_p$, noting that the preprint's constant
+$C_{n,\alpha}=\log(2^{n/2}\Gamma(n/2)n^{1-n/2})+\frac n2(2+\alpha)$ is
+$\frac{n(\lambda-1)}2-\log f_I(n)$.
+\item Compare the saddle location and its proof
+\ploc{(5.5), p.~17}{profile-spectral.tex:379--386} with
+\sloc{Landon2020-CriticalSphericalSKFreeEnergy}{Prop.~3.1 with (3.5) and (3.7), p.~9; Lemma~3.4, p.~10}:
+the deficit at $2+Cd_0^2$ against (3.7), and the top pole at distance
+$c/(nd_0)$ against (3.5). Since $C_\varepsilon\le\ell$ eventually, Landon's
+bounds imply (5.5).
+\item Compare the normalization \ploc{(5.7)}{profile-spectral.tex:520--561}
+with \sloc{Landon2020-CriticalSphericalSKFreeEnergy}{Thm.~1.1, p.~2; eqs.~(1.3), (2.3)--(2.5)};
+it implies (5.7) for any $C>1/12$.
+\item Compare \ploc{(7.2), the paragraph after it (p.~27) and $\Delta_T$
+after (7.3) (p.~28)}{profile-spectral.tex:1183--1213, 1251--1253} with
+\sloc{DuHuang2026-CriticalSKFreeEnergyFluctuations}{proof of Prop.~4.5, pp.~23--24},
+and the noncentral-factor sentence \ploc{(p.~27)}{profile-spectral.tex:1209--1210} with
+\sloc{BaikEtAl2020-SphericalSpinGlassExternalField}{eq.~(3.5), p.~12; App.~A, p.~71}.
+\item Compare the proofs of \ploc{Lemma~11.4 (p.~64)}{profile-local.tex:1078--1123}
+and \ploc{Proposition~12.4 (p.~81)}{profile-amplification.tex:1265--1272} with
+\sloc{DuHuang2026-CriticalSKFreeEnergyFluctuations}{Lemma~4.3, p.~19} and
+\sloc{NguyenSosoe2018-OverlapCLTNearCriticalSphericalSK}{eqs.~(3.8)--(3.10), p.~7}:
+there $\det(I-2\mathrm iQ)$, with $Q$ the frequency tensored with the
+covariance over $L$, factors by mode into the kernel
+$(z-\lambda_i)(w-\lambda_i)-a^2$.
+\end{enumerate}
+\subsection{S3. The Br\'ezin--Hikami duality for GOE characteristic polynomials with an external source}\label{f:S3}
+
+\paragraph{Summary.}
+The polynomial bound on the second moment of the Kac--Rice Jacobian
+determinant \ploc{(Lemma~8.2, pp.~31--32)}{profile-roots.tex:95--192} rests on
+an exact identity \ploc{(p.~32)}{profile-roots.tex:152--170} that writes
+$\E\det(\,\cdot\,)^2$, for a GOE matrix with a diagonal shift and variance
+profile, as a six-variable Gaussian average of a product of per-site factors.
+It is the $k=2$ case of Br\'ezin and Hikami's dual
+Grassmann representation of GOE characteristic polynomials with an external
+source \sloc{BrezinHikami2001-CharPolyRealSymmetric}{\S6, eqs.~(88)--(89),
+pp.~19--20, with (43), p.~10}: factoring out the variance profile turns it into
+their diagonal source, and the preprint's derivation follows their \S3 step by
+step. The preprint introduces the identity with ``The exact identity is'' and
+derives it ``for completeness'', citing no source; the opening of \S8
+\ploc{(p.~30)}{profile-roots.tex:10--15} credits only the Kac--Rice
+organization and lists the ``polynomial determinant bound'' among results
+``proved here''. Br\'ezin--Hikami appears nowhere in the preprint or its
+companions. Grade: \grade{Strong}, because the identity and its derivation are
+reused exactly and carry that bound.
+
+\paragraph{Setup.}
+For a candidate root $y$ of the TAP-type equation of Section~\ref{sec:overview}, put $b=1-q$,
+$v=1-m^2\in(0,1]^n$ and $V=\operatorname{diag}v$
+\ploc{(\S8, p.~30)}{profile-roots.tex:28--31}, and let $\mathsf Q_y$ be the
+law of $J$ conditioned on $y$ being a root. The Kac--Rice formula
+\ploc{(Lemma~8.1, p.~31)}{profile-roots.tex:46--65} integrates over $y$ an
+explicit scalar root density times $\E_{\mathsf Q_y}[T\,\mathcal W]$, for any
+nonnegative test $T(y,J)$, where
+\[
+ \mathcal W(y,J)=e^{-nb^2/2}\bigl|\det\bigl(I+(bI-J-2mm^{\mathsf T}/n)V\bigr)\bigr|
+ \qquad\ploc{(8.1)}{profile-roots.tex:59--61}
+\]
+is the normalized absolute Jacobian. Lemma~8.2 states
+$\E_{\mathsf Q_y}\mathcal W^2\le n^{C_D}$ on $\norm y\le n^D$. For an
+unconditioned GOE matrix $W_0$, real $z$ and $x_i=1+z+bv_i$, the identity in
+its proof \ploc{(p.~32)}{profile-roots.tex:152--162} is
+\begin{equation*}
+ \E_{W_0}\det\!\bigl((1+z)I+bV-\sqrt V W_0\sqrt V\bigr)^2
+ =\E_H\prod_{i=1}^n\Bigl[(x_i+\mathrm i v_iH_1)(x_i+\mathrm i v_iH_2)
+ +v_i^2\bigl(|h_1|^2+|h_2|^2\bigr)\Bigr],
+ \tag{P}
+\end{equation*}
+where $H_1,H_2$ are real $N(0,1/n)$ and $h_1,h_2$ are circular complex
+Gaussians with $\E|h_j|^2=1/n$, all independent. The bracketed terms are the
+\emph{site factors}. The derivation \ploc{(p.~32)}{profile-roots.tex:162--170}
+uses exterior (Grassmann) variables $\bar\psi_i^a,\psi_i^a$, $a=1,2$: averaging
+$W_0$ adds $-[X_{11}^2+X_{22}^2+2X_{12}X_{21}+2PQ]/(2n)$ to the exponent, with
+local symbols $X_{ab}=\sum_iv_i\bar\psi_i^a\psi_i^b$,
+$P=\sum_iv_i\bar\psi_i^1\bar\psi_i^2$ and $Q=\sum_iv_i\psi_i^1\psi_i^2$, and
+these terms are decoupled with $H_1,H_2,h_1,h_2$.
+
+\paragraph{Role in the argument.}
+On Route~1 (Section~\ref{sec:overview}), Sections~8--10 show that, under
+the planted law, every root at the observed field passes scalar and matrix
+diagnostics, which feed the \S11 comparison. Each diagnostic is first proved
+without the weight $\mathcal W$, with failure probability $n^Ce^{-Bk}$, and
+then transferred to the root count by
+$\E_{\mathsf Q_y}[\one_F\mathcal W]\le\mathsf Q_y(F)^{1/2}
+(\E_{\mathsf Q_y}\mathcal W^2)^{1/2}$. Polynomial accuracy is essential, since
+$k=nr^3$ need only exceed $\log^{10}n$
+\ploc{(\S8, p.~30)}{profile-roots.tex:45}: a loss of $e^{\varepsilon n}$, as in
+the Kac--Rice works credited for the set-up
+\cite{FanMeiMontanari2018-TAPFreeEnergyVariationalInference,CelentanoFanMei2021-LocalConvexityTAPZ2Sync},
+would swamp $e^{-Bk}$. In the proof, symmetrization and a fixed-rank
+comparison of $J$ under $\mathsf Q_y$ with $W_0$ reduce the bound to the left
+side of (P), uniformly in real $|z|\le1/n$
+\ploc{(pp.~31--32)}{profile-roots.tex:104--150}; then (P), a contour shift and
+an elementary estimate give $\le Cn^{3/2}$
+\ploc{(p.~32)}{profile-roots.tex:152--191}. The lemma is invoked at
+\ploc{Proposition~8.3 (p.~33)}{profile-roots.tex:238--244},
+\ploc{\S10.1 (p.~42)}{profile-orbits.tex:29--33} and, implicitly,
+\ploc{Proposition~9.1 (p.~37)}{profile-matrices.tex:60--61}.
+
+\paragraph{The earlier technique.}
+Br\'ezin and Hikami \cite{BrezinHikami2001-CharPolyRealSymmetric} (arXiv
+version; printed page numbers) compute
+$F_k(\lambda_1,\dots,\lambda_k)=\E\prod_{\alpha=1}^k\det(\lambda_\alpha-\mathsf X)$
+for a real symmetric $N\times N$ matrix $\mathsf X$ with weight
+$e^{-\frac N2\operatorname{Tr}\mathsf X^2}$ ((21), p.~6), so
+$\E\mathsf X_{ii}^2=1/N$ and $\E\mathsf X_{ij}^2=1/(2N)$, by trading the
+$N\times N$ average for an integral over $k\times k$ matrices. Each determinant
+is a Gaussian Grassmann integral,
+$\det(\lambda-\mathsf X)=\int\prod_ad\bar c_a\,dc_a\,
+e^{iN\bar c_a(\lambda\delta_{ab}-\mathsf X_{ab})c_b}$ ((6)--(7), p.~3), with
+one copy $c_{a\alpha}$ per factor~$\alpha$. The GOE average is then Gaussian,
+$\E e^{iN\operatorname{Tr}\mathsf XY}=e^{-\frac N4\operatorname{Tr}(Y^2+YY^{\mathsf T})}$
+with $Y_{ab}=-\sum_\alpha\bar c_{a\alpha}c_{b\alpha}$ ((22), p.~6), and yields
+two quartic terms: $\operatorname{Tr}Y^2=-\operatorname{tr}\gamma^2$ with
+$\gamma_{\alpha\beta}=\sum_a\bar c_{a\alpha}c_{a\beta}$ ((10), (23)), already
+present for the GUE, and the pairing term
+$\operatorname{Tr}YY^{\mathsf T}=\operatorname{tr}\mathsf U\mathsf V$ with
+$\mathsf U_{\alpha\beta}=\sum_a\bar c_{a\alpha}\bar c_{a\beta}$,
+$\mathsf V_{\alpha\beta}=\sum_ac_{a\alpha}c_{a\beta}$ ((24)--(26), pp.~6--7),
+which is specific to orthogonal symmetry. A Hubbard--Stratonovich transform
+decouples the first with a $k\times k$ Hermitian $B$ ((11), p.~4) and the
+second with a complex antisymmetric $D$ ((27), p.~7). The exponent is then a
+sum over sites, so the Grassmann integral factorizes into one Pfaffian per
+site ((28)--(30), p.~7):
+\[
+ F_k=\int dB\,dD\,e^{-N\operatorname{tr}(B^2+D^\dagger D)}\,[-\operatorname{Pf}\mathsf M]^N,
+ \qquad
+ \mathsf M=\begin{pmatrix}D&\Lambda-iB^{\mathsf T}\\-(\Lambda-iB)&D^\dagger\end{pmatrix}
+ \quad\text{((31)--(32))},
+\]
+with $\Lambda=\operatorname{diag}(\lambda_\alpha)$ and $2k^2-k$ real
+integration variables (pp.~7--8). For $k=2$, $D$ has a single entry $d$ and
+\[
+ -\operatorname{Pf}\mathsf M=|d|^2+(\lambda_1-iB_{11})(\lambda_2-iB_{22})+|B_{12}|^2
+ \qquad\text{((42)--(43), pp.~9--10)},
+\]
+the quaternion determinant of a $2\times2$ self-dual quaternion matrix: the
+GOE$\to$GSE duality (47). In \S6 (pp.~19--20) a diagonal source
+$A=\operatorname{diag}(a_j)$ is added ((86), p.~19), and, following (88),
+$F_k$ is read for $\E\prod_\alpha\det(\lambda_\alpha+A-\mathsf X)$ ((86) as
+printed gives $\lambda_\alpha-A$; the sign of a diagonal source is immaterial
+here). Being diagonal, the source
+enters only the Pfaffian of site $j$, through $\Lambda\mapsto\Lambda+a_j\one$
+in $\mathsf M^{(j)}$ ((88), p.~19), so
+\[
+ F_k=\int dB\,dD\,e^{-N\operatorname{tr}(B^2+D^\dagger D)}\prod_{j=1}^N[-\operatorname{Pf}\mathsf M^{(j)}]
+ \qquad\text{((89), p.~20)}.
+\]
+
+\paragraph{Correspondence.}
+Throughout, $n=N$, $k=2$, and $W_0\overset{d}{=}\sqrt2\,\mathsf X$.
+
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Preprint (proof of \ploc{Lemma~8.2, p.~32}{profile-roots.tex:152--170}) & Br\'ezin--Hikami \cite{BrezinHikami2001-CharPolyRealSymmetric}\\
+\midrule
+\endfirsthead
+\toprule
+Preprint (continued) & Br\'ezin--Hikami (continued)\\
+\midrule
+\endhead
+$W_0$, $\E W_{ij}^2=(1+\delta_{ij})/n$ \ploc{(\S2, p.~6)}{model.tex:20--21} &
+$\mathsf X$, weight $e^{-\frac N2\operatorname{Tr}\mathsf X^2}$ ((21), p.~6)\\
+\addlinespace
+$\E\det(\Gamma_z-W_0)^2$, $\Gamma_z=\operatorname{diag}(x_i/v_i)$ &
+$2^nF_2(\lambda,\lambda)$, source $\lambda+a_j$ ((86), (88), p.~19)\\
+\addlinespace
+$\bar\psi_i^a,\psi_i^a$: site $i$, flavour $a=1,2$ &
+$\bar c_{a\alpha},c_{a\alpha}$: site $a$, flavour $\alpha=1,2$ ((6)--(7), p.~3)\\
+\addlinespace
+$X_{11}^2+X_{22}^2+2X_{12}X_{21}$ & $\operatorname{tr}\gamma^2=-\operatorname{Tr}Y^2$ ((10), (23))\\
+\addlinespace
+$2PQ$ & $\operatorname{Tr}YY^{\mathsf T}=\operatorname{tr}\mathsf U\mathsf V$ ((24)--(26))\\
+\addlinespace
+$H_1,H_2$ real, $h_1,h_2$ complex: six real variables &
+Hermitian $B$, antisymmetric $D$: $2k^2-k=6$ ((11), (27))\\
+\addlinespace
+$\E_H\prod_i[\text{site factor}]$ &
+(89), site factor $-\operatorname{Pf}\mathsf M^{(j)}$ ((43), (88))\\
+\bottomrule
+\end{xltabular}
+\end{center}
+
+Since every $v_i>0$,
+$(1+z)I+bV-\sqrt VW_0\sqrt V=\sqrt V(\Gamma_z-W_0)\sqrt V$ with
+$\Gamma_z=\operatorname{diag}\bigl((1+z)/v_i+b\bigr)$, so the variance profile
+is a diagonal source and the left side of (P) is
+$2^n(\det V)^2F_2(\lambda,\lambda)$ with $\lambda=b/\sqrt2$ and
+$a_j=(1+z)/(\sqrt2\,v_j)$, so that $\lambda+a_j=x_j/(\sqrt2\,v_j)$. Under $H_l=-\sqrt2\,B_{ll}$, $h_1=\sqrt2\,B_{12}$,
+$h_2=\sqrt2\,d$, the weight
+$e^{-N(B_{11}^2+B_{22}^2+2|B_{12}|^2+2|d|^2)}$ of (89) becomes the law of
+$(H_1,H_2,h_1,h_2)$ in (P), and the site factors match:
+\[
+ \underbrace{(x_j+\mathrm iv_jH_1)(x_j+\mathrm iv_jH_2)+v_j^2(|h_1|^2+|h_2|^2)}_{\text{preprint, (P)}}
+ =2v_j^2\underbrace{\bigl[|d|^2+(\lambda+a_j-\mathrm iB_{11})(\lambda+a_j-\mathrm iB_{22})+|B_{12}|^2\bigr]}_{-\operatorname{Pf}\mathsf M^{(j)},\ \text{BH (43), (88)}}
+\]
+The factors $\prod_j2v_j^2$ are those on the left, so (P) is (89) at $k=2$ and
+$\lambda_1=\lambda_2$.
+
+\paragraph{What is new in the preprint.}
+\begin{itemize}
+\item The contour shift $H_l\mapsto H_l+\mathrm ib$, $l=1,2$, whose cost
+$e^{nb^2}$ cancels exactly the normalization $e^{-nb^2}$ in $\mathcal W^2$.
+\item The finite-$n$ polynomial bound: the modulus bound through $e_1,e_2$, the
+estimate $e^{-cn\min(R_H^4,R_H^2)}$, in which the quadratic terms cancel
+exactly, and the integral bound $\le Cn^{3/2}$, uniformly in $z\in[-1/n,1/n]$
+and $v\in(0,1]^n$. At $v\equiv1$, $z=0$ the source is $a_j=1/\sqrt2$, which is
+Br\'ezin and Hikami's critical value $c$
+\sloc{BrezinHikami2001-CharPolyRealSymmetric}{(91), p.~20}; they reach a
+quartic action there only by formal large-$N$ asymptotics.
+\item The reduction from $\mathsf Q_y$ to an unconditioned GOE, and the use of
+the bound inside a shrinking-overlap Kac--Rice argument.
+\end{itemize}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item Compare \ploc{the identity in the proof of Lemma~8.2, p.~32}{profile-roots.tex:152--162}
+with \sloc{BrezinHikami2001-CharPolyRealSymmetric}{eqs.~(88)--(89), pp.~19--20,
+and (43), p.~10}. Factor $\sqrt V$ out of the determinant, set $k=2$ and
+$\lambda_1=\lambda_2$, and apply the dictionary above; the site factors and
+Gaussian weights coincide.
+\item Compare \ploc{the derivation on p.~32}{profile-roots.tex:162--170} with
+\sloc{BrezinHikami2001-CharPolyRealSymmetric}{eqs.~(6)--(7), p.~3, and
+(22)--(30), pp.~6--7}: the terms $X_{11}^2+X_{22}^2+2X_{12}X_{21}$ and $2PQ$ are
+$\operatorname{tr}\gamma^2$ and $\operatorname{tr}\mathsf U\mathsf V$, decoupled
+by a $2\times2$ Hermitian matrix and one antisymmetric entry.
+\item Read \ploc{p.~32}{profile-roots.tex:152--170} and the opening of
+\ploc{\S8 (p.~30)}{profile-roots.tex:10--15}: neither cites Br\'ezin--Hikami,
+and the latter lists the polynomial determinant bound among results ``proved
+here''.
+\end{enumerate}
+% =====================================================================
+% Finding S4.
+% =====================================================================
+\subsection{S4. Polchinski renormalization: trickle-down of Hessian bounds across caps}\label{f:S4}
+
+\paragraph{Summary.}
+The cap induction of the preprint carries a Hessian bound for the capped
+potential $\phi_p$ from each spectral cap to the next finer one. Each cap step
+is one discrete step of the Polchinski renormalization scheme of
+Bauerschmidt--Bodineau \cite{BauerschmidtBodineau2019-SineGordonMultiscaleBakryEmery},
+in the form set out in the survey of Bauerschmidt--Bodineau--Dagallier (BBD)
+\sloc{BauerschmidtBodineauDagallier2023-PolchinskiIntroduction}{\S\S3.2, 3.4--3.5},
+and the steps compose across caps by the semigroup property.
+In stochastic-localization language it is the trickle-down covariance
+induction of Anari--Koehler--Vuong (AKV)
+\sloc{AnariKoehlerVuong2024-TrickleDownLocalizationSchemes}{\S3}, and its
+scalar bound is their trickle-down of semi-log-concavity
+\sloc{AnariKoehlerVuong2024-TrickleDownLocalizationSchemes}{Thm.~102}.
+The step occupies \ploc{\S\S16.1--16.2}{cap-multiscale.tex:143--504}: the
+convolution and transition \ploc{(16.3)--(16.4)}{cap-multiscale.tex:154--163},
+the Hessian identity \ploc{(16.11)}{cap-multiscale.tex:388--395} and the
+Brascamp--Lieb bound \ploc{(16.14)--(16.15)}{cap-multiscale.tex:454--504},
+each matching a numbered equation of BBD with a sign flip ((16.14)--(16.15)
+after recentring); it is
+iterated in the \ploc{proof of Theorem~18.6}{cap-initialization.tex:1006--1012}
+and reused in \ploc{\S18}{cap-initialization.tex:479--525}.
+The preprint cites none of the sine-Gordon paper, BBD or
+Bauerschmidt--Dagallier; it cites AKV and an earlier Bauerschmidt--Bodineau
+paper only for their SK temperature thresholds, and near the identities it
+credits only the Brascamp--Lieb inequality and, for the form of a two-sided
+covariance bound, Chewi--Pooladian
+\cite{ChewiPooladian2022-EntropicCaffarelliCovariance}
+\ploc{(\S16.2, p.~129)}{cap-multiscale.tex:376--379}.
+\textbf{Grade:} \grade{Strong}, because the whole one-step apparatus
+(renormalized potential, fluctuation measure, Hessian identity,
+Brascamp--Lieb bound under a margin) is reused intact and composed across the
+caps by the semigroup property.
+
+\paragraph{Setup.}
+Section~\ref{sec:overview} defines $d$, $P_p$, $k_p$, $B_p$, $J_p$,
+$\phi_p$, $R_p$ and $\alpha$. In addition:
+\begin{itemize}
+\item \emph{Cap and Hessian.} Put $H_p=\ran P_p$, with fields $h\in H_p$. The
+capped Gibbs law $\mu_{p,h}\propto e^{x^{\mathsf T}J_px/2+h^{\mathsf T}x}$ is
+the posterior of $X\sim\mu_J$ after a Gaussian observation of precision
+$B_p$ with value $h$ \ploc{(\S2)}{model.tex:29--41}, so a larger $p$ means
+more observation and a flatter interaction. The projected Hessian is
+$K_p=\nabla^2_{H_p}(\phi_p|_{H_p})=\Cov_{\mu_{p,h}}(P_pX)$
+\ploc{(\S16, p.~124)}{cap-multiscale.tex:17--23}.
+\item \emph{Invariant.} With $R_p^H=(p^2+\alpha_p(h))^{-1}I_{H_p}$,
+$e=h/\norm h$ and $D=p^2(K_p-R_p^H)$, the induction carries
+\ploc{(16.2)}{cap-multiscale.tex:40--45}
+\[
+ \norm{D_{\perp\perp}}\le\delta,\quad
+ \norm{D_{\perp e}}\le K_0\sqrt\delta,\quad
+ -K_0I_{H_p}\preceq D,\quad D_{ee}\le-0.30
+\]
+on the annulus $\mathcal A_p(\sigma)=\{h\in H_p:|\alpha_p(h)|\le\sigma p^2\}$
+\ploc{(16.1)}{cap-multiscale.tex:8--12}. The negative entry $D_{ee}$ is the
+radial deficit.
+\item \emph{One step.} For a child scale $c=xp$ (with $x=\gamma$ in the
+induction) put $\Delta=B_p-B_c\succeq0$, $E=\ran\Delta$ and $U=H_c\subset E$.
+Then $J_c=J_p+\Delta$ and $\Delta_U=(1-x^2)p^2I_U$; inverses of $\Delta$ are
+taken on $E$ \ploc{(\S16.1, p.~126)}{cap-multiscale.tex:143--152}.
+\item \emph{Auxiliary steps.} For a fixed number of initial levels $\phi_p$ is
+an auxiliary potential \ploc{(Proposition~18.2)}{cap-initialization.tex:479--486},
+and the function convolved is a semiconcave extension $\bar\phi_p$, an infimum
+of supporting paraboloids of curvature $L_p=(1+\gamma^4/100)p^{-2}I$
+\ploc{(16.7)}{cap-multiscale.tex:248--262}, with margin
+$\norm{\Delta_E^{1/2}L_p\Delta_E^{1/2}}<1$
+\ploc{(\S16.1, p.~127)}{cap-multiscale.tex:264--269}.
+\item \emph{Recentring.} With the child saddle parameter $\alpha$ frozen,
+$D^\circ=p^2(K_p-(p^2+\alpha)^{-1}I)$, $C_0=(\Delta_E^{-1}-R_p|_E)^{-1}$,
+$S=p^{-2}C_0$ and $N=(p^2+\alpha)/(c^2+\alpha)$
+\ploc{(\S16.2, pp.~129--130)}{cap-multiscale.tex:402--403, 445--474}.
+\end{itemize}
+
+\paragraph{Role in the argument.}
+This is Route~2 of Section~\ref{sec:overview}.
+\ploc{Proposition~16.1}{cap-multiscale.tex:80--119} (``One cap step'')
+propagates the invariant from $p$ to $c=\gamma p$, outside an event of
+probability at most $Ce^{-ak_p}+Ce^{-a'k_c}$ over a fresh Haar refinement. The
+step is iterated from the fixed initialization scale $p_0$ of \S\S17--18
+down to $np^3\asymp\sqrt{\log n}$. The output,
+\ploc{Theorem~18.6}{cap-initialization.tex:975--999}, is
+$P_p\nabla^2\phi_p(h)P_p\preceq(1+\epsilon)p^{-2}P_p$ on a thin saddle annulus
+(and $\preceq Cp^{-2}P_p$ on bounded field balls). These curvature bounds
+control the information revealed along the forward observation path in
+\ploc{\S19}{cap-entropy.tex:3--8, 427}, whose entropy-retention and layer
+argument gives the log-Sobolev inequality
+\ploc{(Theorem~19.3)}{cap-entropy.tex:856}. The same device recurs in \S18,
+where the auxiliary potential is one convolution step and
+\ploc{(18.13)}{cap-initialization.tex:518--525} is the Brascamp--Lieb bound
+under the margin \ploc{(18.11)}{cap-initialization.tex:402--409}; in
+single-step form in \ploc{\S19.4 (pp.~178--179)}{cap-entropy.tex:551--557}; and, closed by
+a Poincar\'e estimate instead of Brascamp--Lieb, as the backward covariance
+induction of \ploc{\S12.3}{profile-amplification.tex:633--645, 908--921} on
+the isotropic route.
+
+\paragraph{The earlier technique.}
+Bauerschmidt--Bodineau's sine-Gordon paper
+\cite{BauerschmidtBodineau2019-SineGordonMultiscaleBakryEmery} (not their
+earlier JFA paper \cite{BauerschmidtBodineau2017-SimpleProofLSIHighTemp},
+which the preprint cites and which makes a single such step) splits a
+Gaussian covariance as $C_t=\int_0^t\dot C_s\,ds$ and integrates the
+fluctuations out scale by scale. For a potential $V_0$, the renormalised
+potential and the renormalisation semigroup are
+\sloc{BauerschmidtBodineau2019-SineGordonMultiscaleBakryEmery}{(1.3)--(1.4), p.~2};
+\sloc{BauerschmidtBodineauDagallier2023-PolchinskiIntroduction}{Def.~3.2, (3.11)--(3.12), p.~16}
+\[
+ e^{-V_t(\varphi)}=\mathbb E_{C_t}\bigl(e^{-V_0(\varphi+\zeta)}\bigr),\qquad
+ \mathbf P_{s,t}F(\varphi)=e^{V_t(\varphi)}\,
+ \mathbb E_{C_t-C_s}\bigl(e^{-V_s(\varphi+\zeta)}F(\varphi+\zeta)\bigr),
+\]
+and, by the semigroup property, from scale $s$ to $t$,
+$V_t(\varphi)=-\log\mathbb E_{C_t-C_s}e^{-V_s(\varphi+\zeta)}$
+\sloc{BauerschmidtBodineauDagallier2023-PolchinskiIntroduction}{proof of Lemma~3.11, p.~22}.
+The kernel of $\mathbf P_{0,t}$ is the fluctuation measure
+$\mu^\varphi_t(d\zeta)\propto e^{-V_0(\zeta)}\,\mathsf N(\varphi,C_t)(d\zeta)$
+\sloc{BauerschmidtBodineauDagallier2023-PolchinskiIntroduction}{(3.17)--(3.18), p.~17}.
+Differentiating gives $\nabla V_t(\varphi)=\E_{\mu_t^\varphi}[C_t^{-1}(\varphi-\zeta)]$
+and
+\sloc{BauerschmidtBodineauDagallier2023-PolchinskiIntroduction}{Lemma~3.12, (3.60)--(3.61), p.~23}
+\[
+ (f,\operatorname{Hess}V_t(\varphi)f)
+ =\E_{\mu_t^\varphi}[(f,\operatorname{Hess}V_0(\zeta)f)]
+   -\Var_{\mu_t^\varphi}\bigl((f,\nabla V_0(\zeta))\bigr)
+ =(f,C_t^{-1}f)-\Var_{\mu_t^\varphi}\bigl((C_t^{-1}f,\zeta)\bigr).
+\]
+Bounding the variance by Brascamp--Lieb gives
+\sloc{BauerschmidtBodineauDagallier2023-PolchinskiIntroduction}{Prop.~3.13, Proof~1, (3.63)--(3.65), p.~23}
+\[
+ \operatorname{Hess}V_t(\varphi)\ge
+ \E_{\mu_t^\varphi}\bigl[\operatorname{Hess}V_0\,
+   (C_t^{-1}+\operatorname{Hess}V_0)^{-1}C_t^{-1}\bigr],\qquad
+ C_t^{1/2}\operatorname{Hess}V_t\,C_t^{1/2}\ge
+ \E_{\mu_t^\varphi}\Bigl[\frac{\hat H_t}{\mathrm{id}+\hat H_t}\Bigr],
+\]
+with $\hat H_t=C_t^{1/2}\operatorname{Hess}V_0\,C_t^{1/2}$, in one step from
+$0$ to $t$ for convex $V_0$.
+For non-convex $V_0$ in one dimension the step needs a margin, $t<t_0$ with
+$t_0^{-1}=-\inf V_0''$
+\sloc{BauerschmidtBodineauDagallier2023-PolchinskiIntroduction}{Ex.~3.15, p.~26}.
+Along the continuous flow the Hessian obeys
+\sloc{BauerschmidtBodineauDagallier2023-PolchinskiIntroduction}{Lemma~3.11, (3.56)},
+and Bauerschmidt--Bodineau's criterion also admits discrete decompositions
+$C_0+C_1+\cdots$
+\sloc{BauerschmidtBodineau2019-SineGordonMultiscaleBakryEmery}{Thm.~2.6}.
+Bauerschmidt--Bodineau feed these bounds into a multiscale Bakry--\'Emery
+criterion \sloc{BauerschmidtBodineau2019-SineGordonMultiscaleBakryEmery}{Thms.~1.2 and~2.5}.
+For Ising models the fluctuation measure is an Ising measure with
+spin covariance $\Sigma_t$, and
+$\operatorname{Hess}V_t=C_t^{-1}-C_t^{-1}\Sigma_tC_t^{-1}$
+\sloc{BauerschmidtDagallier2022-NearCriticalIsingLSI}{(1.23)}; BBD show that
+both that criterion and Chen--Eldan's entropic stability then reduce to a
+bound on $\Sigma_t$ uniform over external fields
+\sloc{BauerschmidtBodineauDagallier2023-PolchinskiIntroduction}{Thm.~6.12, Ex.~6.15}.
+Bauerschmidt--Dagallier use this to get a polynomial log-Sobolev inequality
+for near-critical Ising models.
+
+AKV run the same induction in stochastic-localization language, which BBD
+identify with the Polchinski flow
+\sloc{BauerschmidtBodineauDagallier2023-PolchinskiIntroduction}{\S4.5}. For a
+linear-tilt localization $(\nu_t)$,
+\sloc{AnariKoehlerVuong2024-TrickleDownLocalizationSchemes}{eq.~(8), p.~32}
+\[
+ \Cov(\nu_t)=\E[\Cov(\nu_{t+1})\mid\mathcal F_t]
+ +\Cov(\nu_t)\Cov(Z_{t+1}\mid\mathcal F_t)\Cov(\nu_t),
+\]
+which carries covariance bounds backward from the more localized
+$\nu_{t+1}$ to $\nu_t$; this is the ``trickle-down''. Their scalar
+trickle-down of semi-log-concavity
+\sloc{AnariKoehlerVuong2024-TrickleDownLocalizationSchemes}{Thm.~102, p.~76},
+which they prove from its continuous-time form
+\sloc{AnariKoehlerVuong2024-TrickleDownLocalizationSchemes}{(10)} rather than
+by Brascamp--Lieb,
+reads: if every tilt of $\mu$ has covariance $\preceq\gamma^{-1}I$ and
+$T<\gamma$, then every tilt of $\mathcal G_{-T}\mu$, where
+$d\mathcal G_{-T}\mu/d\mu\propto e^{T\norm x^2/2}$, has covariance
+$\preceq(\gamma-T)^{-1}I$. Chen--Eldan's Lemma~50
+\cite{ChenEldan2022-LocalizationSchemes} is the special case of a product
+base measure on the cube, proved by one Gaussian decomposition step plus
+Brascamp--Lieb and credited there to
+\cite{BauerschmidtBodineau2017-SimpleProofLSIHighTemp}.
+
+\paragraph{Correspondence.}
+The dictionary applies BBD's Definition~3.2 to $V_s:=-\phi_p$ (or
+$-\bar\phi_p$), with covariance increment $\Delta$; upper bounds on $K$
+become lower bounds on $\operatorname{Hess}V$.
+
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Preprint & Bauerschmidt--Bodineau, BBD, AKV\\
+\midrule
+parent scale $p$, child scale $c=\gamma p<p$ & times $s<t$ (BBD Def.~3.2)\\
+\addlinespace
+$\Delta=B_p-B_c$ \ploc{(\S16.1)}{cap-multiscale.tex:143--152} & $C_t-C_s$\\
+\addlinespace
+child field $h_c$; parent field $Y=h_p$ & $\varphi$; $\zeta$ after the shift in BBD (3.18)\\
+\addlinespace
+$\phi_p$, $\phi_c$ (or $\bar\phi_p$); $K_p$, $K_c$ & $-V_s$, $-V_t$; $-\operatorname{Hess}V_s$, $-\operatorname{Hess}V_t$\\
+\addlinespace
+convolution \ploc{(16.3), p.~126}{cap-multiscale.tex:156--158} & BBD (3.11) and its $s\to t$ form (proof of Lemma~3.11); BB (1.3)\\
+\addlinespace
+transition $\mathsf T^{h_c}_{c,p}$ \ploc{(16.4), p.~126}{cap-multiscale.tex:159--162} & fluctuation measure $\mu^\varphi_t$, BBD (3.17)--(3.18); kernel of $\mathbf P_{s,t}$, BBD (3.12); BB (1.4)\\
+\addlinespace
+Hessian identity \ploc{(16.11), p.~129}{cap-multiscale.tex:388--395}; gradient $\nabla_U\phi_c=\Delta_U^{-1}(\E_{\mathsf T}Y_U-h)$ \ploc{(\S16.4, p.~135)}{cap-multiscale.tex:929} & BBD (3.61), second equality; (3.60)\\
+\addlinespace
+Brascamp--Lieb bound $\Cov_{\mathsf T^{\rm ext}}(Y)\preceq\E_{\mathsf T^{\rm ext}}M_{\rm ext}(Y)^{-1}$, $M_{\rm ext}=\Delta_E^{-1}-[K^{\rm ext}_p]_{EE}$ \ploc{(\S16.2, p.~129)}{cap-multiscale.tex:396--407} & BBD (3.63)--(3.64)\\
+\addlinespace
+margin $\norm{\Delta_E^{1/2}L_p\Delta_E^{1/2}}<1$ \ploc{(\S16.1, p.~127)}{cap-multiscale.tex:264--269} & $t<t_0$, BBD Ex.~3.15\\
+\addlinespace
+recursion \ploc{(16.14)--(16.15), p.~130}{cap-multiscale.tex:454--504} & BBD (3.64)--(3.65) with $C_t\to C_0=p^2S$, $\operatorname{Hess}V_0\to-p^{-2}D^\circ$\\
+\addlinespace
+scalar bound \ploc{at the end of the proof of Lemma~16.3, p.~139}{cap-multiscale.tex:1188--1205} & AKV Thm.~102 with $\gamma=p^2/q$, $T=(1-x^2)p^2$\\
+\addlinespace
+iteration over the caps \ploc{(proof of Theorem~18.6, p.~170)}{cap-initialization.tex:1006--1012} & semigroup property (BBD proof of Lemma~3.11); Hessian flow (3.56); discrete decompositions admitted by BB Thm.~2.6\\
+\addlinespace
+$\mu_{p,h}$ (more observed) $\to\mu_{c,h}$, with $K=\Cov$ & AKV $\nu_{t+1}\to\nu_t$, backward induction (8)\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+The two key steps, side by side:
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Preprint & BBD\\
+\midrule
+\ploc{(16.11)}{cap-multiscale.tex:388--395}\par
+$\displaystyle K_c=\Delta_U^{-1}[\Cov_{\mathsf T}(Y)]_{UU}\Delta_U^{-1}-\Delta_U^{-1}$
+&
+(3.61)\par
+$\displaystyle(f,\operatorname{Hess}V_tf)=(f,C_t^{-1}f)-\Var_{\mu_t^\varphi}\bigl((C_t^{-1}f,\zeta)\bigr)$\\
+\addlinespace
+(16.11) with the bound on p.~129, $K=[K_p^{\rm ext}]_{EE}$\par
+$\displaystyle K_c^{\rm ext}\preceq\bigl[\E_{\mathsf T^{\rm ext}}\bigl(\Delta^{-1}(\Delta^{-1}-K)^{-1}\Delta^{-1}-\Delta^{-1}\bigr)\bigr]_{UU}$\par
+$\displaystyle\phantom{K_c^{\rm ext}}=\bigl[\E_{\mathsf T^{\rm ext}}K(I-\Delta K)^{-1}\bigr]_{UU}$
+&
+(3.64)\par
+$\displaystyle\operatorname{Hess}V_t\ge\E_{\mu_t^\varphi}\bigl[\operatorname{Hess}V_0\,(C_t^{-1}+\operatorname{Hess}V_0)^{-1}C_t^{-1}\bigr]$\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+In the second row put $H=-K$ and $C=\Delta$ on $E$. BBD's integrand is then
+$H(C^{-1}+H)^{-1}C^{-1}=H(I+CH)^{-1}=-K(I-\Delta K)^{-1}$, so (3.64) is
+the preprint's bound before compression to $U$ and recentring. The preprint then recentres at the
+frozen spherical Gaussian, using
+$M^{-1}=C_0+p^{-2}C_0D^\circ(I-SD^\circ)^{-1}C_0$ with
+$M=C_0^{-1}-p^{-2}D^\circ$ \ploc{(\S16.2, p.~130)}{cap-multiscale.tex:473}.
+The Gaussian part gives $R_c|_U$ exactly, and the correction map
+$D^\circ\mapsto D^\circ(I-SD^\circ)^{-1}$ in (16.14) is the same map
+$H\mapsto H(I+CH)^{-1}$ at $H=-p^{-2}D^\circ$, $C=C_0$, up to the factor
+$-p^{-2}$. In its whitened form (16.15),
+$D(I-SD)^{-1}=S^{-1/2}[(I-S^{1/2}DS^{1/2})^{-1}-I]S^{-1/2}$, the bracket is
+$-\hat H(\mathrm{id}+\hat H)^{-1}$, the integrand of BBD (3.65), with
+$\hat H=-S^{1/2}DS^{1/2}$.
+
+\paragraph{What is new in the preprint.}
+\begin{itemize}
+\item The iteration of the Brascamp--Lieb step over a discrete sequence of
+caps. In the sources this bound is a single step (BBD
+Prop.~3.13 from $0$ to $t$, BBD Ex.~3.15, AKV Thm.~102).
+\item The radial deficit, regenerated at each step by completing the square,
+Sherman--Morrison and Gaussian-bridge trace identities
+\ploc{((16.16)--(16.20), pp.~130--131)}{cap-multiscale.tex:506--589}. The
+sources have no radial or rank-one mechanism.
+\item Conditional-Haar compression of transverse errors
+\ploc{(\S16.4, pp.~131--136)}{cap-multiscale.tex:591--956}: sampled replicas,
+a nuclear-norm integration by parts and a conditionally Haar residual
+rotation.
+\item Bounds on typical fields only (annuli and bounded balls), where the
+sources assume field-uniform bounds. The Brascamp--Lieb margin is restored by
+the semiconcave extension (16.7), and matching lower bounds come from cutoff
+Fisher (Cram\'er--Rao) tests
+\ploc{(16.12)--(16.13)}{cap-multiscale.tex:418, 438} and transition
+comparisons.
+\item Initialization at a fixed small $p_0$ from a TAP expansion and
+an auxiliary potential (\S\S17--18), not from a product or explicit measure.
+\item The cap schedule $B_p=(p^2-d)_+$, i.e.\ $J_p=\min(J,2-p^2)$
+spectrally, which flattens the top of the spectrum.
+\item The endpoint: entropy retention on stopped observation paths, then
+layers (\S19), rather than the multiscale Bakry--\'Emery criterion.
+\end{itemize}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item Put \ploc{(16.3)--(16.4), p.~126}{cap-multiscale.tex:154--163} beside
+\sloc{BauerschmidtBodineauDagallier2023-PolchinskiIntroduction}{Def.~3.2, (3.11)--(3.12), p.~16; (3.17), p.~17; proof of Lemma~3.11, p.~22}
+(or \sloc{BauerschmidtBodineau2019-SineGordonMultiscaleBakryEmery}{(1.3)--(1.4), p.~2}),
+and substitute $V_s=-\phi_p$, $C_t-C_s=\Delta$, $\varphi=h_c$.
+\item Put \ploc{(16.11), p.~129}{cap-multiscale.tex:388--395} beside
+\sloc{BauerschmidtBodineauDagallier2023-PolchinskiIntroduction}{Lemma~3.12, (3.61), second equality, p.~23},
+with $\operatorname{Hess}V=-K$ and $C_t=\Delta$.
+\item Combine (16.11) with the Brascamp--Lieb bound
+\ploc{on p.~129}{cap-multiscale.tex:405--407}, inverting on $E$ before
+compressing to $U$, and check the identity
+$\Delta^{-1}(\Delta^{-1}-K)^{-1}\Delta^{-1}-\Delta^{-1}=K(I-\Delta K)^{-1}$,
+$K=[K_p^{\rm ext}]_{EE}$, against \sloc{BauerschmidtBodineauDagallier2023-PolchinskiIntroduction}{(3.64), p.~23}.
+Then put \ploc{(16.14)--(16.15), p.~130}{cap-multiscale.tex:454--504} beside
+(3.64)--(3.65), with $C_t\to C_0=p^2S$ and
+$\operatorname{Hess}V_0\to-p^{-2}D^\circ$.
+\item In the last display of the
+\ploc{proof of Lemma~16.3, p.~139}{cap-multiscale.tex:1188--1205}, the support
+curvature on $U$ is $q/p^2$ with $q=(1+x^2a)^{-1}+e$, $a=\alpha/c^2$, and the
+increment is $(1-x^2)p^2$. Check that
+\[
+ c^2K^{\rm ext}_c\preceq\frac{1+(1+x^2a)e}{(1+a)-(1-x^2)(1+x^2a)e/x^2}\,I_U
+ =\frac{x^2q}{1-(1-x^2)q}\,I_U=c^2(\gamma-T)^{-1}I_U
+\]
+with $\gamma=p^2/q$ and $T=(1-x^2)p^2$, which is
+\sloc{AnariKoehlerVuong2024-TrickleDownLocalizationSchemes}{Thm.~102, p.~76}.
+\end{enumerate}
+
+\subsection{S5. The capacity--measure criterion for the log-Sobolev inequality}\label{f:S5}
+
+\paragraph{Summary.}
+Route~2 ends with \ploc{Lemma~19.1}{cap-entropy.tex:44--143} (p.~172), which
+turns an energy estimate for a restricted class of bounded tests into the
+log-Sobolev inequality. After a new first step that yields a lower bound on
+capacity, its proof (\ploc{pp.~172--173}{cap-entropy.tex:94--143}) runs the
+sufficiency half of the capacity--measure criterion for the log-Sobolev
+inequality, stated by Barthe--Roberto
+\sloc{BartheRoberto2003-SobolevInequalitiesRealLine}{\S4, remark~6)} and proved by
+Barthe--Cattiaux--Roberto
+\sloc{BartheEtAl2004-InterpolatedInequalitiesOrliczIsoperimetry}{Thms~11
+and~13}, with the dyadic slices of Bakry--Coulhon--Ledoux--Saloff-Coste
+\sloc{BakryEtAl1995-SobolevInequalitiesInDisguise}{\S10.1}. The same slicing,
+without capacities, recurs in \ploc{the proof of
+Theorem~14.2}{profile-entropy.tex:614--677} (pp.~111--112). The preprint cites
+only Barthe--Roberto's Lemma~4, as a ``compare'' pointer for the final entropy
+shift (\ploc{p.~173}{cap-entropy.tex:124--125}); the capacity, the criterion,
+the slicing and the median split carry no citation, and the proof of
+Theorem~14.2 cites nothing. Grade: \grade{Strong}, because the whole chain from
+capacity to the log-Sobolev inequality is reused intact and only its last link
+is credited.
+
+\paragraph{Setup.}
+For a probability measure $\eta$,
+$\Ent_\eta(u)=\eta[u\log u]-\eta[u]\log\eta[u]$
+\ploc{(\S19, p.~171)}{cap-entropy.tex:10--16}. With $\KL$ for the preprint's
+$D(\cdot\Vert\cdot)$:
+\begin{quote}
+\textbf{Lemma 19.1} \ploc{(p.~172)}{cap-entropy.tex:44--64}. Let $\eta$ be a
+strictly positive probability measure on a finite state space, $\mathcal E$ a
+reversible Markov Dirichlet form, and $\min_x\eta(x)\ge e^{-M}$ with
+$M\ge\log2$. Suppose that, for some $A>0$,
+$\mathcal E(g)\ge A\,\eta[g^2]\log(1/\eta[g^2])$ for every $0\le g\le1$
+supported on a set of measure at most $1/2$ with
+$\KL\bigl(g^2\eta/\eta[g^2]\,\Vert\,\eta\bigr)\ge\frac12\log(1/\eta[g^2])$ and
+$0<\log(1/\eta[g^2])\le M$. Then, with an absolute constant $C$,
+\[
+ \Ent_\eta(f^2)\le\frac{C(1+\log_+M)^2}{A}\,\mathcal E(f)
+ \qquad\text{for every real-valued } f. \tag{19.3}
+\]
+\end{quote}
+For a set $E$ with $\eta(E)=a\le1/2$, a test $h$ is \emph{admissible} if $h=1$
+on $E$ and $h=0$ outside a set of measure at most $1/2$. The preprint defines
+capacity as the infimum of $\mathcal E(h)$ over admissible $h$
+(\ploc{p.~172}{cap-entropy.tex:91--92}); we write $\mathrm{cap}_\eta(E)$ for it.
+Step~1 of the proof shows
+\[
+ \mathcal E(h)\ge\frac{cA}{(1+\log_+M)^2}\,a\log(1/a)
+ \qquad\text{for every admissible } h. \tag{19.4}
+\]
+In the application $\eta=\mu_J$, $\mathcal E=\D_J$, $A=n^{-2/3-r}$, and the
+hypothesis is the restricted estimate \ploc{(19.1)}{cap-entropy.tex:24--29} for
+tests satisfying \ploc{(19.2)}{cap-entropy.tex:30--33}; on $\norm J\le3$ one
+has $M=Cn$, and the factor $(\log n)^2$ is absorbed into the exponent
+(\ploc{p.~173}{cap-entropy.tex:145--149}).
+
+\paragraph{Role in the argument.}
+Lemma~19.1 is the last link of route~2 (Section~\ref{sec:overview}).
+\S\S19.2--19.6 prove (19.1) for tests satisfying (19.2) by following the
+observation process to a product endpoint, which is designed for bounded tests
+whose squared-density tilt has entropy comparable to $\log(1/\mu_J[f^2])$
+(\ploc{p.~172}{cap-entropy.tex:34--37}). Lemma~19.1 turns this into
+\ploc{Theorem~19.3}{cap-entropy.tex:856--874},
+$\Ent_{\mu_J}(f^2)\le n^{2/3+\rho}\D_J(f)$, which gives the bound on
+$C_{\mathrm{LS},J}$ in Theorem~1.1 (\ploc{\S20.3, p.~186}{dynamics.tex:196--199}).
+The proof has three steps: (1)~equal-height layers give (19.4)
+(\ploc{p.~172}{cap-entropy.tex:66--92}); (2)~dyadic layers give (19.3) for
+$v\ge0$ supported on a set of measure at most $1/2$
+(\ploc{pp.~172--173}{cap-entropy.tex:94--114}); (3)~a median split and an entropy
+shift give (19.3) for all $f$ (\ploc{p.~173}{cap-entropy.tex:116--143}). Steps~2
+and~3 use the hypothesis only through (19.4), and they are the reused part. The
+same slicing, without capacities, removes the sup-norm restriction from the
+support profile of route~1 in the proof of Theorem~14.2.
+
+\paragraph{The earlier technique.}
+Maz'ya \cite{NL-Mazya1985} reduced $L^2$ Sobolev-type inequalities to
+inequalities between the capacity and the measure of sets, by cutting a
+function into level slices. On a probability space this takes the following
+form. (BR, BCR and BCLS abbreviate
+\cite{BartheRoberto2003-SobolevInequalitiesRealLine},
+\cite{BartheEtAl2004-InterpolatedInequalitiesOrliczIsoperimetry} and
+\cite{BakryEtAl1995-SobolevInequalitiesInDisguise}; BCR page numbers refer to
+arXiv:math/0407219v1. In the sources $A$ is a set; $\rho$ and $\varphi$ are
+unrelated to the preprint's $\rho$ and $\phi_j$, and $p$, $q$ are BCLS's
+exponents, unrelated to the preprint's $p$ and $p_j$.)
+\begin{itemize}
+\item \emph{Capacity of a set of measure at most $1/2$}
+ \sloc{BartheEtAl2004-InterpolatedInequalitiesOrliczIsoperimetry}{\S5.2,
+ pp.~30--31}:
+ $\mathrm{Cap}_\mu(A)=\inf\{\int|\nabla f|^2d\mu:\ f|_A\ge1,\ \mu(f=0)\ge\frac12\}$.
+ Barthe--Roberto \sloc{BartheRoberto2003-SobolevInequalitiesRealLine}{\S4,
+ remark~6), p.~496} use tests $\one_A\le f\le\one_\Omega$ with $\mu(\Omega)=1/2$.
+\item \emph{The criterion}
+ \sloc{BartheRoberto2003-SobolevInequalitiesRealLine}{remark~6), pp.~495--496},
+ stated without proof: the log-Sobolev constant is comparable, up to universal
+ constants, to the best $\beta$ in
+ $\beta\,\mathrm{Cap}_\mu(A)\ge\mu(A)\log(1/\mu(A))$ for $\mu(A)\le1/2$. The
+ programme is to split $f$ at a median $m$ into
+ $F_\pm=(f-m)\one_{\{f\gtrless m\}}$ and treat each half by Maz'ya's
+ level-set argument.
+\item \emph{Its proof}
+ \sloc{BartheEtAl2004-InterpolatedInequalitiesOrliczIsoperimetry}{Thm~11,
+ pp.~38--39; Thm~13, p.~45; Rem.~19, pp.~46--47}. Theorem~11: for $\rho>1$ and
+ a non-decreasing $F\ge0$ with $F=0$ on $[0,2\rho]$, if
+ $\mu(A)F(\rho/\mu(A))\le D\,\mathrm{Cap}_\mu(A)$ whenever
+ $\mu(A)\le1/(2\rho)$, then
+ \[
+ \int f^2F\Bigl(\frac{f^2}{\int f^2d\mu}\Bigr)d\mu\le D\Bigl(\frac{\rho}{\sqrt\rho-1}\Bigr)^2\int|\nabla f|^2d\mu .
+ \]
+ Its proof sets $\Omega_k=\{f^2\ge2\rho^k\mu(f^2)\}$, bounds the left side by
+ $\sum_{k\ge1}\mu(\Omega_k)\,2\rho^{k+1}\mu(f^2)F(2\rho^{k+1})$, and tests
+ $\mathrm{Cap}_\mu(\Omega_k)$ with $h_k$, the function $|f|$ clipped between
+ consecutive levels and rescaled to $[0,1]$. Theorem~13 with $\varphi=\log$,
+ plus Remark~19 (which derives the needed Poincar\'e inequality from capacity),
+ gives: $\mu(A)\log(2/\mu(A))\lesssim\mathrm{Cap}_\mu(A)$ implies the
+ log-Sobolev inequality.
+\item \emph{Dyadic slices}
+ \sloc{BakryEtAl1995-SobolevInequalitiesInDisguise}{\S10.1, p.~1065}: the
+ capacity inequality is applied to $2^{-k}f_k=2^{-k}[(f-2^k)^+\wedge2^k]$, which
+ is at least $1$ on $\{f\ge2^{k+1}\}$, giving
+ $2^{pk}\mu(f\ge2^{k+1})^{p/q}\le C\,W(f)^p$. Summing needs the slice energies to
+ add up to at most a constant times the energy (hypothesis $(H^p_\rho)$,
+ p.~1038; $(H)$ for short), which holds for Markov kernel forms (Lemma~7.1,
+ pp.~1055--1057). Equation~(10.4) (p.~1069), stated after Theorem~10.4, is the
+ level-set bound for Orlicz norms; Theorem~10.4 is presented as a
+ generalization of Kaimanovich's Theorem~3.1 for Markov operators
+ \cite{NL-Kaimanovich1992}. Theorem~10.5 (p.~1070) uses the same slices to
+ upgrade a support-restricted inequality to an Orlicz inequality.
+\item \emph{Median split and Rothaus shift}
+ \sloc{BartheRoberto2003-SobolevInequalitiesRealLine}{Lemma~4, p.~485; proof of
+ Thm~3, pp.~486--487}: $\Ent_\mu(F^2)\le\Ent_\mu(F_+^2)+\Ent_\mu(F_-^2)$ for the
+ halves at a median, and
+ $\Ent_P(f^2)\le\Ent_P((f-a)^2)+2\int(f-a)^2dP$ for every $a\in\R$.
+\end{itemize}
+
+\paragraph{Correspondence.}
+The first table below matches the links; the second sets the two key displays
+side by side.
+
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Preprint & Earlier work\\
+\midrule
+\endhead
+Admissible $h$: $1$ on $E$, $0$ off a set of measure $\le1/2$, clipped to
+$[0,1]$; $\mathrm{cap}_\eta(E)=\inf\mathcal E(h)$ (\ploc{p.~172}{cap-entropy.tex:67--69, 91--92})
+& $\mathrm{Cap}_\mu(A)$: $f|_A\ge1$, $\mu(f=0)\ge1/2$ (BCR \S5.2, p.~31);
+$\one_A\le f\le\one_\Omega$, $\mu(\Omega)=1/2$ (BR remark~6), p.~496)\\
+\addlinespace
+(19.4) implies (19.3), constant $\asymp(1+\log_+M)^2/A$
+(\ploc{p.~172}{cap-entropy.tex:59--62, 87--90})
+& $\beta\,\mathrm{Cap}_\mu(A)\ge\mu(A)\log(1/\mu(A))$ $\Leftrightarrow$ LSI
+(BR remark~6), p.~496); BCR Thm~13 at $\varphi=\log$ with Rem.~19\\
+\addlinespace
+Slices $\phi_j=(v-2^j)_+\wedge2^j$, divided by $2^j$, test
+$\{v\ge2^{j+1}\}$; $a_j=\eta(v\ge2^j)$ (\ploc{p.~172}{cap-entropy.tex:94--97})
+& $2^{-k}[(f-2^k)^+\wedge2^k]\ge1$ on $\{f\ge2^{k+1}\}$ (BCLS \S10.1,
+p.~1065); BCR's $h_k$ (p.~39)\\
+\addlinespace
+$\mathcal E(v)\ge\sum_j\mathcal E(\phi_j)$ by edgewise monotone increments
+(\ploc{pp.~172--173}{cap-entropy.tex:99, 103--106})
+& $(H)$ for kernel forms (BCLS Lemma~7.1, pp.~1055--1057)\\
+\addlinespace
+$\Ent_\eta(v^2)\le48S$, $S=\sum_j4^ja_{j+1}\log(1/a_{j+1})$
+(\ploc{p.~173}{cap-entropy.tex:106--114})
+& Level-set bound in the proof of BCR Thm~11 (p.~39); BCLS (10.4) (p.~1069)\\
+\addlinespace
+Median $b$, $v_\pm=(f-b)_\pm$;
+$\Ent_\eta((f-b)^2)\le\Ent_\eta(v_+^2)+\Ent_\eta(v_-^2)$
+(\ploc{p.~173}{cap-entropy.tex:116--122})
+& $F_\pm$ at a median (BR remark~6), p.~495); the same subadditivity (BR proof
+of Thm~3, p.~487)\\
+\addlinespace
+(19.5): $\Ent_\eta((u+b)^2)\le C\Ent_\eta(u^2)+C\eta[u^2]$, cited
+(\ploc{p.~173}{cap-entropy.tex:124--143})
+& BR Lemma~4 (p.~485), which is (19.5) with $C=2$\\
+\addlinespace
+\S14: $g_j=\min\{(f-2^j)_+,2^j\}$; (14.17)--(14.18); Prop.~14.1 applied to each
+$g_j/\sqrt{A_j}$ and summed (\ploc{pp.~111--112}{profile-entropy.tex:621--677})
+& BCLS Thm~10.5 (p.~1070): support-restricted to Orlicz, by a weak bound on
+each $f_k=(f-2^k)^+\wedge2^k$ summed with (10.4) and $(H)$\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Key displays, proof of Lemma~19.1 & Earlier work\\
+\midrule
+\endhead
+Criterion, (19.4)$\Rightarrow$(19.3) (\ploc{p.~172}{cap-entropy.tex:59--62, 87--90}):
+$\mathrm{cap}_\eta(E)\ge\frac{cA}{(1+\log_+M)^2}\,a\log\frac1a$ for $a\le\frac12$
+gives $\Ent_\eta(f^2)\le\frac{C(1+\log_+M)^2}{A}\mathcal E(f)$
+& BR remark~6), p.~496:
+$\beta\,\mathrm{Cap}_\mu(A)\ge\mu(A)\log\frac1{\mu(A)}$ for $\mu(A)\le\frac12$
+$\Leftrightarrow$ LSI with constant $\asymp\beta$\\*
+\addlinespace
+Slices and level sets (\ploc{pp.~172--173}{cap-entropy.tex:98--114}):
+$\mathcal E(v)\ge\sum_j\mathcal E(\phi_j)\ge\frac{cA}{(1+\log_+M)^2}\,S$ and
+$\Ent_\eta(v^2)\le48S$
+& BCLS p.~1065: $2^{pk}\mu(f\ge2^{k+1})^{p/q}\le C\,W(f)^p$;
+BCR p.~39: $\int f^2F(\cdot)\,d\mu\le\sum_{k\ge1}\mu(\Omega_k)\,2\rho^{k+1}\mu(f^2)F(2\rho^{k+1})$\\*
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{What is new in the preprint.}
+\begin{itemize}
+\item Step~1: the passage from an entropy-conditioned estimate on bounded tests
+ to the capacity bound (19.4), through equal-height layers
+ $g_i=K((h-i/K)_+\wedge K^{-1})$ with $K\asymp\log\log(1/a)$ and the doubly
+ exponential pigeonhole $T_{i+1}\ge S_i^2$, at a cost of $(1+\log_+M)^2$.
+\item The criterion stated for a finite reversible Markov Dirichlet form, with
+ the slice superadditivity proved edgewise with constant~$1$.
+\item In \S14, the likelihood restriction $\norm f_\infty^2\le100p^{-2}$ of
+ Proposition~14.1 (\ploc{p.~105}{profile-entropy.tex:130--137}) and the rule
+ discarding slices with $A_j<4^jp_j^2/100$, at a cost of at most $S/50$
+ (\ploc{p.~112}{profile-entropy.tex:656--664}).
+\end{itemize}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item \emph{Capacity and criterion.} Put the opening of the proof of
+ Lemma~19.1, (19.4) and the sentence after it
+ (\ploc{p.~172}{cap-entropy.tex:66--69, 87--92}) beside
+ \sloc{BartheEtAl2004-InterpolatedInequalitiesOrliczIsoperimetry}{\S5.2,
+ p.~31; Thm~13, p.~45; Rem.~19, pp.~46--47}, with Theorem~13 at
+ $\varphi=\log$, and \sloc{BartheRoberto2003-SobolevInequalitiesRealLine}{remark~6),
+ p.~496}.
+\item \emph{Slices and level sets.} Compare the dyadic-layer paragraph
+ (\ploc{pp.~172--173}{cap-entropy.tex:94--114}) with
+ \sloc{BakryEtAl1995-SobolevInequalitiesInDisguise}{\S10.1, p.~1065} and the
+ first two displays of the proof of
+ \sloc{BartheEtAl2004-InterpolatedInequalitiesOrliczIsoperimetry}{Thm~11, p.~39}.
+\item \emph{Median split and shift.} Compare
+ \ploc{p.~173}{cap-entropy.tex:116--129} with
+ \sloc{BartheRoberto2003-SobolevInequalitiesRealLine}{proof of Thm~3, p.~487;
+ Lemma~4, p.~485}.
+\item \emph{\S14.} Compare the proof of Theorem~14.2, including (14.17)--(14.18)
+ (\ploc{pp.~111--112}{profile-entropy.tex:621--677}), with
+ \sloc{BakryEtAl1995-SobolevInequalitiesInDisguise}{Thm~10.5, p.~1070;
+ Lemma~7.1, pp.~1055--1057}.
+\end{enumerate}
+
+\section{Partial findings}\label{sec:partial}
+
+\subsection{P1. Wang's signed two-spin curvature method}\label{f:P1}
+
+\paragraph{Summary.}
+The curvature inequality behind the terminal spectral gap of route~1 is
+Wang's signed two-spin method
+\sloc{Wang2026-OptimalMixingGlauberSKBetaHalf}{Lemma~3.4 and proof of
+Thm~1.2, pp.~10--13}: condition on all but two spins $i,j$, expand the
+two-spin Ising law in $U_{ij}=\tanh B_{ij}$ keeping the signed first-order
+term, and sum over pairs, so that $\norm{\Lgen f}^2$ is at least the Dirichlet
+form minus $a^{\mathsf T}Ua$, with $B$ the zero-diagonal interaction matrix and
+$a_i=v_id_if$, up to higher-order terms in $U$. The
+preprint imports it as Lemma~8.1 of AcceptedGap
+\ploc{(\S3, p.~8)}{accepted-inputs.tex:91--94} and applies it in the proof
+of \ploc{Proposition~13.6 (pp.~102--103)}{profile-positive.tex:1584--1698}.
+At both places the preprint cites only the companion lemma, whose section
+opens by crediting Wang's Lemma~3.4
+\ploc{(AcceptedGap, \S8, p.~58)}{terminal.tex:8--11}; the preprint's one
+citation of Wang is for his $\beta<1/2$ mixing theorem
+\ploc{(\S1, p.~5)}{introduction.tex:182--185}.
+Grade: \grade{Partial}, because Wang's two-spin estimate and its summation
+over pairs are reused essentially intact, but their credit reaches the reader
+only through the cited companion lemma.
+
+\paragraph{Setup.}
+AG denotes \cite{OAI-AcceptedGap}. Let
+$\mu_h(x)\propto\exp(\frac12x^{\mathsf T}Bx+h^{\mathsf T}x)$ on
+$\{-1,1\}^n$, with $B$ symmetric with zero diagonal, and let $P_i$ be the
+heat-bath update at site $i$ (the $Q_i$ of Section~\ref{sec:overview}), an
+orthogonal projection in $L^2(\mu_h)$. Put
+\[
+ D_i=I-P_i,\qquad H=\sum_iD_i=-\Lgen,\qquad
+ d_if(x)=\tfrac12\bigl(f(x^{i\gets+1})-f(x^{i\gets-1})\bigr),
+\]
+let $m_i,v_i$ be the conditional mean and variance of $x_i$ given $x_{-i}$,
+and $a_i=v_id_if$. Then $D_if=(x_i-m_i)d_if$ and
+$\D_h(f)=\sum_i\mu_h[v_i(d_if)^2]=\sum_i\norm{D_if}^2_{L^2(\mu_h)}$.
+Entrywise, $U=\tanh B$ (Wang's $T$), $Q=U\circ U$,
+$r_3(U)=\max_i\sum_j|U_{ij}|^3$ and $r_4(U)=\max_i\sum_jU_{ij}^4$. In
+Proposition~13.6, $B=\theta J^\circ$ with $0\le\theta\le1$, and $h$ is an
+observation field at a large fixed time $T$ or later.
+
+\paragraph{Role in the argument.}
+Route~1 needs, at a large fixed observation time, a posterior gap that holds
+uniformly over the law of the observed configuration $X$, and bounded
+covariance and gap along a path that weakens the interaction to a product law.
+\ploc{Proposition~13.6}{profile-positive.tex:1556--1582} supplies both,
+outside probability $e^{-cn}$. Its proof restates the imported inequality
+\ploc{(p.~102)}{profile-positive.tex:1585--1598}, checks its entrywise
+hypothesis $\max|U_{ij}|\le u_0$ for every $B=\theta J^\circ$, bounds
+$\mu_h[a^{\mathsf T}Ua+C|a|^{\mathsf T}Q|a|]$ by $\D_h(f)/4$ through a
+large-field split (Section~\ref{f:P6}), and concludes
+\ploc{(p.~103)}{profile-positive.tex:1683--1697} from
+$\mu_h[(-\Lgen f)^2]\ge\D_h(f)/2$, by the spectral theorem, that every nonzero
+eigenvalue of $-\Lgen$ is at least $1/2$, so $\Var_{\mu_h}f\le2\D_h(f)$ and
+$\norm{\Sigma_h}\le2$. These
+outputs feed the backward amplification
+\ploc{(\S12.3, p.~71)}{profile-amplification.tex:428--435} and the proof of
+Proposition~14.1 \ploc{(pp.~109, 111)}{profile-entropy.tex:427--429, 575--579}.
+
+\paragraph{The earlier technique.}
+Wang \cite{Wang2026-OptimalMixingGlauberSKBetaHalf} (arXiv v1, 23 August
+2026; pages are the printed pages of v2) proves a deterministic Poincar\'e
+criterion (Thm~1.2, p.~3) for Glauber dynamics of Ising models $\mu_{J,h}$ with
+weak entries, uniformly in $h$: with $T=(\tanh J_{ij})$, the constant is
+$\frac1n\bigl(1-\max\{\norm T,2\norm{T\circ T}\}-Cr_3(T)\bigr)$ whenever this
+is positive. His generator is $\frac1n\sum_i(P_i-I)=-H/n$, with $D_i=I-P_i$.
+\begin{itemize}
+\item \emph{Curvature form} (Prop.~3.2, p.~9; Lemma~3.3, p.~10):
+ $n^2\E_\mu\Gamma_2(f,f)=\norm{\sum_iD_if}^2=\sum_{i,j}\ip{D_if}{D_jf}$,
+ $D_if=(x_i-m_i)d_if$ and $\norm{D_if}^2=\E_\mu[v_i(d_if)^2]$.
+\item \emph{Two-spin estimate} (Lemma~3.4, p.~10; proof in \S3.2,
+ pp.~11--13), which Wang presents as his new ingredient (\S1.1, p.~2). If
+ $\mu(x)\propto\exp(J_{12}x_1x_2+h_1x_1+h_2x_2)$ and $t=\tanh J_{12}$ has
+ $|t|\le\delta$, then for every $f$
+ \[
+ \ip{D_1f}{D_2f}\ge-t\ip{v_1d_1f}{v_2d_2f}
+ -2t^2\ip{m_1v_1d_1f}{m_2v_2d_2f}-C|t|^3\bigl(\norm{D_1f}^2+\norm{D_2f}^2\bigr).
+ \]
+ The proof, with $a=\tanh h_1$, $b=\tanh h_2$, $A=1-a^2$, $B=1-b^2$ and
+ $f=c+p(x_1-a)+q(x_2-b)+r(x_1-a)(x_2-b)$, writes the left side plus the two
+ signed terms as $AB(\phi_0pq+\phi_1pr+\phi_2qr+\phi_{12}r^2)$ with
+ $|\phi_0|\le C_0|t|^3$, $|\phi_1|+|\phi_2|\le C_0t^4$, $\phi_{12}\ge\frac12$;
+ its steps are in the table below.
+\item \emph{Summation} (proof of Thm~1.2, pp.~10--11): condition on
+ $X_{-\{i,j\}}$, apply Lemma~3.4 to the conditional pair law, average, and sum
+ over pairs. With $a=(v_id_if)_i$ and $b=(m_iv_id_if)_i$,
+ \[
+ n^2\E_\mu\Gamma_2(f,f)\ge\bigl(1-2Cr_3(T)\bigr)\sum_i\norm{D_if}^2
+ -\E_\mu\bigl[a^{\mathsf T}Ta+2b^{\mathsf T}(T\circ T)b\bigr].
+ \]
+ Wang bounds the quadratic forms by
+ $\max\{\norm T,2\norm{T\circ T}\}\sum_i\norm{D_if}^2$ and converts curvature
+ to a gap by the integrated Bakry--\'Emery criterion (Thm~2.11, p.~8), which
+ he quotes from \sloc{NL-BakryGentilLedoux2014}{Prop.~4.8.3}. For SK,
+ $\norm T\approx2\beta$, which gives a gap for $\beta<1/2$ (Thm~3.1, p.~8).
+\end{itemize}
+
+\paragraph{Correspondence.}
+Wang's steps, against AG's Lemma~8.1 and its proof as imported by the
+preprint. In AG, $g_i=d_if$, $a_i=v_i^1g_i$, and $u=\tanh J_{ij}$ plays the
+role of $t$.
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.15\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Step & Wang & AG (and the preprint)\\
+\midrule
+Curvature form
+& $n^2\E_\mu\Gamma_2=\norm{\sum_iD_if}^2$; $\sum_i\norm{D_if}^2=\sum_i\E_\mu[v_i(d_if)^2]$ (Prop.~3.2, Lemma~3.3, pp.~9--10)
+& $\E_{\mu_{h_0}}[(Hf)^2]$, $Hf=\sum_i(I-P_i)f=\sum_i(x_i-m_i^1)d_if$;
+ $\sum_i\E[v_i^1g_i^2]=\D_{h_0}(f)$ \ploc{((8.1), p.~59; p.~61)}{terminal.tex:20--29, 205--207}.
+ Preprint: $\mu_h[(-\Lgen f)^2]$, $\D_h(f)$ \ploc{(p.~102)}{profile-positive.tex:1585--1596}\\
+\addlinespace
+Pair reduction
+& Condition on $X_{-\{i,j\}}$; $\mu\propto(1+ax_1)(1+bx_2)(1+tx_1x_2)$;
+ $v_1=A(1-t^2)/(1+atx_2)^2$; $d_1f=p+r(x_2-b)$, $d_2f=q+r(x_1-a)$
+ (pp.~11--12)
+& Condition on the other spins;
+ $d\mu_{ij}/d\mu_{0,ij}=(1+uxy)/(1+uab)$;
+ $v_i^1=A(1-u^2)/(1+uay)^2$; $g_i=p+r(y-b)$, $g_j=s+r(x-a)$
+ \ploc{((8.3)--(8.4), p.~59)}{terminal.tex:50--78}\\
+\addlinespace
+Signed first-order term
+& Add $t\ip{v_1d_1f}{v_2d_2f}$ and $2t^2\ip{m_1v_1d_1f}{m_2v_2d_2f}$:
+ $pq$ coefficient $O(t^3)$, $pr,qr$ coefficients $O(t^4)$, $r^2$
+ coefficient $\ge\frac12$ (p.~12)
+& Add $u\,\E_{ij}[a_ia_j]$ (8.8) to the cross term (8.6): $ps$, $rp$, $rs$
+ coefficients $O(u^2)$, $r^2$ coefficient $\ge\frac12$
+ \ploc{(pp.~60--61)}{terminal.tex:80--178}\\
+\addlinespace
+Error terms
+& $\frac12r^2$ dropped; the left side plus the two signed terms is
+ $\ge-C_0AB|t|^3(p^2+q^2+r^2)$;
+ $\norm{D_1f}^2\ge C_1(Ap^2+ABr^2)$ (pp.~12--13)
+& Young into $\frac12r^2$, leaving $C_5u^2|ps|+C_5u^4(p^2+s^2)$;
+ $\E_{ij}|a_ia_j|\ge c_1AB|ps|$, $\E_{ij}[v_i^1g_i^2]\ge c_2ABp^2$
+ \ploc{(p.~61)}{terminal.tex:168--197}\\
+\addlinespace
+Sum over pairs
+& For $\max|T_{ij}|\le\delta$: $a^{\mathsf T}Ta+2b^{\mathsf T}(T\circ T)b$;
+ error $2Cr_3(T)\sum_i\norm{D_if}^2$ (p.~11)
+& For $\max|U_{ij}|\le u_0$: $a^{\mathsf T}Ua+C|a|^{\mathsf T}Q|a|$; error
+ $Cr_4(U)\D_{h_0}(f)$
+ \ploc{((8.2), pp.~59, 61)}{terminal.tex:32--46, 203--214}; restated in the
+ preprint \ploc{(p.~102)}{profile-positive.tex:1585--1598}\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+The two key formulas side by side; the second AG formula is the inequality
+the preprint states on \ploc{p.~102}{profile-positive.tex:1593--1596}, with
+$\mu_h[(-\Lgen f)^2]$ on the left:
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Wang & AG (and the preprint)\\
+\midrule
+Lemma~3.4 (p.~10):
+$\ip{D_1f}{D_2f}\ge-t\ip{v_1d_1f}{v_2d_2f}-2t^2\ip{m_1v_1d_1f}{m_2v_2d_2f}
+-C|t|^3\bigl(\norm{D_1f}^2+\norm{D_2f}^2\bigr)$
+& \ploc{(8.9), p.~61}{terminal.tex:198--201}:
+$\E_{ij}[(x-m_i^1)g_i\,(y-m_j^1)g_j]\ge-u\,\E_{ij}[a_ia_j]-C_6u^2\E_{ij}|a_ia_j|
+-C_6u^4\E_{ij}[v_i^1g_i^2+v_j^1g_j^2]$\\
+\addlinespace
+Proof of Thm~1.2 (p.~11):
+$n^2\E_\mu\Gamma_2(f,f)\ge\bigl(1-2Cr_3(T)\bigr)\sum_i\norm{D_if}^2
+-\E_\mu\bigl[a^{\mathsf T}Ta+2b^{\mathsf T}(T\circ T)b\bigr]$
+& \ploc{(8.2), p.~59}{terminal.tex:38--43}:
+$\E_{\mu_{h_0}}[(Hf)^2]\ge\bigl(1-Cr_4(U)\bigr)\D_{h_0}(f)
+-\E_{\mu_{h_0}}\bigl[a^{\mathsf T}Ua+C|a|^{\mathsf T}Q|a|\bigr]$\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{What is new in the preprint.}
+\begin{itemize}
+\item The imported variant, proved in AG \ploc{(pp.~59--61)}{terminal.tex:48--215},
+ keeps only the first-order term signed: its second-order cost is the absolute
+ form $C|a|^{\mathsf T}Q|a|$ rather than Wang's signed
+ $2b^{\mathsf T}(T\circ T)b$ with $b_i=m_ia_i$, and absorbing the mixed terms
+ into $\frac12r^2$ by Young's inequality makes the row error quartic,
+ $r_4(U)$, rather than cubic, $r_3(T)$.
+\item The quadratic forms are bounded differently. Wang bounds
+ $a^{\mathsf T}Ta$ by $\norm T\sum_i\norm{D_if}^2$, which needs $\norm T<1$; at $\beta=1$,
+ $\norm{J^\circ}\approx2$. The preprint bounds
+ $a^{\mathsf T}Ua+C|a|^{\mathsf T}Q|a|$ pointwise by a large-field split at
+ observation time $T$ (Section~\ref{f:P6}), as AG do at fixed $j<1$.
+\item The inequality is applied along the family $B=\theta J^\circ$,
+ $0\le\theta\le1$, that ends at a product law, with disorder events of
+ probability $1-e^{-cn}$; AG apply it at one fixed $j<1$.
+\end{itemize}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item \emph{Pair estimate.} Put
+ \sloc{Wang2026-OptimalMixingGlauberSKBetaHalf}{Lemma~3.4, p.~10} and its
+ proof (pp.~11--13) beside
+ \ploc{AG (8.3)--(8.9) (pp.~59--61)}{terminal.tex:50--201}: the same pair
+ law, the same $p,r$ expansion of the two gradients, the same signed term.
+\item \emph{Summation.} Compare the display that follows the summation over
+ pairs in the proof of Wang's Thm~1.2 (p.~11) with
+ \ploc{AG (8.2) (p.~59)}{terminal.tex:32--46}, the last paragraph of AG's proof
+ \ploc{(p.~61)}{terminal.tex:203--214}, and the preprint's restatement
+ \ploc{(p.~102)}{profile-positive.tex:1585--1598}.
+\item \emph{Citation path.} Read the preprint's
+ \ploc{\S3 (p.~8)}{accepted-inputs.tex:91--94} and the first paragraph of the
+ proof of \ploc{Proposition~13.6 (p.~102)}{profile-positive.tex:1585--1598};
+ then \ploc{AG \S8 (p.~58)}{terminal.tex:8--11} and
+ \ploc{AG \S1.1 (p.~4)}{introduction.tex:131--133}; then the preprint's only
+ citation of Wang \ploc{(\S1, p.~5)}{introduction.tex:182--185}.
+\end{enumerate}
+\subsection[P2. Density bounds for weighted chi-square sums (Bobkov--Naumov--Ulyanov; G\"otze--Naumov--Spokoiny--Ulyanov)]{P2. Density bounds for weighted chi-square sums\\ (Bobkov--Naumov--Ulyanov; G\"otze--Naumov--Spokoiny--Ulyanov)}\label{f:P2}
+
+\paragraph{Summary.}
+The preprint conditions Gaussians on spheres using two published density
+estimates for weighted noncentral chi-square sums: the Fourier majorant of
+Bobkov, Naumov and Ulyanov (BNU below)
+\sloc{BobkovNaumovUlyanov2020-DensityMaxWeightedChiSquare}{Lemma~3, p.~5},
+and the bound of G\"otze, Naumov, Spokoiny and Ulyanov (GNSU below) on the
+density of $\norm{\xi-a}^2$ by $\norm{\Sigma_\xi}_{\mathrm F}^{-1}$, uniformly
+in the shift~$a$, when no eigenvalue of $\Sigma_\xi$ dominates
+($3\lambda_1^2\le\norm{\Sigma_\xi}_{\mathrm F}^2$)
+\sloc{GotzeEtAl2017-LargeBallGaussianComparison}{Thm~2.6,
+p.~13}. The majorant is the dominating function in the proof of
+\ploc{Lemma~5.2 (p.~17)}{profile-spectral.tex:400--428} and is derived
+explicitly, by BNU's concavity argument, in the proof of
+\ploc{Lemma~10.1 (p.~46)}{profile-orbits.tex:323--335}. The
+shift-uniform bound is the estimate $f_{S\mid Z=z}(n)\le C\sqrt{d/n}$
+``uniformly in the translated mean'' in the shell conditioning of
+\ploc{\S5.3 (p.~18)}{profile-spectral.tex:441--458}, and the noncentral bound
+drawn from \ploc{(15.5)}{cap-static.tex:164--175}. Neither paper is cited
+anywhere in the preprint. The companion \cite{OAI-AcceptedCritical} credits
+BNU's Lemma~3 for the same majorant in its own ``Density at the mean'' lemma
+\ploc{(Lemma~4.2, p.~16)}{AcceptedCritical spherical.tex:144--165},
+but the preprint proves its lemma itself and cites the companion only for its
+Theorems~1.2--1.3. Grade: \grade{Partial}, because only a fragment of the two
+papers is reused: the upper density bound for spread spectra (BNU's Lemma~3,
+and the bound of BNU's Theorem~2 and case~1 of GNSU's Theorem~2.6). Their
+lower bounds and dominant-eigenvalue cases are not used.
+
+\paragraph{Setup.}
+For a fixed spectrum and field, $\lambda>\lambda_{\max}(J)$ solves
+\ploc{(5.4)}{profile-spectral.tex:369--373}
+\[
+ D=(\lambda-J)^{-1},\qquad m_{\mathrm o}=Dh,\qquad
+ \Tr D+\norm{m_{\mathrm o}}^2=n,
+\]
+and the spherical Gibbs law is $N(m_{\mathrm o},D)$ conditioned on
+$\norm x^2=n$ \ploc{(\S5.3, p.~17)}{profile-spectral.tex:375--378}. When
+$\lambda-2\asymp d^2$ with $d_0\le d\lesssim1$, one has $\Tr D^2\asymp n/d$
+and $\norm D/(\Tr D^2)^{1/2}=O((nd^3)^{-1/2})=o(1)$
+\ploc{(pp.~17--18)}{profile-spectral.tex:430--435, 471--474}.
+\begin{itemize}
+\item \emph{Lemma~5.2 (Density at the mean)}
+ \ploc{(p.~17)}{profile-spectral.tex:392--398}. Let $g$ be a
+ finite-dimensional standard Gaussian vector and
+ $Q=g^{\mathsf T}Ag+b^{\mathsf T}g$ with $A\succeq0$ and $\sigma^2=\Var Q>0$.
+ The density of $Q$ at $\E Q$ is at least $c/\sigma$ for an absolute $c>0$,
+ and, with a smaller constant, at a displacement $o(\sigma)$ along any
+ sequence of such forms. The proof normalizes to
+ $\sum_ia_i(g_i^2-1)+2\sum_ib_ig_i$, $a_i\ge0$,
+ $2\sum_ia_i^2+4\sum_ib_i^2=1$; Fourier inversion handles the case in which
+ neither a single $a_i$ nor the linear part dominates.
+\item \emph{Shell conditioning} \ploc{(p.~18)}{profile-spectral.tex:441--458}.
+ Put $x=m_{\mathrm o}+D^{1/2}g$, $S=\norm x^2$, $Z=V^{\mathsf T}g$ for a
+ matrix $V$ with a fixed number of orthonormal columns, and
+ $P=I-VV^{\mathsf T}$. By (5.4), $\E S=n$. Then
+ $p_{Z\mid S=n}(z)=p_Z(z)\,f_{S\mid Z=z}(n)/f_S(n)$. Given $Z=z$, $x$ is
+ Gaussian with mean $m_{\mathrm o}+D^{1/2}Vz$ (the ``translated mean'') and
+ covariance $D^{1/2}PD^{1/2}$, whose nonzero eigenvalues are those of the
+ compression $PDP|_{\ran P}$.
+\end{itemize}
+
+\paragraph{Role in the argument.}
+Shell conditioning transfers Gaussian moment and tail bounds for fixed
+projections to the sphere through the density ratio. Lemma~5.2 bounds the
+denominator below, $f_S(n)\ge c\sqrt{d/n}$, and the shift-uniform estimate
+bounds the numerator above, $f_{S\mid Z=z}(n)\le C\sqrt{d/n}$ for every $z$.
+The bounded ratio, with a local limit dominated by the same majorant
+\ploc{(p.~18)}{profile-spectral.tex:467--483}, gives
+\ploc{(5.6)}{profile-spectral.tex:460--465},
+$\norm{\E_{\mathrm{shell}}[D^{-1/2}(x-m_{\mathrm o})(x-m_{\mathrm o})^{\mathsf
+T}D^{-1/2}]}\le1+o(1)$, which \S11 uses for its shell density denominators
+\ploc{(pp.~56--57)}{profile-local.tex:519, 560--562}. The two estimates
+recur in the proof of \ploc{Proposition~7.1 (p.~27)}{profile-spectral.tex:1196--1210}
+and in \ploc{\S7.1 (p.~29)}{profile-spectral.tex:1355--1362}, in the proof of
+\ploc{Lemma~10.1 (p.~46)}{profile-orbits.tex:296--335}, in the proofs of
+\ploc{Proposition~11.1 (p.~56)}{profile-local.tex:519--521} and
+\ploc{Lemma~11.4 (p.~64)}{profile-local.tex:1113--1123}, in
+\ploc{\S15.3 ((15.5)--(15.6), p.~115)}{cap-static.tex:145--211} and the proof of
+\ploc{Proposition~15.1 (p.~122)}{cap-static.tex:724--727}, and in the proof of
+\ploc{Lemma~18.1 (p.~161)}{cap-initialization.tex:225--241}.
+
+\paragraph{The earlier technique.}
+BNU write $M(\cdot)$ for the maximum of a density, $W_a=\sum_k\lambda_k(Z_k-a_k)^2$
+with $\lambda_1\ge\dots\ge\lambda_n>0$ and $Z_k$ independent standard normal,
+$A_1=\sum_k\lambda_k^2$ and $B_1=\sum_k\lambda_k^2a_k^2$
+\sloc{BobkovNaumovUlyanov2020-DensityMaxWeightedChiSquare}{\S2, p.~3}.
+\begin{itemize}
+\item \emph{Lemma~3} (p.~5). If $\alpha_1^2+\dots+\alpha_n^2=1$ and
+ $\alpha_k^2\le1/m$ for some $m\in\{1,2,\dots\}$, the characteristic function
+ of $W=\sum_k\alpha_kZ_k^2$ satisfies, in their eq.~(6),
+ \[
+  |f(t)|\le(1+4t^2/m)^{-m/4}.
+ \]
+ Proof (pp.~5--6): $-\log|f(t)|=\frac14\sum_k\log(1+4\alpha_k^2t^2)$ is concave in
+ $(\alpha_k^2)_k$ and is minimized at the extreme points of
+ $\{0\le b_k\le1/m,\ \sum_kb_k=1\}$. Inversion then bounds the density,
+ $M(W)\le\frac1{2\pi}\int|f|$ (p.~6).
+\item \emph{Theorem~2} (p.~3) and its proof (pp.~9--11). A shift only lowers
+ the modulus: $|\E e^{it(Z-a)^2}|=(1+4t^2)^{-1/4}\exp\{-2a^2t^2/(1+4t^2)\}$
+ (p.~10). If $\lambda_1^2\le A_1/3$, then
+ $M(W_a)\le2/\sqrt{A_1+B_1}\le2/\sqrt{A_1}$.
+\end{itemize}
+GNSU write $p_\xi(x,a)$ for the density of $\norm{\xi-a}^2$, where $\xi$ is a
+centered Gaussian element with covariance $\Sigma_\xi$, eigenvalues
+$\lambda_1\ge\lambda_2\ge\dots$ and $\Lambda_1^2=\sum_j\lambda_j^2$.
+\begin{itemize}
+\item \emph{Theorem~2.6} (p.~13), eq.~(2.3). For any $a$,
+ $\sup_{x\ge0}p_\xi(x,a)\lesssim\kappa(\Sigma_\xi)$, where
+ $\kappa(\Sigma_\xi)=\Lambda_1^{-1}=\norm{\Sigma_\xi}_{\mathrm F}^{-1}$ when
+ $3\lambda_1^2\le\Lambda_1^2$ (eq.~(2.1), p.~10). In this case the proof
+ (p.~16) bounds each factor by $(1+4\lambda_j^2t^2)^{-1/4}$ whatever the shift
+ (eq.~(3.2)), inverts, and integrates the product with Lemma~A.2
+ (pp.~21--22).
+\end{itemize}
+
+\paragraph{Correspondence.}
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.15\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{0.33\linewidth}@{}}
+\toprule
+Step & Preprint & BNU / GNSU\\
+\midrule
+Variable
+& $\sum_ia_i(g_i^2-1)+2\sum_ib_ig_i$ \ploc{(p.~17)}{profile-spectral.tex:402--405};
+ $S$ given $Z=z$, the squared norm of a Gaussian with covariance
+ $D^{1/2}PD^{1/2}$ and translated mean \ploc{(p.~18)}{profile-spectral.tex:450--454}
+& $W=\sum_k\alpha_kZ_k^2$ (Lemma~3); for the shell, $W_a$ (Thm~2) and
+ $\norm{\xi-a}^2$ (GNSU Thm~2.6)\\
+\addlinespace
+Fourier majorant
+& $(1+4(\max_ia_i)^2t^2)^{-c/(\max_ia_i)^2}$
+ \ploc{(p.~17)}{profile-spectral.tex:423--427}; concavity of $\log(1+ux)$ on
+ $[0,\max_ia_i^2]$ \ploc{(p.~46)}{profile-orbits.tex:325--331}
+& Eq.~(6) with $1/m=\max_k\alpha_k^2$; concavity on
+ $\{0\le b_k\le1/m\}$ (Lemma~3, pp.~5--6)\\
+\addlinespace
+Shift or linear part dropped
+& ``The noncentral factor does not increase the modulus''
+ \ploc{(p.~27)}{profile-spectral.tex:1208--1209}; (15.5), ``the remaining
+ factors have absolute value at most one''
+ \ploc{(p.~115)}{cap-static.tex:164--172}
+& BNU p.~10; GNSU eq.~(3.2), p.~16\\
+\addlinespace
+Spread hypothesis
+& $\norm D/(\Tr D^2)^{1/2}=o(1)$ \ploc{(p.~18)}{profile-spectral.tex:471--474};
+ a band of order $k_p$ coordinates with $r_i\asymp p^{-2}$
+ \ploc{(p.~115)}{cap-static.tex:171--172}
+& $\lambda_1^2\le A_1/3$ (BNU Thm~2); $3\lambda_1^2\le\Lambda_1^2$
+ (GNSU eq.~(2.1))\\
+\addlinespace
+Shift-uniform density bound
+& $f_{S\mid Z=z}(n)\le C\sqrt{d/n}$ ``uniformly in the translated mean''
+ \ploc{(p.~18)}{profile-spectral.tex:454--456}; parent density
+ $\le C\sqrt{p/n}$ ``for every $y$'' \ploc{(p.~122)}{cap-static.tex:724--726};
+ $\le Cp^2/\sqrt{k_p}$ for a tilted law with any mean
+ \ploc{(p.~161)}{cap-initialization.tex:230--238}
+& $\sup_xp_\xi(x,a)\lesssim\Lambda_1^{-1}$ for any $a$ (GNSU Thm~2.6);
+ $M(W_a)\le2/\sqrt{A_1}$ (BNU Thm~2)\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+The two key formulas, side by side:
+\begin{itemize}
+\item \emph{Majorant.} BNU's eq.~(6), applied to $\alpha_k=a_k/s$ with
+ $s^2=\sum_ja_j^2$ at frequency $st$, with $m=s^2/\max_ka_k^2$, reads
+ $|\E e^{it\sum_ka_kg_k^2}|\le(1+4(\max_ka_k)^2t^2)^{-s^2/(4\max_ka_k^2)}$;
+ a linear term only lowers the modulus. BNU state eq.~(6) for integer $m$;
+ the chord bound $\log(1+4bt^2)\ge mb\log(1+4t^2/m)$ on $[0,1/m]$ gives it for
+ real $m$. Preprint, Lemma~5.2 \ploc{(p.~17)}{profile-spectral.tex:423--427}:
+ $(1+4(\max_ia_i)^2t^2)^{-c/(\max_ia_i)^2}$, i.e.\ $c=s^2/4$. Preprint,
+ Lemma~10.1 \ploc{(p.~46)}{profile-orbits.tex:325--331}, with
+ $\sigma^2=2\sum_ia_i^2$:
+ $\prod_i(1+4t^2a_i^2/\sigma^2)^{-1/4}\le(1+4t^2a_{\max}^2/\sigma^2)^{-\sigma^2/(8a_{\max}^2)}$,
+ which is the display above at frequency $t/\sigma$.
+\item \emph{Shift-uniform bound.} GNSU eq.~(2.3) with
+ $\Sigma_\xi=D^{1/2}PD^{1/2}$ and $a=-(m_{\mathrm o}+D^{1/2}Vz)$: since
+ the compression keeps the spread,
+ $\Lambda_1^2=\Tr[(PDP)^2]\asymp\Tr D^2\asymp n/d$, so
+ $\sup_xp_\xi(x,a)\lesssim\sqrt{d/n}$ for every $z$. Preprint
+ \ploc{(p.~18)}{profile-spectral.tex:454--456}: ``the surviving spectral block
+ of the compression and the quadratic-product formula therefore give
+ $f_{S\mid Z=z}(n)\le C\sqrt{d/n}$ uniformly in the translated mean''.
+\end{itemize}
+
+\paragraph{What is new in the preprint.}
+\begin{itemize}
+\item The lower bound at the mean, rather than at the maximum, for every
+ $A\succeq0$, including a dominant coefficient, a linear term and $o(\sigma)$
+ displacements. BNU's lower bounds (Lemma~2, p.~4; Theorem~1, p.~3) concern the
+ maximum $M(W)$. The companion's
+ \ploc{Lemma~4.2 (p.~16)}{AcceptedCritical spherical.tex:154--165} is the
+ centered case.
+\item The density-ratio transfer of Gaussian projections to the shell, and the
+ sharp constant in (5.6) from a local limit dominated by the majorant.
+\item Multi-replica and matrix-frequency forms: the $2\times2$ bound
+ $|\varphi(T)|\le(1+c\norm T^2\log^{-C}n)^{-cN}$ in the proof of
+ \ploc{Proposition~7.1 (p.~27)}{profile-spectral.tex:1202--1208},
+ \ploc{(15.6) (p.~115)}{cap-static.tex:181--206} and the determinant damping
+ $(1+c|v|^2/N)^{-c'N}$ in the proof of
+ \ploc{Lemma~11.4 (p.~64)}{profile-local.tex:1113--1123}.
+\end{itemize}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item Read the last paragraph of the proof of
+ \ploc{Lemma~5.2 (p.~17)}{profile-spectral.tex:422--428} against BNU Lemma~3
+ and eq.~(6) (p.~5), then the companion's sentence before its
+ \ploc{Lemma~4.2 (AcceptedCritical, p.~16)}{AcceptedCritical spherical.tex:144--152},
+ which credits BNU's Lemma~3 for this majorant, and its version of the
+ majorant \ploc{(p.~17)}{AcceptedCritical spherical.tex:211--216}.
+\item Read ``To check the Fourier bound explicitly'' in the proof of
+ \ploc{Lemma~10.1 (p.~46)}{profile-orbits.tex:323--335} against the proof of
+ BNU Lemma~3 (pp.~5--6): the same concavity step and the same exponent.
+\item Read the shell-conditioning paragraph
+ \ploc{(p.~18)}{profile-spectral.tex:441--458} against GNSU Theorem~2.6
+ (p.~13), eq.~(2.1) (p.~10) and case~1 of its proof (p.~16), and against BNU
+ Theorem~2 (p.~3).
+\item Read \ploc{(15.5) and the paragraph after it (p.~115)}{cap-static.tex:162--175}
+ against BNU's modulus formula (p.~10): for $Y_i=a_i+\sqrt{r_i}g_i$, BNU's
+ factor at frequency $r_it$ with shift $a_i/\sqrt{r_i}$ is
+ $(1+4t^2r_i^2)^{-1/4}\exp\{-2t^2r_ia_i^2/(1+4t^2r_i^2)\}$, the $i$th factor
+ of (15.5).
+\end{enumerate}
+\subsection{P3. The fixed-spectrum Haar second-moment comparison (Bhattacharya--Sen; Du--Huang)}\label{f:P3}
+
+\paragraph{Summary.}
+Section~6 of the preprint compares cube and sphere partition functions on a
+Haar orbit at fixed spectrum by a second-moment argument assembled from two
+earlier pieces: the reweighted-overlap identity and overlap-cell comparison of
+Du--Huang (DH below)
+\sloc{DuHuang2026-CriticalSKFreeEnergyFluctuations}{Lemmas~2.1 and~3.9, proof
+of Thm.~1.6}, and, for large overlaps, the fixed-spectrum two-eigenvalue
+reduction of Bhattacharya--Sen (BS below)
+\sloc{BhattacharyaSen2015-OrthogonalMeanFieldSpinGlasses}{\S3.2.1, eq.~(3.14)}.
+In the preprint they appear as display
+\ploc{(6.3)}{profile-spectral.tex:712--730} and the global pair estimate of
+\ploc{\S6.1 (p.~22)}{profile-spectral.tex:788--837}, which give
+$\E_Ue^{2F}\le e^{o(k)}$ in \ploc{\S6.2 (p.~23)}{profile-spectral.tex:841--848};
+the comparison recurs in \S\S7, 10, 11, 14, 15 and~18. For this comparison
+Section~6 cites only Comets, for the first moment (its only other citation is
+Lehec, for the entropy--drift representation). DH is cited for this content
+elsewhere (\ploc{\S1, pp.~5--6}{introduction.tex:198--210};
+\ploc{\S7, p.~26}{profile-spectral.tex:1133--1138};
+\ploc{\S12.4, p.~77}{profile-amplification.tex:928--935};
+\ploc{\S15.4, p.~116}{cap-static.tex:294--297}), in \S7 and \S15.4 just
+before recurrences of the comparison. BS is cited nowhere, and the companion \cite{OAI-AcceptedCritical}, which credits
+BS for this step \ploc{(\S5, p.~22)}{orientation.tex:12--18}, is cited by the
+preprint only for its Theorems~1.2--1.3. \textbf{Grade: \grade{Partial}},
+because the DH components are credited elsewhere in the preprint, though not
+in Section~6, and the uncredited part is BS's reduction through (3.14), a
+fragment of their proof.
+
+\paragraph{Setup.}
+In \S6 the eigenvalues $\Lambda$ of $J$ and the eigen-coordinates $c$ of the
+field are fixed, and the eigenframe $U$ is Haar distributed: $J=U\Lambda
+U^{\mathsf T}$, $h=Uc$ \ploc{(p.~20)}{profile-spectral.tex:660--662}. $\E_U$
+is the Haar expectation, $Z(h)$ and $Z_{\mathrm o}(h)$ are as in
+Section~\ref{sec:overview}, $Z_{\mathrm o}(h)$ does not depend on $U$, and
+$F(U)=\log(Z(h)/Z_{\mathrm o}(h))$. For replicas $X^1,\dots,X^p$ (independent
+uniform signs, or independent uniform points of the sphere of radius $\sqrt
+n$), $R_{ab}=(X^a)^{\mathsf T}X^b/n$, and $R=(R_{ab})$ is their Gram matrix.
+\ploc{Proposition~6.1}{profile-spectral.tex:666--707} assumes a spherical
+saddle $\lambda$ with $d=\sqrt{\lambda-2}$ comparable to a scale $r>0$,
+$\norm h\le Cr\sqrt n$ and $k=nr^3\gg\log n$; $\mu_h$ is the cube Gibbs law
+with field~$h$.
+
+\paragraph{Role in the argument.}
+\ploc{Proposition~6.1 (pp.~20--21)}{profile-spectral.tex:666--707} states
+that, outside Haar mass $e^{-Bk}$, $|\log Z(h)/Z_{\mathrm o}(h)|\le o(k)$
+\ploc{(6.1)}{profile-spectral.tex:674--677}, that tilted $p$-replica moments
+cost at most $C\Tr(P^2)k+o(k)$ \ploc{(6.2)}{profile-spectral.tex:680--687},
+and that pair overlaps concentrate. Section~6.1 bounds the unnormalized
+replica integrals relative to $Z_{\mathrm o}(h)^p$: small overlaps by (6.3)
+and the common angular integral, and $|R_{12}|>\eta$ by the global pair
+estimate, which gives $\E_U[e^{2F}q_\eta]\le e^{-c_\eta n}$ with
+$q_\eta=\mu_h^{\otimes2}(|R_{12}|>\eta)$
+\ploc{(p.~23)}{profile-spectral.tex:865--867}. Section~6.2 turns
+$\E_Ue^F=1$ and $\E_Ue^{2F}\le e^{o(k)}$ into high anchors, a strong upper
+tail of $F$ and, through controlled rotations, the lower tail and~(6.1).
+Proposition~6.1 is used in \ploc{\S11 (p.~47)}{profile-local.tex:76},
+\ploc{\S12.3 (pp.~73, 76)}{profile-amplification.tex:570, 835} and
+\ploc{\S14 (pp.~106--107)}{profile-entropy.tex:187, 211, 288}. The
+comparison itself recurs in \ploc{\S7 (p.~27)}{profile-spectral.tex:1176--1180},
+in the fixed-overlap second moment of
+\ploc{\S10.2 (pp.~44--45)}{profile-orbits.tex:144--148, 163--235}, in
+\ploc{Lemma~11.2 (p.~60)}{profile-local.tex:799--936} and
+\ploc{the proof of Proposition~11.1 (p.~56)}{profile-local.tex:512}, where
+the Gram eigenvalues are $1\pm t$, in
+\ploc{the proof of Proposition~14.1 (p.~106)}{profile-entropy.tex:198--204},
+in \ploc{the proof of Proposition~15.1 (pp.~117--118)}{cap-static.tex:345--409},
+which redoes the Gram comparison as (15.10) and the sum/difference reduction
+with spherical free energies at $1\pm|r|$, and in
+\ploc{\S18.1 (p.~161)}{cap-initialization.tex:257--271, 293--297}.
+
+\paragraph{The earlier technique.}
+\emph{BS} \sloc{BhattacharyaSen2015-OrthogonalMeanFieldSpinGlasses}{(1.16)--(1.17),
+p.~5} fix a diagonal matrix $\Lambda$, write $\E_0$ for the Haar expectation
+over $O$, and study
+\[
+ Z_N(\beta,O,\Lambda)=2^{-N}\sum_{\sigma\in\{\pm1\}^N}
+ \exp(\beta\sigma^{\mathsf T}O\Lambda O^{\mathsf T}\sigma),\qquad
+ \E_0Z_N=\E_0\exp(N\beta(O\Lambda O^{\mathsf T})_{11}).
+\]
+In the proof of Proposition~3.1 (\S3.2.1, p.~10), with $\E_1$ the uniform
+average over $\sigma,\tau$,
+\[
+ \E_0Z_N^2=\E_1\E_0\exp\Bigl(N\beta\Bigl\{\Bigl(1+\frac{\sigma^{\mathsf T}\tau}{N}\Bigr)
+ (O\Lambda O^{\mathsf T})_{11}+\Bigl(1-\frac{\sigma^{\mathsf T}\tau}{N}\Bigr)
+ (O\Lambda O^{\mathsf T})_{22}\Bigr\}\Bigr),
+\]
+since ``the non-zero eigenvalues of
+$(\sigma\sigma^{\mathsf T}+\tau\tau^{\mathsf T})/N$ are
+$(1+\sigma^{\mathsf T}\tau/N)$ and $(1-\sigma^{\mathsf T}\tau/N)$
+respectively''. Summing the spins by
+$\E_1e^{\lambda\sigma^{\mathsf T}\tau}=(\cosh\lambda)^N$ gives (3.14):
+$\E_0Z_N^2=\E_0\exp(NF_{\mathrm{BS}}(V_1,V_2))$ with
+$F_{\mathrm{BS}}(x,y)=\beta(x+y)+\log\cosh\beta(x-y)$ and
+$V_i=(O\Lambda O^{\mathsf T})_{ii}$.
+
+\emph{DH} \sloc{DuHuang2026-CriticalSKFreeEnergyFluctuations}{\S1, \S2.1} take
+$H_N(x)=\frac12(Wx,x)$ with $W$ a GOE matrix,
+$Z_N=2^{-N}\sum_xe^{H_N(x)}$, $Z_N^{\mathrm{sph}}$ the same integral over the
+uniform measure on the sphere of radius $\sqrt N$, and
+$X_N=Z_N/Z_N^{\mathrm{sph}}$; $\E X_N=1$ because $Z_N^{\mathrm{sph}}$ averages
+$Z_N$ over rotations of $W$ ((2.3), p.~6). \emph{Lemma~2.1} (p.~7):
+$J_{\mathrm{DH}}(q)=\E[e^{H_N(x)+H_N(y)}/(Z_N^{\mathrm{sph}})^2]$ depends on
+$x,y$ only through $q=R(x,y)$; $J_{\mathrm{DH}}(q)=e^{Nq^2/2}e^{N/2}K(q)$ with
+$K(q)=\E[Z_N^{\mathrm{sph}}(W+(1+q)e_1e_1^{\mathsf T}+(1-q)e_2e_2^{\mathsf
+T})^{-2}]$; and
+$\E[X_N^2\langle g(R_{1,2})\rangle]=\E_q[J_{\mathrm{DH}}(q)g(q)]$ for cube
+overlaps,
+$\E\langle g(R_{1,2})\rangle^{\mathrm{sph}}=\E_q^{\mathrm{sph}}[J_{\mathrm{DH}}(q)g(q)]$
+for sphere overlaps ((2.7)--(2.8)). The overlap laws are
+$p(q)=2^{-N}\binom{N}{N(1+q)/2}$ and $\rho(q)\propto(1-q^2)^{(N-3)/2}$
+((2.10)--(2.11), p.~7). \emph{Lemma~3.9} (p.~12): for $|q|=o(N^{-1/4})$ and
+$|\tilde q-q|\le N^{-1}$, $p(q)e^{Nq^2/2}=\rho(\tilde q)e^{N\tilde q^2/2}\cdot
+\frac2N\cdot(1+O(N^{-1}+q^2+Nq^4))$. The proof of \emph{Theorem~1.6} (pp.~13--14)
+writes $\E(X_N-1)^2=\E_q[J_{\mathrm{DH}}]-\E_q^{\mathrm{sph}}[J_{\mathrm{DH}}]$,
+compares central cells by Lemma~3.9, and bounds the tails by log-concavity of
+$K$ (Lemmas~3.3 and~3.7), giving $\E(X_N-1)^2\lesssim N^{-1/3}$ (p.~5).
+
+\paragraph{Correspondence.}
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.13\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{0.25\linewidth}>{\raggedright\arraybackslash}p{0.25\linewidth}@{}}
+\toprule
+Step & Preprint & BS & DH\\
+\midrule
+Fixed spectrum, Haar frame
+& $J=U\Lambda U^{\mathsf T}$, $h=Uc$, with $\Lambda,c$ fixed
+ \ploc{(p.~20)}{profile-spectral.tex:660--662}
+& $O\Lambda O^{\mathsf T}$, $\Lambda$ fixed, $\E_0$ over Haar $O$ ((1.16), p.~5)
+& GOE $W$, averaged; rotation invariance (Lemma~2.1)\\
+\addlinespace
+First moment
+& $\E_Ue^F=1$ \ploc{(p.~23; Comets cited on p.~22)}{profile-spectral.tex:842--848}
+& $\E_0Z_N=\E_0\exp(N\beta(O\Lambda O^{\mathsf T})_{11})$ ((1.17))
+& $\E X_N=1$ ((2.3), p.~6)\\
+\addlinespace
+One angular integral for both priors
+& ``Conditional on the Gram matrix, Haar rotation supplies exactly the same
+ angular integral for both priors'' \ploc{(p.~21)}{profile-spectral.tex:728--730}
+& Inner $\E_0$ depends on $\sigma,\tau$ only through $\sigma^{\mathsf T}\tau/N$
+ (p.~10)
+& $J_{\mathrm{DH}}(q)$ depends only on $q$; (2.7)--(2.8) (p.~7)\\
+\addlinespace
+Small overlaps: cell comparison
+& (6.3); spherical density $\propto(\det R)^{(n-p-1)/2}$; Legendre match
+ through cubic order \ploc{(p.~21)}{profile-spectral.tex:712--728}
+& None
+& Lemma~3.9 (p.~12); $\rho\propto(1-q^2)^{(N-3)/2}$ ((2.11))\\
+\addlinespace
+Large overlaps: two directions
+& Orthogonal sum and difference rotated; strengths $1\pm R_{12}$
+ \ploc{(p.~22)}{profile-spectral.tex:793--798}
+& Eigenvalues $1\pm\sigma^{\mathsf T}\tau/N$; $V_1,V_2$ (p.~10)
+& $(1\pm q)e_{1,2}e_{1,2}^{\mathsf T}$ in $K(q)$ ((2.6)); tails by
+ log-concavity (Lemmas~3.3, 3.7)\\
+\addlinespace
+Spin-overlap cost
+& Cram\'er rate of the sign overlap exceeds $R_{12}^2/2$ by a fixed amount on
+ $|R_{12}|\ge\eta$ \ploc{(p.~22)}{profile-spectral.tex:832--837}
+& $\E_1e^{\lambda\sigma^{\mathsf T}\tau}=(\cosh\lambda)^N$, the $\log\cosh$
+ term of $F_{\mathrm{BS}}$ in (3.14)
+& $p(q)$ in (2.10)\\
+\addlinespace
+Output
+& $\E_Ue^{2F}\le e^{o(k)}$ \ploc{(p.~23)}{profile-spectral.tex:846--848}
+& Prop.~3.1: second-moment rate twice the first (p.~9)
+& Thm.~1.6: $\E(X_N-1)^2\lesssim N^{-1/3}$ (p.~5)\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+The two key formulas, side by side:\par\nobreak\csname @nobreaktrue\endcsname
+\begin{itemize}
+\item \emph{Two-eigenvalue reduction.} BS (p.~10): the exponent is
+ $N\beta\{(1+\sigma^{\mathsf T}\tau/N)V_1+(1-\sigma^{\mathsf T}\tau/N)V_2\}$.
+ Preprint \ploc{(p.~22)}{profile-spectral.tex:793--799}: ``After rotating the
+ orthogonal sum and difference, their angular energy is at most''
+ $\exp\{\frac n4[(1+R_{12})^2+(1-R_{12})^2]+o(n)\}$. Both rest on
+ $xx^{\mathsf T}+yy^{\mathsf T}=(1+R_{12})w_+w_+^{\mathsf T}+(1-R_{12})w_-w_-^{\mathsf T}$,
+ where $R_{12}=x^{\mathsf T}y/n$ and $w_\pm=(x\pm y)/\sqrt{2(1\pm R_{12})}$
+ are orthogonal with norm $\sqrt n$.
+\item \emph{Cell comparison.} DH (p.~12):
+ $p(q)e^{Nq^2/2}=\rho(\tilde q)e^{N\tilde q^2/2}\cdot\frac2N\cdot
+ (1+O(N^{-1}+q^2+Nq^4))$ with $\rho\propto(1-q^2)^{(N-3)/2}$. Preprint
+ \ploc{(6.3), p.~21}{profile-spectral.tex:712--719}: cube probability of a
+ Gram box $\le$ spherical probability $\times\,n^{C_p}\exp\{C_pn\max_{a\ne
+ b}|R_{ab}|^4\}$, spherical density $\propto(\det R)^{(n-p-1)/2}$. At $p=2$,
+ $\det R=1-R_{12}^2$ and the exponent is $(n-3)/2$, which is DH's $\rho$.
+\end{itemize}
+
+\paragraph{What is new in the preprint.}
+\begin{itemize}
+\item The cell comparison is for $p$ replicas, with Gram boxes and a Legendre
+ match to $-\frac12\log\det R$ through cubic order, and holds up to overlaps of
+ a small constant. DH treat $p=2$ by Stirling's formula for
+ $|q|=o(N^{-1/4})$.
+\item A field rotating with the matrix, a saddle off the edge ($d\asymp r$),
+ and errors on the scale $k=nr^3$ with the matrix tilts of (6.2). DH work at
+ zero field with a GOE average, BS at small $\beta$ with no field.
+\item After the reduction, each direction, of strength $u=1\pm R_{12}$, is
+ controlled by a one-direction bound $u^2/4$ proved with a Gaussian of
+ precision $z-uJ$; the second direction is handled in the codimension-one
+ compression \ploc{(p.~22)}{profile-spectral.tex:800--816}, where the bound
+ holds unchanged by interlacing \ploc{(\S15.4, p.~118)}{cap-static.tex:391--394}.
+ BS instead replace $V_2$ by an independent $V_2'$ on a localization event
+ (Lemma~3.2, (3.16)--(3.17), p.~11) and evaluate the rate by a
+ large-deviation principle for $V_1$ (Prop.~3.4, Lemma~3.3, p.~12); DH use
+ the log-concavity of $K$.
+\item The lower tail of $F$ comes from controlled rotations
+ \ploc{(\S6.2, pp.~23--25)}{profile-spectral.tex:880--1079}; BS use Lipschitz
+ concentration over Haar measure (Lemma~3.1 with (3.12), pp.~9--10).
+\end{itemize}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item Read the global pair estimate
+ \ploc{(p.~22, from ``Only the pair calculation'' to ``proves the global pair
+ estimate'')}{profile-spectral.tex:788--837} against BS \S3.2.1 up to (3.14)
+ (p.~10).
+\item Read \ploc{(6.3) and the five sentences after it (p.~21)}{profile-spectral.tex:712--730}
+ against DH Lemma~3.9 (p.~12) and (2.10)--(2.11) (p.~7), setting $p=2$.
+\item Read \ploc{$\E_Ue^F=1$, $\E_Ue^{2F}\le e^{o(k)}$ (pp.~22--23)}{profile-spectral.tex:841--848}
+ against DH (2.3) (p.~6), Lemma~2.1 with (2.9) (p.~7) and the first display
+ of the proof of Theorem~1.6 (p.~13).
+\item For credit, read \ploc{\S1 (pp.~5--6)}{introduction.tex:198--210},
+ \ploc{\S7 (p.~26)}{profile-spectral.tex:1133--1138},
+ \ploc{\S12.4 (p.~77)}{profile-amplification.tex:928--935} and
+ \ploc{\S15.4 (p.~116)}{cap-static.tex:294--297} for DH,
+ \ploc{AcceptedCritical \S5 (p.~22)}{orientation.tex:12--18} for BS, and
+ \ploc{\S3 (p.~7)}{accepted-inputs.tex:3--6}, where the preprint cites that
+ companion only for its Theorems~1.2 and~1.3.
+\end{enumerate}
+\subsection{P4. Earlier critical-temperature bounds on the SK partition function and covariance (Du--Huang; El Alaoui--Gaitonde)}\label{f:P4}
+
+\paragraph{Summary.}
+Three statements that the preprint proves at $\beta=1$ have earlier versions
+in Du and Huang's free-energy CLT and overlap bounds (DH below)
+\sloc{DuHuang2026-CriticalSKFreeEnergyFluctuations}{Thms~1.3--1.4, p.~3} and
+El Alaoui and Gaitonde's critical covariance bound (EAG below)
+\sloc{ElAlaouiGaitonde2022-CovarianceMatrixSK}{Prop.~4.5, p.~11}. In the
+preprint they are the partition-function lower bound
+\ploc{(7.5)}{profile-spectral.tex:1341--1347}, the covariance lower bound
+\ploc{(7.6)}{profile-spectral.tex:1349--1367} (both in
+\ploc{\S7.1, p.~29}{profile-spectral.tex:1330--1367}), and the bottom-scale
+covariance bound \ploc{(12.8)}{profile-amplification.tex:943--948} of
+\ploc{Proposition~12.4 (p.~77)}{profile-amplification.tex:938--949}. The
+earlier version is stronger for (7.5) and weaker for (7.6). For (12.8) only an
+analogue at $s=0$, under the ordinary law and with $\log n$ in place of
+$\ell^C$, follows from DH's Theorem~1.4(a). The preprint cites DH only for
+comparison methods (Theorem~1.6, \S3.3, and Lemma~3.5 of their overlap paper
+\cite{DuHuang2026-CriticalSKOverlapDistribution}), never for Theorems~1.3 or~1.4, and never cites EAG; it attributes the
+zero-field in-probability covariance bounds to the companion AC, whose
+introduction credits DH's Theorem~1.4. \textbf{Grade: \grade{Partial}}, because
+the earlier forms of (7.6) and (12.8) are weaker or restricted to $s=0$, and
+the stronger earlier form of (7.5) is credited only indirectly, through the
+comparison theorem from which it follows.
+
+\paragraph{Setup.}
+AC denotes the companion \cite{OAI-AcceptedCritical}. At zero field $\mu_J$ is
+invariant under $x\mapsto-x$. With $\Sigma_0=\Cov_{\mu_J}(X)$, $\langle\cdot\rangle$
+the Gibbs average over independent replicas $x^1,x^2$, and
+$R_{12}=(x^1)^{\mathsf T}x^2/n$,
+\[
+ n^2\langle R_{12}^2\rangle=\norm{\Sigma_0}_{\mathrm{HS}}^2,\qquad
+ \norm{\Sigma_0}\le\norm{\Sigma_0}_{\mathrm{HS}}\le(n\norm{\Sigma_0})^{1/2},
+\]
+the last because $\Tr\Sigma_0=n$.
+\begin{itemize}
+\item DH write $N=n$ and $W=J$ (GOE with diagonal), and
+ $Z_N=2^{-N}\sum_xe^{x^{\mathsf T}Wx/2}$, which is $Z(0)$. Their
+ $F_N=\log Z(0)$, $Z_N^{\mathrm{sph}}=Z_{\mathrm o}(0)$ and
+ $X_N=Z_N/Z_N^{\mathrm{sph}}$.
+\item EAG's measure at $\beta=1$,
+ $\mu\propto\exp(n^{-1/2}\sum_{i<j}g_{ij}\sigma_i\sigma_j)$, is $\mu_J$ with
+ $J^\circ_{ij}=g_{ij}/\sqrt n$. Their $\operatorname{cov}(\mu)=\langle\sigma\sigma^{\mathsf T}\rangle$
+ is $\Sigma_0$.
+\item In \S12, $\Sigma_s=\Cov_{\mu_s}(X)$, $\ell=\log\log(n+1000)$, and
+ $\mathcal G$ is the spectral restriction imposed throughout
+ \ploc{\S12 (p.~66)}{profile-amplification.tex:9--13}. An ``integrated planted
+ mass'' is a probability under the planted law at time $s$.
+\end{itemize}
+
+\paragraph{Role in the argument.}
+In \ploc{the proof of Proposition~14.1 (p.~107)}{profile-entropy.tex:239--247},
+(7.5) and $\E Z(0)=e^{n/4}$ transfer every planted exception of route~1, of
+conditional probability $q_J$, to ordinary disorder at polynomial cost:
+$\E_{\mathrm{ord}}[\one_{\{\mathcal G,\,Z(0)/\E Z(0)\ge n^{-C}\}}q_J]\le
+n^C\E_{\mathrm{pl}}[\one_{\mathcal G}q_J]$. Proposition~12.4 covers the bottom
+range $ns^{3/2}\le K_{\log}\log n$, where the backward induction of \S12 stops.
+In \ploc{the same proof (p.~109)}{profile-entropy.tex:410--425} the variance
+decay $-V_b'\le c_bV_b$ uses $c_b\le Cn^{2/3}\ell^C$ for
+$b\le b_*=(K''\log n/n)^{2/3}$, with integral $o(\log n)$, inside
+$\int_0^Tc_b\,db\le\frac23(1+\epsilon)\log n+o(\log n)$.
+(7.6) is supplementary. With $\D(f_v)\le1$ for unit linear tests
+\ploc{(p.~29)}{profile-spectral.tex:1368--1377}, it reproves the lower bound
+$R_J\ge n^{2/3-o(1)}$, which the main theorem takes from AC through
+\ploc{Theorem~1.2 (p.~4)}{introduction.tex:80--103}.
+
+\paragraph{The earlier result.}
+DH (arXiv v2, July 2026) treat $\beta=1$, zero field.
+\begin{itemize}
+\item \emph{Theorem~1.3(b)} (p.~3):
+ $(\frac{\log N}6)^{-1/2}(F_N-\frac N4+\frac{\log N}{12})\to\mathcal N(0,1)$.
+ It follows ``directly'' (p.~5; proof on p.~31) from Theorem~1.6 (p.~5),
+ $\E[(X_N-1)^2]\lesssim N^{-1/3}$, and the spherical CLT (eq.~(1.6), p.~3).
+ \emph{Lemma~6.1} (p.~33) gives the lower tail
+ $\P(F_N\le\frac N4-\frac{\log N}{12}-t)\le2\exp(-t^2/\log N)$ for all
+ $t\ge0$. Lemma~5.5 (p.~29) is a cruder version.
+\item \emph{Theorem~1.4} (p.~3): for a universal $c>0$,
+ (a) $\E\langle\exp(cN^{1/3}|R_{12}|)\rangle\le2$ and
+ (b) $\E\langle R_{12}^2\rangle\ge cN^{-2/3}$. Part (a) is proved in \S6.2
+ (p.~34) from Propositions~3.1--3.2 (p.~9) and the lower tail of $X_N$
+ (Theorem~1.6 and Lemmas~6.1 and~6.3, pp.~33--34). Part (b) is a by-product
+ of the cavity-method variance proof (\S5.4, p.~32).
+\end{itemize}
+EAG (arXiv v3, November 2024; first posted December 2022):
+for every $\beta$, \emph{Lemma~4.1} (p.~10) gives
+$\E\norm{\operatorname{cov}(\mu)}_{\mathrm{op}}\ge n\E\langle R_{12}^2\rangle$. \emph{Proposition~4.5} (p.~11; announced in Theorem~1.2,
+p.~2) gives, at $\beta=1$,
+$\E\norm{\operatorname{cov}(\mu)}_{\mathrm{op}}\ge c(n/\log n)^{3/16}$. It
+combines Chatterjee's bound $\E\langle|R_{12}|^3\rangle\ge1/(Ln)$ with a
+Talagrand overlap tail bound.
+
+\paragraph{Correspondence.}
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.12\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.25\linewidth}@{}}
+\toprule
+Statement & Preprint & Earlier & Relation\\
+\midrule
+Partition function
+& \ploc{(7.5)}{profile-spectral.tex:1341--1347}: $Z(0)\ge n^{-C}e^{n/4}$ with
+ probability tending to one
+& DH Thm.~1.3(b); Lemma~6.1
+& Earlier is stronger: (7.5) for every $C>\frac1{12}$ (Thm.~1.3(b)), with
+ failure at most $2n^{-(C-1/12)^2}$ (Lemma~6.1)\\
+\addlinespace
+Its derivation
+& \ploc{Prop.~7.1 (p.~26)}{profile-spectral.tex:1141--1158} at $h=0$,
+ attributed to DH Thm.~1.6 \ploc{(p.~26)}{profile-spectral.tex:1132--1135};
+ then \ploc{(5.7)}{profile-spectral.tex:520--524},
+ $Z_{\mathrm o}(0)\ge n^{-C}e^{n/4}$
+& Thm.~1.6, then the spherical CLT (1.6) (pp.~5, 31)
+& Same two steps\\
+\addlinespace
+Covariance, upper
+& \ploc{(12.8)}{profile-amplification.tex:943--948}:
+ $\norm{\Sigma_s}\le Cn^{2/3}\ell^C$ outside integrated planted mass $n^{-B}$
+ (on $\mathcal G$), for
+ $ns^{3/2}\le K_{\log}\log n$
+& DH Thm.~1.4(a)
+& Case $s=0$, under the ordinary law, with $\log n$ for $\ell^C$\\
+\addlinespace
+Covariance, lower
+& \ploc{(7.6)}{profile-spectral.tex:1365--1367}:
+ $\norm{\Sigma_0}\ge n^{2/3-o(1)}$ with probability tending to one
+& DH Thm.~1.4(b):
+ $\E\norm{\Sigma_0}_{\mathrm{HS}}^2\ge cn^{4/3}$
+& Annealed Hilbert--Schmidt form at the same scale; (7.6) implies it up to
+ $n^{o(1)}$. With EAG Lemma~4.1 it gives $\E\norm{\Sigma_0}\ge cn^{1/3}$\\
+\addlinespace
+&
+& EAG Prop.~4.5:
+ $\E\norm{\Sigma_0}\ge c(n/\log n)^{3/16}$
+& Operator norm, in expectation, exponent $\frac3{16}$\\
+\addlinespace
+Credit
+& \ploc{Theorem~1.2 (p.~4)}{introduction.tex:80--103} and
+ \ploc{\S7.1 (p.~29)}{profile-spectral.tex:1330--1336} cite AC for
+ $\norm{\Sigma_J}\in[n^{2/3}/M_n,M_nn^{2/3}]$
+& \ploc{AC, Thm.~1.2 (p.~2)}{introduction.tex:71--76};
+ \ploc{AC \S1.2 (p.~3)}{introduction.tex:130--155} credits DH Thms.~1.4
+ and~1.6
+& Indirect, for the zero-field in-probability bounds only\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+The two key formulas, side by side:
+\begin{itemize}
+\item \emph{Covariance upper bound.} DH Theorem~1.4(a): put
+ $Y=\langle e^{cn^{1/3}|R_{12}|}\rangle$. Since $y\mapsto\log^2(e+y)$ is
+ concave on $[0,\infty)$, $c^2n^{2/3}\langle R_{12}^2\rangle\le\log^2(e+Y)$, so
+ \[
+  \norm{\Sigma_0}\le\norm{\Sigma_0}_{\mathrm{HS}}\le c^{-1}n^{2/3}\log(e+Y),
+  \qquad \P(Y>n^B)\le2n^{-B}.
+ \]
+ Preprint \ploc{(12.8)}{profile-amplification.tex:943--948}:
+ $\norm{\Sigma_s}\le Cn^{2/3}\ell^C$ outside integrated planted mass $n^{-B}$.
+\item \emph{Partition function.} DH Lemma~6.1 with $t=(C-\frac1{12})\log n$:
+ $\P(Z(0)<n^{-C}e^{n/4})\le2n^{-(C-1/12)^2}$. Preprint
+ \ploc{(p.~29)}{profile-spectral.tex:1341--1345}:
+ $Z(0)=Z_{\mathrm o}(0)\cdot Z(0)/Z_{\mathrm o}(0)$, with the first factor at
+ least $n^{-C}e^{n/4}$ by (5.7) and the second $1+o(1)$ by Proposition~7.1.
+\end{itemize}
+
+\paragraph{What is new in the preprint.}
+\begin{itemize}
+\item Proposition~12.4 holds at every small positive time, along the
+ observation field, under the planted law, with $\ell^C$ in place of
+ $\log n$. That precision is used: with $\log n$, the integral of $c_b$ over
+ $(0,b_*]$ on p.~109 would be of order $(\log n)^{5/3}$, not $o(\log n)$. The
+ proof is a finite-replica $p$-th moment expansion with label cancellation,
+ not DH's reweighted exponential-moment argument.
+\item (7.6) bounds the operator norm with probability tending to one at the
+ sharp exponent, by conditioning one spherical edge mode and using the
+ cube--sphere error of Proposition~7.1. DH's bound is annealed and
+ Hilbert--Schmidt, and EAG's exponent is $\frac3{16}$.
+\item (7.5) adds nothing: it is weaker than DH's Theorem~1.3(b) and is derived
+ by the same two steps.
+\end{itemize}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item Read \ploc{(7.5) and the sentence before it (p.~29)}{profile-spectral.tex:1338--1347}
+ and \ploc{the opening of \S7 (p.~26)}{profile-spectral.tex:1125--1140}
+ against DH Theorem~1.3(b) (p.~3), the sentence after Theorem~1.6 (p.~5), and
+ Lemma~6.1 (p.~33).
+\item Read \ploc{\S12.4 and Proposition~12.4 (p.~77)}{profile-amplification.tex:925--949}
+ against DH Theorem~1.4(a) (p.~3), and its use
+ \ploc{on p.~109}{profile-entropy.tex:410--425}.
+\item Read \ploc{(7.6) (p.~29)}{profile-spectral.tex:1349--1367} against DH
+ Theorem~1.4(b) (p.~3), EAG Lemma~4.1 (p.~10) and EAG Proposition~4.5
+ (p.~11).
+\item Read \ploc{Theorem~1.2 (p.~4)}{introduction.tex:80--103} and
+ \ploc{the opening of \S7.1 (p.~29)}{profile-spectral.tex:1330--1336} against
+ \ploc{AC Theorem~1.2 (p.~2) and AC \S1.2 (p.~3)}{introduction.tex:71--76,
+ 130--155}, where DH Theorems~1.4 and~1.6 are credited.
+\end{enumerate}
+\subsection{P5. Local convexity of the TAP free energy at positive observation times (Celentano)}\label{f:P5}
+
+\paragraph{Summary.}
+Celentano
+\sloc{Celentano2022-SudakovFerniquePostAMPTAPConvexity}{Thm.~2(i)(2) and~(ii), pp.~10--11}
+proved that, in the planted model of El Alaoui--Montanari--Sellke (EAMS) at
+every inverse temperature $\lambda>0$ and every observation strength
+$\gamma_0>0$, the EAMS TAP free energy is strongly convex on a ball of radius
+$\epsilon\sqrt n$ around a late AMP iterate and has a unique stationary point
+there, with probability tending to one. At $\lambda=1$, $\gamma_0=s$ this is
+a local form, for the critical planted posterior at time~$s$, of the stability
+implication \ploc{(13.1)}{profile-positive.tex:16--30}, which
+\ploc{Proposition~13.4 (pp.~88--89)}{profile-positive.tex:442--466} proves on
+the whole approximate-root region with probability $1-e^{-an}$; the assertion
+recurs in \ploc{Lemma~17.3 (p.~143)}{cap-classical.tex:298--314} and
+\ploc{Proposition~17.5 (p.~148)}{cap-classical.tex:643--688}. The preprint
+never cites Celentano. It cites Celentano--Fan--Mei
+\ploc{(\S1, p.~6; \S8, p.~30)}{introduction.tex:218--223; profile-roots.tex:10--13}
+only for the conditional Kac--Rice organization at fixed signal, without side
+information (\S8 calls their Lemma~4.8 and Appendix~A.5 a
+``local-convexity refinement'' of Fan--Mei--Montanari); the companion
+\cite{OAI-AcceptedGap} credits Celentano only in its introduction, which the
+preprint does not cite for this. \textbf{Grade: \grade{Partial} (B)}, because
+Celentano's statement is a weaker, local version: one AMP-selected ball, a
+fixed-$q$ Hessian, constants for one fixed $\gamma_0$, and no rate.
+
+\paragraph{Setup.}
+Section~\ref{sec:overview} fixes the planted law and $h_s$. In \S13
+\ploc{(p.~83)}{profile-positive.tex:5--30}, with $J^\circ=J-\operatorname{diag}J$,
+$m=\tanh y$, $q(y)=\norm m^2/n$, $b(y)=1-q(y)$, $V_y=\operatorname{diag}(1-m_i^2)$
+and diagonal $A\ge0$,
+\[
+ F_h(y)=y-h+(b(y)I-J^\circ)m,\qquad
+ \mathcal H(y,A)=I+A^{1/2}\Bigl(b(y)I-J^\circ-\tfrac2n\,mm^{\mathsf T}\Bigr)A^{1/2}.
+\]
+Roots of $F_h$ are TAP solutions, and
+$V_y^{-1/2}\mathcal H(y,V_y)V_y^{-1/2}=V_y^{-1}+b(y)I-J^\circ-\frac2nmm^{\mathsf T}$
+is the Hessian of the TAP free energy with self-consistent $q$. The stability
+implication \ploc{(13.1)}{profile-positive.tex:22--30} is
+\[
+ \norm{F_h(y)}\le\rho_0\sqrt n,\quad 0\le A\le(1+\eta_0)I,\quad
+ n^{-1/2}\norm{A-V_y}_{\mathrm F}\le\epsilon_A
+ \ \Longrightarrow\ \mathcal H(y,A)\succeq c_0I .
+\]
+\begin{quote}
+\textbf{Proposition 13.4} \ploc{(pp.~88--89)}{profile-positive.tex:442--466}.
+Fix $0<s_1<T<\infty$. There are $\rho_0,\eta_0,\epsilon_A,c_0,c_*,a>0$,
+depending on $[s_1,T]$, such that at every $s\in[s_1,T]$, under the planted
+law restricted to the spectral event, the probability that (13.1) fails at
+$h=h_s$, or that some $y$ has $\norm{F_{h_s}(y)}\le\rho_0\sqrt n$ and
+$q(y)<c_*$, is at most $e^{-an}$. This holds uniformly in $s$ on compact
+intervals after decreasing the residual threshold. At small $r=\sqrt s$,
+failure of (13.1) has probability at most $e^{-A_*nr^3}$, for each fixed $A_*$.
+\end{quote}
+The proof gauges $X$ to $\mathbf 1$, so $J=W+\mathbf 1\mathbf 1^{\mathsf T}/n$ and
+$h_s=s\mathbf 1+\sqrt s\,g$, and works with $J$ in place of $J^\circ$ (written
+$\widetilde F_h$, $\widetilde{\mathcal H}$) \ploc{(p.~89)}{profile-positive.tex:475--483}
+until it removes the diagonal at a cost $(1+\eta_0)\max_i|J_{ii}|$
+\ploc{(p.~94)}{profile-positive.tex:936--949}. Route~2 states the same test as
+\ploc{(17.2)}{cap-classical.tex:24--38} (p.~140), with residual
+$|F_h(y)|_n\le2\rho$ and interaction $J_*=\beta W_{\mathrm{off}}$; at $\beta=1$ it
+is (13.1).
+
+\paragraph{Role in the argument.}
+The implication (13.1) is the stable-field hypothesis recalled in
+Section~\ref{f:S1}, and Proposition~13.4 is the preprint's replacement at
+$\beta=1$ for the companion's stable-field statements, which assume $\beta<1$
+\ploc{(p.~83)}{profile-positive.tex:33--39}. With
+\ploc{Proposition~13.5 (p.~95)}{profile-positive.tex:974--1033}, Proposition~13.4
+gives $\norm{\Sigma_s}\le C$ at each fixed positive time outside probability
+$e^{-cn}$ \ploc{(p.~103)}{profile-positive.tex:1700--1716}. This is the input
+from which \S12 amplifies covariance bounds backward along the observation
+path, and (13.1) with (13.2) controls changes of mean in the entropy
+localization, where the small-time rates are used
+\ploc{(\S14.2, p.~110)}{profile-entropy.tex:490--495}.
+On Route~2, Lemma~17.3 proves (17.2) at $\beta=1$ along $Y(t)=tX+B(t)$,
+$t\in[t_b,T]$, under typical disorder, for use in
+\ploc{\S19.4 (p.~178)}{cap-entropy.tex:524--526}; its exponential rate is what
+carries it from the planted law to typical disorder, using only
+$\log Z-\log\E Z=o(n)$ \ploc{(p.~145)}{cap-classical.tex:444--449}.
+Proposition~17.5 proves (17.2) with fixed slack at small fixed $t$, for the
+field family \ploc{(17.7) (p.~145)}{cap-classical.tex:457--464}, which contains
+$tX+B(t)$; the stability step is on
+\ploc{pp.~156--157}{cap-classical.tex:1308--1375}. It is used to start the cap
+induction \ploc{(\S18.1, p.~159)}{cap-initialization.tex:67} and at small times
+in \ploc{\S19.6 (p.~181)}{cap-entropy.tex:721--753}.
+
+\paragraph{The earlier result.}
+Celentano's vectors and matrices are set in bold. The model
+\sloc{Celentano2022-SudakovFerniquePostAMPTAPConvexity}{(1)--(2), p.~2} is
+\[
+ \mathbf Y=\tfrac\lambda n\,\mathbf x\mathbf x^{\mathsf T}+\mathbf W,\qquad
+ \mathbf y=\gamma_0\mathbf x+\sqrt{\gamma_0}\,\mathbf g,
+\]
+with $\mathbf W\sim\mathrm{GOE}(n)$, $\mathbf x$ uniform on $\{-1,1\}^n$ and
+$\mathbf g$ standard Gaussian; $\lambda$ is the inverse temperature of the SK
+measure $\mu_{\mathbf W}\propto e^{(\lambda/2)\ip{\mathbf x}{\mathbf W\mathbf x}}$
+(p.~3). With $Q(\mathbf m)=\norm{\mathbf m}^2/n$ and $\mathsf h$ the binary
+entropy, the EAMS TAP free energy (eq.~(6), p.~4) is
+\[
+ \mathcal F_{\mathsf{AMS}}(\mathbf m)=-\frac\lambda{2n}\mathbf m^{\mathsf T}\mathbf Y\mathbf m
+ -\frac1n\sum_i\mathsf h(m_i)-\frac1n\ip{\mathbf y}{\mathbf m}
+ -\frac{\lambda^2(1-q_\infty)(1+q_\infty-2Q(\mathbf m))}4,
+\]
+where $q_\infty=\E\tanh^2(\gamma_\infty+\sqrt{\gamma_\infty}G)$ and
+$\gamma_\infty=\lambda^2\E\tanh^2(\gamma_\infty+\sqrt{\gamma_\infty}G)+\gamma_0$
+(eq.~(15) and Prop.~3(v), p.~9). Let $\mathbf m^{k-1}$ be the $(k-1)$st iterate
+of the EAMS AMP iteration started at $\mathbf y$ (eq.~(5), p.~4).
+\emph{Theorem~2} (pp.~10--11), case (i)(2): if $\lambda>0$ and $\gamma_0>0$,
+there are $c,c'>0$ depending on $(\lambda,\gamma_0)$ such that, for every
+$\epsilon<c'$ and every $k$ large enough (depending on $\lambda,\gamma_0,\epsilon$),
+with probability tending to one as $n\to\infty$,
+\[
+ \inf\bigl\{\mathbf v^{\mathsf T}\nabla^2\mathcal F_{\mathsf{AMS}}(\mathbf u)\mathbf v:\
+ \norm{\mathbf v}=1,\ \norm{\mathbf u-\mathbf m^{k-1}}\le\epsilon\sqrt n\bigr\}>c/n
+ \qquad\text{(eq.~(16))};
+\]
+and (ii) for $\epsilon$ below a possibly smaller $c'$ and $k$ large,
+$\mathcal F_{\mathsf{AMS}}$ has a unique stationary point in the ball
+$\norm{\mathbf u-\mathbf m^{k-1}}\le\epsilon\sqrt n$ intersected with
+$[-1,1]^n$, lying in $(-1,1)^n$. Celentano's Hessian (p.~11), displayed with
+$\mathbf W$ and $\ip{\mathbf 1}{\mathbf v}$ after setting $\mathbf x=\mathbf 1$
+(\S4), reads
+\[
+ n\nabla^2\mathcal F_{\mathsf{AMS}}(\mathbf u)=\operatorname{diag}\bigl((1-u_i^2)^{-1}\bigr)
+ +\lambda^2(1-q_\infty)I-\lambda\mathbf Y .
+\]
+The motivating range is $\lambda\in[1/2,1)$, but the theorem has no upper
+bound on $\lambda$: ``We establish this for any $\lambda>0$'' (p.~4).
+
+\paragraph{Correspondence.}
+Take $\lambda=1$ and $\gamma_0=s$, and write
+$\Delta_{\mathbf u}=\operatorname{diag}(1-u_i^2)$ for $\mathbf u\in(-1,1)^n$.
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.13\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+& Preprint ($\beta=1$, time $s$) & Celentano ($\lambda=1$, $\gamma_0=s$)\\
+\midrule
+Law
+& $X$ uniform, $J=W+XX^{\mathsf T}/n$, $h_s=sX+B_s$; gauged to
+ $X=\mathbf 1$, $h_s=s\mathbf 1+\sqrt s\,g$ \ploc{(p.~89)}{profile-positive.tex:475--477}
+& $\mathbf Y=\mathbf x\mathbf x^{\mathsf T}/n+\mathbf W$,
+ $\mathbf y=s\mathbf x+\sqrt s\,\mathbf g$ ((1)--(2), p.~2); $\mathbf x=\mathbf 1$ (p.~11)\\
+\addlinespace
+Field equation
+& $\widetilde F_{h_s}(y)=0$:
+ $y+(1-q(y))m-Jm=h_s$ \ploc{(p.~89)}{profile-positive.tex:479--483}
+& AMP fixed point: $\mathbf z+(1-Q(\mathbf m))\mathbf m-\mathbf Y\mathbf m=\mathbf y$,
+ $\mathbf m=\tanh\mathbf z$ ((5), p.~4); stationarity of (6) has $q_\infty$ for
+ $Q(\mathbf m)$\\
+\addlinespace
+Overlap fixed point
+& $v_*(s)=s+\E_{N(v_*,v_*)}\tanh y$, with $q=v_*-s$ on the equality law
+ \ploc{(Lemma~13.3, p.~87)}{profile-positive.tex:311--328}
+& $\gamma_\infty=s+\E\tanh(\gamma_\infty+\sqrt{\gamma_\infty}G)$,
+ $q_\infty=\gamma_\infty-s$ ((15), Prop.~3(v), p.~9)\\
+\addlinespace
+Matrix
+& $\Delta_{\mathbf u}^{-1/2}\widetilde{\mathcal H}(y,\Delta_{\mathbf u})\Delta_{\mathbf u}^{-1/2}
+ =\Delta_{\mathbf u}^{-1}+b(y)I-J-\frac2nmm^{\mathsf T}$
+& $n\nabla^2\mathcal F_{\mathsf{AMS}}(\mathbf u)=\Delta_{\mathbf u}^{-1}+(1-q_\infty)I-\mathbf Y$
+ (p.~11)\\
+\addlinespace
+Where
+& every $y$ with $\norm{F_{h_s}(y)}\le\rho_0\sqrt n$ and every diagonal $A$ in a
+ Frobenius ball of radius $\epsilon_A\sqrt n$ around $V_y$
+ \ploc{((13.1), p.~83)}{profile-positive.tex:22--30}
+& every $\mathbf u$ with $\norm{\mathbf u-\mathbf m^{k-1}}\le\epsilon\sqrt n$,
+ $\epsilon<c'$, $k\ge k_0(\epsilon)$ ((16), p.~10)\\
+\addlinespace
+Constants, probability
+& margin $c_0$; constants depend only on $[s_1,T]$; probability
+ $1-e^{-an}$, uniformly on $[s_1,T]$; rate $e^{-A_*nr^3}$ for failure of
+ (13.1), and $e^{-cn\theta^3}$ for approximate roots with $q(y)>\theta\ge Cr$,
+ as $s\to0$ (Prop.~13.4)
+& margin $c$ (in units of $1/n$); $c,c'$ depend on $(\lambda,\gamma_0)$;
+ probability tending to one\\
+\addlinespace
+Roots
+& no approximate root with $q<c_*$; a unique root of $F_{h_s}$ in $\R^n$
+ \ploc{(proof of Prop.~13.5, p.~95)}{profile-positive.tex:1024--1033}
+& a unique stationary point in the ball (Thm.~2(ii), p.~11)\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+The two key formulas, side by side:
+\begin{itemize}
+\item \emph{Hessians.} With $J=\mathbf Y$ and $m=\tanh y$, for every $y$ and
+ $\mathbf u\in(-1,1)^n$,
+ \[
+  n\nabla^2\mathcal F_{\mathsf{AMS}}(\mathbf u)
+  =\Delta_{\mathbf u}^{-1/2}\,\widetilde{\mathcal H}(y,\Delta_{\mathbf u})\,\Delta_{\mathbf u}^{-1/2}
+  +\bigl(q(y)-q_\infty\bigr)I+\tfrac2n\,mm^{\mathsf T}.
+ \]
+ Since $\Delta_{\mathbf u}\preceq I$,
+ $\widetilde{\mathcal H}(y,\Delta_{\mathbf u})\succeq c_0I$ gives
+ $n\nabla^2\mathcal F_{\mathsf{AMS}}(\mathbf u)\succeq(c_0-|q(y)-q_\infty|)I$.
+\item \emph{Roots.} If $\mathbf m_*=\tanh\mathbf z_*$ is stationary for
+ $\mathcal F_{\mathsf{AMS}}$, then
+ $\widetilde F_{\mathbf y}(\mathbf z_*)=(q_\infty-Q(\mathbf m_*))\mathbf m_*$, and
+ $\norm{\Delta_{\mathbf u}-V_{\mathbf z_*}}_{\mathrm F}\le2\norm{\mathbf u-\mathbf m_*}$.
+\end{itemize}
+Hence, on the event of Proposition~13.4 and for $n$ large, the lower bound in
+(16), centred at $\mathbf m_*$ instead of $\mathbf m^{k-1}$, holds with
+$c=c_0-|Q(\mathbf m_*)-q_\infty|-o(1)$ on the ball
+$\norm{\mathbf u-\mathbf m_*}\le\frac12\epsilon_A\sqrt n$ around every
+stationary point with $|Q(\mathbf m_*)-q_\infty|\le\rho_0/2$ (the diagonal of
+$J$ costs $o(1)$ in both the residual and the Hessian); for Celentano's
+stationary point this difference is small, since $Q(\mathbf m^{k-1})\to q_\infty$
+(Prop.~3, p.~9). Celentano proves the bound only around the stationary point
+that AMP finds.
+
+\paragraph{What is new in the preprint.}
+\begin{itemize}
+\item Uniformity over every approximate root (which gives a unique root of
+ $F_{h_s}$ in $\R^n$) and every nearby diagonal $A$, and exclusion of
+ approximate roots of overlap below $c_*$; Proposition~13.5 uses both.
+\item The Hessian with self-consistent $q$, including the rank-one term
+ $-\frac2nmm^{\mathsf T}$.
+\item Probability $1-e^{-an}$, uniform in $s\in[s_1,T]$ and along the path;
+ small-time rates; transfer to typical disorder (Lemma~17.3); the
+ spectral-noise fields of Proposition~17.5.
+\item The proof: smoothed Kac--Rice integrals, a conditional finite-rank
+ Hessian and a local-volume witness, adapted from
+ \ploc{AcceptedGap \S5}{stability.tex}. Celentano uses a Sudakov--Fernique
+ comparison conditional on the AMP iterates.
+\end{itemize}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item Read Celentano (1)--(2) (p.~2), (6) (p.~4) and Theorem~2 (pp.~10--11)
+ with $\lambda=1$, $\gamma_0=s$, together with the sentence on p.~4 that
+ covers every $\lambda>0$, against
+ \ploc{Proposition~13.4 (pp.~88--89)}{profile-positive.tex:442--466} and the
+ gauged planted law at the start of its proof
+ \ploc{(p.~89)}{profile-positive.tex:475--483}; then Celentano's (15) and
+ Prop.~3(v) (p.~9) against
+ \ploc{Lemma~13.3 (p.~87)}{profile-positive.tex:311--328}, which give
+ $\gamma_\infty=v_*(s)$ and $q_\infty=v_*(s)-s$.
+\item Put Celentano's Hessian (p.~11) next to $\widetilde{\mathcal H}$
+ \ploc{(p.~89)}{profile-positive.tex:479--483} conjugated by
+ $\Delta_{\mathbf u}^{-1/2}$, and check the Hessian identity above; then compare
+ the quantifiers of (16) (p.~10) with those of
+ \ploc{(13.1) (p.~83)}{profile-positive.tex:22--30}.
+\item For Route~2, read
+ \ploc{Lemma~17.3 (p.~143)}{cap-classical.tex:298--314} and the stability step
+ of \ploc{Proposition~17.5 (pp.~156--157)}{cap-classical.tex:1308--1375}
+ against Theorem~2 at $\gamma_0=t$.
+\item For credit, read the opening of
+ \ploc{\S13 (p.~83)}{profile-positive.tex:33--39}, which introduces
+ Proposition~13.4 as the endpoint replacement for the companion's
+ stable-field statements; \ploc{\S3 (p.~7)}{accepted-inputs.tex:24--30}, which
+ sets the whole-region assertion against ``positivity at one selected root'';
+ and the first sentence of the proof of
+ \ploc{Lemma~17.3 (p.~143)}{cap-classical.tex:316--318}. None cites
+ Celentano; the companion credits him at
+ \ploc{AcceptedGap \S1.1 (p.~4)}{introduction.tex:118--125}.
+\end{enumerate}
+\subsection{P6. Large-field reduction to sparse principal submatrices (Bandeira--El Alaoui--R\"odder)}\label{f:P6}
+
+\paragraph{Summary.}
+The preprint reuses a mechanism of Bandeira, El Alaoui and R\"odder (BER
+below) \sloc{BandeiraElAlaouiRodder2026-GlauberHighOverlapGibbs}{Thm.~1.1 and
+proof of Lemma~2.3}: a large external field leaves only a small,
+configuration-dependent set of weakly biased coordinates, and a norm bound
+holding uniformly over all sparse principal submatrices makes the Gibbs
+measure effectively high-temperature on that set. It is used twice, each time
+to carry a near-critical posterior to a product law at a large observation
+time: in the stability verification of
+\ploc{\S19.4 (p.~178)}{cap-entropy.tex:530--549}, and in the proof of
+\ploc{Proposition~13.6 (pp.~102--103)}{profile-positive.tex:1556--1698}. BER
+is cited nowhere: \S19.4 cites nothing, and \S13.4 cites the companion's net
+lemma, whose lead-in paragraph
+\ploc{(companion \S8, p.~61)}{terminal.tex:217--223} credits BER.
+\textbf{Grade: \grade{Partial}}, because only BER's two elementary steps (the weak-field
+count and the sparse-submatrix bound) are reused, and the decisive block split
+is the companion's.
+
+\paragraph{Setup.}
+AG denotes the companion \cite{OAI-AcceptedGap}. In \S\S17--19, $\beta<1$ is
+not an inverse temperature but a fixed interaction coefficient close to~$1$
+\ploc{(\S18, pp.~158--159)}{cap-initialization.tex:39--66}, and
+$|u|_n=n^{-1/2}\norm u$.
+\begin{itemize}
+\item \emph{Stability test.} For an interaction $J_*$ with entries of variance
+ $j/n$, \ploc{(17.1)}{cap-classical.tex:17--21} sets $m=\tanh y$,
+ $r=1-\norm m^2/n$, $V=\operatorname{diag}(1-m_i^2)$ and
+ $F_h(y)=y+(jrI-J_*)m-h$, whose roots are TAP solutions. A field $h$ passes
+ the test \ploc{(17.2)}{cap-classical.tex:24--38} if every $y$ and diagonal
+ $A$ with $|F_h(y)|_n\le2\rho$, $0\le A\le(1+\eta_{\rm stab})I$ and
+ $n^{-1/2}\norm{A-V}_{\mathrm F}\le\epsilon_A$ satisfy
+ \[
+  I+A^{1/2}\bigl(jrI-J_*-\tfrac{2j}{n}mm^{\mathsf T}\bigr)A^{1/2}\succeq bI .
+ \]
+ At $A=V$ this is the symmetrized TAP Jacobian. For such fields with
+ $j(1+\eta_{\rm stab})^2<1$,
+ \ploc{Proposition~17.1}{cap-classical.tex:45--79} uses AG's
+ high-temperature machinery to give a unique root and
+ $\norm{\Cov_{\mu_h}(x)}\le C$.
+\item \emph{Weakening path (\S19.4).} Route~2 tracks the retained entropy
+ $H(s)=\E_{Q_\nu}D(\nu_s\Vert\mu_s)$, the expected relative entropy between
+ the posteriors of the tilted law $\nu=f^2\mu_J/N$ and of $\mu_J$
+ \ploc{(\S19.2, p.~173)}{cap-entropy.tex:160--175}. After scalar precision
+ $T$ it follows $B_a=(T+4a)I+(1-\beta+a)J$, $0\le a\le\beta$
+ \ploc{(p.~178)}{cap-entropy.tex:531--535}. The posterior interaction is
+ $J_*=(\beta-a)J^\circ$, so $j=(\beta-a)^2$ falls to~$0$, a product law. The
+ field is $h=TX+[4aX+(1-\beta+a)JX]+B_a^{1/2}G$ with $X\sim\nu$, so every
+ bound must be uniform in~$X$.
+\item \emph{Terminal extension (\S13.4).}
+ \ploc{Proposition~13.6}{profile-positive.tex:1556--1582} sets
+ $h_T=TX+\sqrt Tg$, for any law of~$X$, and continues with
+ $h_{T+\lambda}=h_T+\lambda RX+R^{1/2}B_\lambda$, $R=J+c_+I\succeq0$. It shows
+ that $\mu_{h_T}$ has unscaled gap at least $1/2$ and that the laws
+ $\mu_{h_{T+\lambda},\lambda}$, where
+ $\mu_{h,\lambda}\propto\exp(\frac{1-\lambda}2x^{\mathsf T}J^\circ x+h^{\mathsf T}x)$,
+ keep bounded covariance and inverse gap up to the product law at
+ $\lambda=1$, all outside probability $e^{-cn}$. Its proof bounds the error
+ term $\mu_h[a^{\mathsf T}Ua+C|a|^{\mathsf T}Q|a|]$ of AG's signed curvature
+ inequality \ploc{(Lemma~8.1)}{terminal.tex:32--33}, restated
+ \ploc{on p.~102}{profile-positive.tex:1588--1596}; here $U=\tanh B$
+ entrywise, $Q_{ij}=U_{ij}^2$, $a_i=v_id_if$, and $v_i$ is the conditional
+ spin variance.
+\end{itemize}
+
+\paragraph{Role in the argument.}
+Both routes end at a product law, where a two-point log-Sobolev inequality
+and tensorization bound the entropy. Reaching it with only fixed losses needs
+bounded covariance (route~2, through (17.2)) or a uniform gap (route~1),
+uniformly in the source law. Near the start of the \S19 path
+$\sqrt j\approx1$, so the crude bound
+$(1+\eta_{\rm stab})\norm{J_*}\approx2(1+\eta_{\rm stab})\sqrt j$ cannot
+give (17.2); the sparse bound can. In route~2 the verification yields
+\ploc{(19.17)}{cap:constant-entropy-ode}, $\dot H\ge-CH-e^{-an}$, which
+carries the retained entropy \ploc{(19.16)}{cap:retained-entropy} to the
+product endpoint when $L\le\lambda n$
+\ploc{(p.~180)}{cap-entropy.tex:649--652}; the same test on the later
+weakening interval of \ploc{\S19.6}{cap-entropy.tex:751--754, 777--786,
+806--809} defines the stopping time used for $\lambda n\le L\le Cn$, so both
+entropy ranges of
+\ploc{Theorem~19.3}{cap-entropy.tex:856--874} pass through it. In route~1,
+Proposition~13.6 supplies bounded covariance, the terminal gap and the
+order-$n$ entropy extension in the proof of Proposition~14.1
+\ploc{(pp.~106, 109, 111)}{profile-entropy.tex:190--195, 427--429, 575--579}.
+
+\paragraph{The earlier technique.}
+BER prove polynomial-time Glauber mixing for quadratic Gibbs measures, SK at
+every $\beta$ included, once the external field is large
+\sloc{BandeiraElAlaouiRodder2026-GlauberHighOverlapGibbs}{\S1.1, Thm.~1.1 and Cor.~1.2, p.~3}.
+We write $K$ for their interaction matrix; their $m$ is a dimension.
+\emph{Theorem~1.1}: if
+$\max_{|\mathcal S|\le\delta n}\norm{K_{\mathcal S\mathcal S}}\le\frac15$
+for some $\delta\in(0,1)$, then for some $\theta$ independent of $n$, lazy
+Glauber dynamics for
+$\nu(x)\propto\exp(\frac12x^{\mathsf T}Kx+\theta\one^{\mathsf T}x)$ mixes in
+polynomial time. The proof combines two observations.
+\begin{itemize}
+\item \emph{Few weak coordinates.} A field $\theta\one+v$ with
+ $\norm v=O(\sqrt n)$ ($v$ comes from pinning, Proposition~3.2, p.~10) is
+ below $\theta/2$ only on a small set, by a Chebyshev count (proof of
+ Lemma~2.3, p.~7). A spin-flip injection then shows that most spins align
+ with the field (Lemma~2.3, Corollary~2.4).
+\item \emph{High temperature on small sets.} The remaining randomness lives
+ on a small set: the free spins after pinning (\S3.2, p.~11), or the set
+ $\mathcal D$ where two replicas disagree, on which the halved replica
+ difference is Gibbs with interaction $2K_{\mathcal D\mathcal D}$
+ (Lemma~2.1, p.~5). The hypothesis then bounds its covariance (eq.~(11)).
+\end{itemize}
+The GOE matrix satisfies the hypothesis by Gaussian concentration and a union
+bound over supports, which BER call routine (\S3.3, pp.~11--12). AG adapt the
+mechanism at fixed $j<1$, crediting BER's Theorem~1.1 just before its
+Lemma~8.2 \ploc{(\S8, p.~61)}{terminal.tex:217--223}. AG's
+\ploc{Lemma~8.2}{terminal.tex:225--327} proves the sparse bounds with $9^k$
+nets, and the proof of its \ploc{Proposition~8.3}{terminal.tex:334--433}
+counts weak-field sites, then splits the curvature form into a block on the
+weak set $S(x)$, controlled by the sparse bound, and cross and complementary
+blocks, controlled by the global norm times $2\sqrt\eta$ and $\eta$,
+respectively, where $\eta=\operatorname{sech}^2(T/4)$.
+
+\paragraph{Correspondence.}
+The gauge $x\mapsto X\odot x$ maps the field $TX$ to $T\one$ and preserves
+submatrix norms, so BER's $\theta$ is the preprint's $T$.
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.15\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{0.24\linewidth}>{\raggedright\arraybackslash}p{0.2\linewidth}@{}}
+\toprule
+Step & Preprint & BER & AG\\
+\midrule
+Large field, $O(\sqrt n)$ perturbation
+& Proof of Prop.~13.6 \ploc{(p.~103)}{profile-positive.tex:1658--1665};
+ \ploc{\S19.4}{cap-entropy.tex:536--538}
+& $\theta\one+v$ (Lemma~2.3); $v$ from pinning (Prop.~3.2)
+& $TX+\sqrt TZ$ (Prop.~8.3)\\
+\addlinespace
+Weak-field count
+& Norm count \ploc{(p.~103)}{profile-positive.tex:1660--1667}; ``small site
+ fraction'' \ploc{(\S19.4)}{cap-entropy.tex:535--536}
+& Chebyshev count (p.~7)
+& Independence count \ploc{(p.~63)}{terminal.tex:375--382}\\
+\addlinespace
+Small, configuration-dependent set
+& Weak conditional field
+ \ploc{(p.~103)}{profile-positive.tex:1668--1673}; $A$ not small
+ \ploc{(\S19.4)}{cap-entropy.tex:539--540}
+& Free set (p.~11); disagreement set $\mathcal D$ (Lemma~2.2)
+& $S(x)$ \ploc{(eq.~(8.16))}{terminal.tex:393--395}\\
+\addlinespace
+Uniform sparse bound
+& $9^k$ nets, $|S|\le\alpha n$ \ploc{(p.~102)}{profile-positive.tex:1610--1625};
+ in words in \ploc{\S19.4}{cap-entropy.tex:540--541}
+& Hypothesis of Thm.~1.1; GOE in \S3.3
+& $9^k$ nets \ploc{(Lemma~8.2)}{terminal.tex:225--327}\\
+\addlinespace
+High temperature on the small set
+& Block split \ploc{(p.~103)}{profile-positive.tex:1675--1686};
+ (17.2) via $\norm{J_*}$ and $|A^{1/2}m|_n$
+ \ploc{(\S19.4)}{cap-entropy.tex:541--543}
+& Exact restriction to $\mathcal D$ (Lemma~2.1, eq.~(11))
+& Block split \ploc{(p.~64)}{terminal.tex:397--412}\\
+\addlinespace
+Output
+& (19.17); gap $\ge\frac12$ uniformly in $\lambda$ (Prop.~13.6)
+& Polynomial mixing (Thm.~1.1)
+& Gap $\ge\frac12$ at fixed $j<1$ \ploc{(Prop.~8.3)}{terminal.tex:334--349}\\
+\bottomrule
+\end{xltabular}
+\end{center}
+The two key formulas, side by side:
+\begin{itemize}
+\item \emph{Weak-field count.} BER (p.~7): $\norm v^2\ge|\mathcal
+ S|(\theta/2)^2$ on $\mathcal S=\{i:h_i\le\theta/2\}$, so $\norm v\le
+ C_2\sqrt m$ and $\theta>4C_2/\sqrt\delta$ give $|\mathcal S|\le\delta m/4$.
+ Preprint \ploc{(p.~103)}{profile-positive.tex:1660--1667}:
+ $\sup_\lambda\norm{h_{T+\lambda}-TX}\le C(1+\sqrt T)\sqrt n$, so for large
+ $T$ fewer than $\alpha n/2$ sites have $|h_{T+\lambda,i}|<T/2$.
+\item \emph{High-temperature step.} BER (eq.~(11), p.~11):
+ $\norm{\Cov(\nu_{2K_{\mathcal S\mathcal S}})}\le(1-2\norm{2K_{\mathcal
+ S\mathcal S}})^{-1}\le5$ for $|\mathcal S|\le\delta n$. AG
+ \ploc{(p.~64)}{terminal.tex:404--412}:
+ $a^{\mathsf T}Ua\le[\varepsilon+M(2\sqrt\eta+\eta)]q_f$; preprint
+ \ploc{(p.~103)}{profile-positive.tex:1679--1681}:
+ $a^{\mathsf T}Ua+C|a|^{\mathsf T}Q|a|\le(1+C)\{\varepsilon+M(2\sqrt\eta+\eta)\}q_f$,
+ where $q_f=\sum_iv_i(d_if)^2$.
+\end{itemize}
+
+\paragraph{What is new in the preprint.}
+\begin{itemize}
+\item At \S19 the mechanism verifies (17.2), including its rank-one term,
+ along a path on which the interaction coefficient varies, so that AG's
+ high-temperature input applies; at \S13 it feeds AG's curvature inequality.
+ BER use it to bound correlation matrices under pinning.
+\item The small set is defined deterministically from the field or an
+ approximate TAP root, for every configuration and source law; BER's
+ alignment holds in Gibbs probability.
+\item At \S13 the conclusion is an $O(1)$ gap with failure probability
+ $e^{-cn}$, extended in $\lambda$ to a product law. For the planted
+ posterior at time $T$, BER's Corollary~4.1 (p.~13) gives only polynomial
+ mixing.
+\end{itemize}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item Read \ploc{\S19.4 (p.~178)}{cap-entropy.tex:530--549} against BER \S1.2
+ (pp.~3--4) and the definition of $\mathcal S$ and the bound
+ $|\mathcal S|\le\delta m/4$ in the proof of BER's Lemma~2.3 (p.~7): the
+ ``small site fraction'' is BER's count with $\theta=T$.
+\item Read \ploc{the proof of Proposition~13.6 (pp.~102--103)}{profile-positive.tex:1600--1686}
+ against BER \S3.3 (pp.~11--12), AG's
+ \ploc{Lemma~8.2 (pp.~61--63)}{terminal.tex:225--327} and
+ \ploc{the proof of AG's Proposition~8.3 (pp.~63--64)}{terminal.tex:370--412},
+ with AG's credit to BER \ploc{on p.~61}{terminal.tex:217--223}.
+\item Read \ploc{(17.2)}{cap-classical.tex:27--38} and
+ \ploc{the end of the stability verification in \S19.4}{cap-entropy.tex:539--543}
+ against \ploc{AG's block split (p.~64)}{terminal.tex:397--412}, then BER's
+ Lemma~2.1 (p.~5) and eq.~(11) (p.~11): BER restrict exactly to the small
+ set, while AG and the preprint down-weight its complement.
+\end{enumerate}
+
+\section{Structural finding}\label{sec:structural}
+\subsection{C1. The spectral-cap route is not needed for the log-Sobolev exponent}\label{f:C1}
+
+\paragraph{Summary.}
+Route~1 ends with the support profile of
+\ploc{Theorem~14.2}{profile-entropy.tex:599--612} (p.~111). By the
+Hermon--Peres characterization of the log-Sobolev constant through Dirichlet
+eigenvalues of sets
+\sloc{HermonPeres2016-L2MixingHypercontractivityHitting}{Thm~1.2, p.~3 of
+arXiv v3}, this profile alone gives
+$C_{\mathrm{LS},J}<17c_\omega^{-1}n^{2/3+\omega}$; Diaconis--Saloff-Coste
+\sloc{DiaconisSaloffCoste1996-LogSobolevFiniteMarkovChains}{Cor.~3.11,
+p.~728}, applied to the $L^2$ bound in the proof of
+\ploc{Lemma~20.1}{dynamics.tex:83--93} (p.~184), gives the same exponent up to a
+factor $\log n$. The preprint instead takes the upper bound on
+$C_{\mathrm{LS},J}$ in Theorem~1.1 only from
+\ploc{Theorem~19.3}{cap-entropy.tex:856--874}, the endpoint of the
+spectral-cap route \ploc{\S\S15--19 (pp.~112--183)}{cap-static.tex:1 to
+cap-entropy.tex:874}, and states in \ploc{\S2 (p.~7)}{model.tex:70--72} that
+this inequality ``will require its own entropy and layer argument''. It cites
+Diaconis--Saloff-Coste only for Theorems~3.5 and~3.7, and does not cite
+Hermon--Peres. Conversely, Goel--Montenegro--Tetali
+\sloc{GoelEtAl2005-MixingSpectralProfile}{Lemma~4.2 and the remark after it,
+p.~15 of arXiv v1}, also cited, turn Theorem~19.3 back into the support
+profile, so the two routes end at statements equivalent up to constant
+factors. Grade:
+\grade{Major}, because a component of the main theorem becomes a citation and
+about 70 pages become unnecessary for Theorem~1.1.
+
+\paragraph{Setup.}
+Shared notation is in Section~\ref{sec:overview}. Write
+$h_t^x=e^{t\Lgen_J}(x,\cdot)/\mu_J$ for the density at per-site time $t$ from
+the start $x$, and
+\[
+ \tau_2=\inf\bigl\{t>0:\ \max_x\norm{h_t^x-1}_{L^2(\mu_J)}\le1/e\bigr\}
+\]
+for the worst-start $L^2$ mixing time of $e^{t\Lgen_J}$. Lemma~20.1 assumes
+\ploc{(20.1)}{dynamics.tex:17--22}: $\D(f)\ge\alpha\,\mu(f^2)\log(1/p)$ for
+every $f\ge0$ with $0<p=\mu(f>0)\le\frac12$. On the event of Theorem~14.2 this
+holds with $\mu=\mu_J$ and $\alpha=c_\omega n^{-2/3-\omega}$. Its proof
+follows $V_t=\mu_J\bigl((h_t^x)^2\bigr)=1+\norm{h_t^x-1}_2^2$ and uses
+$M=\max\{8,\mu_{J,\min}^{-1}\}$, where $\mu_{J,\min}\ge e^{-(3+\log2)n}$ on
+$\norm J\le3$ \ploc{(20.5)}{dynamics.tex:144--146}. The sources'
+constants are written $\alpha_{\mathrm{HP}}$, $\alpha_{\mathrm{DSC}}$ and
+$\rho_{\mathrm{GMT}}$, distinct from the preprint's $\alpha$ and the slack
+$\rho$ of Theorem~19.3.
+
+\paragraph{Role in the argument.}
+The mixing upper bounds come from Lemma~20.1 with Theorem~14.2
+\ploc{(p.~185)}{dynamics.tex:137--148}. In
+\ploc{\S20.3 (p.~186)}{dynamics.tex:196--201} the median consequence of
+Theorem~14.2 gives the upper bound on $R_J$, and Theorem~19.3 alone is named
+for the upper bound on $C_{\mathrm{LS},J}$. Route~2 exists to prove Theorem~19.3. It comprises the
+cube--sphere comparison on caps (\S15), the radial-deficit induction (\S16),
+its initialization (\S\S17--18), and entropy retention closed by Lemma~19.1
+(\S19). Elsewhere Theorem~19.3 serves only as a second proof of the mixing
+bounds in \ploc{\S20.2 (p.~185)}{dynamics.tex:150--185} and, through
+$C_{\mathrm{EP},J}\le C_{\mathrm{LS},J}/4$, in
+\ploc{Corollary~20.2}{dynamics.tex:249--263}. Route~1 does not use route~2:
+\S\S5--14 refer to no result of \S\S15--19, and \S20.1 uses only Theorem~14.2
+and (20.5).
+
+\paragraph{The earlier results.}
+\begin{itemize}
+\item \emph{Hermon--Peres.} For a finite irreducible chain $(\Omega,P,\pi)$
+ with $Q=(P+P^*)/2$, set $\mathcal E(f)=\ip{(I-Q)f}{f}_\pi$,
+ $c_{\mathrm{LS}}=\inf\{\mathcal E(f)/\Ent_\pi(f^2):f\text{ non-constant}\}$
+ and $t_{\mathrm{LS}}=1/c_{\mathrm{LS}}$ ((3.11), p.~9). For $A\subsetneq\Omega$,
+ $\lambda(A)$ is the smallest eigenvalue of $I-Q_A$, with $Q_A$ the
+ restriction of $Q$ to $A$ (p.~3); by the Rayleigh quotient,
+ $\lambda(A)=\min\{\mathcal E(f)/\pi(f^2):f\ne0,\ \operatorname{supp}f\subset A\}$.
+ $\mathrm{Con}_\delta$ is the set of connected $A$ with $\pi(A)\le\delta$
+ (p.~2). With
+ \[
+  \alpha_{\mathrm{HP}}=\min_{A\in\mathrm{Con}_{1/2}}\frac{\lambda(A)}{|\log\pi(A)|},\qquad
+  \kappa=1/\alpha_{\mathrm{HP}} \qquad\text{(HP (1.5))},
+ \]
+ Theorem~1.2 (p.~3) states, for every irreducible chain on a finite state
+ space,
+ \[
+  \kappa\le t_{\mathrm{LS}}\le2(\kappa+t_{\mathrm{rel}}(1+\log49))
+  \le2\Bigl(1+\frac{1+\log49}{\log2}\Bigr)\kappa<17\kappa
+  \qquad\text{(1.7)},
+ \]
+ where $t_{\mathrm{rel}}$ is the inverse of the smallest nonzero eigenvalue of
+ $I-Q$, and the third step uses $t_{\mathrm{rel}}\log2\le\kappa$ (1.6).
+\item \emph{Diaconis--Saloff-Coste.} For an irreducible Markov kernel $K$,
+ $H_t=e^{-t(I-K)}$ (p.~695), $h_t^x=H_t^x/\pi$,
+ $\mathcal E(f,f)=\frac12\sum_{x,y}|f(x)-f(y)|^2K(x,y)\pi(x)$ and
+ $\alpha_{\mathrm{DSC}}=\min\mathcal E(f,f)/\Ent_\pi(f^2)$ ((1.4)--(1.7),
+ p.~696; DSC write the entropy as $\sum|f|^2\log(|f|^2/\norm f_2^2)\pi$).
+ Corollary~3.11 (p.~728): if $(K,\pi)$ is reversible and
+ $\tau=\inf\{t>0:\sup_x\norm{h_t^x-1}_2\le1/e\}$, then
+ $\frac1{2\alpha_{\mathrm{DSC}}}\le\tau\le\frac1{4\alpha_{\mathrm{DSC}}}
+ \bigl(4+\log\log\frac1{\pi_*}\bigr)$.
+\item \emph{Goel--Montenegro--Tetali.} For the same $\mathcal E$,
+ $\rho_{\mathrm{GMT}}=\inf\mathcal E(f,f)/\Ent_\pi(f^2)$ (p.~15) and
+ $\lambda_0(A)=\inf_{f\in c_0^+(A)}\mathcal E(f,f)/\pi(f^2)$, over nonnegative
+ $f$ supported in $A$ (defined p.~4; variational form p.~9). Lemma~4.2 gives
+ $\Lambda(r)\ge\rho_{\mathrm{GMT}}\log(1/r)/(1-r)$ for the spectral profile
+ $\Lambda$, and the remark after it gives
+ $\lambda_0(A)\ge\rho_{\mathrm{GMT}}\log(1/\pi(A))$ (p.~15).
+\end{itemize}
+
+\paragraph{How the earlier results apply.}
+Take $K=P=P_J$ in all three sources. Each $Q_i$ is an orthogonal projection in
+$L^2(\mu_J)$ \ploc{(p.~184)}{dynamics.tex:99--101}, so $P_J$ is reversible; it
+is irreducible because every single-spin flip has positive heat-bath
+probability. The objects then match as follows.
+
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Sources & Preprint, with $K=P=P_J$\\
+\midrule
+$\mathcal E(f)=\ip{(I-Q)f}{f}_\pi$ (HP p.~9, before (3.11)); $\mathcal E(f,f)$
+(DSC p.~696, after (1.4); GMT p.~3)
+& $\D_J(f)/n$, since $\ip{(I-Q_i)f}{f}_{\mu_J}=\mu_J[\Var_{\mu_J}(f\mid x_{-i})]$
+and $P_J=n^{-1}\sum_iQ_i$ \ploc{((1.2), p.~3)}{introduction.tex:27--31}\\
+\addlinespace
+$c_{\mathrm{LS}}$ (HP), $\alpha_{\mathrm{DSC}}$, $\rho_{\mathrm{GMT}}$; $t_{\mathrm{LS}}$
+& $1/(nC_{\mathrm{LS},J})$, with $C_{\mathrm{LS},J}$ as in
+\ploc{(1.4)}{introduction.tex:43--45}; $t_{\mathrm{LS}}=nC_{\mathrm{LS},J}$\\
+\addlinespace
+$\lambda(A)$ (HP), $\lambda_0(A)$ (GMT)
+& $\min\{\D_J(f)/(n\mu_J(f^2)):f\ne0,\ \operatorname{supp}f\subset A\}$\\
+\addlinespace
+$\alpha_{\mathrm{HP}}=\min_{\mathrm{Con}_{1/2}}\lambda(A)/|\log\pi(A)|$ (HP (1.5))
+& $\ge c_\omega n^{-5/3-\omega}$ by \ploc{(14.16)}{profile-entropy.tex:605--609}\\
+\addlinespace
+$H_t=e^{-t(I-K)}$; $\tau$ (DSC pp.~695, 728)
+& $e^{(t/n)\Lgen_J}$; $\tau=n\tau_2$\\
+\addlinespace
+$\pi_*$ (DSC)
+& $\mu_{J,\min}\ge e^{-(3+\log2)n}$ \ploc{(20.5)}{dynamics.tex:144--146}\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\begin{enumerate}
+\item \emph{Hermon--Peres.} If $\mu_J(A)\le\frac12$ and $f\ne0$ is supported in
+ $A$, then $p\le\mu_J(A)$, so (14.16) gives
+ $\D_J(f)/n\ge c_\omega n^{-5/3-\omega}\log(1/\mu_J(A))\,\mu_J(f^2)$. Hence
+ $\lambda(A)\ge c_\omega n^{-5/3-\omega}|\log\mu_J(A)|$ for every such $A$,
+ connected or not, and $\alpha_{\mathrm{HP}}\ge c_\omega n^{-5/3-\omega}$. Then
+ (1.7) gives $nC_{\mathrm{LS},J}<17\kappa\le17c_\omega^{-1}n^{5/3+\omega}$ on the
+ event of Theorem~14.2, where (14.16) holds for all $f$ at once. With
+ $\omega=\delta/2$ this is $C_{\mathrm{LS},J}\le n^{2/3+\delta}$ with probability
+ tending to one, for every $\delta>0$.
+\item \emph{Diaconis--Saloff-Coste.} Corollary~3.11 reads
+ $nC_{\mathrm{LS},J}/2\le n\tau_2$, that is $C_{\mathrm{LS},J}\le2\tau_2$. The
+ proof of Lemma~20.1 shows, for every start, $V_t\le8$ once
+ $t\ge t_0=\alpha^{-1}\log\frac{\log(M/4)}{\log2}$ and
+ $V_{t_0+t}-1\le7e^{-2\alpha(\log2)t}$
+ \ploc{(p.~184)}{dynamics.tex:86--93}. So
+ $\tau_2\le t_0+\frac{2+\log7}{2\alpha\log2}$, and (20.5) gives
+ $C_{\mathrm{LS},J}\le2\alpha^{-1}(\log(6n)+3)=O(n^{2/3+\omega}\log n)$.
+\item \emph{Converse.} With $\rho_{\mathrm{GMT}}=1/(nC_{\mathrm{LS},J})$, the remark after
+ GMT Lemma~4.2, applied to $|f|$ with $A=\{f\ne0\}$, gives
+ $\D_J(f)\ge C_{\mathrm{LS},J}^{-1}\log(1/p)\,\mu_J(f^2)$. So Theorem~19.3,
+ $C_{\mathrm{LS},J}\le n^{2/3+\rho}$, yields (14.16) with $n^{-2/3-\rho}$ in
+ place of $c_\omega n^{-2/3-\omega}$.
+\end{enumerate}
+
+The two endpoints side by side:
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Preprint & With the earlier results\\
+\midrule
+Route~1, \ploc{(14.16), p.~111}{profile-entropy.tex:605--609}:
+$\D_J(f)\ge c_\omega n^{-2/3-\omega}\log(1/p)\,\mu_J(f^2)$ for $p\le\frac12$
+& HP (1.5) with $\mathcal E=\D_J/n$:
+$\alpha_{\mathrm{HP}}=\min_{A}\frac{\lambda(A)}{|\log\pi(A)|}\ge c_\omega n^{-5/3-\omega}$\\
+\addlinespace
+Route~2, \ploc{(19.23), p.~183}{cap-entropy.tex:859--862}:
+$\Ent_{\mu_J}(f^2)\le n^{2/3+\rho}\D_J(f)$, after \S\S15--19
+& HP (1.7): $C_{\mathrm{LS},J}=t_{\mathrm{LS}}/n<17c_\omega^{-1}n^{2/3+\omega}$
+from route~1 alone\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{What the cap route still contributes.}
+\begin{itemize}
+\item A second proof of all the upper bounds in Theorem~1.1, through
+ hypercontractivity (\S20.2), that does not pass through Theorem~14.2.
+\item Results on capped Gibbs measures that nothing outside \S\S15--19 uses:
+ the cube--sphere comparison of capped partition functions and projected
+ means, uniformly over field balls
+ (\ploc{Proposition~15.1}{cap-static.tex:299--309}); the one-step transport of
+ the radial deficit (\ploc{Proposition~16.1, p.~125}{cap-multiscale.tex:80});
+ and the projected covariance bounds $(1+\epsilon)/p^2$ on the saddle annulus
+ and $C/p^2$ on bounded field balls at all scales
+ $p_{\min}(n)\le p\le p_{\mathrm{top}}$
+ (\ploc{Theorem~18.6, p.~170}{cap-initialization.tex:976--989}).
+\item No better constant: Theorem~19.3 passes through Lemma~19.1, whose
+ constant carries $C(1+\log_+M)^2=O(\log^2n)$
+ \ploc{(p.~172)}{cap-entropy.tex:58--62}, while the Hermon--Peres derivation
+ above loses only the factor~17.
+\end{itemize}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item \emph{Hermon--Peres.} Put (14.16) (p.~111) beside HP (1.5) and
+ Theorem~1.2 (p.~3), with $c_{\mathrm{LS}}$ from (3.11) (p.~9). With $P=P_J$,
+ (1.2) gives $\mathcal E=\D_J/n$, and the factor $n$ cancels between
+ $t_{\mathrm{LS}}$ and $\kappa$.
+\item \emph{Diaconis--Saloff-Coste.} Put the $L^2$ bounds in the proof of
+ Lemma~20.1 \ploc{(p.~184)}{dynamics.tex:83--93} and (20.5) (p.~185) beside
+ DSC Corollary~3.11 (p.~728) and the definitions (1.4)--(1.7) (p.~696).
+\item \emph{Use of route~2.} Read \ploc{\S20.3 (p.~186)}{dynamics.tex:196--201}
+ and the sentence quoted from \ploc{\S2 (p.~7)}{model.tex:67--72}; then check that the proofs of Theorem~14.2
+ \ploc{(pp.~111--112)}{profile-entropy.tex:614--690} and Lemma~20.1
+ \ploc{(pp.~184--185)}{dynamics.tex:51--148} invoke nothing from \S\S15--19.
+\item \emph{Converse.} Put GMT Lemma~4.2 and the remark after it (p.~15) beside
+ Theorem~19.3 (p.~183).
+\end{enumerate}
+
+\begin{thebibliography}{99}
+\small
+\bibitem{ElAlaouiMontanariSellke2022-SamplingSKAlgorithmicSL} A. El Alaoui, A. Montanari, M. Sellke, "Sampling from the Sherrington-Kirkpatrick Gibbs measure via algorithmic stochastic localization", FOCS 2022 (full version). arXiv:2203.05093v2.
+\bibitem{BaikLee2015-FluctuationsSphericalSKFreeEnergy} J. Baik, J. O. Lee, "Fluctuations of the free energy of the spherical Sherrington-Kirkpatrick model", J. Stat. Phys. 165 (2016). arXiv:1505.07349v5.
+\bibitem{BaikEtAl2020-SphericalSpinGlassExternalField} J. Baik, E. Collins-Woodfin, P. Le Doussal, H. Wu, "Spherical spin glass model with external field", J. Stat. Phys. (2021). arXiv:2010.06123v3.
+\bibitem{Landon2020-CriticalSphericalSKFreeEnergy} B. Landon, "Free energy fluctuations of the two-spin spherical SK model at critical temperature", J. Math. Phys. 63 (2022) 033301. arXiv:2010.06691v1; doi:10.1063/5.0054298.
+\bibitem{NguyenSosoe2018-OverlapCLTNearCriticalSphericalSK} V. L. Nguyen, P. Sosoe, "Central limit theorem near the critical temperature for the overlap in the 2-spin spherical SK model", J. Math. Phys. 60 (2019). arXiv:1809.03675v1; doi:10.1063/1.5065525.
+\bibitem{DuHuang2026-CriticalSKFreeEnergyFluctuations} H. Du, B. Huang, "Fluctuations of the Sherrington-Kirkpatrick free energy at critical temperature" (2026). arXiv:2607.02172v2.
+\bibitem{BrezinHikami2001-CharPolyRealSymmetric} E. Brézin, S. Hikami, "Characteristic polynomials of real symmetric random matrices", Commun. Math. Phys. 223 (2001) 363-382. arXiv:math-ph/0103012v1; doi:10.1007/s002200100547.
+\bibitem{BauerschmidtBodineau2019-SineGordonMultiscaleBakryEmery} R. Bauerschmidt, T. Bodineau, "Log-Sobolev inequality for the continuum sine-Gordon model", Comm. Pure Appl. Math. 74 (2021). arXiv:1907.12308v2.
+\bibitem{BauerschmidtBodineauDagallier2023-PolchinskiIntroduction} R. Bauerschmidt, T. Bodineau, B. Dagallier, "Stochastic dynamics and the Polchinski equation: an introduction", Probab. Surveys (2024). arXiv:2307.07619v2.
+\bibitem{AnariKoehlerVuong2024-TrickleDownLocalizationSchemes} N. Anari, F. Koehler, T.-D. Vuong, "Trickle-down in localization schemes and applications", STOC 2024 (full version). arXiv:2407.16104v1; doi:10.1145/3618260.3649622.
+\bibitem{BartheRoberto2003-SobolevInequalitiesRealLine} F. Barthe, C. Roberto, "Sobolev inequalities for probability measures on the real line", Studia Math. 159(3) (2003) 481-497. doi:10.4064/sm159-3-9.
+\bibitem{BartheEtAl2004-InterpolatedInequalitiesOrliczIsoperimetry} F. Barthe, P. Cattiaux, C. Roberto, "Interpolated inequalities between exponential and Gaussian, Orlicz hypercontractivity and isoperimetry", Rev. Mat. Iberoam. 22(3) (2006) 993-1067. arXiv:math/0407219v1.
+\bibitem{BakryEtAl1995-SobolevInequalitiesInDisguise} D. Bakry, T. Coulhon, M. Ledoux, L. Saloff-Coste, "Sobolev inequalities in disguise", Indiana Univ. Math. J. 44(4) (1995) 1033-1074. doi:10.1512/iumj.1995.44.2019.
+\bibitem{Wang2026-OptimalMixingGlauberSKBetaHalf} S. Wang, "Optimal mixing of Glauber dynamics for the Sherrington-Kirkpatrick model at beta<1/2" (v1 Aug 23, 2026; v2 Aug 28, 2026). arXiv:2608.22159v2.
+\bibitem{BobkovNaumovUlyanov2020-DensityMaxWeightedChiSquare} S. G. Bobkov, A. A. Naumov, V. V. Ulyanov, "Two-sided bounds for PDF's maximum of a sum of weighted chi-square variables", Springer Proc. Math. Stat. 371 (2021). arXiv:2012.10747v1; doi:10.1007/978-3-030-83266-7\_13.
+\bibitem{GotzeEtAl2017-LargeBallGaussianComparison} F. Götze, A. Naumov, V. Spokoiny, V. Ulyanov, "Large ball probabilities, Gaussian comparison and anti-concentration", Bernoulli 25(4A) (2019) 2538--2563. arXiv:1708.08663v2.
+\bibitem{BhattacharyaSen2015-OrthogonalMeanFieldSpinGlasses} B. B. Bhattacharya, S. Sen, "High temperature asymptotics of orthogonal mean-field spin glasses", J. Stat. Phys. (2016). arXiv:1507.05067v2.
+\bibitem{ElAlaouiGaitonde2022-CovarianceMatrixSK} A. El Alaoui, J. Gaitonde, "Bounds on the covariance matrix of the Sherrington-Kirkpatrick model". arXiv:2212.02445v3.
+\bibitem{Celentano2022-SudakovFerniquePostAMPTAPConvexity} M. Celentano, "Sudakov-Fernique post-AMP, and a new proof of the local convexity of the TAP free energy", Ann. Probab. 52 (2024). arXiv:2208.09550v1.
+\bibitem{BandeiraElAlaouiRodder2026-GlauberHighOverlapGibbs} A. S. Bandeira, A. El Alaoui, A. Rödder, "Mixing of Glauber dynamics on high overlap Gibbs measures" (July 2026). arXiv:2607.06813v1.
+\bibitem{HermonPeres2016-L2MixingHypercontractivityHitting} J. Hermon, Y. Peres, "A characterization of L2 mixing and hypercontractivity via hitting times and maximal inequalities", Probab. Theory Related Fields 170 (2018) 769-800. arXiv:1609.07557v3.
+\bibitem{DiaconisSaloffCoste1996-LogSobolevFiniteMarkovChains} P. Diaconis, L. Saloff-Coste, "Logarithmic Sobolev inequalities for finite Markov chains", Ann. Appl. Probab. 6(3) (1996) 695-750. doi:10.1214/aoap/1034968224.
+\bibitem{OAI-CriticalMixing} OpenAI, \emph{Critical mixing in the Sherrington--Kirkpatrick model}, OpenAI Math Release preprint, September 25, 2026. \texttt{openai/math}, \texttt{preprints/Critical-mixing-in-the-Sherrington-Kirkpatrick-model-September-25-2026}.
+\bibitem{OAI-AcceptedCritical} OpenAI, \emph{Critical slowing down in the Sherrington--Kirkpatrick model}, OpenAI Math Release preprint, September 24, 2026 (cited by the preprint as \texttt{AcceptedCritical}).
+\bibitem{OAI-AcceptedGap} OpenAI, \emph{A spectral gap throughout the high-temperature Sherrington--Kirkpatrick phase}, OpenAI Math Release preprint, September 24, 2026 (cited by the preprint as \texttt{AcceptedGap}).
+\bibitem{FanMeiMontanari2018-TAPFreeEnergyVariationalInference} Z. Fan, S. Mei, A. Montanari, "TAP free energy, spin glasses, and variational inference", Ann. Probab. 49 (2021). arXiv:1808.07890v2.
+\bibitem{CelentanoFanMei2021-LocalConvexityTAPZ2Sync} M. Celentano, Z. Fan, S. Mei, "Local convexity of the TAP free energy and AMP convergence for Z2-synchronization", Ann. Statist. 51 (2023). arXiv:2106.11428v3.
+\bibitem{NL-KosterlitzThoulessJones1976} J. M. Kosterlitz, D. J. Thouless, R. C. Jones, Spherical model of a spin-glass, Phys. Rev. Lett. 36 (1976) 1217--1220, doi:10.1103/PhysRevLett.36.1217
+\bibitem{DuHuang2026-CriticalSKOverlapDistribution} H. Du, B. Huang, "Overlap distribution of the critical Sherrington-Kirkpatrick model" (2026). arXiv:2608.08752v1.
+\bibitem{ChewiPooladian2022-EntropicCaffarelliCovariance} S. Chewi, A.-A. Pooladian, "An entropic generalization of Caffarelli's contraction theorem via covariance inequalities", C. R. Math. 361 (2023). arXiv:2203.04954v1; doi:10.5802/crmath.486.
+\bibitem{BauerschmidtBodineau2017-SimpleProofLSIHighTemp} R. Bauerschmidt, T. Bodineau, "A very simple proof of the LSI for high temperature spin systems", J. Funct. Anal. 276 (2019). arXiv:1712.03676v2.
+\bibitem{ChenEldan2022-LocalizationSchemes} Y. Chen, R. Eldan, "Localization schemes: A framework for proving mixing bounds for Markov chains", Duke Math. J. 174 (2025). arXiv:2203.04163v2.
+\bibitem{BauerschmidtDagallier2022-NearCriticalIsingLSI} R. Bauerschmidt, B. Dagallier, "Log-Sobolev inequality for near critical Ising models", Comm. Pure Appl. Math. (2024). arXiv:2202.02301v2.
+\bibitem{NL-Mazya1985} V. G. Maz'ya, Sobolev Spaces, Springer Series in Soviet Mathematics, Springer, Berlin (1985).
+\bibitem{NL-Kaimanovich1992} V. A. Kaimanovich, Dirichlet norms, capacities and generalized isoperimetric inequalities for Markov operators, Potential Anal. 1 (1992) 61--82.
+\bibitem{NL-BakryGentilLedoux2014} D. Bakry, I. Gentil, M. Ledoux, Analysis and Geometry of Markov Diffusion Operators, Grundlehren der mathematischen Wissenschaften 348, Springer (2014).
+\bibitem{GoelEtAl2005-MixingSpectralProfile} S. Goel, R. Montenegro, P. Tetali, "Mixing time bounds via the spectral profile", Electron. J. Probab. 11 (2006) 1-26. arXiv:math/0505690v1; doi:10.1214/EJP.v11-300.
+\end{thebibliography}
+
+\end{document}

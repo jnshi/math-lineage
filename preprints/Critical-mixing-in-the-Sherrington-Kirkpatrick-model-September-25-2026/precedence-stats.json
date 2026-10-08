@@ -1,0 +1,73 @@
+{
+  "format": "math-lineage/precedence-stats",
+  "format_version": 1,
+  "preprint": "OAI:Critical-mixing-in-the-Sherrington-Kirkpatrick-model-September-25-2026",
+  "generated_from": "precedence-findings.json",
+  "review_date": "2026-10-08",
+  "findings": {
+    "total": 12,
+    "by_category": {
+      "A": 9,
+      "B": 2,
+      "C": 1
+    },
+    "by_grade": {
+      "Strong": 5,
+      "Partial": 6,
+      "Major": 1,
+      "Moderate": 0
+    },
+    "by_category_and_grade": {
+      "A": {
+        "Strong": 5,
+        "Partial": 4
+      },
+      "B": {
+        "Partial": 2
+      },
+      "C": {
+        "Major": 1
+      }
+    },
+    "ids_by_category_and_grade": {
+      "A": {
+        "Strong": [
+          "S1",
+          "S2",
+          "S3",
+          "S4",
+          "S5"
+        ],
+        "Partial": [
+          "P1",
+          "P2",
+          "P3",
+          "P6"
+        ]
+      },
+      "B": {
+        "Partial": [
+          "P4",
+          "P5"
+        ]
+      },
+      "C": {
+        "Major": [
+          "C1"
+        ]
+      }
+    }
+  },
+  "earlier_works": {
+    "distinct": 25,
+    "not_in_preprint_bibliography": 19,
+    "in_preprint_bibliography": 6,
+    "finding_source_pairs_by_status": {
+      "not_cited": 18,
+      "cited_for_other_content": 5,
+      "credited_in_part": 1,
+      "credited_elsewhere": 1,
+      "credited_indirectly": 2
+    }
+  }
+}

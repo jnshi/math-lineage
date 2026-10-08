@@ -1,0 +1,576 @@
+{
+  "format": "math-lineage/precedence-findings",
+  "format_version": 1,
+  "preprint": {
+    "id": "OAI:Critical-mixing-in-the-Sherrington-Kirkpatrick-model-September-25-2026",
+    "title": "Critical mixing in the Sherrington–Kirkpatrick model",
+    "date": "2026-09-25",
+    "path": "preprints/Critical-mixing-in-the-Sherrington-Kirkpatrick-model-September-25-2026",
+    "companions": [
+      {
+        "id": "OAI:Critical-slowing-down-in-the-Sherrington-Kirkpatrick-model-September-24-2026",
+        "cited_as": "AcceptedCritical"
+      },
+      {
+        "id": "OAI:A-spectral-gap-throughout-the-high-temperature-Sherrington-Kirkpatrick-phase-September-24-2026",
+        "cited_as": "AcceptedGap"
+      }
+    ]
+  },
+  "review": {
+    "date": "2026-10-08",
+    "report_pdf": "precedence-findings.pdf",
+    "report_tex": "precedence-findings.tex",
+    "locator_convention": "Preprint locations use the compiled numbering and page numbers of paper.pdf. Source locators refer to the version identified by the source's arXiv id or DOI."
+  },
+  "definitions": {
+    "category": {
+      "A": "Unattributed reuse: a technique, construction, identity, estimate or body of theory from an identifiable earlier paper is reused without credit for that content.",
+      "B": "Same-problem precedence: earlier, uncited partial progress on the same problem, such as a weaker or special-case version of a statement the preprint proves.",
+      "C": "Structural: a published result would replace or substantially shorten a large part of the argument."
+    },
+    "grade": {
+      "Strong": "(A/B) The earlier technique is reused essentially intact without credit for that content.",
+      "Partial": "(A/B) Only a fragment is reused, or the credit is present but only indirect.",
+      "Major": "(C) A route, a section, or a component of the main theorem becomes a citation.",
+      "Moderate": "(C) A multi-page chain of lemmas becomes a citation."
+    },
+    "source_status": {
+      "not_cited": "The work is not in the preprint's bibliography.",
+      "cited_for_other_content": "The work is in the preprint's bibliography but is not cited for this content.",
+      "credited_in_part": "The preprint cites the work for part of this content only.",
+      "credited_elsewhere": "The preprint cites the work for this content at other locations, but not where the content is used.",
+      "credited_indirectly": "The preprint cites a location (e.g. a companion lemma) that itself credits the work for this content."
+    }
+  },
+  "sources": {
+    "ElAlaouiMontanariSellke2022": {
+      "authors": ["A. El Alaoui", "A. Montanari", "M. Sellke"],
+      "title": "Sampling from the Sherrington–Kirkpatrick Gibbs measure via algorithmic stochastic localization",
+      "year": 2022,
+      "venue": "FOCS 2022",
+      "arxiv": "2203.05093",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "KosterlitzThoulessJones1976": {
+      "authors": ["J. M. Kosterlitz", "D. J. Thouless", "R. C. Jones"],
+      "title": "Spherical model of a spin-glass",
+      "year": 1976,
+      "venue": "Phys. Rev. Lett. 36 (1976) 1217–1220",
+      "arxiv": null,
+      "doi": "10.1103/PhysRevLett.36.1217",
+      "in_preprint_bibliography": false
+    },
+    "BaikLee2015": {
+      "authors": ["J. Baik", "J. O. Lee"],
+      "title": "Fluctuations of the free energy of the spherical Sherrington–Kirkpatrick model",
+      "year": 2015,
+      "venue": "J. Stat. Phys. 165 (2016)",
+      "arxiv": "1505.07349",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "BaikCollinsWoodfinLeDoussalWu2020": {
+      "authors": ["J. Baik", "E. Collins-Woodfin", "P. Le Doussal", "H. Wu"],
+      "title": "Spherical spin glass model with external field",
+      "year": 2020,
+      "venue": "J. Stat. Phys. (2021)",
+      "arxiv": "2010.06123",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "Landon2020": {
+      "authors": ["B. Landon"],
+      "title": "Free energy fluctuations of the two-spin spherical SK model at critical temperature",
+      "year": 2020,
+      "venue": "J. Math. Phys. 63 (2022) 033301",
+      "arxiv": "2010.06691",
+      "doi": "10.1063/5.0054298",
+      "in_preprint_bibliography": false
+    },
+    "NguyenSosoe2018": {
+      "authors": ["V. L. Nguyen", "P. Sosoe"],
+      "title": "Central limit theorem near the critical temperature for the overlap in the 2-spin spherical SK model",
+      "year": 2018,
+      "venue": "J. Math. Phys. 60 (2019)",
+      "arxiv": "1809.03675",
+      "doi": "10.1063/1.5065525",
+      "in_preprint_bibliography": false
+    },
+    "DuHuang2026-FreeEnergy": {
+      "authors": ["H. Du", "B. Huang"],
+      "title": "Fluctuations of the Sherrington–Kirkpatrick free energy at critical temperature",
+      "year": 2026,
+      "venue": "preprint",
+      "arxiv": "2607.02172",
+      "doi": null,
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "DuHuang2026CriticalFluctuations"
+    },
+    "BrezinHikami2001": {
+      "authors": ["E. Brézin", "S. Hikami"],
+      "title": "Characteristic polynomials of real symmetric random matrices",
+      "year": 2001,
+      "venue": "Commun. Math. Phys. 223 (2001) 363–382",
+      "arxiv": "math-ph/0103012",
+      "doi": "10.1007/s002200100547",
+      "in_preprint_bibliography": false
+    },
+    "BauerschmidtBodineau2019-SineGordon": {
+      "authors": ["R. Bauerschmidt", "T. Bodineau"],
+      "title": "Log-Sobolev inequality for the continuum sine-Gordon model",
+      "year": 2019,
+      "venue": "Comm. Pure Appl. Math. 74 (2021)",
+      "arxiv": "1907.12308",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "BauerschmidtBodineauDagallier2023": {
+      "authors": ["R. Bauerschmidt", "T. Bodineau", "B. Dagallier"],
+      "title": "Stochastic dynamics and the Polchinski equation: an introduction",
+      "year": 2023,
+      "venue": "Probab. Surveys (2024)",
+      "arxiv": "2307.07619",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "BauerschmidtDagallier2022": {
+      "authors": ["R. Bauerschmidt", "B. Dagallier"],
+      "title": "Log-Sobolev inequality for near critical Ising models",
+      "year": 2022,
+      "venue": "Comm. Pure Appl. Math. (2024)",
+      "arxiv": "2202.02301",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "AnariKoehlerVuong2024": {
+      "authors": ["N. Anari", "F. Koehler", "T.-D. Vuong"],
+      "title": "Trickle-down in localization schemes and applications",
+      "year": 2024,
+      "venue": "STOC 2024",
+      "arxiv": "2407.16104",
+      "doi": "10.1145/3618260.3649622",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "AnariKoehlerVuong2024"
+    },
+    "BartheRoberto2003": {
+      "authors": ["F. Barthe", "C. Roberto"],
+      "title": "Sobolev inequalities for probability measures on the real line",
+      "year": 2003,
+      "venue": "Studia Math. 159(3) (2003) 481–497",
+      "arxiv": null,
+      "doi": "10.4064/sm159-3-9",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "BR2003"
+    },
+    "BartheCattiauxRoberto2004": {
+      "authors": ["F. Barthe", "P. Cattiaux", "C. Roberto"],
+      "title": "Interpolated inequalities between exponential and Gaussian, Orlicz hypercontractivity and isoperimetry",
+      "year": 2004,
+      "venue": "Rev. Mat. Iberoam. 22(3) (2006) 993–1067",
+      "arxiv": "math/0407219",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "BakryCoulhonLedouxSaloffCoste1995": {
+      "authors": ["D. Bakry", "T. Coulhon", "M. Ledoux", "L. Saloff-Coste"],
+      "title": "Sobolev inequalities in disguise",
+      "year": 1995,
+      "venue": "Indiana Univ. Math. J. 44(4) (1995) 1033–1074",
+      "arxiv": null,
+      "doi": "10.1512/iumj.1995.44.2019",
+      "in_preprint_bibliography": false
+    },
+    "Wang2026": {
+      "authors": ["S. Wang"],
+      "title": "Optimal mixing of Glauber dynamics for the Sherrington–Kirkpatrick model at β<1/2",
+      "year": 2026,
+      "venue": "preprint",
+      "arxiv": "2608.22159",
+      "doi": null,
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "Wang2026OptimalMixing"
+    },
+    "BobkovNaumovUlyanov2020": {
+      "authors": ["S. G. Bobkov", "A. A. Naumov", "V. V. Ulyanov"],
+      "title": "Two-sided bounds for PDF's maximum of a sum of weighted chi-square variables",
+      "year": 2020,
+      "venue": "Springer Proc. Math. Stat. 371 (2021)",
+      "arxiv": "2012.10747",
+      "doi": "10.1007/978-3-030-83266-7_13",
+      "in_preprint_bibliography": false
+    },
+    "GotzeNaumovSpokoinyUlyanov2017": {
+      "authors": ["F. Götze", "A. Naumov", "V. Spokoiny", "V. Ulyanov"],
+      "title": "Large ball probabilities, Gaussian comparison and anti-concentration",
+      "year": 2017,
+      "venue": "Bernoulli 25(4A) (2019) 2538–2563",
+      "arxiv": "1708.08663",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "BhattacharyaSen2015": {
+      "authors": ["B. B. Bhattacharya", "S. Sen"],
+      "title": "High temperature asymptotics of orthogonal mean-field spin glasses",
+      "year": 2015,
+      "venue": "J. Stat. Phys. (2016)",
+      "arxiv": "1507.05067",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "ElAlaouiGaitonde2022": {
+      "authors": ["A. El Alaoui", "J. Gaitonde"],
+      "title": "Bounds on the covariance matrix of the Sherrington–Kirkpatrick model",
+      "year": 2022,
+      "venue": "preprint",
+      "arxiv": "2212.02445",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "Celentano2022": {
+      "authors": ["M. Celentano"],
+      "title": "Sudakov–Fernique post-AMP, and a new proof of the local convexity of the TAP free energy",
+      "year": 2022,
+      "venue": "Ann. Probab. 52 (2024)",
+      "arxiv": "2208.09550",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "BandeiraElAlaouiRodder2026": {
+      "authors": ["A. S. Bandeira", "A. El Alaoui", "A. Rödder"],
+      "title": "Mixing of Glauber dynamics on high overlap Gibbs measures",
+      "year": 2026,
+      "venue": "preprint",
+      "arxiv": "2607.06813",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "HermonPeres2016": {
+      "authors": ["J. Hermon", "Y. Peres"],
+      "title": "A characterization of L2 mixing and hypercontractivity via hitting times and maximal inequalities",
+      "year": 2016,
+      "venue": "Probab. Theory Related Fields 170 (2018) 769–800",
+      "arxiv": "1609.07557",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "DiaconisSaloffCoste1996": {
+      "authors": ["P. Diaconis", "L. Saloff-Coste"],
+      "title": "Logarithmic Sobolev inequalities for finite Markov chains",
+      "year": 1996,
+      "venue": "Ann. Appl. Probab. 6(3) (1996) 695–750",
+      "arxiv": null,
+      "doi": "10.1214/aoap/1034968224",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "DSC1996"
+    },
+    "GoelMontenegroTetali2005": {
+      "authors": ["S. Goel", "R. Montenegro", "P. Tetali"],
+      "title": "Mixing time bounds via the spectral profile",
+      "year": 2005,
+      "venue": "Electron. J. Probab. 11 (2006) 1–26",
+      "arxiv": "math/0505690",
+      "doi": "10.1214/EJP.v11-300",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "GMT2006"
+    }
+  },
+  "findings": [
+    {
+      "id": "S1",
+      "category": "A",
+      "grade": "Strong",
+      "technique": "El Alaoui–Montanari–Sellke planted stochastic-localization framework for SK",
+      "summary": "The preprint studies the SK Gibbs measure inside the EAMS framework: a Gaussian observation of a Gibbs sample, the TAP equation with the observation as field, and the planted law with its likelihood transfer to ordinary disorder.",
+      "preprint_locations": ["§3 (p. 7)", "§4.1", "§5.1", "used throughout §§8–14 and §17"],
+      "credit_in_preprint": "Not cited. A companion credits EAMS for this combination, in a passage the preprint does not cite.",
+      "sources": [
+        {
+          "key": "ElAlaouiMontanariSellke2022",
+          "locators": "(1.4), (4.12); (2.3), (4.53); §4.1, Prop. 4.2, (4.14)",
+          "role": "Gaussian observation process, TAP equation at the observation field, planted law and likelihood transfer",
+          "status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "category": "A",
+      "grade": "Strong",
+      "technique": "Spherical saddle-point (Kosterlitz–Thouless–Jones) representation with a field, in one- and two-replica form",
+      "summary": "The spherical reference model rests on the KTJ contour representation of the spherical partition function with a field, its critical saddle analysis, and its two-replica form for the joint law of squared lengths and overlap.",
+      "preprint_locations": ["§5.3: (5.4), (5.5), Lemmas 5.3–5.4", "(7.2) and the paragraph after it (p. 27)", "recurs in §§6–7, 11–12, 15, 19"],
+      "credit_in_preprint": "Not cited. Du–Huang is cited only for their §3 comparison, not for the representation in their §4.",
+      "sources": [
+        {
+          "key": "KosterlitzThoulessJones1976",
+          "locators": null,
+          "role": "contour-integral (saddle-point) representation of the spherical partition function",
+          "status": "not_cited"
+        },
+        {
+          "key": "BaikLee2015",
+          "locators": "Lemma 1.3, p. 5",
+          "role": "the representation at zero field",
+          "status": "not_cited"
+        },
+        {
+          "key": "BaikCollinsWoodfinLeDoussalWu2020",
+          "locators": "Lemmas 3.1 and 3.3",
+          "role": "the representation with a field, and its two-replica double-contour form with a field",
+          "status": "not_cited"
+        },
+        {
+          "key": "Landon2020",
+          "locators": "Prop. 3.1, Lemma 3.4; Thm. 1.1",
+          "role": "critical saddle location (a stronger form, by the same two steps) and the normalization bound",
+          "status": "not_cited"
+        },
+        {
+          "key": "NguyenSosoe2018",
+          "locators": "Lemma 4",
+          "role": "two-replica double-contour (Laplace) form",
+          "status": "not_cited"
+        },
+        {
+          "key": "DuHuang2026-FreeEnergy",
+          "locators": "proof of Prop. 4.4; Lemma 4.3; proof of Prop. 4.5",
+          "role": "Gaussian-conditioned-on-its-radius form, and the two-replica Fourier inversion",
+          "status": "cited_for_other_content"
+        }
+      ]
+    },
+    {
+      "id": "S3",
+      "category": "A",
+      "grade": "Strong",
+      "technique": "Brézin–Hikami duality for GOE characteristic polynomials with an external source",
+      "summary": "The polynomial bound on the second moment of the Kac–Rice Jacobian rests on an exact identity that is the k=2 case of Brézin–Hikami's dual Grassmann representation, derived as in their §3.",
+      "preprint_locations": ["Lemma 8.2 (pp. 31–32); the identity on p. 32", "opening of §8 (p. 30), which lists the bound among results \"proved here\""],
+      "credit_in_preprint": "Not cited; derived \"for completeness\".",
+      "sources": [
+        {
+          "key": "BrezinHikami2001",
+          "locators": "§6, eqs. (88)–(89), pp. 19–20, with (43), p. 10; derivation in §3",
+          "role": "exact k=2 dual representation of E det(·)² with an external source, and its Grassmann derivation",
+          "status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "S4",
+      "category": "A",
+      "grade": "Strong",
+      "technique": "Polchinski renormalization (one-step Bauerschmidt–Bodineau apparatus), composed across scales; trickle-down form",
+      "summary": "Each spectral-cap step of the cap induction is one discrete Polchinski renormalization step (renormalized potential, fluctuation measure, Hessian identity, Brascamp–Lieb bound under a margin), and the steps compose by the semigroup property.",
+      "preprint_locations": ["§§16.1–16.2: (16.3)–(16.4), (16.11), (16.14)–(16.15)", "iterated in the proof of Theorem 18.6", "reused in §18"],
+      "credit_in_preprint": "Not cited for this. AKV and an earlier Bauerschmidt–Bodineau paper are cited only for SK temperature thresholds.",
+      "sources": [
+        {
+          "key": "BauerschmidtBodineau2019-SineGordon",
+          "locators": null,
+          "role": "Polchinski renormalization scheme for log-Sobolev inequalities",
+          "status": "not_cited"
+        },
+        {
+          "key": "BauerschmidtBodineauDagallier2023",
+          "locators": "§§3.2, 3.4–3.5",
+          "role": "the one-step apparatus in the form used: convolution and transition, Hessian identity, Brascamp–Lieb bound",
+          "status": "not_cited"
+        },
+        {
+          "key": "BauerschmidtDagallier2022",
+          "locators": "(1.23)",
+          "role": "Hessian identity for the renormalized potential",
+          "status": "not_cited"
+        },
+        {
+          "key": "AnariKoehlerVuong2024",
+          "locators": "§3; Thm. 102",
+          "role": "trickle-down covariance induction and trickle-down of semi-log-concavity",
+          "status": "cited_for_other_content"
+        }
+      ]
+    },
+    {
+      "id": "S5",
+      "category": "A",
+      "grade": "Strong",
+      "technique": "Capacity–measure criterion for the log-Sobolev inequality, with dyadic slicing",
+      "summary": "Route 2 ends by running the sufficiency half of the Barthe–Roberto / Barthe–Cattiaux–Roberto capacity–measure criterion, with the dyadic slices of Bakry–Coulhon–Ledoux–Saloff-Coste; the same slicing recurs in the proof of Theorem 14.2.",
+      "preprint_locations": ["Lemma 19.1 and its proof (pp. 172–173)", "proof of Theorem 14.2 (pp. 111–112)"],
+      "credit_in_preprint": "Only Barthe–Roberto's Lemma 4, for the last step.",
+      "sources": [
+        {
+          "key": "BartheRoberto2003",
+          "locators": "§4, remark 6); Lemma 4",
+          "role": "statement of the capacity–measure criterion; Lemma 4 for the final entropy shift",
+          "status": "credited_in_part"
+        },
+        {
+          "key": "BartheCattiauxRoberto2004",
+          "locators": "Thms. 11 and 13",
+          "role": "proof of the capacity–measure criterion",
+          "status": "not_cited"
+        },
+        {
+          "key": "BakryCoulhonLedouxSaloffCoste1995",
+          "locators": "§10.1",
+          "role": "dyadic level-set slicing",
+          "status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "P1",
+      "category": "A",
+      "grade": "Partial",
+      "technique": "Wang's signed two-spin curvature estimate",
+      "summary": "The curvature inequality behind route 1's terminal spectral gap is Wang's signed two-spin estimate summed over pairs, imported through a companion lemma.",
+      "preprint_locations": ["§3 (p. 8)", "proof of Proposition 13.6 (pp. 102–103)"],
+      "credit_in_preprint": "Indirectly, via a companion lemma that credits Wang. The preprint's own citation of Wang is for his β<1/2 mixing theorem.",
+      "sources": [
+        {
+          "key": "Wang2026",
+          "locators": "Lemma 3.4 and proof of Thm. 1.2, pp. 10–13",
+          "role": "signed two-spin curvature estimate and its summation over pairs",
+          "status": "credited_indirectly"
+        }
+      ]
+    },
+    {
+      "id": "P2",
+      "category": "A",
+      "grade": "Partial",
+      "technique": "Density bounds for weighted noncentral chi-square sums",
+      "summary": "Conditioning Gaussians on spheres uses the Bobkov–Naumov–Ulyanov Fourier majorant and the Götze–Naumov–Spokoiny–Ulyanov shift-uniform density bound for spread spectra.",
+      "preprint_locations": ["proof of Lemma 5.2 (p. 17)", "shell conditioning in §5.3 (p. 18)", "proof of Lemma 10.1 (p. 46)", "(15.5)"],
+      "credit_in_preprint": "Not cited. A companion credits BNU for the same majorant, but the preprint proves its lemma itself.",
+      "sources": [
+        {
+          "key": "BobkovNaumovUlyanov2020",
+          "locators": "Lemma 3, p. 5 (proof pp. 5–6); Thm. 2",
+          "role": "Fourier majorant and upper density bound for weighted chi-square sums with spread spectra",
+          "status": "not_cited"
+        },
+        {
+          "key": "GotzeNaumovSpokoinyUlyanov2017",
+          "locators": "Thm. 2.6 (case 1), p. 13",
+          "role": "density bound uniform in the shift when no eigenvalue dominates",
+          "status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "P3",
+      "category": "A",
+      "grade": "Partial",
+      "technique": "Fixed-spectrum Haar second-moment comparison",
+      "summary": "Section 6 compares cube and sphere partition functions on a Haar orbit by combining Du–Huang's overlap-cell comparison with Bhattacharya–Sen's fixed-spectrum two-eigenvalue reduction for large overlaps.",
+      "preprint_locations": ["(6.3) and the global pair estimate, §6.1 (pp. 21–22)", "§6.2 (p. 23)", "recurs in §§7, 10, 11, 14, 15, 18"],
+      "credit_in_preprint": "Bhattacharya–Sen not cited. Du–Huang cited in §§1, 7, 12.4 and 15.4, but not in §6.",
+      "sources": [
+        {
+          "key": "BhattacharyaSen2015",
+          "locators": "§3.2.1, eq. (3.14)",
+          "role": "fixed-spectrum two-eigenvalue reduction for large overlaps",
+          "status": "not_cited"
+        },
+        {
+          "key": "DuHuang2026-FreeEnergy",
+          "locators": "Lemmas 2.1 and 3.9; proof of Thm. 1.6",
+          "role": "reweighted-overlap identity and overlap-cell comparison",
+          "status": "credited_elsewhere"
+        }
+      ]
+    },
+    {
+      "id": "P4",
+      "category": "B",
+      "grade": "Partial",
+      "technique": "Critical-temperature bounds on the SK partition function and covariance",
+      "summary": "Earlier versions exist of the partition-function lower bound (7.5) (stronger), the covariance lower bound (7.6) (weaker), and the bottom-scale covariance bound (12.8) (only an s=0, ordinary-law analogue with log n).",
+      "preprint_locations": ["(7.5) and (7.6), §7.1 (p. 29)", "(12.8) of Proposition 12.4 (p. 77)"],
+      "credit_in_preprint": "(7.5) indirectly, via Du–Huang's Theorem 1.6; otherwise not cited.",
+      "sources": [
+        {
+          "key": "DuHuang2026-FreeEnergy",
+          "locators": "Thms. 1.3–1.4, p. 3",
+          "role": "free-energy CLT and critical overlap bound",
+          "status": "cited_for_other_content"
+        },
+        {
+          "key": "ElAlaouiGaitonde2022",
+          "locators": "Prop. 4.5, p. 11",
+          "role": "critical covariance bound",
+          "status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "P5",
+      "category": "B",
+      "grade": "Partial",
+      "technique": "Local convexity of the TAP free energy in the planted model at positive observation strength",
+      "summary": "Celentano proved local strong convexity and a unique stationary point of the EAMS TAP free energy near a late AMP iterate at every observation strength: a weaker, local form of the stability statement the preprint proves at β=1.",
+      "preprint_locations": ["(13.1) and Proposition 13.4 (pp. 88–89)", "Lemma 17.3 (p. 143)", "Proposition 17.5 (p. 148)"],
+      "credit_in_preprint": "Not cited. Celentano–Fan–Mei is cited only for the conditional Kac–Rice organization.",
+      "sources": [
+        {
+          "key": "Celentano2022",
+          "locators": "Thm. 2(i)(2) and (ii), pp. 10–11",
+          "role": "local strong convexity and a unique stationary point of the TAP free energy in the planted model",
+          "status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "P6",
+      "category": "A",
+      "grade": "Partial",
+      "technique": "Large-field reduction to sparse principal submatrices",
+      "summary": "A large external field leaves few weakly biased coordinates, and a norm bound uniform over sparse principal submatrices makes the Gibbs measure effectively high-temperature on them.",
+      "preprint_locations": ["§19.4 (p. 178)", "proof of Proposition 13.6 (pp. 102–103)"],
+      "credit_in_preprint": "Not cited. Credited indirectly at §13.4, via a companion lemma whose lead-in credits BER; §19.4 cites nothing.",
+      "sources": [
+        {
+          "key": "BandeiraElAlaouiRodder2026",
+          "locators": "Thm. 1.1 and proof of Lemma 2.3",
+          "role": "weak-field coordinate count and sparse-submatrix norm bound",
+          "status": "credited_indirectly"
+        }
+      ]
+    },
+    {
+      "id": "C1",
+      "category": "C",
+      "grade": "Major",
+      "technique": "Log-Sobolev constant from the support profile (Hermon–Peres characterization)",
+      "summary": "The support profile at the end of route 1 already gives the log-Sobolev exponent by the Hermon–Peres characterization, so the spectral-cap route is not needed for Theorem 1.1.",
+      "preprint_locations": ["Theorem 14.2 (p. 111)", "§§15–19 (pp. 112–183), ending in Theorem 19.3", "§2 (p. 7)"],
+      "impact": "About 70 pages (§§15–19) become unnecessary for Theorem 1.1.",
+      "credit_in_preprint": null,
+      "sources": [
+        {
+          "key": "HermonPeres2016",
+          "locators": "Thm. 1.2, p. 3 (arXiv v3)",
+          "role": "κ ≤ t_LS < 17κ: the support profile gives the log-Sobolev constant",
+          "status": "not_cited"
+        },
+        {
+          "key": "DiaconisSaloffCoste1996",
+          "locators": "Cor. 3.11, p. 728",
+          "role": "log-Sobolev constant from L² mixing, up to a factor log n",
+          "status": "cited_for_other_content"
+        },
+        {
+          "key": "GoelMontenegroTetali2005",
+          "locators": "Lemma 4.2 and the remark after it, p. 15 (arXiv v1)",
+          "role": "converse: the log-Sobolev inequality gives the support profile",
+          "status": "cited_for_other_content"
+        }
+      ]
+    }
+  ]
+}
