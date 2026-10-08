@@ -1,0 +1,4 @@
+# Shell scripts must keep LF line endings, or bash fails on Windows checkouts with autocrlf.
+*.sh text eol=lf
+# Pattern files are read by grep -f; keep them LF too.
+*-patterns.txt text eol=lf

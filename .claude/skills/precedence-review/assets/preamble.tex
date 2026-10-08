@@ -1,0 +1,71 @@
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,tabularx,longtable,array}
+\usepackage{xltabular}% tabularx-style tables that can break across pages
+\usepackage{enumitem}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{cite}% sorts and compresses numeric citations
+\usepackage[colorlinks=true,linkcolor=Blue,citecolor=Blue,urlcolor=Blue]{hyperref}
+
+% ---------------------------------------------------------------------
+% Shared notation
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\Lgen}{\mathcal{L}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Ent}{Ent}
+\DeclareMathOperator{\KL}{KL}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\ran}{ran}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\ip}[2]{\langle #1,#2\rangle}
+% Locators.  \ploc{compiled locator}{TeX file:line} cites the preprint (or a
+% companion).  Only the compiled locator (section, equation, result, page of the
+% PDF) is printed.  The TeX file:line stays in the source to help checkers find
+% the passage and never appears in the PDF.  \sloc{key}{locator} cites a source.
+\newcommand{\ploc}[2]{#1}
+\newcommand{\sloc}[2]{\cite[#2]{#1}}
+\newcommand{\grade}[1]{\textsc{#1}}
+% Uniform list and table styling across all findings.
+\setlist{itemsep=2pt,topsep=3pt,parsep=0pt,leftmargin=1.6em}
+\setlist[enumerate]{label=\arabic*.}
+\setlist[itemize]{label=\textbullet}
+\renewcommand{\arraystretch}{1.15}
+% Findings are numbered by LaTeX, so nobody types an ID.  In the main file,
+% \findinggroup{S} (or {P}, {C}) after each findings \section sets the ID prefix
+% and restarts the count; IDs follow the order of the \input lines.  Each
+% fragment opens with
+%   \finding{<title>}{<slug>}   or   \finding[<short title>]{<title>}{<slug>}
+% which prints \subsection{S3. <title>} (with "S3. <short title>" in the table
+% of contents and PDF bookmarks when a short title is given) and does
+% \label{f:<slug>}, so \ref{f:<slug>} prints the ID "S3" as a link.  Refer to
+% another finding as finding~\ref{f:<slug>}.  Before any \findinggroup the
+% IDs print as ?1, ?2, ... (as in a standalone test of one fragment).
+\makeatletter
+\newcounter{finding}
+\newcommand{\finding@prefix}{?}
+\renewcommand{\thefinding}{\finding@prefix\arabic{finding}}
+\newcommand{\findinggroup}[1]{\gdef\finding@prefix{#1}\setcounter{finding}{0}}
+\newcommand{\finding}[3][]{%
+  \stepcounter{finding}%
+  \protected@edef\finding@id{\thefinding}% fix the ID now: "S3", not a counter reference
+  \edef\finding@next{\noexpand\finding@sect{\finding@id}}%
+  \finding@next{#1}{#2}{#3}}
+% #1 ID (already expanded), #2 short title (may be empty), #3 title, #4 slug.
+\newcommand{\finding@sect}[4]{%
+  \if\relax\detokenize{#2}\relax
+    \subsection{#1. #3}%
+  \else
+    \subsection[#1. #2]{#1. #3}%
+  \fi
+  \def\@currentlabel{#1}% \ref prints the ID; hyperref links it to this subsection
+  \label{f:#4}}
+\makeatother
+% ---------------------------------------------------------------------
