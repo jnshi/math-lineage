@@ -15,16 +15,22 @@
 \input{parts/about}
 \input{parts/overview}
 
+% IDs are assigned by LaTeX in the order of the \input lines (S1, S2, ... after
+% \findinggroup{S}). Withdrawing or reordering a finding is just deleting or
+% moving its \input line.
 \section{Strong findings}\label{sec:strong}
-\input{findings/S1-slug}
+\findinggroup{S}
+\input{findings/first-strong-slug}
 % one \input per Strong finding, in reading order or by significance
 
 \section{Partial findings}\label{sec:partial}
-\input{findings/P1-slug}
+\findinggroup{P}
+\input{findings/first-partial-slug}
 % Partial findings, including (B) same-problem precedence
 
 \section{Structural finding}\label{sec:structural}
-\input{findings/C1-slug}
+\findinggroup{C}
+\input{findings/first-structural-slug}
 % use "Structural findings" for more than one; drop the section if there are none
 
 \input{parts/bibliography}

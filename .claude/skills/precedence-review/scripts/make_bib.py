@@ -1,17 +1,24 @@
 """Build <writeup>/parts/bibliography.tex from the citations the write-up uses.
 
-Usage: python -I -X utf8 make_bib.py <writeup dir> <prior-work/INDEX.md> [<main .tex>]
+Usage: python3 -I -X utf8 make_bib.py <writeup dir> <prior-work/INDEX.md> [<main .tex>]
 
 Keys are collected from \\cite{...} and \\sloc{Key}{...} in reading order: the
 main file's \\input / \\fragment lines if it is given, otherwise every .tex in
-findings/ and parts/. Each key is resolved from, in order:
-  1. a comment line "% BIB <Key>: <full citation>" in any document file
-     (use this for the preprint and its companions, OAI-..., and for works
-     outside the library, NL-...);
+parts/ and findings/. Each key is resolved from, in order:
+  1. a comment line "% BIB <Key>: <full citation>" in any document file. Use
+     this for the preprint and its companions (OAI-...) and for works outside
+     the library (NL-...). The text is used as TeX.
   2. the "## Downloaded papers" table of prior-work/INDEX.md
-     (columns: Key | Citation | arXiv / DOI | ...).
-Parenthetical working notes ("(author copy from ...)", "(not read)", ...) are
-stripped. Unresolved keys are printed and rendered as a bold placeholder.
+     (columns: Key | Citation | arXiv / DOI | ...). The text is treated as
+     plain text and escaped.
+Working notes must be marked "[note: ...]" in INDEX cells; those marks are
+removed, as are ";"-separated clauses of a parenthetical that contain a URL or a
+file path. Nothing else is guessed: every other parenthetical that reaches the
+bibliography and has three or more words, or no digits, is listed for review.
+If one is a working note, mark it "[note: ...]" in INDEX.md and rerun.
+
+Exit status 1 (after writing the file) if a key is unresolved, an INDEX row is
+malformed, or an \\input target does not exist.
 """
 import io
 import os
@@ -20,14 +27,16 @@ import sys
 
 sys.stdout.reconfigure(encoding="utf-8")
 
+if len(sys.argv) < 3:
+    print(__doc__)
+    sys.exit(2)
 writeup, index_path = sys.argv[1], sys.argv[2]
 main_file = sys.argv[3] if len(sys.argv) > 3 else None
+problems = []
 
-# Parenthetical working notes to drop from citations. Extend the trigger words
-# when a new kind of note slips through.
-NOTE_RE = re.compile(
-    r"\s*\((?=[^()]*(verified|version used|not read|consulted|checked|library|paywalled|as listed|"
-    r"as cited|author copy|journal data|saved as|publisher PDF|text extraction|garbled))[^()]*\)",
+# A ";"-separated clause of a parenthetical is dropped if it contains a URL or a file path.
+URL_CLAUSE = re.compile(
+    r"https?://|\bwww\.|\b[\w-]+\.(?:edu|org|com|net|gov|ac\.[a-z]{2})/|[\w.~-]+/[\w.~/-]+\.(?:pdf|ps|html?|txt|tex)\b",
     re.I,
 )
 
@@ -40,18 +49,103 @@ UNICODE = {
 
 
 def tex_escape(s):
+    """Escape plain text for TeX. Backslashes and braces are escaped too, so INDEX
+    text can never run TeX commands (e.g. \\input) in the bibliography."""
+    s = s.replace("\\", "\x00").replace("{", "\\{").replace("}", "\\}")
     s = re.sub(r"([&%#_$])", r"\\\1", s)
     s = s.replace("~", "\\textasciitilde{}").replace("^", "\\textasciicircum{}")
+    s = s.replace("\x00", "\\textbackslash{}")
     for u, t in UNICODE.items():
         s = s.replace(u, t)
     return s
+
+
+def split_top(inner, sep):
+    """Split at top-level occurrences of sep (not inside nested parentheses)."""
+    parts, buf, depth = [], "", 0
+    for ch in inner:
+        if ch == "(":
+            depth += 1
+        elif ch == ")":
+            depth -= 1
+        if depth == 0 and ch == sep:
+            parts.append(buf)
+            buf = ""
+        else:
+            buf += ch
+    parts.append(buf)
+    return parts
+
+
+def filter_parenthetical(inner):
+    """Return None if no clause has a URL or path, else the remaining clauses ('' if none)."""
+    clauses = split_top(inner, ";")
+    if not any(URL_CLAUSE.search(c) for c in clauses):
+        return None
+    return "; ".join(c.strip() for c in clauses if c.strip() and not URL_CLAUSE.search(c))
+
+
+def strip_note_marks(s):
+    """Remove every "[note: ...]" mark, allowing nested brackets inside it."""
+    out, i, n = [], 0, len(s)
+    while i < n:
+        if s[i] == "[" and s[i + 1:i + 6].lower() == "note:":
+            depth, j = 0, i
+            while j < n:
+                if s[j] == "[":
+                    depth += 1
+                elif s[j] == "]":
+                    depth -= 1
+                    if depth == 0:
+                        break
+                j += 1
+            if j >= n:
+                problems.append("unterminated [note: ...] in: " + s[:80])
+                break
+            while out and out[-1] in " \t":
+                out.pop()
+            i = j + 1
+        else:
+            out.append(s[i])
+            i += 1
+    return "".join(out)
+
+
+def strip_notes(s):
+    s = strip_note_marks(s)
+    out, i, n = [], 0, len(s)
+    while i < n:
+        if s[i] != "(":
+            out.append(s[i])
+            i += 1
+            continue
+        depth, j = 0, i
+        while j < n:
+            if s[j] == "(":
+                depth += 1
+            elif s[j] == ")":
+                depth -= 1
+                if depth == 0:
+                    break
+            j += 1
+        if j >= n:  # unbalanced: keep the rest as is
+            out.append(s[i:])
+            break
+        kept = filter_parenthetical(s[i + 1:j])
+        if kept is None:
+            out.append(s[i:j + 1])
+        elif kept:
+            out.append("(" + kept + ")")
+        i = j + 1
+    text = re.sub(r"[ \t]{2,}", " ", "".join(out))
+    return re.sub(r"\s+([.,;:])", r"\1", text).strip()
 
 
 def document_files():
     """Document files in reading order."""
     skip = ("preamble", "bibliography")
     if main_file:
-        text = io.open(os.path.join(writeup, main_file), encoding="utf-8").read()
+        text = io.open(os.path.join(writeup, main_file), encoding="utf-8-sig").read()
         text = re.sub(r"(?m)(?<!\\)%.*$", "", text)
         paths = []
         for m in re.finditer(r"\\input\{([^}]+)\}|\\fragment\{([^}]+)\}", text):
@@ -59,9 +153,11 @@ def document_files():
             stem = rel[:-4] if rel.endswith(".tex") else rel
             if stem.endswith(skip):
                 continue
-            p = os.path.join(writeup, rel if rel.endswith(".tex") else rel + ".tex")
+            p = os.path.join(writeup, stem + ".tex")
             if os.path.isfile(p):
                 paths.append(p)
+            elif m.group(1):  # \fragment may point at a draft that doesn't exist yet; \input may not
+                problems.append(f"\\input target not found: {stem}.tex")
         return paths
     paths = []
     for sub in ("parts", "findings"):
@@ -75,7 +171,7 @@ def document_files():
 def used_keys():
     keys, explicit = [], {}
     for path in document_files():
-        text = io.open(path, encoding="utf-8").read()
+        text = io.open(path, encoding="utf-8-sig").read()
         for m in re.finditer(r"(?m)^\s*%\s*BIB\s+([A-Za-z0-9._:-]+)\s*:\s*(.+)$", text):
             explicit.setdefault(m.group(1), m.group(2).strip())
         body = re.sub(r"(?m)(?<!\\)%.*$", "", text)
@@ -91,33 +187,64 @@ def used_keys():
     return ordered, explicit
 
 
+def split_row(line):
+    s = line.strip()
+    if s.startswith("|"):
+        s = s[1:]
+    if s.endswith("|") and not s.endswith("\\|"):
+        s = s[:-1]
+    return [c.strip().replace("\\|", "|") for c in re.split(r"(?<!\\)\|", s)]
+
+
 def index_table():
-    rows, in_table = {}, False
-    for line in io.open(index_path, encoding="utf-8"):
+    """Rows of the "## Downloaded papers" table: key -> (citation, ids), or None if malformed."""
+    rows = {}
+    lines = io.open(index_path, encoding="utf-8-sig").read().replace("\r\n", "\n").split("\n")
+    in_section, ncols = False, None
+    for i, line in enumerate(lines):
         if line.startswith("## "):
-            in_table = line.startswith("## Downloaded papers")
+            in_section, ncols = line.startswith("## Downloaded papers"), None
             continue
-        if in_table and line.startswith("| ") and not line.startswith("| Key") and not line.startswith("|---"):
-            cells = [c.strip() for c in line.strip().strip("|").split(" | ")]
-            if len(cells) >= 3:
-                rows[cells[0].strip("`")] = (cells[1], cells[2])
+        if not in_section or not line.lstrip().startswith("|"):
+            continue
+        cells = split_row(line)
+        if all(re.fullmatch(r":?-{3,}:?", c) for c in cells if c):
+            continue  # separator row
+        nxt = lines[i + 1] if i + 1 < len(lines) else ""
+        if ncols is None:
+            if re.match(r"^\s*\|\s*:?-{3,}", nxt):
+                ncols = len(cells)  # header row
+            continue
+        key = cells[0].strip("`").strip()
+        if len(cells) != ncols:
+            rows.setdefault(key, None)
+            problems.append(f"INDEX.md line {i + 1}: {len(cells)} cells, expected {ncols} "
+                            f"(a literal '|' in a cell?); key {key[:60]!r}")
+            continue
+        rows[key] = (cells[1], cells[2])
     return rows
 
 
 keys, explicit = used_keys()
 rows = index_table()
-missing, items = [], []
+missing, items, review = [], [], []
 for k in keys:
     if k in explicit:
-        cit = NOTE_RE.sub("", explicit[k])
-        # Explicit entries may already be TeX (e.g. \emph{...}); escape only if they look like plain text.
+        cit = strip_notes(explicit[k])
+        review += [f"{k}: {p}" for p in re.findall(r"\([^()]*\)", cit)
+                   if not re.search(r"\d", p) or len(p.split()) >= 3]
+        # Explicit entries are written as TeX (e.g. \emph{...}); escape only if they look like plain text.
         items.append((k, cit if "\\" in cit else tex_escape(cit)))
-    elif k in rows:
-        cit, ids = rows[k]
-        cit = NOTE_RE.sub("", cit).rstrip(" .")
-        items.append((k, tex_escape(cit) + ". " + tex_escape(ids) + "."))
+    elif rows.get(k):
+        cit, ids = (strip_notes(c) for c in rows[k])
+        review += [f"{k}: {p}" for p in re.findall(r"\([^()]*\)", cit + " " + ids)
+                   if not re.search(r"\d", p) or len(p.split()) >= 3]
+        entry = tex_escape(cit.rstrip(" ."))
+        if ids:
+            entry += ". " + tex_escape(ids)
+        items.append((k, entry + "."))
     else:
-        missing.append(k)
+        missing.append(k + (" (malformed INDEX row)" if k in rows else ""))
         items.append((k, "\\textbf{[missing bibliography entry for key " + tex_escape(k) + "]}"))
 
 out = ["\\begin{thebibliography}{99}", "\\small"]
@@ -126,3 +253,14 @@ out.append("\\end{thebibliography}")
 with io.open(os.path.join(writeup, "parts", "bibliography.tex"), "w", encoding="utf-8", newline="\n") as fh:
     fh.write("\n".join(out) + "\n")
 print("keys:", len(keys), "missing:", missing)
+if review:
+    print("parentheticals kept in the bibliography (check none is a working note; if one is, mark it "
+          "[note: ...] in INDEX.md):")
+    for r in review:
+        print("  " + r)
+if problems:
+    print("problems:")
+    for p in problems:
+        print("  " + p)
+if missing or problems:
+    sys.exit(1)

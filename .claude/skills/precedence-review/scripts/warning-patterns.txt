@@ -1,0 +1,32 @@
+# Warning tier: strings that usually mean a process note or a working note
+# reached the write-up. build.sh and fragment_test.sh print every hit for
+# review, but hits do not change the exit status. Hard failures go in
+# forbidden-patterns.txt.
+#
+# Format: as in forbidden-patterns.txt. One extended regular expression
+# (grep -E) per line, matched case-insensitively against the page-joined text;
+# lines starting with # are comments; blank lines are ignored; "@build " limits
+# a pattern to build.sh. Keep patterns portable to BSD grep (no \b, \w, \<).
+
+# Process notes
+skeptic
+regrad
+sub-?agent
+coordinator
+citation status
+caveat
+not verified
+consulted
+case-insensitive
+(^|[^A-Za-z])table [0-9]
+
+# The paper library
+librar(y|ies)
+
+# make_bib.py's working-note words
+author[^ ]{0,3} (copy|preprint)
+open access
+saved as
+paywall
+garbled
+text extraction

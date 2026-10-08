@@ -13,7 +13,7 @@ The check runs on the finished write-up fragments, because those carry the exact
 Launch one agent per finding, all in parallel, in the background. These agents only read; the one file each writes is its verdict.
 
 ## Brief
-Save this to `<scratch>/author-check-brief.md`. Each agent's prompt is a one-line header followed by the brief, with `{ID}` and `{FILENAME}` filled in. The header reads: "Today is {TODAY}. Your finding is **{ID}**, in file `{FILENAME}`." Extend it by finding type:
+Save this to `<scratch>/author-check-brief.md`. Each agent's prompt is a one-line header followed by the brief, with `{ID}` and `{SLUG}` filled in. The ID is the printed one, from `print_summaries.py` after the last build. The header reads: "Today is {TODAY}. Your finding is **{ID}**, in file `findings/{SLUG}.tex`." Extend it by finding type:
 - **For a (B) finding:** "It is a (B)-type finding: earlier, weaker results on the same problem."
 - **For a structural finding:** "It is a structural finding: it claims that published results make part of your argument unnecessary. Treat it as feedback on a missed citation that would have shortened the paper. Check carefully whether the claimed implication really holds, including every hypothesis and normalization."
 
@@ -23,7 +23,7 @@ You are the author of the preprint "{TITLE}" ({DATE}). You are responding to a r
 
 ## Materials
 - **The report**, compiled: `{WRITEUP_DIR}/precedence-findings.pdf`, with its text in `{WRITEUP_DIR}/build/full.txt`.
-- **Your finding's LaTeX source:** `{WRITEUP_DIR}/findings/{FILENAME}`. Read the whole finding, and the report's Section 1 ("About this document") for its definitions and grading rules.
+- **Your finding's LaTeX source:** `{WRITEUP_DIR}/findings/{SLUG}.tex`. Read the whole finding, and the report's Section 1 ("About this document") for its definitions and grading rules.
 - **Your preprint:** `{PREPRINT_DIR}`, with TeX in `build/sections/*.tex` and `paper.pdf`.
   - Compiled text with page breaks (`\f`; the page is 1 plus the number of `\f` before a match): `{SCRATCH}/paper.txt`.
   - In the report's source, `\ploc{compiled}{file:line}` gives the TeX location as its hidden second argument, which helps you find passages quickly.
@@ -73,8 +73,8 @@ You are the author of the preprint "{TITLE}" ({DATE}). You are responding to a r
    - bibliography title corrections, in `prior-work/INDEX.md`, which is where the bibliography is generated from.
 3. **Launch one agent per finding, in parallel.** Each prompt is short:
    - point to `<scratch>/apply-check-brief.md` (below);
-   - give the ID, the FILENAME and a private scratch subfolder;
-   - include a **"Verdict to apply" block that you distil** from `author-checks/<ID>.md`: accept or accept in part, which grade stands, which components to drop, a reworded grade reason if needed, the key errata, and the errata count;
+   - give the ID, the slug and a private scratch subfolder;
+   - include a **"Verdict to apply" block that you distil** from `author-checks/<slug>.md`: accept or accept in part, which grade stands, which components to drop, a reworded grade reason if needed, the key errata, and the errata count;
    - include the Tool-pitfalls block;
    - ask for a proposed replacement of this finding's summary-table cells if the claim changed.
 4. **When they return:**
@@ -89,8 +89,8 @@ You are the author of the preprint "{TITLE}" ({DATE}). You are responding to a r
 You are revising ONE finding (a LaTeX fragment) in a report for **human experts who will only read the PDF**. An independent check has just reviewed the finding, written from the point of view of the preprint's author. It produced (i) a verdict and (ii) a list of write-up errata. Your job is to make the fragment correct and consistent with what that check established. Today is {TODAY}.
 
 ## Files
-- **Fragment to revise (edit in place; edit nothing else):** `{WRITEUP_DIR}/findings/<FILENAME>`. A backup is in `findings/pre-check/`.
-- **The check:** `{REVIEW_DIR}/author-checks/<ID>.md`. Read it fully: the verdict, the author's response, the claim-check table and the errata list.
+- **Fragment to revise (edit in place; edit nothing else):** `{WRITEUP_DIR}/findings/<SLUG>.tex`. A backup is in `findings/pre-check/`. Keep its `\finding{…}{<SLUG>}` line, and never type a finding ID; refer to other findings with `\ref{f:<slug>}`.
+- **The check:** `{REVIEW_DIR}/author-checks/<SLUG>.md`. Read it fully: the verdict, the author's response, the claim-check table and the errata list.
 - **Shared notation and rules:** `{WRITEUP_DIR}/parts/overview.tex`, `parts/about.tex`, `parts/preamble.tex`.
 - **For re-checking:** preprint TeX `{PREPRINT_DIR}/build/sections/`; compiled preprint text with `\f` page breaks `{SCRATCH}/paper.txt` plus the companion texts; sources in `{REPO}/prior-work/src/<Key>/` and `text/<Key>.txt`.
 
@@ -106,7 +106,7 @@ You are revising ONE finding (a LaTeX fragment) in a report for **human experts 
    - **Tables:** `xltabular` inside `center` with `\small`, booktabs rules, and `\addlinespace` between rows. Don't number or caption tables ("Table 9"); refer to "the table below".
    - **Length:** don't make the finding longer than it is.
    - **Edit only with the Edit/Write tools.**
-5. **Test-compile:** `bash "{SKILL}/scripts/fragment_test.sh" "{WRITEUP_DIR}/parts/preamble.tex" "{WRITEUP_DIR}/findings/<FILENAME>" "{SCRATCH}/fix-<ID>"`. Fix errors and overfull boxes over 10pt, and every forbidden-string hit.
+5. **Test-compile:** `bash "{SKILL}/scripts/fragment_test.sh" "{WRITEUP_DIR}/parts/preamble.tex" "{WRITEUP_DIR}/findings/<SLUG>.tex" "{SCRATCH}/fix-<SLUG>"`. It must end with `result: PASS`. Also remove any listed warning that isn't legitimate.
 
 {TOOL PITFALLS BLOCK}
 
@@ -117,4 +117,4 @@ You are revising ONE finding (a LaTeX fragment) in a report for **human experts 
 - If the claim changed: proposed replacement cells for this finding's row in the summary table (Technique / In the preprint / Credited?).
 ````
 
-**Bibliography working notes.** If a check flags notes in a bibliography entry, such as "author copy from …", "saved as …" or "text extraction garbled", don't strip them from `INDEX.md`. Agents use those notes. `make_bib.py` removes such parentheticals when it generates the bibliography; extend its `NOTE_RE` trigger words if a new kind of note slips through.
+**Bibliography working notes.** If a check flags notes in a bibliography entry, such as "author copy from …", "saved as …" or "text extraction garbled", don't strip them from `INDEX.md`. Agents use those notes. Rewrite such notes in INDEX.md, or in the fragment's `% BIB` line, as `[note: …]`. `make_bib.py` strips only `[note: …]` marks and URL clauses, and it lists every other wordy parenthetical it keeps, so check that list on every build.

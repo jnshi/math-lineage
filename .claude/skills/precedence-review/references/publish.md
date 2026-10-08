@@ -13,7 +13,7 @@ preprints/<preprint>/
 
 ## 1. PDF and flattened source
 1. **Set the title-page date** in `writeup/precedence-findings.tex` to the date of the final revision, then run the full build.
-2. **Flatten the source.** Run `python -I -X utf8 <skill>/scripts/flatten_tex.py writeup/precedence-findings.tex <scratch>/flat/precedence-findings.tex`. This inlines every `\input` and drops the `% BIB` comment lines, which are redundant once the bibliography is inlined. `\ploc`'s hidden file:line arguments stay; they never print.
+2. **Flatten the source.** Run `python3 -I -X utf8 <skill>/scripts/flatten_tex.py writeup/precedence-findings.tex <scratch>/flat/precedence-findings.tex`. This inlines every `\input` and drops the `% BIB` comment lines, which are redundant once the bibliography is inlined. `\ploc`'s hidden file:line arguments stay; they never print.
 3. **Check that the flat file compiles to the same document.** Compile it in `<scratch>/flat/` with **three** pdflatex passes: from a clean directory the table of contents only settles on the third. Then compare `pdftotext -layout` of both PDFs (`diff -q`).
 4. **Check the comments.** Grep the flat file's comments for working notes, such as "paywalled", "not read" or instructions meant for agents, and remove any you find.
 5. **Copy** the flat `.tex` and `writeup/build/precedence-findings.pdf` into `preprints/<preprint>/`.
@@ -48,17 +48,26 @@ See `<skill>/assets/precedence-findings.example.json` for a complete example. It
 
 How to fill it in:
 - **What the preprint cites.** Get this from `build/references.bib` (or `references.tex`), and grep the sections for `\cite…{key}` to see what each work is cited for.
-- **Summaries and titles.** Take the summaries, titles, grades and locators from the final fragments (`scripts/print_summaries.py`) and the summary table.
+- **IDs, summaries and titles.** Take them from the final build: `python3 -I -X utf8 <skill>/scripts/print_summaries.py <writeup dir>` prints each finding's ID as LaTeX assigned it, with its slug, title and Summary. Take grades and locators from the summary table. The JSON's `id` must be the printed ID (S1, P2, …), not the slug.
 
 ## 3. `precedence-stats.json`
-`python -I -X utf8 <skill>/scripts/precedence_stats.py preprints/<preprint> reviews/<slug>/writeup/parts/summary.tex`
+After a full build, run `python3 -I -X utf8 <skill>/scripts/precedence_stats.py preprints/<preprint> reviews/<slug>/writeup`.
 
-The script validates the JSON before writing the stats:
-- every source key resolves;
-- every category, grade and status is defined, and each grade fits its category;
-- `in_preprint_bibliography` matches the preprint's bibliography (by key, arXiv id, DOI and title);
-- each status is consistent with the bibliography;
-- the grades match the summary table.
+The script validates the JSON before writing the stats. It fails, and deletes any old stats file, on:
+- schema errors (field types);
+- duplicate JSON keys, finding IDs or `preprint_bib_key`s;
+- definitions that differ from the canonical ones;
+- a grade that doesn't fit its category;
+- unknown source keys;
+- statuses inconsistent with `in_preprint_bibliography`;
+- a `preprint_bib_key` that the preprint's TeX never `\cite`s. A `.bib` entry that is never cited is not in the bibliography;
+- any disagreement between the summary table (resolved through the build's `.aux`) and the JSON on IDs, grades or categories.
+
+It does not decide by itself whether an earlier work is in the bibliography: that is a fact the review established by reading the preprint. If a source marked not in the bibliography matches a bibliography entry by arXiv id, DOI or exact title, the script prints a `WARNING (check by hand)` line. Each one is only a hint, but look at every one.
+
+Two gaps remain:
+- A source can be given the wrong cited key, for example the bib key of another paper the preprint does cite. Check each `preprint_bib_key` against the bibliography entry yourself.
+- The script needs the preprint's TeX (`build/`) to check citations.
 
 Fix every reported error, then rerun. The stats it writes are:
 - the number of findings by category, by grade, and by category and grade, with IDs;

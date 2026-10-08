@@ -1,6 +1,8 @@
 # Environment pitfalls and working recipes
 
-These come from the failed tool calls in about 80 subagent transcripts from the first run, which was on Windows with Git Bash. Most are generic; the Windows-only ones are marked. Before the first brief, check what the machine has: `which pdftotext pdfinfo pdftoppm pdflatex gh curl python`. Also check whether PyMuPDF imports with plain `python`.
+These come from the failed tool calls in about 80 subagent transcripts from the first run, which was on Windows with Git Bash. Most are generic; the Windows-only ones are marked. Before the first brief, check what the machine has: `which pdftotext pdfinfo pdftoppm pdflatex gh curl python3 python`. Also check whether PyMuPDF imports with plain `python3`.
+
+Commands here say `python3`, since macOS and many Linux systems have no `python`. On a machine where only `python` exists (some Windows installs), substitute it everywhere, including in the briefs. The bundled shell scripts already try `python3` first, then `python`. The scripts need Python 3.9 or later.
 
 ## The "Tool pitfalls" block
 Paste this into **every** subagent prompt. Drop the lines that don't apply to the platform.
@@ -8,7 +10,7 @@ Paste this into **every** subagent prompt. Drop the lines that don't apply to th
 ````text
 **Tool pitfalls on this machine:**
 - The Bash tool can turn `\\` into `\` before the shell sees it, even inside single quotes and quoted heredocs. Never pass LaTeX or regexes containing `\\` through sed, heredocs or `python -c`. Edit `.tex` files only with the Read/Edit/Write tools; write any script to a file with Write, then run it.
-- Python: run scripts as `python -I -X utf8 <script>` (or start them with `import sys; sys.stdout.reconfigure(encoding="utf-8")`). `PYTHONIOENCODING` is ignored under `-I`, and the console may not be UTF-8. Open text files with `encoding="utf-8", errors="replace"`. Use raw strings for any TeX in Python.
+- Python: run scripts as `python3 -I -X utf8 <script>` (or `python` where `python3` doesn't exist) (or start them with `import sys; sys.stdout.reconfigure(encoding="utf-8")`). `PYTHONIOENCODING` is ignored under `-I`, and the console may not be UTF-8. Open text files with `encoding="utf-8", errors="replace"`. Use raw strings for any TeX in Python.
 - Windows/Git Bash: run pdflatex from inside its directory with relative file names (MSYS rewrites Windows paths in arguments). Don't use `/tmp`; it isn't where Python looks, and it isn't your scratch folder. Pass file paths to Python as arguments, not inside string literals. Quote every path.
 - Use your own subfolder of the scratch directory for every temporary file; other agents share the scratch root, and generic names like `test.tex` or `pg.py` collide.
 - arXiv: always `curl -sSL "https://export.arxiv.org/..."`. Plain http returns an empty 301 with no error, so an empty result means a failed request, not "no hits". Wait 3–5 s between calls; on 429 or "Rate exceeded" wait 30 s or more. Look up the latest version (`api/query?id_list=<id>`) before calling fetch_arxiv.sh, which requires a version.
@@ -76,9 +78,10 @@ Paste this into **every** subagent prompt. Drop the lines that don't apply to th
 
 **Find the compiled page of a statement.** pdftotext output separates pages with `\f`.
 ```
-python -I -X utf8 <skill>/scripts/pagefind.py <scratch>/paper.txt "Lemma 8\.2" "proved here"
-python -I -X utf8 <skill>/scripts/pagefind.py <scratch>/paper.txt --page 32
+python3 -I -X utf8 <skill>/scripts/pagefind.py <scratch>/paper.txt "Lemma 8\.2" "proved here"
+python3 -I -X utf8 <skill>/scripts/pagefind.py <scratch>/paper.txt --page 32
 ```
+`p.N` is the PDF page index, which can differ from the printed page number, for example in journal reprints or after an unnumbered title page. For each page with a hit, the script also shows the page's first and last lines; read the printed number there and use that in locators. Text without form feeds is rejected; re-extract it with plain `pdftotext -enc UTF-8`.
 Straight from a PDF: `for p in $(seq 10 30); do pdftotext -enc UTF-8 -f $p -l $p X.pdf - | grep -q "Lemma 4.4" && echo p.$p; done; true`.
 
 **Look up arXiv metadata or the latest version.**
@@ -88,7 +91,10 @@ Straight from a PDF: `for p in $(seq 10 30); do pdftotext -enc UTF-8 -f $p -l $p
 `curl -sSL "https://export.arxiv.org/api/query?search_query=au:Lehec+AND+abs:%22stochastic+localization%22&max_results=20&sortBy=submittedDate"`
 
 **Fetch an arXiv paper into the library:**
-`bash <repo>/prior-work/tools/fetch_arxiv.sh <Key> <id>v<N>`, then append the INDEX.md row.
+Run `bash <repo>/prior-work/tools/fetch_arxiv.sh <Key> <id>v<N>`.
+- If it exits 0, append the INDEX.md row.
+- If it exits 1, its last line says what failed: the PDF, the text or the source. Nothing partial is kept, so a rerun retries cleanly.
+- `src: none` (only a PDF was submitted, or no TeX files in the source) is not a failure.
 
 **Fetch a non-arXiv PDF:**
 ```

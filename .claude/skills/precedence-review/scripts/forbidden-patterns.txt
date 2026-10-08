@@ -1,0 +1,24 @@
+# Hard tier: strings that must never reach the reader of the write-up PDF.
+# Any hit makes build.sh and fragment_test.sh exit 1. Keep this list to
+# high-precision patterns; softer ones go in warning-patterns.txt.
+#
+# Format: one extended regular expression (grep -E) per line, matched
+# case-insensitively against the pdftotext output with each page joined into
+# one line (once keeping and once removing line-end hyphens), so strings broken
+# across lines are still caught. Lines starting with # are comments; blank
+# lines are ignored. "@build " marks a pattern that only build.sh checks: a
+# standalone fragment test expects unresolved references and citations.
+# Keep patterns portable to BSD grep: no \b, \w or \<; use ([^A-Za-z0-9_]|^).
+
+# TeX file names and file:line locators
+\.tex([^A-Za-z0-9]|$)
+tex:[0-9]
+
+# TeX labels (prefix:name). The prefix list is explicit, so doi:, arXiv:,
+# http: and similar never match.
+(^|[^A-Za-z0-9_])(eq|eqn|eqs|ineq|lem|lemma|sec|sect|section|subsec|ssec|subsubsec|para|prop|thm|theorem|cor|def|defn|rem|fig|figure|tab|tbl|table|app|apx|appendix|ex|exa|conj|claim|alg|ch|chap|part|item|fn|step|hyp|ass|asm|obs|fact|cond|prof|cap):[A-Za-z0-9]([A-Za-z0-9:._/-]*[A-Za-z0-9])?
+
+# Unresolved references and citations, and make_bib.py's placeholder
+@build \?\?
+@build \[\?]
+missing bibliography entry

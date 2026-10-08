@@ -39,5 +39,7 @@ text = "\n".join(lines) + "\n"
 if "\\input{" in text:
     sys.exit("an \\input remains unexpanded (inline or commented form?); check the main file")
 dest.parent.mkdir(parents=True, exist_ok=True)
-dest.write_text(text, encoding="utf-8", newline="\n")
+# open() rather than Path.write_text(newline=...), which needs Python 3.10.
+with open(dest, "w", encoding="utf-8", newline="\n") as fh:
+    fh.write(text)
 print(f"wrote {dest} ({len(lines)} lines)")

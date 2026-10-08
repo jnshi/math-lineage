@@ -44,7 +44,7 @@ What counts as a finding is what made this procedure useful, so get it exactly r
     INDEX.md  papers/  text/  src/  tools/fetch_arxiv.sh
 <repo>/reviews/<slug>/            working files for this review (gitignored)
     NN-<section-slug>.md  FINDINGS.md  TIMING.md  COMPANION-CREDIT-MAP.md  CONSOLIDATION.md
-    author-checks/<ID>.md   writeup/{precedence-findings.tex, parts/, findings/, build/}
+    author-checks/<slug>.md   writeup/{precedence-findings.tex, parts/, findings/<slug>.tex, build/}
 <scratch>/                        briefs, compiled-text extractions, one subfolder per subagent
 ```
 
@@ -105,12 +105,12 @@ See `references/writeup.md`.
 4. **Assemble.**
    - Merges are the user's call; recommend one when two findings overlap.
    - Move withdrawn or merged fragments to `findings/retired/`.
-   - Renumber with `scripts/renumber_findings.py`.
+   - LaTeX numbers the findings (S1, P2, C1) from the order of the `\input` lines. Withdrawing, downgrading or reordering a finding is just deleting or moving its line. Nobody types an ID.
    - Write the summary table.
    - Build, run the QA gates and send the PDF.
 
 ### 5. Author-persona check (one read-only agent per finding, in parallel)
-Each agent plays the preprint's honorable author. It is curious and glad to be reminded of a forgotten source, but it rejects claims that are untrue or contrived. It also reports every typo and write-up error. Each agent writes `author-checks/<ID>.md`. The brief is in `references/skeptic.md`.
+Each agent plays the preprint's honorable author. It is curious and glad to be reminded of a forgotten source, but it rejects claims that are untrue or contrived. It also reports every typo and write-up error. Each agent writes `author-checks/<slug>.md`. The brief is in `references/skeptic.md`.
 
 ### 6. Apply verdicts (one agent per finding, in parallel)
 1. Back up the fragments.
@@ -187,7 +187,7 @@ These rules came from review of the first write-up. Put them in every drafting, 
 
 These caused most of the retries in the first run, mostly on Windows with Git Bash. Paste the "Tool pitfalls" block from `references/environment.md` into every subagent prompt, adapted to the platform. The worst ones:
 - **Backslashes.** The Bash tool can turn `\\` into `\`, even inside single quotes and quoted heredocs. That silently corrupts LaTeX, so edit `.tex` files only with Edit or Write, and write scripts to files before running them.
-- **Python output encoding.** Python output can crash on a non-UTF-8 console, and `PYTHONIOENCODING` is ignored under `python -I`. Run `python -I -X utf8`, or call `sys.stdout.reconfigure(encoding="utf-8")`.
+- **Python output encoding.** Python output can crash on a non-UTF-8 console, and `PYTHONIOENCODING` is ignored under `python -I`. Run `python3 -I -X utf8`, or call `sys.stdout.reconfigure(encoding="utf-8")`. Use `python` only where `python3` doesn't exist.
 - **arXiv over plain http** returns an empty 301 with no error. Use `curl -sSL https://export.arxiv.org/...`, spaced 3–5 s apart. Look up the version before fetching.
 - **MSYS paths.** MSYS rewrites Windows paths passed as arguments. Run pdflatex from inside its build directory with relative names, and use scratch subfolders rather than `/tmp`.
 
@@ -195,13 +195,13 @@ These caused most of the retries in the first run, mostly on Windows with Git Ba
 
 | File | Purpose |
 |---|---|
-| `scripts/fetch_arxiv.sh` | Fetch an arXiv paper (PDF, text, safely extracted LaTeX source) into `prior-work/`. Copy it to `prior-work/tools/`. |
+| `scripts/fetch_arxiv.sh` | Fetch an arXiv paper (PDF, text, safely extracted LaTeX source) into `prior-work/`. Copy it to `prior-work/tools/`. Needs `python3` (3.9 or later) to unpack sources. It exits 1 if anything failed, and nothing partial is left behind. |
 | `scripts/pagefind.py` | Find the compiled page of a phrase in a pdftotext file, or print a page. |
-| `scripts/fragment_test.sh` | Test-compile one write-up fragment in a scratch folder and grep its PDF text for forbidden strings. |
+| `scripts/fragment_test.sh` | Test-compile one write-up fragment in a scratch folder and check its PDF text. It exits 0 only on `result: PASS`. |
 | `scripts/make_bib.py` | Generate `parts/bibliography.tex` from the cited keys, in reading order. |
-| `scripts/build.sh` | Build the whole write-up: bibliography, 3 pdflatex passes, QA summary. |
-| `scripts/renumber_findings.py` | Renumber finding IDs (titles, labels, refs, file names) after merges or withdrawals. |
-| `scripts/print_summaries.py` | Print each fragment's title and Summary, for the summary table and JSON. |
+| `scripts/build.sh` | Build the whole write-up: bibliography, 3 pdflatex passes, QA gates. It exits 0 only on `result: PASS`. |
+| `scripts/print_summaries.py` | Print each finding's ID (from the last build), slug, title and Summary, in document order. |
+| `scripts/forbidden-patterns.txt`, `scripts/warning-patterns.txt` | Patterns that fail the build, or are only printed for review, when found in the PDF text. Shared by `build.sh` and `fragment_test.sh`. |
 | `scripts/flatten_tex.py` | Inline every `\input` into one standalone `.tex` for publishing. |
 | `scripts/precedence_stats.py` | Validate `precedence-findings.json` and write `precedence-stats.json`. |
 | `assets/` | Templates: INDEX, FINDINGS, write-up preamble/main/about/summary, example JSON, README. |
