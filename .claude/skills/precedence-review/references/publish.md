@@ -95,4 +95,15 @@ The old README is still in git if anyone wants it back.
    - the attribution line the environment specifies for PR bodies.
 7. **Report the PR link to the user.** If the environment provides PR or CI tools, use them to check the PR's status. Never enable auto-merge unless asked.
 
-If `gh` is not installed or not authenticated, stop after pushing the branch. Give the user the compare URL so they can open the PR themselves; don't try to work around authentication.
+### Without `gh`
+If `gh` is not installed or not signed in, open the PR through the GitHub website instead. Never try to work around authentication. Steps 2–4 above (branch, stage, commit) are the same. The push and the PR then depend on whether the user can push to `jnshi/math-lineage`. Ask them if you don't know. Otherwise, try the push: a "Permission … denied" or 403 error means they can't.
+
+- **With push access:**
+  1. Push the branch to the remote that points at `jnshi/math-lineage`.
+  2. Give the user `https://github.com/jnshi/math-lineage/compare/main...<branch>?quick_pull=1&title=<title>&body=<body>`, with the title and body URL-encoded. The link opens the new-PR form pre-filled, and the user only clicks **Create pull request**. If the URL gets very long, leave out `body`, and give them the body to paste from `<scratch>/pr-body.md`.
+- **Without push access, which is the usual case for anyone but the repository's owner:**
+  1. Ask the user to fork the repository on GitHub, at `https://github.com/jnshi/math-lineage/fork`. Forking is an action on their account, so they do it themselves.
+  2. Add their fork as a remote and push the branch there: `git remote add fork https://github.com/<their-user>/math-lineage.git`, then `git push -u fork <branch>`. Use their fork's actual name if they renamed it. Their existing git credentials must allow the push; if they don't, stop and say so.
+  3. Give them the cross-fork link `https://github.com/jnshi/math-lineage/compare/main...<their-user>:<branch>?quick_pull=1&title=<title>&body=<body>`, URL-encoded the same way.
+
+Users who know from the start that they have no push access can fork first and clone their fork instead (setup, step 0.1). In that case, add `jnshi/math-lineage` as `upstream` with `git remote add upstream https://github.com/jnshi/math-lineage.git`, and branch from `upstream/main` in step 2.

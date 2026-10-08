@@ -130,6 +130,7 @@ The brief is in `references/skeptic.md`.
 2. **Finish by opening a pull request against `jnshi/math-lineage`.**
    - Use a new branch holding only those files, plus `.gitignore` if it changed.
    - Push the branch and run `gh pr create`.
+   - Without push access, go through a fork. Without `gh`, use a pre-filled link to GitHub's website. Both paths are in `references/publish.md`.
    - Give the user the link.
 
 The schema, scripts, README template and PR steps are in `references/publish.md`.
