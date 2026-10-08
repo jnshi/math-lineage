@@ -1,0 +1,353 @@
+{
+  "format": "math-lineage/precedence-findings",
+  "format_version": 1,
+  "preprint": {
+    "id": "OAI:A-spectral-gap-throughout-the-high-temperature-Sherrington-Kirkpatrick-phase-September-24-2026",
+    "title": "A spectral gap throughout the high-temperature Sherrington–Kirkpatrick phase",
+    "date": "2026-09-24",
+    "path": "preprints/A-spectral-gap-throughout-the-high-temperature-Sherrington-Kirkpatrick-phase-September-24-2026",
+    "companions": []
+  },
+  "review": {
+    "date": "2026-10-08",
+    "report_pdf": "precedence-findings.pdf",
+    "report_tex": "precedence-findings.tex",
+    "locator_convention": "Preprint locations use the compiled numbering and page numbers of main.pdf. Source locators refer to the version identified by the source's arXiv id or DOI."
+  },
+  "definitions": {
+    "category": {
+      "A": "Unattributed reuse: a technique, construction, identity, estimate or body of theory from an identifiable earlier paper is reused without credit for that content.",
+      "B": "Same-problem precedence: earlier, uncited partial progress on the same problem, such as a weaker or special-case version of a statement the preprint proves.",
+      "C": "Structural: a published result would replace or substantially shorten a large part of the argument."
+    },
+    "grade": {
+      "Strong": "(A/B) The earlier technique is reused essentially intact without credit for that content.",
+      "Partial": "(A/B) Only a fragment is reused, or the credit is present but only indirect.",
+      "Major": "(C) A route, a section, or a component of the main theorem becomes a citation.",
+      "Moderate": "(C) A multi-page chain of lemmas becomes a citation."
+    },
+    "source_status": {
+      "not_cited": "The work is not in the preprint's bibliography.",
+      "cited_for_other_content": "The work is in the preprint's bibliography but is not cited for this content.",
+      "credited_in_part": "The preprint cites the work for part of this content only.",
+      "credited_elsewhere": "The preprint cites the work for this content at other locations, but not where the content is used.",
+      "credited_indirectly": "The preprint cites a location (e.g. a companion lemma) that itself credits the work for this content."
+    }
+  },
+  "sources": {
+    "FanMeiMontanari2018": {
+      "authors": [
+        "Z. Fan",
+        "S. Mei",
+        "A. Montanari"
+      ],
+      "title": "TAP free energy, spin glasses, and variational inference",
+      "year": 2018,
+      "venue": "Ann. Probab. 49 (2021)",
+      "arxiv": "1808.07890",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "CelentanoFanMei2021": {
+      "authors": [
+        "M. Celentano",
+        "Z. Fan",
+        "S. Mei"
+      ],
+      "title": "Local convexity of the TAP free energy and AMP convergence for Z2-synchronization",
+      "year": 2021,
+      "venue": "Ann. Statist. 51 (2023)",
+      "arxiv": "2106.11428",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "Celentano2022": {
+      "authors": [
+        "M. Celentano"
+      ],
+      "title": "Sudakov–Fernique post-AMP, and a new proof of the local convexity of the TAP free energy",
+      "year": 2022,
+      "venue": "Ann. Probab. 52 (2024) 923–954",
+      "arxiv": "2208.09550",
+      "doi": "10.1214/23-AOP1675",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "Celentano2024"
+    },
+    "HuangSellke2023": {
+      "authors": [
+        "B. Huang",
+        "M. Sellke"
+      ],
+      "title": "Strong topological trivialization of multi-species spherical spin glasses",
+      "year": 2023,
+      "venue": "preprint",
+      "arxiv": "2308.09677",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "Chatterjee2007": {
+      "authors": [
+        "S. Chatterjee"
+      ],
+      "title": "Spin glasses and Stein's method",
+      "year": 2007,
+      "venue": "Probab. Theory Related Fields 148 (2010)",
+      "arxiv": "0706.3500",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "ElAlaouiMontanariSellke2022": {
+      "authors": [
+        "A. El Alaoui",
+        "A. Montanari",
+        "M. Sellke"
+      ],
+      "title": "Sampling from the Sherrington–Kirkpatrick Gibbs measure via algorithmic stochastic localization",
+      "year": 2022,
+      "venue": "FOCS 2022",
+      "arxiv": "2203.05093",
+      "doi": null,
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "EAMS2022"
+    },
+    "ElAlaouiGaitonde2022": {
+      "authors": [
+        "A. El Alaoui",
+        "J. Gaitonde"
+      ],
+      "title": "Bounds on the covariance matrix of the Sherrington–Kirkpatrick model",
+      "year": 2022,
+      "venue": "preprint",
+      "arxiv": "2212.02445",
+      "doi": null,
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "EAG2024"
+    },
+    "HuangMohantyRajaramanWu2024": {
+      "authors": [
+        "B. Huang",
+        "S. Mohanty",
+        "A. Rajaraman",
+        "D. X. Wu"
+      ],
+      "title": "Weak Poincaré inequalities, simulated annealing, and sampling from spherical spin glasses",
+      "year": 2024,
+      "venue": "preprint",
+      "arxiv": "2411.09075",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "DaviesLeeSandhuShi2026-Sampling": {
+      "authors": [
+        "E. Davies",
+        "H. Lee",
+        "J. S. Sandhu",
+        "J. Shi"
+      ],
+      "title": "Potential Hessian Ascent III: Sampling the Sherrington–Kirkpatrick model at β < 1/2",
+      "year": 2026,
+      "venue": "preprint",
+      "arxiv": "2605.03718",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "DaviesLeeSandhuShi2026-WPI": {
+      "authors": [
+        "E. Davies",
+        "H. Lee",
+        "J. S. Sandhu",
+        "J. Shi"
+      ],
+      "title": "Weak Poincaré inequalities via approximate stochastic localization: application to sampling the Sherrington–Kirkpatrick model",
+      "year": 2026,
+      "venue": "preprint",
+      "arxiv": "2607.08160",
+      "doi": null,
+      "in_preprint_bibliography": false
+    }
+  },
+  "findings": [
+    {
+      "id": "S1",
+      "category": "A",
+      "grade": "Strong",
+      "technique": "Kac–Rice complexity method for TAP critical points in planted SK, with the count restricted to Hessian failures",
+      "summary": "The stability proposition is proved with Fan–Mei–Montanari's Kac–Rice computation for TAP critical points in planted SK (gauge, gradient density from Cov(Wm), determinant rate, relative-entropy rate vanishing at the Bayes point), restricted as in Celentano–Fan–Mei to Hessian failures near the Bayes law with their Sudakov–Fernique comparison as bulk input; at t = σ = 0 the preprint's scalar rate is Fan–Mei–Montanari's complexity functional term by term.",
+      "preprint_locations": [
+        "§§5.1–5.4, (5.4)–(5.9), Lemmas 5.3–5.5, (5.25) (pp. 28–38)",
+        "Lemmas 3.2–3.5 (pp. 12–21)",
+        "Lemmas 4.1–4.2 (pp. 22–26)",
+        "claimed as the paper's own route in §1.1 (p. 4) and §1.3 (p. 5)"
+      ],
+      "credit_in_preprint": "Neither Fan–Mei–Montanari nor Celentano–Fan–Mei is cited; the only citation on TAP-Hessian positivity is Celentano, for local convexity near late AMP iterates, proved without Kac–Rice.",
+      "sources": [
+        {
+          "key": "FanMeiMontanari2018",
+          "locators": "§3 (p. 8); Prop. 3.1, Lemma 3.3, Prop. 3.2 and (3.5) (p. 9); Prop. 3.5 and §3.4 (pp. 10–11); (4.18), Lemma 4.9 (p. 19); Prop. 5.2 (p. 22)",
+          "role": "Kac–Rice complexity computation: gauge, gradient density, determinant rate, relative-entropy rate, zero at the Bayes point",
+          "status": "not_cited"
+        },
+        {
+          "key": "CelentanoFanMei2021",
+          "locators": "Lemma 4.1 (p. 15; App. A.4, p. 33); Lemmas 4.7–4.9 and Cor. 4.10 (pp. 17–18; proof p. 50); Lemma B.2 (p. 43)",
+          "role": "Kac–Rice count restricted to Hessian failures near the Bayes law; Sudakov–Fernique bound on the smallest TAP-Hessian eigenvalue",
+          "status": "not_cited"
+        },
+        {
+          "key": "Celentano2022",
+          "locators": "Prop. 1 (p. 6); §4 (p. 11)",
+          "role": "the same Sudakov–Fernique comparison applied to the TAP Hessian",
+          "status": "cited_for_other_content"
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "category": "A",
+      "grade": "Strong",
+      "technique": "Approximate-critical-point control from annealed Kac–Rice bounds",
+      "summary": "To exclude unstable approximate solutions of the TAP field equation, the preprint uses Huang–Sellke's device turning an exponentially small annealed Kac–Rice bound into high-probability non-existence of approximate bad critical points: Gaussian rerandomization (smoothing), a local lower bound in which the inverse-Jacobian volume cancels the determinant, inheritance of the bad property, and Markov's inequality.",
+      "preprint_locations": [
+        "(5.5) and the proof of Lemma 5.3 (p. 28)",
+        "Lemma 5.6 (pp. 35–37)",
+        "exclusion step in the proof of Proposition 5.1 (pp. 37–38)",
+        "presented as the paper's own in §1.1 (p. 4) and §1.3 (p. 5)"
+      ],
+      "credit_in_preprint": "Not cited; the preprint presents the local-volume step as its own.",
+      "sources": [
+        {
+          "key": "HuangSellke2023",
+          "locators": "§5: Theorem 5.2 (p. 28); Lemmas 5.9–5.11 (pp. 32–35); proof of Theorem 5.2 (p. 36)",
+          "role": "approximate-critical-point control from an annealed Kac–Rice bound",
+          "status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "P1",
+      "category": "A",
+      "grade": "Partial",
+      "technique": "Stein equation for tanh under a cosh-tilted Gaussian, used to compare a field with an Onsager-corrected field",
+      "summary": "The preprint's scalar identity (6.9) is Chatterjee's Stein equation for tanh under a cosh-tilted Gaussian, with its bounded solution in closed form, used as he does at the Gibbs-sample local field centred at the Onsager-corrected field; Chatterjee's L² estimate of ⟨Tf⟩, the main work of his method, is not reused.",
+      "preprint_locations": [
+        "(6.8)–(6.9) (p. 45)",
+        "proof of Lemma 6.5 (pp. 53–54)",
+        "(6.12)–(6.13) (pp. 45–46)",
+        "proof of Proposition 7.2, (7.3) (p. 57)"
+      ],
+      "credit_in_preprint": "Not cited; (6.9) is introduced as a scalar identity valid for arbitrary real fields, and Bolthausen is cited only for the Onsager-corrected recursion.",
+      "sources": [
+        {
+          "key": "Chatterjee2007",
+          "locators": "§1.8, (12)–(15) (p. 7); Lemma 1.3 (p. 8; §3.6, p. 25); §3.4 (pp. 20–23); Corollary 1.2 (p. 5)",
+          "role": "Stein operator and equation for tanh under a cosh-tilted Gaussian, its bounded solution, and its use at a Gibbs sample with the Onsager-corrected centre",
+          "status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "P2",
+      "category": "A",
+      "grade": "Partial",
+      "technique": "Planted stochastic-localization framework for SK at its points of use: planted law with likelihood transfer, and the state-evolution fixed point",
+      "summary": "Proposition 5.1 is proved under the El Alaoui–Montanari–Sellke planted law for the SK observation process and transferred to the SK disorder by their likelihood identity; the equality law locating the zero set of the Kac–Rice rate is their state-evolution fixed point.",
+      "preprint_locations": [
+        "(5.4) (p. 28)",
+        "§5.4 (pp. 39–40)",
+        "Lemma 4.2 (pp. 25–26)"
+      ],
+      "credit_in_preprint": "Cited once, in §1.1 (p. 4), as a parallel combination of Gaussian observations, planted laws and AMP; nothing is cited where these ingredients are used.",
+      "sources": [
+        {
+          "key": "ElAlaouiMontanariSellke2022",
+          "locators": "§4.1, (4.1)–(4.9), Proposition 4.2, (4.14) (pp. 10–12); (2.5), (4.16), Proposition 4.4, Lemma 4.5(c) (pp. 5, 12–14)",
+          "role": "planted model and likelihood identity for the SK observation process; state-evolution fixed point",
+          "status": "credited_elsewhere"
+        }
+      ]
+    },
+    {
+      "id": "P3",
+      "category": "A",
+      "grade": "Partial",
+      "technique": "Route to a Poincaré inequality from covariance bounds at stochastic-localization fields, via the inverse TAP Hessian",
+      "summary": "El Alaoui and Gaitonde set out, without proofs, the route the preprint carries out: covariance at stochastic-localization fields ≈ inverse negative TAP Hessian, bounded under uniform positivity, then a Poincaré inequality via Eldan–Shamir / Chen–Eldan; their one concrete step (a Frobenius resolvent bound with TAP-Hessian concavity at probability 1 − O(1/n)) is not reused.",
+      "preprint_locations": [
+        "Proposition 5.1 (p. 27)",
+        "§6.4 (pp. 45–48)",
+        "Proposition 7.2 (p. 56)",
+        "§2 (pp. 7–10)"
+      ],
+      "credit_in_preprint": "Cited only for its zero-field Theorem 1.1 (§1.1, p. 4); the preprint does not say that El Alaoui–Gaitonde proposed the route.",
+      "sources": [
+        {
+          "key": "ElAlaouiGaitonde2022",
+          "locators": "§2, (2.1)–(2.7) (pp. 3–4)",
+          "role": "proposed route from covariance bounds at stochastic-localization fields, via the inverse TAP Hessian, to a Poincaré inequality",
+          "status": "cited_for_other_content"
+        }
+      ]
+    },
+    {
+      "id": "P4",
+      "category": "A",
+      "grade": "Partial",
+      "technique": "Stopped stochastic localization with exceptional paths",
+      "summary": "The preprint's transfer to Theorem 1.1 has the skeleton of Huang–Mohanty–Rajaraman–Wu's stopped localization: a test-function-independent stopping time at the first failure of a path estimate, early-stopped and terminal-failure paths counted as bad, and a good/bad split of the retained variance; their osc(f)² charge of the bad part is replaced by an f²-tilted entropy bound.",
+      "preprint_locations": [
+        "§2.2 (pp. 7–8), (2.3)–(2.4)",
+        "§2.4 (p. 10)",
+        "Corollary 5.2 (p. 27)"
+      ],
+      "credit_in_preprint": "Not cited; Chen–Eldan is cited for the variance/Dirichlet-form framework, which covers stopping only with an almost-sure terminal gap.",
+      "sources": [
+        {
+          "key": "HuangMohantyRajaramanWu2024",
+          "locators": "§2 (p. 15); §6.2, Lemmas 6.6 and 6.8 (pp. 26–27); Lemma 4.11 (p. 20) and its Glauber form Lemma A.6 (p. 74)",
+          "role": "stopped localization with exceptional paths",
+          "status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "P5",
+      "category": "A",
+      "grade": "Partial",
+      "technique": "Resolvent estimates uniform over adaptive diagonals by metric projection, concentration and chaining",
+      "summary": "The proof of Lemma 3.1 (§3.3) follows the assembly Davies et al. uses in Theorem B.9 for uniformity over all diagonal deformations: metric projection onto an operator-norm ball, increments regular in the diagonal parameters, Gaussian concentration and chaining at the natural scale. The objects controlled differ (Davies et al. bounds the diagonal of DQ̄²D, with two inverse factors; Lemma 3.1 concerns words with one), and the mean computation is the preprint's own.",
+      "preprint_locations": [
+        "Lemma 3.1 (p. 12)",
+        "§3.3, proof of Lemma 3.1 (pp. 17–19)"
+      ],
+      "credit_in_preprint": "Not cited; in §3 the preprint cites only Speicher and Vitale, for other points.",
+      "sources": [
+        {
+          "key": "DaviesLeeSandhuShi2026-Sampling",
+          "locators": "App. B: Lemma B.8 (p. 159); Theorem B.9 (pp. 160–162); Corollary B.35 (p. 179)",
+          "role": "uniform control of resolvent diagonals over all diagonal deformations by metric projection, regular increments, concentration and chaining",
+          "status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "P6",
+      "category": "B",
+      "grade": "Partial",
+      "technique": "Weak Poincaré inequality for SK heat-bath Glauber dynamics at β < 1/2 via approximate stochastic localization",
+      "summary": "DLSS proved, by approximate stochastic localization, a weak Poincaré inequality for SK heat-bath Glauber at every β < 1/2: a weaker version, on half the range, of Theorem 1.1, and the first functional inequality for this chain past β ≈ 0.295. It was posted before the two works the preprint cites for β < 1/2 (Wang; Boban–Li–Oveis Gharan), whose results imply it on its range; no proof is reused.",
+      "preprint_locations": [
+        "Theorem 1.1 (p. 3)",
+        "§1.1 (p. 4)"
+      ],
+      "credit_in_preprint": "Not cited; the later cited Wang and Boban–Li–Oveis Gharan both discuss and imply it.",
+      "sources": [
+        {
+          "key": "DaviesLeeSandhuShi2026-WPI",
+          "locators": "Corollary 1.5 (p. 2); Theorem 1.4 (p. 2); Definition 2.3; Theorem 5.1 (p. 21)",
+          "role": "weak Poincaré inequality for SK Glauber at β < 1/2; terminal weak inequality at a large fixed time",
+          "status": "not_cited"
+        }
+      ]
+    }
+  ]
+}

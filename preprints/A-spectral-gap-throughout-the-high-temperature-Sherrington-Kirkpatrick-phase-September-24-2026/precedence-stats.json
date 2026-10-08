@@ -1,0 +1,64 @@
+{
+  "format": "math-lineage/precedence-stats",
+  "format_version": 1,
+  "preprint": "OAI:A-spectral-gap-throughout-the-high-temperature-Sherrington-Kirkpatrick-phase-September-24-2026",
+  "generated_from": "precedence-findings.json",
+  "review_date": "2026-10-08",
+  "findings": {
+    "total": 8,
+    "by_category": {
+      "A": 7,
+      "B": 1,
+      "C": 0
+    },
+    "by_grade": {
+      "Strong": 2,
+      "Partial": 6,
+      "Major": 0,
+      "Moderate": 0
+    },
+    "by_category_and_grade": {
+      "A": {
+        "Strong": 2,
+        "Partial": 5
+      },
+      "B": {
+        "Partial": 1
+      },
+      "C": {}
+    },
+    "ids_by_category_and_grade": {
+      "A": {
+        "Strong": [
+          "S1",
+          "S2"
+        ],
+        "Partial": [
+          "P1",
+          "P2",
+          "P3",
+          "P4",
+          "P5"
+        ]
+      },
+      "B": {
+        "Partial": [
+          "P6"
+        ]
+      },
+      "C": {}
+    }
+  },
+  "earlier_works": {
+    "distinct": 10,
+    "not_in_preprint_bibliography": 7,
+    "in_preprint_bibliography": 3,
+    "finding_source_pairs_by_status": {
+      "not_cited": 7,
+      "cited_for_other_content": 2,
+      "credited_in_part": 0,
+      "credited_elsewhere": 1,
+      "credited_indirectly": 0
+    }
+  }
+}
