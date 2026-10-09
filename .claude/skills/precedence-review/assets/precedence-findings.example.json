@@ -38,11 +38,11 @@
       "paragraph": "As judged by the author-persona check: a short paragraph; for overstated novelty, a larger revision of the abstract or framing."
     },
     "credit_status": {
-      "not_cited": "The work is not in the preprint's bibliography.",
+      "not_cited": "The work is not in the preprint's bibliography, and no location the preprint cites credits it for this content.",
       "cited_for_other_content": "The work is in the preprint's bibliography but is not cited for this content.",
-      "credited_elsewhere": "The preprint cites the work for this content at other locations, but not where the content is used.",
-      "credited_in_part": "The preprint cites the work for part of this content only.",
-      "credited": "The preprint cites the work for this content. Allowed only in a finding with overstated novelty."
+      "credited_elsewhere": "The preprint credits the work for this content at other locations, directly or through a cited location that credits it, but not where the content is used.",
+      "credited_in_part": "The preprint credits the work for part of this content only, directly or through a cited location that credits it.",
+      "credited": "The preprint credits the work for this content, directly or through a cited location that credits it. Allowed only in a finding with overstated novelty."
     },
     "flags": {
       "attribution_gap": "True when the relationship is same technique, adapted or same result; the centrality is main result, central or supporting; and the principal earlier work (listed first among the sources) is not cited for this content anywhere (not_cited or cited_for_other_content).",

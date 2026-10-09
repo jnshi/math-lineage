@@ -57,7 +57,7 @@ See `<skill>/assets/precedence-findings.example.json` for a complete example. It
   - `centrality`: `main result`, `central`, `supporting` or `peripheral` (best-effort judgment). A weaker result is never `main result`.
   - `form_of_inclusion`: `citation`, `sentence`, `paragraph` or `none`, from the author-persona check. With overstated novelty, it describes the change to the abstract or framing, and is never `citation`.
   - `attribution_gap`: derived, and recomputed by the validator. It holds when the relationship is same technique, adapted or same result; the centrality is main result, central or supporting; and the principal source is `not_cited` or `cited_for_other_content`.
-  - `overstated_novelty`: the preprint cites the earlier work for this content, but its abstract, contribution statements or framing of a main result present it as new, explicitly or as a reader would reasonably take it. When true, `novelty_claim` says where (e.g. `"Abstract; framing of Theorem 1.1 (p. 2)"`), and every source is `credited`, `credited_elsewhere` or `credited_in_part`.
+  - `overstated_novelty`: the preprint credits the earlier work for this content, directly or through a cited location that credits it, but its abstract, contribution statements or framing of a main result present it as new, explicitly or as a reader would reasonably take it. When true, `novelty_claim` says where (e.g. `"Abstract; framing of Theorem 1.1 (p. 2)"`), and every source is `credited`, `credited_elsewhere` or `credited_in_part`.
   - `technique` is the finding's title as printed (a gloss without citations). Keep it in sync when titles change.
   - `preprint_locations` uses compiled numbering and printed pages, for example `"§3 (p. 7)"` or `"Lemma 8.2 (pp. 31–32)"`.
   - `credit_in_preprint` is one sentence: what the preprint cites for this content, and where.
@@ -65,11 +65,13 @@ See `<skill>/assets/precedence-findings.example.json` for a complete example. It
     - `locators`: where in that work, with printed pages, or null;
     - `role`: what that work contributes to the finding, in a few words;
     - `credit_status`, one of:
-      - `not_cited`: the work is not in the preprint's bibliography;
+      - `not_cited`: the work is not in the preprint's bibliography, and no location the preprint cites credits it for this content;
       - `cited_for_other_content`: it is in the bibliography, but not cited for this content;
-      - `credited_elsewhere`: it is cited for this content at other locations, but not where the content is used;
-      - `credited_in_part`: it is cited for part of this content only;
-      - `credited`: it is cited for this content. Only with overstated novelty.
+      - `credited_elsewhere`: it is credited for this content at other locations, directly or through a cited location that credits it (such as a companion lemma), but not where the content is used;
+      - `credited_in_part`: it is credited for part of this content only;
+      - `credited`: it is credited for this content. Only with overstated novelty.
+
+      The credited statuses may apply to a work outside the bibliography, through a cited location that credits it; `cited_for_other_content` needs the work in the bibliography.
 
 How to fill it in:
 - **What the preprint cites.** Get this from the bibliography file, and grep the sections and the abstract for `\cite…{key}` to see what each work is cited for.
