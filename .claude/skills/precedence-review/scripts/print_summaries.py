@@ -5,7 +5,7 @@ Usage: python3 -I -X utf8 print_summaries.py <writeup dir> [<main .tex>]
 
 Fragments are read in the order of the main file's \\input{findings/<slug>} lines
 (commented-out lines are skipped). Each fragment opens with
-\\finding[<short title>]{<title>}{<slug>}. IDs (S1, P2, ...) are assigned by
+\\finding[<short title>]{<title>}{<slug>}. IDs (F1, F2, ...) are assigned by
 LaTeX, so they are read from build/<main>.aux, which build.sh writes: build
 first. Without the aux, or for a fragment it doesn't know, the ID is "?" and a
 warning is printed. Useful for drafting the summary table,

@@ -1,38 +1,39 @@
 \section*{Summary of findings}
 
-Grades and categories are defined in Section~\ref{sec:about}. Locations refer
-to the preprint's compiled numbering. ``Credited?'' says what the preprint
-cites for the reused content; it does not apply to structural findings.
+Each row is a citation the preprint is missing: earlier work that already
+contains part of the preprint, which the preprint does not cite where that
+part appears. ``Cited?'' names the earlier work and says what, if anything, the
+preprint cites it for. The exception is a row flagged \emph{overstated
+novelty}: there the preprint cites the work, but its abstract or framing
+presents the content as new. Terms are defined in Section~\ref{sec:about};
+centrality is a best-effort judgment. Locations use the preprint's own
+numbering and printed pages.
 
-% Each row starts with \ref{f:<slug>}, which prints the finding's ID (S1, P2, ...)
-% as a link. Never type an ID: LaTeX assigns them from the main file's order.
+% Each row starts "\ref{f:<finding>} & \rel{<relationship>} & <centrality> &",
+% in that order: \ref prints the finding's ID (F1, F2, ...) as a link, and
+% precedence_stats.py reads those three cells. Put \attrgap and \overstated in
+% the Cited? cell of a row exactly when the JSON sets the flag. Never type an
+% ID: LaTeX assigns them from the main file's order (by magnitude).
 \begin{center}\footnotesize
-\begin{xltabular}{\linewidth}{@{}l l >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{0.2\linewidth} >{\raggedright\arraybackslash}p{0.2\linewidth}@{}}
+\begin{xltabular}{\linewidth}{@{}l >{\raggedright\arraybackslash}p{0.11\linewidth} >{\raggedright\arraybackslash}p{0.10\linewidth} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{0.17\linewidth} >{\raggedright\arraybackslash}p{0.24\linewidth}@{}}
 \toprule
-ID & Grade & Technique or result (earlier source) & In the preprint & Credited?\\
+ID & Relationship & Centrality & Technique or result & In the preprint & Cited?\\
 \midrule
 \endhead
-\ref{f:first-strong-slug} & \grade{Strong} &
-{NAMED TECHNIQUE: WHAT EXACTLY IS REUSED} \cite{SourceKey} &
-{COMPILED LOCATIONS, e.g. \S3, Lemma~8.2 (p.~32); recurs in \S\S8--14} &
-Not cited\\
+\ref{f:first-finding} & \rel{same result} & main result &
+{WHAT THE EARLIER RESULTS COVER} &
+{COMPILED LOCATIONS, e.g. Abstract; Theorem~1.1 (p.~2)} &
+{Authors} {Year} \cite{SourceKey}; {Authors} {Year} \cite{SourceKey2}: cited in \S1.2, not in the abstract; \overstated\\
 \addlinespace
-% ... one row per Strong finding, \addlinespace between rows
-\midrule
-\ref{f:first-partial-slug} & \grade{Partial} &
-{TECHNIQUE} \cite{SourceKey} &
-{LOCATIONS} &
-Indirectly, via a companion lemma that credits {AUTHOR}\\
+\ref{f:second-finding} & \rel{same technique} & central &
+{A GLOSS OF WHAT EXACTLY IS REUSED} &
+{LOCATIONS, e.g. \S3, Lemma~8.2 (p.~32); recurs in \S\S8--14} &
+{Authors} {Year} \cite{SourceKey}: not cited; \attrgap\\
 \addlinespace
-\ref{f:second-partial-slug} & \grade{Partial} (B) &
-{EARLIER RESULT ON THE SAME PROBLEM} \cite{SourceKey} &
+\ref{f:third-finding} & \rel{fragment} & supporting &
+{THE PIECE THAT IS REUSED} &
 {LOCATIONS} &
-Not cited for these results\\
-\midrule
-\ref{f:first-structural-slug} & \grade{Major} (C) &
-{WHAT BECOMES A CITATION, AND BY WHICH RESULT} \cite{SourceKey} &
-{THE SPAN, e.g. \S\S15--19 (pp.~112--183)} &
----\\
+{Authors} {Year} \cite{SourceKey}: cited for other content\\
 \bottomrule
 \end{xltabular}
 \end{center}

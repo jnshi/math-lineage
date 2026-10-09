@@ -1,4 +1,4 @@
-% BIB OAI-Preprint: {AUTHOR}, \emph{{PREPRINT TITLE}}, {RELEASE NAME} preprint, {DATE}. \texttt{preprints/{PREPRINT FOLDER}}.
+% BIB OAI-Preprint: {AUTHOR}, \emph{{PREPRINT TITLE}}, {RELEASE NAME} preprint, {DATE}, \url{{RELEASE URL, e.g. https://github.com/openai/math}}.
 % BIB OAI-Companion1: {AUTHOR}, \emph{{COMPANION TITLE}}, {RELEASE NAME} preprint, {DATE} (cited by the preprint as \texttt{{BIB KEY}}).
 \section{About this document}\label{sec:about}
 
@@ -7,54 +7,89 @@ The preprint is \emph{{PREPRINT TITLE}}, dated {DATE}, with author line
 ``{AUTHOR}'' \cite{OAI-Preprint}. {ONE SENTENCE OF CONTEXT, e.g. the release it
 belongs to.} It proves {ONE OR TWO SENTENCES: THE MAIN RESULT}.
 Section~\ref{sec:overview} summarizes the paper and fixes the notation used
-throughout this document. The preprint relies on {N} companion preprints from
-the same release, \cite{OAI-Companion1}, which it cites as
-\texttt{{BIB KEY}}. They are not treated as prior literature here.
+throughout this document. {EITHER: The preprint relies on {N} companion
+preprints from the same release, \cite{OAI-Companion1}, which it cites as
+\texttt{{BIB KEY}}. They belong to the same release, so they are not treated as
+earlier work here. OR: The preprint cites no other preprint from the same
+release.}
 
-\paragraph{What counts as a finding.}
-This document reports only:
-\begin{description}[leftmargin=1.5em,font=\normalfont\bfseries]
-\item[(A) Unattributed reuse.] A technique, construction, identity, estimate or
-body of theory developed in an identifiable earlier paper is reused without
-attribution: either nothing is cited, or the citation given covers something
-else or something narrower than what is reused.
-\item[(B) Same-problem precedence.] Earlier, uncited partial progress on the
-same problem, such as a weaker or special-case version of a statement the
-preprint proves.
-\item[(C) Structural.] A published result would replace or substantially
-shorten a large part of the argument, or contradicts a claim the preprint
-makes about why part of the argument is necessary.
-\end{description}
-Related work whose omission is a judgment call, textbook tools, and ``should
-cite the original rather than a later source'' quibbles are not reported.
+\paragraph{What this document reports.}
+Each finding is a citation the preprint is missing: part of the preprint's
+mathematics (a technique, construction, estimate, proof route or result) that
+an identifiable earlier paper already contains, where the preprint does not
+cite that paper for it where it is used. ``Earlier'' means publicly available
+before the preprint's date. The one exception, overstated novelty, is
+described below. Not reported: textbook tools in their textbook form, and
+cases where the preprint cites a later source that covers the content rather
+than the original. Findings are ordered by centrality, then by relationship in
+the order listed below, then by position in the preprint.
 
-\paragraph{Grades.}
-\begin{description}[leftmargin=1.5em,font=\normalfont\bfseries]
-\item[\grade{Strong}.] The earlier technique is reused essentially intact
-without credit for that content. This holds even when the preprint combines it
-with new ingredients or applies it in a new setting. New ingredients are
-listed as differences and do not lower the grade.
-\item[\grade{Partial}.] Only a fragment of the earlier technique is reused, or
-the credit is present but only indirectly.
+\paragraph{Relationships.}
+\begin{description}[leftmargin=1.5em,font=\normalfont\itshape]
+\item[same result.] An earlier paper, or several earlier papers together, prove essentially the same statement.
+\item[same technique.] The earlier technique, construction or theory is
+reused essentially intact, possibly in a new setting or with new ingredients
+around it.
+\item[adapted.] The earlier technique's structure is followed, with a change
+at its core: a different object, or a key step replaced.
+\item[proof shortcut.] A published result would replace or substantially
+shorten a large part of the argument.
+\item[same route.] An earlier paper proposed the proof strategy, even
+heuristically, and the preprint carries it out.
+\item[fragment.] One identifiable piece of the earlier technique is reused.
+\item[weaker result.] An earlier paper proves a weaker, special-case or
+partial-range version of a statement the preprint proves.
 \end{description}
-Structural findings (C) are graded by impact instead:
+
+\paragraph{Centrality.}
+Each finding also gets a best-effort judgment of how much of the preprint's
+main argument depends on it: \emph{main result} (reserved for earlier work that
+covers the main result itself, or most of it), \emph{central},
+\emph{supporting} or \emph{peripheral}. An earlier weaker result is never
+labelled main result. Each finding states the chain of results it feeds, so
+the basis for the judgment is visible.
+
+\paragraph{Citations.}
+The ``Cited?'' column of the summary names the earlier work and says what the
+preprint cites for the content in question: \emph{not cited} (the work is not
+in the bibliography), \emph{cited for other content}, \emph{credited elsewhere}
+(cited for this content, but not where it is used), or \emph{credited in
+part}. A citation counts only when it is \emph{for that specific content};
+citing the same paper nearby for a different result does not count. Content
+the preprint credits where it is used, directly or through a cited location
+that itself credits the earlier work{IF COMPANIONS: (such as a companion
+lemma)}, is not reported, except when its novelty is overstated (below). For
+overstated novelty, the column says where the preprint does cite the work.
+
+\paragraph{Flags.}
 \begin{description}[leftmargin=1.5em,font=\normalfont\bfseries]
-\item[\grade{Major}.] A route, a section, or a component of the main theorem
-becomes a citation.
-\item[\grade{Moderate}.] A multi-page chain of lemmas becomes a citation.
+\item[Attribution gap.] Marks the most serious missing citations: the
+relationship is same technique, adapted or same result; the centrality is main
+result, central or supporting; and the preprint cites the principal earlier
+work for this content nowhere.
+\item[Overstated novelty.] The preprint does cite the earlier work for this
+content, but its abstract, a statement of its contributions, or the framing of
+a main result presents that content as new, explicitly or in the way a reader
+would reasonably take it. This is the one case in which content the preprint
+credits is reported.
 \end{description}
-Grades measure how completely the \emph{earlier technique} is reused, not how
-much of the preprint's argument it accounts for. Credit counts as indirect
-only when the preprint cites a source, or a companion preprint, \emph{for that
-specific content}, and the cited location itself covers or credits the
-original. Citing the same paper nearby for a different result does not count.
-When the preprint re-proves something itself, credit given in a companion's
-parallel proof does not transfer.{IF THE PREPRINT SAYS ITS ESTIMATES ARE
-``PROVED BELOW'', ADD: This matters because the preprint states that ... (preprint \S N, p.~M).}
 
 \paragraph{How to check a claim.}
-Locations in the preprint and its companions use their compiled numbering
-(sections, equations, theorems, lemmas, propositions) and, where helpful, page
-numbers in their PDFs. Locations in other sources give the theorem, equation
-and page of the version listed in the bibliography. Each finding ends with a
-short checklist of the passages to put side by side.
+Locations in the preprint{IF COMPANIONS: and its companions} use its section,
+equation and theorem numbers and the page numbers printed in its PDF.
+Locations in other sources give the theorem, equation and printed page of the
+version listed in the bibliography. Each finding ends with a short checklist
+of the passages to put side by side.
+
+% Provenance: keep this block commented out until the publish step, then
+% remove the leading "% " from each line and fill in the placeholders. It
+% names the user, their models and their input: publish only the exact text
+% the user approved (references/publish.md, section 1).
+% \paragraph{Provenance.}
+% This document was generated by LLM agents ({MODEL}) running the
+% precedence-review skill
+% (\href{https://github.com/jnshi/math-lineage/tree/{COMMIT}/.claude/skills/precedence-review}{jnshi/math-lineage},
+% commit \texttt{{COMMIT}}), makes no claim of completeness, and has not been
+% vetted by a human. It was run by {NAME}{IF THEY SUPPLIED INPUT THAT SHAPED A
+% FINDING: , who also supplied the leads behind finding~\ref{f:<finding>}}.{ANY
+% DISCLOSURE THE OPERATOR ASKS TO ADD, VERBATIM.}

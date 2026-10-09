@@ -4,14 +4,18 @@
 #   bash prior-work/tools/fetch_arxiv.sh <Key> <arXiv id with version>
 #   e.g. bash prior-work/tools/fetch_arxiv.sh ChenEldan2022-LocalizationSchemes 2203.04163v2
 #
+# The library is the folder above the script's own folder, and it must hold
+# INDEX.md: run the copy in prior-work/tools/, not the one in the skill.
 # Produces, skipping any that already exist:
 #   papers/<Key>.pdf   the compiled paper (use it for theorem and page numbers in locators)
 #   text/<Key>.txt     pdftotext extraction of the PDF
 #   src/<Key>/         the LaTeX source; only .tex/.bbl/.bib/.sty/.cls files are copied
-# The source is untrusted data: read it, never compile or execute it. It is
-# unpacked by Python's tarfile without extract(). An archive with a link, a
-# special file, or an absolute, drive-letter or ".." path is refused whole.
-# Sizes are capped. A truncated or corrupt download is a failure.
+# Downloads use https only, redirects included. The source is untrusted data:
+# read it, never compile or execute it. It is unpacked by Python's tarfile
+# without extract(). An archive with a link, a special file, or an absolute,
+# drive-letter or ".." path is refused whole, and so is a source compressed
+# with anything but gzip. Sizes are capped. A truncated or corrupt download is
+# a failure.
 # Nothing is written to papers/, text/ or src/ unless that step succeeded.
 # An empty src/<Key>/ counts as absent.
 # Needs curl, pdfinfo, pdftotext and python3 (or python) 3.9 or later.
@@ -38,6 +42,11 @@ if ! [[ $id =~ ^([0-9]{4}\.[0-9]{4,5}|[a-z-]+(\.[A-Z]{2})?/[0-9]{7})v[0-9]+$ ]];
 fi
 
 root=$(cd "$(dirname "$0")/.." && pwd)
+if [ ! -f "$root/INDEX.md" ]; then
+  echo "no $root/INDEX.md: this copy of the script is not in <library>/tools/." >&2
+  echo "Run bash prior-work/tools/fetch_arxiv.sh, after creating prior-work/INDEX.md from assets/INDEX-template.md." >&2
+  exit 2
+fi
 mkdir -p "$root/papers" "$root/text" "$root/src"
 # Temporary files live inside the library, so every final mv is a rename
 # within one filesystem: a result appears whole or not at all.
@@ -49,8 +58,8 @@ fetch() {  # fetch <url> <output file>; prints "<HTTP status> <curl exit code>",
   local status rc wait
   for wait in 10 30 60 0; do
     rc=0
-    status=$(curl -sSL -A "Mozilla/5.0" --connect-timeout 30 --max-time 600 --max-filesize 200000000 \
-      -o "$2" -w '%{http_code}' "$1") || rc=$?
+    status=$(curl -sSL --proto =https --proto-redir =https -A "Mozilla/5.0" --connect-timeout 30 --max-time 600 \
+      --max-filesize 200000000 -o "$2" -w '%{http_code}' "$1") || rc=$?
     if [ "$status" != 429 ] && [ "$status" != 503 ]; then
       break
     fi
@@ -144,7 +153,8 @@ else
     mkdir "$tmp/src"
     xrc=0
     # Exit codes: 0 copied, 3 no TeX files, 4 refused (unsafe), 5 corrupt or
-    # truncated, 6 too large, 7 not a TeX source; anything else is a crash.
+    # truncated, 6 too large, 7 not a TeX source or not gzip-compressed;
+    # anything else is a crash.
     "$py" -I - "$tmp/source" "$tmp/src" <<'PY' || xrc=$?
 import gzip
 import os
@@ -183,7 +193,11 @@ def safe_parts(name):
 with open(SRC, "rb") as fh:
     magic = fh.read(6)
 is_gzip = magic[:2] == b"\x1f\x8b"
-plain = not is_gzip and magic[:3] != b"BZh" and magic != b"\xfd7zXZ\x00"
+# Only gzip is decompressed, through the capped pass below: other compressors
+# (bzip2, xz, zstd) are refused, and anything else is read as an uncompressed tar.
+if magic[:3] == b"BZh" or magic == b"\xfd7zXZ\x00" or magic[:4] == b"\x28\xb5\x2f\xfd":
+    stop(7, "REFUSED (compressed with bzip2, xz or zstd; only gzip is accepted)" + NOTHING)
+plain = not is_gzip
 
 # 1. A gzip stream must be complete (length and CRC are checked) and bounded.
 if is_gzip:
@@ -204,7 +218,7 @@ if is_gzip:
 #    directory with a safe path; only wanted regular files are copied. Any
 #    failure discards the whole output directory (the caller commits on exit 0).
 try:
-    tf = tarfile.open(SRC, "r|*")
+    tf = tarfile.open(SRC, "r|gz" if is_gzip else "r|")
 except tarfile.ReadError:
     tf = None
 except (OSError, EOFError, zlib.error) as e:

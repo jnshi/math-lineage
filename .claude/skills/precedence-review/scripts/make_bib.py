@@ -150,6 +150,8 @@ def document_files():
         paths = []
         for m in re.finditer(r"\\input\{([^}]+)\}|\\fragment\{([^}]+)\}", text):
             rel = m.group(1) or ("findings/" + m.group(2))
+            if "#" in rel:  # a macro parameter, e.g. \input{findings/#1} inside a \newcommand
+                continue
             stem = rel[:-4] if rel.endswith(".tex") else rel
             if stem.endswith(skip):
                 continue

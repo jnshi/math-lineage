@@ -4,14 +4,19 @@
 #
 #   bash fragment_test.sh <preamble.tex> <fragment.tex> <scratch dir>
 #
-# The scratch dir is created (use your own subfolder; never the writeup folder).
-# Files are copied in and pdflatex runs there with relative names, which avoids
-# Windows/MSYS path mangling. Outputs of an earlier run in the same folder are
-# deleted first. Undefined citations and references are expected in this
-# standalone test and are not checked.
+# The fragment first goes through the lint tex_gate.py (next to this script):
+# a command the write-up has no use for (reading or writing files, running
+# code, defining macros) fails the test before anything is compiled. The
+# scratch dir is created (use your own subfolder; never the writeup folder).
+# Files are copied in and pdflatex runs there, confined to that folder
+# (tex_sandbox.sh), with relative names, which avoids Windows/MSYS path
+# mangling. The PDF goes through pdf_check.py. Outputs of an earlier run in
+# the same folder are deleted first. Undefined citations and references are
+# expected in this standalone test and are not checked.
 #
-# Exit status 0 only if: no "!" errors, a PDF was produced, no overfull box over
-# 10pt, and no hit from forbidden-patterns.txt (next to this script). Hits from
+# Exit status 0 only if: no lint hit, the sandbox check passes, no "!" errors,
+# a PDF was produced and passes pdf_check.py, no overfull box over 10pt, and no
+# hit from forbidden-patterns.txt (next to this script). Hits from
 # warning-patterns.txt are printed for review but do not fail the test.
 set -uo pipefail
 if [ $# -ne 3 ]; then
@@ -19,7 +24,7 @@ if [ $# -ne 3 ]; then
   exit 2
 fi
 here=$(CDPATH= cd "$(dirname "$0")" && pwd)
-for f in forbidden-patterns.txt warning-patterns.txt; do
+for f in forbidden-patterns.txt warning-patterns.txt tex_gate.py tex_sandbox.sh pdf_check.py; do
   if [ ! -f "$here/$f" ]; then
     echo "missing $here/$f" >&2
     exit 2
@@ -28,6 +33,24 @@ done
 preamble=$1
 fragment=$2
 dir=$3
+py=""
+for c in python3 python; do
+  if command -v "$c" >/dev/null 2>&1 &&
+     "$c" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)' >/dev/null 2>&1; then
+    py=$c
+    break
+  fi
+done
+if [ -z "$py" ]; then
+  echo "python3 (3.9 or later) not found" >&2
+  exit 1
+fi
+echo "--- source gate:"
+if ! "$py" -I -X utf8 "$here/tex_gate.py" "$fragment"; then
+  echo "the commands above are not allowed in a fragment (only the macros of parts/preamble.tex)"
+  echo "--- result: FAIL (tex-gate)"
+  exit 1
+fi
 mkdir -p "$dir" || exit 1
 cp "$preamble" "$dir/preamble.tex" || exit 1
 cp "$fragment" "$dir/fragment.tex" || exit 1
@@ -62,8 +85,13 @@ pattern_hits() {
 
 printf '%s\n' '\documentclass[11pt]{article}' '\input{preamble}' '\begin{document}' \
   '\section{Test}\label{sec:overview}\label{sec:about}' '\input{fragment}' '\end{document}' > test.tex
-pdflatex -interaction=nonstopmode test.tex > pass1.log 2>&1
-pdflatex -interaction=nonstopmode test.tex > pass2.log 2>&1
+. "$here/tex_sandbox.sh"
+if ! sandbox_check; then
+  echo "--- result: FAIL (sandbox)"
+  exit 1
+fi
+sandbox_pdflatex -interaction=nonstopmode test.tex > pass1.log 2>&1
+[ $? = 124 ] || sandbox_pdflatex -interaction=nonstopmode test.tex > pass2.log 2>&1
 fail=""
 
 echo "--- errors:"
@@ -89,6 +117,10 @@ echo "--- output:"
 if [ -f test.pdf ]; then
   grep 'Output written' test.log
   pdfinfo test.pdf 2>/dev/null | grep Pages
+  echo "--- PDF objects (only internal and web links allowed):"
+  if ! "$py" -I -X utf8 "$here/pdf_check.py" test.pdf; then
+    fail="$fail pdf-check"
+  fi
   if pdftotext -enc UTF-8 test.pdf test.txt; then
     echo "--- forbidden strings in the PDF text (expect none):"
     hits=$(pattern_hits test.txt forbidden.pat)
@@ -98,6 +130,8 @@ if [ -f test.pdf ]; then
     fi
     echo "--- warnings: check each and remove it unless it is legitimate:"
     pattern_hits test.txt warning.pat | head -40
+    # Source check: \ploc{((5.27), p.~39)} prints doubled parentheses.
+    grep -n -F '\ploc{((' fragment.tex | cut -c1-160 | sed 's/^/doubled parentheses in \\ploc, line /'
   else
     echo "pdftotext failed"
     fail="$fail pdftotext"
