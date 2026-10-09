@@ -46,8 +46,10 @@ errors and exits 1.
     novelty_claim, and a form_of_inclusion other than citation (the forms then
     describe revising the abstract or framing); credit_status credited appears
     only with it.
-  - Credit statuses agree with in_preprint_bibliography: not_cited needs false;
-    every other status needs true.
+  - Credit statuses agree with in_preprint_bibliography: not_cited needs false,
+    and cited_for_other_content needs true. The credited statuses allow either,
+    since a work outside the bibliography can be credited through a cited
+    location that credits it (such as a companion's lemma).
   - A source with in_preprint_bibliography true has a preprint_bib_key that is
     cited in build/**/*.tex by a \\cite-family command or \\nocite.
     \\nocite{*} cites every key of every .bib under build/.
@@ -114,11 +116,11 @@ DEFINITIONS = {
         "paragraph": "As judged by the author-persona check: a short paragraph; for overstated novelty, a larger revision of the abstract or framing.",
     },
     "credit_status": {
-        "not_cited": "The work is not in the preprint's bibliography.",
+        "not_cited": "The work is not in the preprint's bibliography, and no location the preprint cites credits it for this content.",
         "cited_for_other_content": "The work is in the preprint's bibliography but is not cited for this content.",
-        "credited_elsewhere": "The preprint cites the work for this content at other locations, but not where the content is used.",
-        "credited_in_part": "The preprint cites the work for part of this content only.",
-        "credited": "The preprint cites the work for this content. Allowed only in a finding with overstated novelty.",
+        "credited_elsewhere": "The preprint credits the work for this content at other locations, directly or through a cited location that credits it, but not where the content is used.",
+        "credited_in_part": "The preprint credits the work for part of this content only, directly or through a cited location that credits it.",
+        "credited": "The preprint credits the work for this content, directly or through a cited location that credits it. Allowed only in a finding with overstated novelty.",
     },
     "flags": {
         "attribution_gap": "True when the relationship is same technique, adapted or same result; the centrality is main result, central or supporting; and the principal earlier work (listed first among the sources) is not cited for this content anywhere (not_cited or cited_for_other_content).",
@@ -132,7 +134,7 @@ CENTRALITY_RANK = {"main result": 0, "central": 1, "supporting": 2, "peripheral"
 RELATIONSHIP_RANK = {"same result": 0, "same technique": 1, "adapted": 2, "proof shortcut": 3,
                      "same route": 4, "fragment": 5, "weaker result": 6}
 GAP_STATUSES = {"not_cited", "cited_for_other_content"}
-NEEDS_BIB = {"cited_for_other_content", "credited_elsewhere", "credited_in_part", "credited"}
+NEEDS_BIB = {"cited_for_other_content"}
 OVERSTATED_STATUSES = {"credited", "credited_elsewhere", "credited_in_part"}
 ID_RE = re.compile(r"F[1-9][0-9]*")
 MIN_TITLE = 12  # normalized characters; shorter titles give no title warning

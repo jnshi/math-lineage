@@ -46,11 +46,13 @@ A **weaker result** is never main result. Each entry states the chain of results
 
 ## Credit status and the specific-content rule
 For each earlier work in a finding, the credit status says what the preprint cites for this content:
-- **not cited:** the work is not in the bibliography;
+- **not cited:** the work is not in the bibliography, and no location the preprint cites credits it for this content;
 - **cited for other content:** in the bibliography, but not cited for this content;
-- **credited elsewhere:** cited for this content at other locations, but not where it is used;
-- **credited in part:** cited for part of this content only;
-- **credited:** cited for this content. Allowed only in a finding with overstated novelty.
+- **credited elsewhere:** credited for this content at other locations, directly or through a cited location that credits it, but not where it is used;
+- **credited in part:** credited for part of this content only;
+- **credited:** credited for this content. Allowed only in a finding with overstated novelty.
+
+One-hop credit counts wherever direct credit would: a work outside the bibliography that a cited companion lemma credits at one location is "credited elsewhere" at the other locations, not "not cited".
 
 **Content the preprint credits where it is used is not a finding,** unless its novelty is overstated. That includes credit through a cited location that itself credits the work, such as a companion lemma: the reader reaches the source in one hop.
 
