@@ -1,46 +1,56 @@
 # Findings digest: {review slug}
 
-The coordinator maintains this file after every section. Section subagents read it instead of all the earlier reports; the full reports are `NN-*.md`.
+The coordinator maintains this file after every section. Section subagents read it instead of all the earlier reports; the full reports are `NN-*.md`. Author-persona checks never read it.
 
-**Scope:**
-- (A) unattributed reuse of a technique or theory from an identifiable earlier paper;
-- (B) uncited earlier partial progress on the same problem, searched only by the introduction pass;
-- (C) structural, a passive slot only.
+**Scope:** load-bearing content that an identifiable earlier paper already contains, where the preprint doesn't cite that paper for it where it is used. That covers reused techniques, constructions and theory, proposed routes the preprint carries out, and earlier results on the same problem. The introduction pass searches for earlier results; later passes record one-liners. Subsuming results are a passive slot only. The one exception is overstated novelty: content the preprint cites, but presents as new in its abstract or framing.
 
-No judgment-call related work, no textbook or folklore tools, no "cite the original" quibbles.
+Inclusion is decided by the author-persona check, so don't drop a verified candidate on a judgment call: record the facts. Out of scope: textbook or folklore tools in textbook form, "cite the original" quibbles, parallels, and anything public on or after the preprint's date.
 
-**Grades:**
-- **Strong:** the technique is reused essentially intact without credit for that content, even when it is combined with new ingredients, and especially when the technique is nameable.
-- **Partial:** only a fragment is reused, or credit is present only indirectly.
+**Relationship:** same technique (reused essentially intact, even with new ingredients around it) · adapted (structure followed, core changed) · fragment (one piece of the technique) · same route · same result · weaker result · subsuming result.
 
-**Specific-content rule.** Indirect credit counts only when the paper cites a source or companion for that specific content and that location credits the original. Citing the same paper nearby for something else does not count. If the paper re-proves the content itself, a companion's parallel credits do not transfer.
+**Centrality (best-effort):** main result (the earlier work covers the main result itself, or most of it) · central · supporting · peripheral. A weaker result is at most central.
 
-**Author-name check:** {names of the sources behind the Strong findings, and where, if anywhere, they appear in the preprint and its bibliography}
+**Credit status:** not cited · cited for other content · credited elsewhere (not where it is used) · credited in part. A citation counts only if it is for that specific content; citing the same paper nearby for something else does not count. A method citation covers the method's own lemmas. Content credited where it is used, directly or through a cited location that credits it, is not a finding unless its novelty is overstated.
 
-## Strong
+**Author-name check:** {for each finding: the source's names, and where, if anywhere, they appear in the preprint, its abstract and its bibliography}
 
-| ID | Technique (source, locators) | Where in the paper | Citation status |
-|---|---|---|---|
+## Findings
 
-## Partial
+| ID | Technique or result (source, locators) | Relationship | Where in the paper (dependency chain) | Credit status | Differences |
+|---|---|---|---|---|---|
 
-| ID | Technique (source, locators) | Where | Note |
-|---|---|---|---|
+## Overstated novelty
+
+- **{ID}:** {the claim, quoted, and its location}; {the cited earlier work that covers it, and where the preprint cites it}.
+
+## Earlier-result one-liners (for consolidation)
+
+- §N: {earlier result, locator, date}; {what in the preprint it precedes}.
 
 ## Ruled out or covered (don't re-check)
 
 - **{item}:** {ruling and reason} (§N).
 
-## Recurrences, corrections and pending merges (for consolidation)
+## Recurrences, corrections and merge candidates (for consolidation)
 
 - §N: {finding} also at {locations}.
-- Merge candidates: {IDs, reason}.
+- Merge candidates (the user decides at the write-up): {IDs, reason}.
 - Corrections reported by agents: {what and where}.
+- Strongest objection to a judgment-based finding, with its factual premise (for the drafter to check; never passed to the persona): {ID: objection}.
 
-## (C) Structural (noted)
+## Subsuming results (noted)
 
-- **C1.** {paper span}. {published result and locator}. {what becomes a citation}. {status of the coordinator's check}.
+- {paper span}. {published result and locator}. {what becomes a citation}. {status of the coordinator's check}.
+
+## User decisions
+
+- {date}: {decision, verbatim where it matters}.
+
+## Write-up: slugs, order and changes during drafting
+
+| Slug | ID | Relationship | Centrality (dependency chain) | Flags | Drafting outcome (pages; proposed changes; dropped components; withdrawal and its defect) |
+|---|---|---|---|---|---|
 
 ## Final verdicts
 
-Filled in after the author-persona check.
+Filled in after the author-persona check: form of inclusion, claims verdict, relationship and centrality as settled, errata count, the length applied, and which findings stay in the JSON only.

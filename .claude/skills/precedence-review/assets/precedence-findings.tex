@@ -1,7 +1,7 @@
 \documentclass[11pt]{article}
 \input{parts/preamble}
 
-\title{Uncredited precedence in\\ ``{PREPRINT TITLE}''\\[4pt]
+\title{Missing citations in\\ ``{PREPRINT TITLE}''\\[4pt]
 \large ({PREPRINT AUTHOR LINE}, {PREPRINT DATE})}
 \date{{DATE OF THE FINAL REVISION}}
 
@@ -15,23 +15,16 @@
 \input{parts/about}
 \input{parts/overview}
 
-% IDs are assigned by LaTeX in the order of the \input lines (S1, S2, ... after
-% \findinggroup{S}). Withdrawing or reordering a finding is just deleting or
-% moving its \input line.
-\section{Strong findings}\label{sec:strong}
-\findinggroup{S}
-\input{findings/first-strong-slug}
-% one \input per Strong finding, in reading order or by significance
-
-\section{Partial findings}\label{sec:partial}
-\findinggroup{P}
-\input{findings/first-partial-slug}
-% Partial findings, including (B) same-problem precedence
-
-\section{Structural finding}\label{sec:structural}
-\findinggroup{C}
-\input{findings/first-structural-slug}
-% use "Structural findings" for more than one; drop the section if there are none
+% IDs are assigned by LaTeX in the order of the \input lines (F1, F2, ...).
+% Order by magnitude: centrality (main result, central, supporting,
+% peripheral), then the relationship, closest first (same result, subsuming
+% result, same technique, adapted, same route, fragment, weaker result), then
+% reading order.
+% Withdrawing or reordering a finding is just deleting or moving its \input line.
+\section{Findings}\label{sec:findings}
+\findinggroup{F}
+\input{findings/first-slug}
+% one \input per finding
 
 \input{parts/bibliography}
 

@@ -1,240 +1,258 @@
 {
   "format": "math-lineage/precedence-findings",
-  "format_version": 1,
-  "_note": "Example trimmed from a real review (4 of its 12 findings, one of each kind: Strong (A), Partial (A) with indirect credit, Partial (B), Major (C)). Omit this _note field in real files.",
+  "format_version": 2,
+  "_note": "Synthetic example: the preprint, authors, keys and locators are placeholders. It shows each relationship field in use, both flags, and a finding kept in the JSON only. Omit this _note field in real files.",
   "preprint": {
-    "id": "OAI:Critical-mixing-in-the-Sherrington-Kirkpatrick-model-September-25-2026",
-    "title": "Critical mixing in the Sherrington–Kirkpatrick model",
-    "date": "2026-09-25",
-    "path": "preprints/Critical-mixing-in-the-Sherrington-Kirkpatrick-model-September-25-2026",
-    "companions": [
-      {
-        "id": "OAI:Critical-slowing-down-in-the-Sherrington-Kirkpatrick-model-September-24-2026",
-        "cited_as": "AcceptedCritical"
-      },
-      {
-        "id": "OAI:A-spectral-gap-throughout-the-high-temperature-Sherrington-Kirkpatrick-phase-September-24-2026",
-        "cited_as": "AcceptedGap"
-      }
-    ]
+    "id": "OAI:<preprint folder name>",
+    "title": "<preprint title>",
+    "date": "2026-09-24",
+    "path": "preprints/<preprint folder name>",
+    "companions": []
   },
   "review": {
     "date": "2026-10-08",
     "report_pdf": "precedence-findings.pdf",
     "report_tex": "precedence-findings.tex",
-    "locator_convention": "Preprint locations use the compiled numbering and page numbers of paper.pdf. Source locators refer to the version identified by the source's arXiv id or DOI."
+    "locator_convention": "Preprint locations use the compiled numbering and page numbers of main.pdf. Source locators give printed page numbers of the version identified by the source's arXiv id or DOI."
   },
   "definitions": {
-    "category": {
-      "A": "Unattributed reuse: a technique, construction, identity, estimate or body of theory from an identifiable earlier paper is reused without credit for that content.",
-      "B": "Same-problem precedence: earlier, uncited partial progress on the same problem, such as a weaker or special-case version of a statement the preprint proves.",
-      "C": "Structural: a published result would replace or substantially shorten a large part of the argument."
+    "relationship": {
+      "same technique": "The earlier technique, construction or theory is reused essentially intact, possibly in a new setting or with new ingredients around it.",
+      "adapted": "The earlier technique's structure is followed, with a change at its core: a different object, or a key step replaced.",
+      "fragment": "One identifiable piece of the earlier technique is reused.",
+      "same route": "An earlier paper proposed the proof strategy, even heuristically, and the preprint carries it out.",
+      "same result": "An earlier paper proves essentially the same statement.",
+      "weaker result": "An earlier paper proves a weaker, special-case or partial-range version of a statement the preprint proves.",
+      "subsuming result": "A published result would replace or substantially shorten a large part of the argument."
     },
-    "grade": {
-      "Strong": "(A/B) The earlier technique is reused essentially intact without credit for that content.",
-      "Partial": "(A/B) Only a fragment is reused, or the credit is present but only indirect.",
-      "Major": "(C) A route, a section, or a component of the main theorem becomes a citation.",
-      "Moderate": "(C) A multi-page chain of lemmas becomes a citation."
+    "centrality": {
+      "main result": "Best-effort: the earlier work covers the main result itself, or most of it, not just a step in its proof. A weaker result is never main result; it takes the centrality of the statement it precedes, at most central.",
+      "central": "Best-effort: the proof of the main theorem runs through it.",
+      "supporting": "Best-effort: it is an input to a central step.",
+      "peripheral": "Best-effort: an extension, a side result, a remark, or one of several interchangeable inputs."
     },
-    "source_status": {
+    "form_of_inclusion": {
+      "none": "The author-persona check would add nothing; the finding is recorded here only, not in the report.",
+      "citation": "A citation at the point of use.",
+      "sentence": "A clause or a sentence.",
+      "paragraph": "A short paragraph."
+    },
+    "credit_status": {
       "not_cited": "The work is not in the preprint's bibliography.",
       "cited_for_other_content": "The work is in the preprint's bibliography but is not cited for this content.",
-      "credited_in_part": "The preprint cites the work for part of this content only.",
       "credited_elsewhere": "The preprint cites the work for this content at other locations, but not where the content is used.",
-      "credited_indirectly": "The preprint cites a location (e.g. a companion lemma) that itself credits the work for this content."
+      "credited_in_part": "The preprint cites the work for part of this content only.",
+      "credited": "The preprint cites the work for this content. Allowed only in a finding with overstated novelty."
+    },
+    "flags": {
+      "attribution_gap": "True when the relationship is same technique, adapted, same route or same result; the centrality is main result, central or supporting; and the preprint cites none of its earlier works for this content anywhere (every source is not_cited or cited_for_other_content).",
+      "overstated_novelty": "True when the preprint cites the earlier work for this content, but its abstract, a statement of its contributions, or the framing of a main result presents that content as new, explicitly or in the way a reader would reasonably take it. It is the one case in which content the preprint credits is reported. novelty_claim says where the claim is made."
     }
   },
   "sources": {
-    "ElAlaouiMontanariSellke2022": {
+    "AuthorAuthor2018-ComplexityMethod": {
       "authors": [
-        "A. El Alaoui",
-        "A. Montanari",
-        "M. Sellke"
+        "A. Author",
+        "B. Author"
       ],
-      "title": "Sampling from the Sherrington–Kirkpatrick Gibbs measure via algorithmic stochastic localization",
-      "year": 2022,
-      "venue": "FOCS 2022",
-      "arxiv": "2203.05093",
+      "title": "<title of the earlier paper with the counting method>",
+      "year": 2018,
+      "venue": "<journal or preprint>",
+      "arxiv": "1808.00000",
       "doi": null,
       "in_preprint_bibliography": false
     },
-    "DuHuang2026-FreeEnergy": {
+    "AuthorEtAl2023-FirstHalf": {
       "authors": [
-        "H. Du",
-        "B. Huang"
+        "C. Author",
+        "D. Author",
+        "E. Author"
       ],
-      "title": "Fluctuations of the Sherrington–Kirkpatrick free energy at critical temperature",
-      "year": 2026,
-      "venue": "preprint",
-      "arxiv": "2607.02172",
+      "title": "<title of the first paper that covers the main result>",
+      "year": 2023,
+      "venue": "<journal or preprint>",
+      "arxiv": "2301.00000",
       "doi": null,
       "in_preprint_bibliography": true,
-      "preprint_bib_key": "DuHuang2026CriticalFluctuations"
+      "preprint_bib_key": "CAuthor2023"
     },
-    "Wang2026": {
+    "Author2024-SecondHalf": {
       "authors": [
-        "S. Wang"
+        "F. Author"
       ],
-      "title": "Optimal mixing of Glauber dynamics for the Sherrington–Kirkpatrick model at β<1/2",
-      "year": 2026,
-      "venue": "preprint",
-      "arxiv": "2608.22159",
-      "doi": null,
-      "in_preprint_bibliography": true,
-      "preprint_bib_key": "Wang2026OptimalMixing"
-    },
-    "ElAlaouiGaitonde2022": {
-      "authors": [
-        "A. El Alaoui",
-        "J. Gaitonde"
-      ],
-      "title": "Bounds on the covariance matrix of the Sherrington–Kirkpatrick model",
-      "year": 2022,
-      "venue": "preprint",
-      "arxiv": "2212.02445",
-      "doi": null,
-      "in_preprint_bibliography": false
-    },
-    "HermonPeres2016": {
-      "authors": [
-        "J. Hermon",
-        "Y. Peres"
-      ],
-      "title": "A characterization of L2 mixing and hypercontractivity via hitting times and maximal inequalities",
-      "year": 2016,
-      "venue": "Probab. Theory Related Fields 170 (2018) 769–800",
-      "arxiv": "1609.07557",
-      "doi": null,
-      "in_preprint_bibliography": false
-    },
-    "DiaconisSaloffCoste1996": {
-      "authors": [
-        "P. Diaconis",
-        "L. Saloff-Coste"
-      ],
-      "title": "Logarithmic Sobolev inequalities for finite Markov chains",
-      "year": 1996,
-      "venue": "Ann. Appl. Probab. 6(3) (1996) 695–750",
+      "title": "<title of the second paper that covers the main result>",
+      "year": 2024,
+      "venue": "<journal or preprint>",
       "arxiv": null,
-      "doi": "10.1214/aoap/1034968224",
+      "doi": "10.0000/example.2024",
       "in_preprint_bibliography": true,
-      "preprint_bib_key": "DSC1996"
+      "preprint_bib_key": "FAuthor2024"
     },
-    "GoelMontenegroTetali2005": {
+    "Author2025-WeakerVersion": {
       "authors": [
-        "S. Goel",
-        "R. Montenegro",
-        "P. Tetali"
+        "G. Author"
       ],
-      "title": "Mixing time bounds via the spectral profile",
-      "year": 2005,
-      "venue": "Electron. J. Probab. 11 (2006) 1–26",
-      "arxiv": "math/0505690",
-      "doi": "10.1214/EJP.v11-300",
+      "title": "<title of the paper with a weaker version of the main theorem>",
+      "year": 2025,
+      "venue": "preprint",
+      "arxiv": "2507.00000",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "AuthorAuthor2020-ConcentrationStep": {
+      "authors": [
+        "H. Author",
+        "I. Author"
+      ],
+      "title": "<title of the paper whose step is reused>",
+      "year": 2020,
+      "venue": "<journal or preprint>",
+      "arxiv": "2004.00000",
+      "doi": null,
       "in_preprint_bibliography": true,
-      "preprint_bib_key": "GMT2006"
+      "preprint_bib_key": "HAuthorIAuthor2020"
+    },
+    "Author2019-SideDevice": {
+      "authors": [
+        "J. Author"
+      ],
+      "title": "<title of the paper with the device used in a remark>",
+      "year": 2019,
+      "venue": "<journal or preprint>",
+      "arxiv": "1909.00000",
+      "doi": null,
+      "in_preprint_bibliography": false
     }
   },
   "findings": [
     {
-      "id": "S1",
-      "category": "A",
-      "grade": "Strong",
-      "technique": "El Alaoui–Montanari–Sellke planted stochastic-localization framework for SK",
-      "summary": "The preprint studies the SK Gibbs measure inside the EAMS framework: a Gaussian observation of a Gibbs sample, the TAP equation with the observation as field, and the planted law with its likelihood transfer to ordinary disorder.",
+      "id": "F1",
+      "slug": "main-theorem-covered",
+      "in_report": true,
+      "relationship": "subsuming result",
+      "centrality": "main result",
+      "form_of_inclusion": "paragraph",
+      "attribution_gap": false,
+      "overstated_novelty": true,
+      "novelty_claim": "Abstract; the framing of Theorem 1.1 in §1 (p. 2)",
+      "technique": "The main theorem, from two earlier results combined",
+      "summary": "Two earlier results together give Theorem 1.1 up to a short combination. The introduction cites both for what they prove, but the abstract presents the theorem as new.",
       "preprint_locations": [
-        "§3 (p. 7)",
-        "§4.1",
-        "§5.1",
-        "used throughout §§8–14 and §17"
+        "Abstract",
+        "Theorem 1.1 (p. 2)",
+        "§1.2 (p. 4)"
       ],
-      "credit_in_preprint": "Not cited. A companion credits EAMS for this combination, in a passage the preprint does not cite.",
+      "credit_in_preprint": "Both works are cited in §1.2 for exactly these results; the abstract mentions neither.",
       "sources": [
         {
-          "key": "ElAlaouiMontanariSellke2022",
-          "locators": "(1.4), (4.12); (2.3), (4.53); §4.1, Prop. 4.2, (4.14)",
-          "role": "Gaussian observation process, TAP equation at the observation field, planted law and likelihood transfer",
-          "status": "not_cited"
+          "key": "AuthorEtAl2023-FirstHalf",
+          "locators": "Thm. 1 (p. 3)",
+          "role": "the result for small parameters",
+          "credit_status": "credited_elsewhere"
+        },
+        {
+          "key": "Author2024-SecondHalf",
+          "locators": "Thm. 2.4 (p. 7)",
+          "role": "the extension to the full range",
+          "credit_status": "credited_elsewhere"
         }
       ]
     },
     {
-      "id": "P1",
-      "category": "A",
-      "grade": "Partial",
-      "technique": "Wang's signed two-spin curvature estimate",
-      "summary": "The curvature inequality behind route 1's terminal spectral gap is Wang's signed two-spin estimate summed over pairs, imported through a companion lemma.",
+      "id": "F2",
+      "slug": "kac-rice-complexity",
+      "in_report": true,
+      "relationship": "same technique",
+      "centrality": "central",
+      "form_of_inclusion": "paragraph",
+      "attribution_gap": true,
+      "overstated_novelty": false,
+      "technique": "Kac–Rice complexity of critical points, restricted to Hessian failures",
+      "summary": "§5 counts critical points with the earlier paper's complexity computation, step for step; the preprint does not cite it.",
       "preprint_locations": [
-        "§3 (p. 8)",
-        "proof of Proposition 13.6 (pp. 102–103)"
+        "§5.1–5.4 (pp. 28–38)",
+        "Lemmas 3.2–3.5"
       ],
-      "credit_in_preprint": "Indirectly, via a companion lemma that credits Wang. The preprint's own citation of Wang is for his β<1/2 mixing theorem.",
+      "credit_in_preprint": "Not cited.",
       "sources": [
         {
-          "key": "Wang2026",
-          "locators": "Lemma 3.4 and proof of Thm. 1.2, pp. 10–13",
-          "role": "signed two-spin curvature estimate and its summation over pairs",
-          "status": "credited_indirectly"
+          "key": "AuthorAuthor2018-ComplexityMethod",
+          "locators": "Prop. 3.2, §3.4 (pp. 9–11)",
+          "role": "the complexity computation and its rate",
+          "credit_status": "not_cited"
         }
       ]
     },
     {
-      "id": "P4",
-      "category": "B",
-      "grade": "Partial",
-      "technique": "Critical-temperature bounds on the SK partition function and covariance",
-      "summary": "Earlier versions exist of the partition-function lower bound (7.5) (stronger), the covariance lower bound (7.6) (weaker), and the bottom-scale covariance bound (12.8) (only an s=0, ordinary-law analogue with log n).",
+      "id": "F3",
+      "slug": "earlier-weaker-version",
+      "in_report": true,
+      "relationship": "weaker result",
+      "centrality": "central",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": false,
+      "overstated_novelty": false,
+      "technique": "A weaker, partial-range version of Theorem 1.1",
+      "summary": "An earlier paper proves Theorem 1.1's inequality on half its range; the preprint does not cite it.",
       "preprint_locations": [
-        "(7.5) and (7.6), §7.1 (p. 29)",
-        "(12.8) of Proposition 12.4 (p. 77)"
+        "Theorem 1.1 (p. 3)",
+        "§1.1 (p. 4)"
       ],
-      "credit_in_preprint": "(7.5) indirectly, via Du–Huang's Theorem 1.6; otherwise not cited.",
+      "credit_in_preprint": "Not cited.",
       "sources": [
         {
-          "key": "DuHuang2026-FreeEnergy",
-          "locators": "Thms. 1.3–1.4, p. 3",
-          "role": "free-energy CLT and critical overlap bound",
-          "status": "cited_for_other_content"
-        },
-        {
-          "key": "ElAlaouiGaitonde2022",
-          "locators": "Prop. 4.5, p. 11",
-          "role": "critical covariance bound",
-          "status": "not_cited"
+          "key": "Author2025-WeakerVersion",
+          "locators": "Cor. 1.5 (p. 2)",
+          "role": "the weaker inequality",
+          "credit_status": "not_cited"
         }
       ]
     },
     {
-      "id": "C1",
-      "category": "C",
-      "grade": "Major",
-      "technique": "Log-Sobolev constant from the support profile (Hermon–Peres characterization)",
-      "summary": "The support profile at the end of route 1 already gives the log-Sobolev exponent by the Hermon–Peres characterization, so the spectral-cap route is not needed for Theorem 1.1.",
+      "id": "F4",
+      "slug": "concentration-step",
+      "in_report": true,
+      "relationship": "fragment",
+      "centrality": "supporting",
+      "form_of_inclusion": "citation",
+      "attribution_gap": false,
+      "overstated_novelty": false,
+      "technique": "Concentration step for the resolvent diagonal",
+      "summary": "One step of an earlier proof is reused in Lemma 3.1; the preprint cites that paper only for a different estimate.",
       "preprint_locations": [
-        "Theorem 14.2 (p. 111)",
-        "§§15–19 (pp. 112–183), ending in Theorem 19.3",
-        "§2 (p. 7)"
+        "Lemma 3.1, §3.3 (pp. 17–19)"
       ],
-      "impact": "About 70 pages (§§15–19) become unnecessary for Theorem 1.1.",
-      "credit_in_preprint": null,
+      "credit_in_preprint": "Cited in §2 for a different estimate, not here.",
       "sources": [
         {
-          "key": "HermonPeres2016",
-          "locators": "Thm. 1.2, p. 3 (arXiv v3)",
-          "role": "κ ≤ t_LS < 17κ: the support profile gives the log-Sobolev constant",
-          "status": "not_cited"
-        },
+          "key": "AuthorAuthor2020-ConcentrationStep",
+          "locators": "Lemma 4.2 (p. 12)",
+          "role": "the concentration step",
+          "credit_status": "cited_for_other_content"
+        }
+      ]
+    },
+    {
+      "id": null,
+      "slug": "remark-device",
+      "in_report": false,
+      "relationship": "adapted",
+      "centrality": "peripheral",
+      "form_of_inclusion": "none",
+      "attribution_gap": false,
+      "overstated_novelty": false,
+      "technique": "A device used in a closing remark",
+      "summary": "Remark 8.4 adapts an earlier device; the author-persona check judged that a pointer would not earn its place, so it is recorded here only.",
+      "preprint_locations": [
+        "Remark 8.4 (p. 63)"
+      ],
+      "credit_in_preprint": "Not cited.",
+      "sources": [
         {
-          "key": "DiaconisSaloffCoste1996",
-          "locators": "Cor. 3.11, p. 728",
-          "role": "log-Sobolev constant from L² mixing, up to a factor log n",
-          "status": "cited_for_other_content"
-        },
-        {
-          "key": "GoelMontenegroTetali2005",
-          "locators": "Lemma 4.2 and the remark after it, p. 15 (arXiv v1)",
-          "role": "converse: the log-Sobolev inequality gives the support profile",
-          "status": "cited_for_other_content"
+          "key": "Author2019-SideDevice",
+          "locators": "§2 (pp. 4–5)",
+          "role": "the device",
+          "credit_status": "not_cited"
         }
       ]
     }

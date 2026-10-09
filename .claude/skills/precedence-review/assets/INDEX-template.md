@@ -26,8 +26,10 @@ Papers downloaded while checking preprints in this repository for uncited preced
 - **Columns:**
   - "Cited by the preprint?" holds the preprint's bib key if the preprint cites the work, otherwise `no`. Name the review if several reviews share the library.
   - "Added by" names the review and the section whose agent downloaded the paper, e.g. `<slug> §5`.
-  - "Relevance" says, in one or two sentences, why the paper was checked and what it contains, or `checked; not relevant to ...`. A later agent who uses the paper for a new purpose appends `[§N] ...` (or `[consolidation] ...`, etc.) to this cell.
-- **Formatting:** never put a literal `|` inside a cell; write ‖·‖ for norms. Details belong in the review reports, not here.
+  - "Relevance" says, in one or two sentences, why the paper was checked and what it contains, or `checked; not relevant to ...`. A later agent who uses the paper for a new purpose appends `[<slug> §N] ...` (or `[<slug> consolidation] ...`, etc.) to this cell.
+  - Rows imported from a library kept elsewhere (`scripts/merge_library.py`) carry a `<tag>:` prefix in "Cited by" and "Added by". Their "Cited by" refers to that review's preprint.
+- **Titles and dates:** copy the title exactly as the paper's title page gives it, and give the date of the first public version (e.g. "July 9, 2026" for a recent preprint). The bibliography of every write-up is generated from this file.
+- **Formatting:** never put a literal `|` inside a cell: write ‖·‖ for norms and `abs(x)` for absolute values. Details belong in the review reports, not here.
 - **Provenance and verification notes:** put them in the Relevance cell. If a note must sit in the Citation or arXiv / DOI cell, write it as `[note: …]`, for example `[note: author copy from the author's homepage; venue not verified]`. The bibliography generator strips `[note: …]` marks and parenthetical clauses containing a URL, and nothing else. A note written as ordinary parentheses would reach the published bibliography. The generator lists every wordy parenthetical it keeps so you can catch one.
 - **The Citation cell is plain text,** not TeX. Write formulas plainly, for example "C^{1,1}" or "beta < 1/2"; the generator escapes everything.
 

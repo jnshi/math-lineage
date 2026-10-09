@@ -98,6 +98,8 @@ if [ -f test.pdf ]; then
     fi
     echo "--- warnings: check each and remove it unless it is legitimate:"
     pattern_hits test.txt warning.pat | head -40
+    # Source check: \ploc{((5.27), p.~39)} prints doubled parentheses.
+    grep -n -F '\ploc{((' fragment.tex | cut -c1-160 | sed 's/^/doubled parentheses in \\ploc, line /'
   else
     echo "pdftotext failed"
     fail="$fail pdftotext"

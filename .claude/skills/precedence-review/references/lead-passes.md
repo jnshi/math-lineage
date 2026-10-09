@@ -3,7 +3,7 @@
 ## Companion credit map
 **Why.** In the first run, most confirmed findings were content that a companion preprint re-proves *with* an explicit external credit, while the preprint under review re-proves or uses the same content *without* that credit. Mapping the companions' credits onto the preprint therefore yields high-quality leads cheaply. The pass took one agent about 20 minutes.
 
-**When.** Run it right after the introduction pass, so every later section receives its leads. If it runs later, its leads for sections already reviewed go to consolidation.
+**When.** Run it right after the introduction pass, so every later section receives its leads. If it runs later, its leads for sections already reviewed go to consolidation. **Skip it if the preprint cites no companions.** Its sibling-pointer step (task 4 below) is then covered by the setup step that looks for published reviews of sibling preprints.
 
 **Brief.** Fill in the `{…}` fields:
 
@@ -11,7 +11,7 @@
 You are building a lead map for a section-by-section precedence review of one mathematics preprint. Section agents (one at a time, §{K}–§{LAST} still to come) and a final consolidation pass will use your map. Today is {TODAY}.
 
 ## Background
-- **The preprint under review:** `{PREPRINT_DIR}`, "{TITLE}" ({DATE}). Source in `build/sections/*.tex`; bibliography `build/references.bib`. Section map: {SECTION MAP}.
+- **The preprint under review:** `{PREPRINT_DIR}`, "{TITLE}" ({DATE}). Source in `build/sections/*.tex`; bibliography `{BIBLIOGRAPHY FILE}`. Section map: {SECTION MAP}.
 - **Companion preprints from the same release that the paper relies on:** {NAME (cited as KEY): PATH, bibliography file (a .bib, or build/references.tex with \bibitem)}.
 - **Why this map.** Companions often re-prove content *with* explicit external credit that the preprint re-proves or uses *without*. {IF THE PREPRINT SAYS ITS ESTIMATES ARE "PROVED BELOW", QUOTE IT}. The preprint cites the companions only for specific named results.
 - Read `{REVIEW_DIR}/FINDINGS.md` first: the digest of findings and rulings so far, including the scope, grading rule and the specific-content rule. Don't re-derive what is listed there.
@@ -56,8 +56,12 @@ Final message to the coordinator, under 250 words: the counts, the (c) items one
 **What it covers:**
 - every credit-map (c) item;
 - every lead left unresolved by a section agent;
+- **the earlier-result one-liners** that section passes recorded: a ruling on each, with dates and the theorem that would make it a same-result or weaker-result finding;
+- **every source that entered the library after section N, checked against sections ≤ N.** In the second run, a paper downloaded during §7 bore directly on §3's machinery, and nobody compared them until the user supplied it as a lead;
 - every suggested merge, and every extension of a finding's location list. Merges are proposed to the user; they are not decided here;
-- a list of the (C) structural items noted across the review, saying which will be written up.
+- **a compiled-locator table per finding:** compiled locator | TeX file:line | what is there, with each location spot-checked. Drafters start from these tables. In the second run they also caught two wrong locators and source pages recorded as PDF indices;
+- **a proposed relationship type and centrality for each finding** (main result / central / supporting / peripheral), with its dependency chain in compiled numbering, and the resulting magnitude order;
+- the subsuming results noted across the review, saying which will be written up.
 
 If there are many leads, split them across a few agents, grouped by the finding they bear on.
 
@@ -67,32 +71,42 @@ If there are many leads, split them across a few agents, grouped by the finding 
 You are running the consolidation pass of a precedence review of the preprint "{TITLE}" ({DATE}). Today is {TODAY}.
 
 ## Scope
-Report only (A) unattributed reuse of a technique or theory developed in an identifiable earlier paper, and (B) uncited earlier partial progress on the same problem. Do not report judgment-call related work, textbook tools, or "cite the original rather than the later source" quibbles.
-**Grades:** **Strong**: the technique is reused essentially intact without credit for that content. **Partial**: only a fragment is reused, or the credit is indirect. Indirect credit counts only if the preprint cites a source for that specific content, and the cited location covers or credits the original.
+Find load-bearing content that traces to an identifiable earlier paper, where the preprint doesn't cite that paper for it where it is used: reuse of a technique, construction or theory (including a proposed route the preprint carries out), and earlier results on the same problem. Also: content the preprint does cite, but presents as new in its abstract or framing (overstated novelty). Don't drop a verified candidate on a judgment call ("superseded by cited work", "standard", "only a fragment"); record the facts that bear on it, since a later check decides inclusion. Textbook tools in their textbook form, "cite the original rather than the later source" quibbles, and anything public on or after {DATE} are out.
+**Relationship types:** same technique (reused essentially intact; new ingredients around it don't change that), adapted (structure followed, core changed), fragment (one piece of the technique), same route (an earlier paper proposed the strategy), same result, weaker result (weaker, special-case or partial-range), subsuming result (a published result would replace a large part of the argument).
+**Credit:** a citation counts only if it is for that specific content; citing the same paper nearby for something else is not credit. Content credited where it is used, directly or through a cited location that credits it, is not a finding unless its novelty is overstated.
 
 ## Task
-Verify these leads:
-{FOR EACH LEAD: ID, ONE-LINE DESCRIPTION, THE PREPRINT LOCATION, THE FINDING IT BEARS ON (IF ANY), AND THE REPORTS TO READ}
+1. **Verify these leads:**
+{FOR EACH LEAD: ID, ONE-LINE DESCRIPTION, THE PREPRINT LOCATION, THE FINDING IT BEARS ON (IF ANY), AND THE REPORTS TO READ. INCLUDE THE EARLIER-RESULT ONE-LINERS, AND EACH LIBRARY SOURCE ADDED AFTER A SECTION IT MAY BEAR ON.}
 
-For each lead, decide one of:
-- **(i) No match:** the preprint doesn't use the content.
-- **(ii) Covered:** already captured by an existing finding, or credited by the preprint for that content.
-- **(iii) Adds to an existing finding:** say exactly what and where.
-- **(iv) New finding:** grade it.
+   For each lead, decide one of:
+   - **(i) No match:** the preprint doesn't use the content.
+   - **(ii) Covered:** already captured by an existing finding, or credited by the preprint at the point of use.
+   - **(iii) Adds to an existing finding:** say exactly what and where.
+   - **(iv) New finding:** give its relationship type and credit status.
+2. **Compiled locators.** For each finding in FINDINGS.md, convert its TeX file:line locations into compiled locators (section, equation, lemma or proposition number, printed page), in one compact table per finding: compiled locator | TeX file:line | what is there. Spot-check that each location contains the claimed content (don't re-review), and list any wrong locator. Check that source pages are printed page numbers, not PDF indices.
+3. **Relationship and centrality.** For each finding, confirm or correct its relationship type. Give its dependency chain in the preprint's compiled numbering (e.g. "Lemma 5.6 → Prop. 5.1 → Thm. 1.1"), and propose a centrality:
+   - main result: the earlier work covers the main result itself, or most of it;
+   - central: the main theorem's proof runs through it;
+   - supporting: an input to a central step;
+   - peripheral.
+
+   A weaker result takes the centrality of the statement it precedes, at most central. Then list the findings by magnitude: centrality first, then relationship (same result, subsuming result, same technique, adapted, same route, fragment, weaker result).
+4. **Merges.** Recommend merges where two findings are the same technique; the user decides.
 
 Check the actual passages: the preprint TeX in `{PREPRINT_DIR}/build/sections/`, its compiled text with `\f` page breaks at `{SCRATCH}/paper.txt`, and the sources in `{REPO}/prior-work/` (grep INDEX.md for keys). Download a paper only if the preprint actually uses the content in question, arXiv only via `fetch_arxiv.sh`, and add an INDEX.md row.
 
 ## Output
-1. Write `{REVIEW_DIR}/CONSOLIDATION.md`: for each lead, the verdict (i)–(iv) with the decisive passages quoted briefly and their locators; for any (iii)/(iv), the exact proposed change or new finding; and a short list of the (C) structural items noted across the review (from FINDINGS.md), saying which one(s) should be written up.
+1. Write `{REVIEW_DIR}/CONSOLIDATION.md`: for each lead, the verdict (i)–(iv) with the decisive passages quoted briefly and their locators; for any (iii)/(iv), the exact proposed change or new finding; the compiled-locator tables; the relationship and centrality proposals with their chains, and the magnitude order; merge recommendations; and a short list of the subsuming results noted across the review (from FINDINGS.md), saying which one(s) should be written up.
 2. Append a dated addendum ("Addendum {TODAY} (consolidation)") of 2–5 lines to each relevant section report, stating the verdict.
 3. Edit nothing else.
 
 {TOOL PITFALLS BLOCK}
 
-Final message (under 150 words): the verdicts, and any new or changed finding.
+Final message (under 200 words): the verdicts, any new or changed finding, wrong locators, centrality proposals and merge recommendations.
 ````
 
-**Before accepting a verdict, spot-check it.** Grep the decisive passage yourself, for example the source's sentence saying it "avoids" the technique, or the preprint for the technique's name. Then add the new findings and changes to `FINDINGS.md`, and move on to the write-up.
+**Before accepting a verdict, spot-check it.** Grep the decisive passage yourself, for example the source's sentence saying it "avoids" the technique, or the preprint for the technique's name. In the second run, a spot-check showed that a paper the status had described as "applying" a device only cited its conclusion. Then add the new findings, changes, relationships and centralities to `FINDINGS.md`, ask the user about merges, and move on to the write-up.
 
 ## Passes not to run
 - **Reference chaining.** This parses the bibliographies of all cited works, ranks candidates by how many cited works cite them, and pulls the citing contexts.
@@ -102,5 +116,5 @@ Final message (under 150 words): the verdicts, and any new or changed finding.
   - It was dropped from the procedure.
 
   A cheaper version of the same idea works inside section briefs: tell agents that the cited papers' `.bbl` and `.bib` files often contain the uncited source.
-- **A dedicated structural pass.** It was rejected; the passive (C) slot is enough.
+- **A dedicated pass for subsuming results.** It was rejected; the passive slot in section briefs is enough.
 - **Forward-citation ("cited by") searches.** Google Scholar has no API and serves CAPTCHAs, which you must not bypass. OpenAlex shows zero citations for very recent preprints. Offer this only if the user asks, and never put the user's email in the requests.
