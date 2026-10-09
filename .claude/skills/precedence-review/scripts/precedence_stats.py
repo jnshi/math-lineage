@@ -7,42 +7,68 @@ Usage: python -I -X utf8 precedence_stats.py <preprint dir> [<writeup dir>]
 checked against build/precedence-findings.aux. A path to parts/summary.tex is
 also accepted.
 
+An empty <preprint dir> argument, or a folder without precedence-findings.json,
+is refused and nothing is deleted. A file that does not parse, or is not
+format version 2, fails without touching precedence-stats.json. Once the file
+is known to be version 2, any old precedence-stats.json is deleted, and a new
+one is written only if every check passes.
+
 Hard checks (format version 2). Any failure prints "VALIDATION FAILED" and the
-errors, exits 1, and leaves no precedence-stats.json behind.
-  - A version 1 file (categories A/B/C and grades) fails with a request to
-    update it to version 2; it is not validated further.
+errors and exits 1.
+  - A version 1 file (categories A/B/C and grades; format_version the integer
+    1) fails with a request to update it to version 2; it is not validated
+    further.
   - The JSON parses (UTF-8, BOM allowed), has no duplicate keys, and every
-    documented field is present with its documented type.
+    documented field is present with its documented type. These strings are
+    non-empty: preprint.id, each source's title, and each finding's slug,
+    technique, summary, credit_in_preprint and each source role; these lists
+    are non-empty: preprint_locations, sources and each source's authors.
   - format, format_version and definitions equal the canonical ones.
-  - Finding ids, slugs and preprint_bib_key values are unique.
+  - Finding ids, slugs and preprint_bib_key values are unique, and a finding
+    lists each source key once.
   - Every relationship, centrality, form_of_inclusion and credit_status is
-    defined, and every source key resolves.
+    defined, and every source key resolves. A weaker result is never main
+    result.
   - A finding in the report has an id F1, F2, ... (running without gaps) and a
     form_of_inclusion other than none. A finding kept in the JSON only has
     in_report false, id null and form_of_inclusion none.
+  - Magnitude order: the findings in the report, in ID order, have
+    non-decreasing (centrality rank, relationship rank). Centrality ranks:
+    main result, central, supporting, peripheral. Relationship ranks: same
+    result, same technique, adapted, proof shortcut, same route, fragment,
+    weaker result.
   - attribution_gap equals its definition: relationship same technique,
-    adapted, same route or same result; centrality main result, central or
-    supporting; and
-    every source not_cited or cited_for_other_content.
+    adapted or same result; centrality main result, central or supporting;
+    and the principal source (the first listed in sources) not_cited or
+    cited_for_other_content.
   - overstated_novelty (the one case where credited content is reported) needs
-    every source credited, credited_elsewhere or credited_in_part, and a
-    novelty_claim; credit_status credited appears only with it.
+    every source credited, credited_elsewhere or credited_in_part, a
+    novelty_claim, and a form_of_inclusion other than citation (the forms then
+    describe revising the abstract or framing); credit_status credited appears
+    only with it.
   - Credit statuses agree with in_preprint_bibliography: not_cited needs false;
     every other status needs true.
   - A source with in_preprint_bibliography true has a preprint_bib_key that is
     cited in build/**/*.tex by a \\cite-family command or \\nocite.
     \\nocite{*} cites every key of every .bib under build/.
     A source with false has no preprint_bib_key.
-  - With <writeup dir>: each summary row starts "\\ref{f:<slug>} & \\rel{<relationship>}
-    & <centrality> &", and is mapped to an ID by \\newlabel{f:<slug>}{{<ID>}...}
-    in the .aux. IDs, slugs, relationships and centralities must equal those
-    of the JSON's findings in the report, both ways, and a row contains
-    \\attrgap exactly when attribution_gap is true.
+  - With <writeup dir>: the \\newlabel{f:<slug>} labels in
+    build/precedence-findings.aux (the findings printed in the report) are
+    exactly the slugs of the JSON's findings in the report, with the same IDs.
+    Each summary row starts "\\ref{f:<slug>} & \\rel{<relationship>} &
+    <centrality> &", and is mapped to an ID by \\newlabel{f:<slug>}{{<ID>}...}.
+    IDs, slugs, relationships and centralities must equal those of the JSON's
+    findings in the report, both ways, and a row contains \\attrgap exactly
+    when attribution_gap is true and \\overstated exactly when
+    overstated_novelty is true.
 
 Warnings, printed but never fatal: a source marked not in the bibliography
 whose arXiv id or DOI (as a whole token), or whose exact normalized title,
 appears in a .bib, .bbl or \\bibitem under build/. These are hints to check by
 hand. A .bib entry that is never cited is not in the bibliography.
+
+The stats count the findings in the report, except by_form_of_inclusion, which
+counts every finding, JSON-only ones included (they are its "none" count).
 """
 import json
 import re
@@ -71,21 +97,21 @@ DEFINITIONS = {
         "adapted": "The earlier technique's structure is followed, with a change at its core: a different object, or a key step replaced.",
         "fragment": "One identifiable piece of the earlier technique is reused.",
         "same route": "An earlier paper proposed the proof strategy, even heuristically, and the preprint carries it out.",
-        "same result": "An earlier paper proves essentially the same statement.",
+        "same result": "An earlier paper, or several earlier papers together, prove essentially the same statement.",
         "weaker result": "An earlier paper proves a weaker, special-case or partial-range version of a statement the preprint proves.",
-        "subsuming result": "A published result would replace or substantially shorten a large part of the argument.",
+        "proof shortcut": "A published result would replace or substantially shorten a large part of the argument.",
     },
     "centrality": {
-        "main result": "Best-effort: the earlier work covers the main result itself, or most of it, not just a step in its proof. A weaker result is never main result; it takes the centrality of the statement it precedes, at most central.",
-        "central": "Best-effort: the proof of the main theorem runs through it.",
-        "supporting": "Best-effort: it is an input to a central step.",
-        "peripheral": "Best-effort: an extension, a side result, a remark, or one of several interchangeable inputs.",
+        "main result": "Best-effort judgment: the earlier work covers the main result itself, or most of it. Never a weaker result.",
+        "central": "Best-effort judgment: much of the main argument depends on it.",
+        "supporting": "Best-effort judgment: the main argument depends on it, but less.",
+        "peripheral": "Best-effort judgment: little of the main argument depends on it.",
     },
     "form_of_inclusion": {
-        "none": "The author-persona check would add nothing; the finding is recorded here only, not in the report.",
-        "citation": "A citation at the point of use.",
-        "sentence": "A clause or a sentence.",
-        "paragraph": "A short paragraph.",
+        "none": "As judged by the author-persona check: not worth a pointer, or for overstated novelty no change to the abstract or framing. Recorded here only, not in the report.",
+        "citation": "As judged by the author-persona check: a citation at the point of use.",
+        "sentence": "As judged by the author-persona check: a clause or a sentence; for overstated novelty, a clause or sentence changed in the abstract, contribution statements or framing.",
+        "paragraph": "As judged by the author-persona check: a short paragraph; for overstated novelty, a larger revision of the abstract or framing.",
     },
     "credit_status": {
         "not_cited": "The work is not in the preprint's bibliography.",
@@ -95,12 +121,16 @@ DEFINITIONS = {
         "credited": "The preprint cites the work for this content. Allowed only in a finding with overstated novelty.",
     },
     "flags": {
-        "attribution_gap": "True when the relationship is same technique, adapted, same route or same result; the centrality is main result, central or supporting; and the preprint cites none of its earlier works for this content anywhere (every source is not_cited or cited_for_other_content).",
+        "attribution_gap": "True when the relationship is same technique, adapted or same result; the centrality is main result, central or supporting; and the principal earlier work (listed first among the sources) is not cited for this content anywhere (not_cited or cited_for_other_content).",
         "overstated_novelty": "True when the preprint cites the earlier work for this content, but its abstract, a statement of its contributions, or the framing of a main result presents that content as new, explicitly or in the way a reader would reasonably take it. It is the one case in which content the preprint credits is reported. novelty_claim says where the claim is made.",
     },
 }
-GAP_RELATIONSHIPS = {"same technique", "adapted", "same route", "same result"}
+GAP_RELATIONSHIPS = {"same technique", "adapted", "same result"}
 GAP_CENTRALITY = {"main result", "central", "supporting"}
+# Magnitude order of the findings in the report: (centrality rank, relationship rank).
+CENTRALITY_RANK = {"main result": 0, "central": 1, "supporting": 2, "peripheral": 3}
+RELATIONSHIP_RANK = {"same result": 0, "same technique": 1, "adapted": 2, "proof shortcut": 3,
+                     "same route": 4, "fragment": 5, "weaker result": 6}
 GAP_STATUSES = {"not_cited", "cited_for_other_content"}
 NEEDS_BIB = {"cited_for_other_content", "credited_elsewhere", "credited_in_part", "credited"}
 OVERSTATED_STATUSES = {"credited", "credited_elsewhere", "credited_in_part"}
@@ -120,7 +150,9 @@ def read(p):
 
 
 def strip_comments(t):
-    return re.sub(r"(?<!\\)%[^\n]*", "", t)
+    """Remove TeX comments: a % after an even number of backslashes (\\% is a
+    percent sign, \\\\% a line break and then a comment)."""
+    return re.sub(r"(?<!\\)((?:\\\\)*)%[^\n]*", r"\1", t)
 
 
 def close_of(s, i):
@@ -179,7 +211,7 @@ def has_type(v, types):
 
 
 def check_types(data, errors):
-    def field(obj, name, types, where, required=True):
+    def field(obj, name, types, where, required=True, nonempty=False):
         if name not in obj:
             if required:
                 errors.append(f"{where}: missing field {name!r}")
@@ -188,13 +220,17 @@ def check_types(data, errors):
         if not has_type(v, types):
             errors.append(f"{where}.{name}: expected {type_name(types)}, got {json.dumps(v, ensure_ascii=False)[:60]}")
             return None
+        if nonempty and ((isinstance(v, str) and not v.strip()) or (isinstance(v, list) and not v)):
+            errors.append(f"{where}.{name} is empty")
         return v
 
     def str_list(obj, name, where):
-        v = field(obj, name, (LIST,), where)
+        v = field(obj, name, (LIST,), where, nonempty=True)
         for i, x in enumerate(v or []):
             if not isinstance(x, str):
                 errors.append(f"{where}.{name}[{i}]: expected string, got {json.dumps(x, ensure_ascii=False)[:60]}")
+            elif not x.strip():
+                errors.append(f"{where}.{name}[{i}] is empty")
 
     if not isinstance(data, dict):
         errors.append("the top level is not a JSON object")
@@ -204,7 +240,7 @@ def check_types(data, errors):
     pre = field(data, "preprint", (DICT,), "file")
     if pre is not None:
         for k in ("id", "title", "date", "path"):
-            field(pre, k, (STR,), "preprint")
+            field(pre, k, (STR,), "preprint", nonempty=(k == "id"))
         comps = field(pre, "companions", (LIST,), "preprint")
         for i, c in enumerate(comps or []):
             if not isinstance(c, dict):
@@ -224,7 +260,7 @@ def check_types(data, errors):
             errors.append(f"{w}: expected object")
             continue
         str_list(s, "authors", w)
-        field(s, "title", (STR,), w)
+        field(s, "title", (STR,), w, nonempty=True)
         field(s, "year", (INT,), w)
         field(s, "venue", (STR, NULL), w)
         field(s, "arxiv", (STR, NULL), w)
@@ -243,24 +279,26 @@ def check_types(data, errors):
         field(f, "id", (STR, NULL), w)
         for k in ("slug", "relationship", "centrality", "form_of_inclusion", "technique", "summary",
                   "credit_in_preprint"):
-            field(f, k, (STR,), w)
+            field(f, k, (STR,), w, nonempty=k in ("slug", "technique", "summary", "credit_in_preprint"))
         field(f, "in_report", (BOOL,), w)
         field(f, "attribution_gap", (BOOL,), w)
         field(f, "overstated_novelty", (BOOL,), w)
         field(f, "novelty_claim", (STR, NULL), w, required=False)
         str_list(f, "preprint_locations", w)
-        srcs = field(f, "sources", (LIST,), w)
-        if srcs is not None and not srcs:
-            errors.append(f"{w}: sources is empty")
+        srcs = field(f, "sources", (LIST,), w, nonempty=True)
+        keys = []
         for j, s in enumerate(srcs or []):
             ws = f"{w}.sources[{j}]"
             if not isinstance(s, dict):
                 errors.append(f"{ws}: expected object")
                 continue
-            field(s, "key", (STR,), ws)
+            keys.append(field(s, "key", (STR,), ws))
             field(s, "locators", (STR, NULL), ws)
-            field(s, "role", (STR,), ws)
+            field(s, "role", (STR,), ws, nonempty=True)
             field(s, "credit_status", (STR,), ws)
+        for k, n in Counter(k for k in keys if k is not None).items():
+            if n > 1:
+                errors.append(f"{w}: source {k} is listed {n} times (list each source once)")
 
 
 # ---------------------------------------------------------------- citations
@@ -497,16 +535,29 @@ def id_key(fid):
 
 
 def summary_errors(wdir, findings):
-    """Each row starts "\\ref{f:<slug>} & \\rel{<relationship>} & <centrality> &", and
-    contains \\attrgap and \\overstated exactly when the finding's flags are true."""
+    """The aux's f: labels (the findings printed in the report) are the slugs of
+    the JSON's findings in the report, with the same IDs. Each summary row starts
+    "\\ref{f:<slug>} & \\rel{<relationship>} & <centrality> &", and contains
+    \\attrgap and \\overstated exactly when the finding's flags are true."""
     errors = []
     summ, labels, aux_p = summary_inputs(wdir, errors)
     if summ is None:
         return errors
+    rep = {f["slug"]: f["id"] for f in findings if f["in_report"]}
+    for slug in sorted(set(labels) - set(rep)):
+        errors.append(f"{labels[slug]} (f:{slug}) is printed in the report ({aux_p.name} has its label), but is "
+                      f"not a finding in the report in the JSON (missing, or in_report is false); remove its "
+                      f"\\input line or add it to the JSON and the summary table")
+    for slug in sorted(set(rep) - set(labels)):
+        errors.append(f"{rep[slug] or slug}: in_report is true in the JSON, but the report prints no finding "
+                      f"f:{slug} (no \\newlabel{{f:{slug}}} in {aux_p.name}; add its \\input line and rebuild)")
+    for slug in sorted(set(rep) & set(labels)):
+        if isinstance(rep[slug], str) and rep[slug] != labels[slug]:
+            errors.append(f"f:{slug} is {labels[slug]} in the report ({aux_p.name}) but {rep[slug]} in the JSON")
     table = {}
     row_re = re.compile(r"\\ref\*?\{f:([^{}]+)\}\s*&\s*\\rel\{([^{}]*)\}\s*&\s*([^&\\]+?)\s*&")
     for m in row_re.finditer(summ):
-        slug, rel, cen = m.group(1), m.group(2).strip(), " ".join(m.group(3).split())
+        slug, rel, cen = m.group(1), " ".join(m.group(2).split()), " ".join(m.group(3).split())
         end = summ.find("\\\\", m.end())
         row = summ[m.start():end if end >= 0 else len(summ)]
         if slug not in labels:
@@ -516,8 +567,9 @@ def summary_errors(wdir, findings):
         if fid in table:
             errors.append(f"summary table: {fid} has more than one row")
         table[fid] = (slug, rel, cen, "\\attrgap" in row, "\\overstated" in row)
+    # Findings without a valid id are reported by finding_errors.
     mine = {f["id"]: (f["slug"], f["relationship"], f["centrality"], f["attribution_gap"], f["overstated_novelty"])
-            for f in findings if f["in_report"]}
+            for f in findings if f["in_report"] and isinstance(f["id"], str) and ID_RE.fullmatch(f["id"])}
     names = ("slug", "relationship", "centrality", "attribution gap (\\attrgap in the row)",
              "overstated novelty (\\overstated in the row)")
     for fid in sorted(set(mine) | set(table), key=id_key):
@@ -560,6 +612,9 @@ def finding_errors(findings, sources, defs):
             errors.append(f"{name}: overstated_novelty is true, so novelty_claim must say where the claim is made")
         if not f["overstated_novelty"] and claim is not None:
             errors.append(f"{name}: novelty_claim is given, but overstated_novelty is false")
+        if f["overstated_novelty"] and f["form_of_inclusion"] == "citation":
+            errors.append(f"{name}: overstated_novelty is true, so form_of_inclusion cannot be citation (the forms "
+                          f"then describe revising the abstract or framing: sentence, paragraph, or none)")
         statuses = []
         for src in f["sources"]:
             k, st = src["key"], src["credit_status"]
@@ -584,21 +639,39 @@ def finding_errors(findings, sources, defs):
             if st in NEEDS_BIB and not inbib:
                 errors.append(f"{name}/{k}: credit_status {st} but the work is not in the bibliography")
             statuses.append(st)
-        gap = (f["relationship"] in GAP_RELATIONSHIPS and f["centrality"] in GAP_CENTRALITY
-               and bool(statuses) and all(s in GAP_STATUSES for s in statuses))
-        if f["attribution_gap"] != gap:
-            errors.append(f"{name}: attribution_gap is {str(f['attribution_gap']).lower()}, "
-                          f"but its definition gives {str(gap).lower()}")
-    nums = sorted(int(f["id"][1:]) for f in findings
-                  if f["in_report"] and isinstance(f["id"], str) and ID_RE.fullmatch(f["id"]))
+        # The principal source is the first listed; the gap is judged on it alone.
+        first = f["sources"][0]
+        if first["key"] in sources and first["credit_status"] in defs["credit_status"]:
+            gap = (f["relationship"] in GAP_RELATIONSHIPS and f["centrality"] in GAP_CENTRALITY
+                   and first["credit_status"] in GAP_STATUSES)
+            if f["attribution_gap"] != gap:
+                errors.append(f"{name}: attribution_gap is {str(f['attribution_gap']).lower()}, but its definition "
+                              f"gives {str(gap).lower()} (relationship {f['relationship']}, centrality "
+                              f"{f['centrality']}, principal source {first['key']} {first['credit_status']})")
+    rep = [f for f in findings if f["in_report"] and isinstance(f["id"], str) and ID_RE.fullmatch(f["id"])]
+    nums = sorted(int(f["id"][1:]) for f in rep)
     if nums != list(range(1, len(nums) + 1)):
         errors.append(f"report ids should run F1..F{len(nums)} without gaps; got "
                       + ", ".join(f"F{n}" for n in nums))
+    # Magnitude order: (centrality rank, relationship rank) never decreases from F1 on.
+    rep = sorted((f for f in rep if f["centrality"] in CENTRALITY_RANK and f["relationship"] in RELATIONSHIP_RANK),
+                 key=lambda f: id_key(f["id"]))
+    for a, b in zip(rep, rep[1:]):
+        ra = (CENTRALITY_RANK[a["centrality"]], RELATIONSHIP_RANK[a["relationship"]])
+        rb = (CENTRALITY_RANK[b["centrality"]], RELATIONSHIP_RANK[b["relationship"]])
+        if rb < ra:
+            errors.append(f"{b['id']} ({b['centrality']}, {b['relationship']}) comes after {a['id']} "
+                          f"({a['centrality']}, {a['relationship']}), against the magnitude order: by centrality "
+                          f"(main result, central, supporting, peripheral), then relationship (same result, same "
+                          f"technique, adapted, proof shortcut, same route, fragment, weaker result). Reorder the "
+                          f"\\input lines, rebuild, and renumber the JSON")
     return errors
 
 
 def make_stats(data, findings, sources, defs):
-    """Counts over the findings in the report; JSON-only findings are listed separately."""
+    """Counts over the findings in the report, except by_form_of_inclusion, which
+    counts every finding (JSON-only findings are its "none" count). JSON-only
+    findings are also listed by slug."""
     rep = sorted((f for f in findings if f["in_report"]), key=lambda f: id_key(f["id"]))
     pairs = [(f["id"], s["key"], s["credit_status"]) for f in rep for s in f["sources"]]
     works = {k for _, k, _ in pairs}
@@ -642,23 +715,33 @@ def main(argv):
     if len(argv) not in (2, 3) or argv[1].startswith("-"):
         print(__doc__)
         sys.exit(2)
+    if not argv[1].strip() or (len(argv) > 2 and not argv[2].strip()):
+        print("an argument is empty: give the preprint dir (and the writeup dir)")
+        sys.exit(2)
     d = Path(argv[1])
+    src = d / "precedence-findings.json"
     out = d / "precedence-stats.json"
-    try:
-        out.unlink()
-    except FileNotFoundError:
-        pass
+    if not src.is_file():
+        # Nothing is deleted: this may not be a preprint folder at all.
+        fail([f"{src} not found (the first argument must be the preprint folder holding it)"])
 
     errors = []
-    data = load_json(d / "precedence-findings.json", errors)
+    data = load_json(src, errors)
     if data is None:
         fail(errors)
-    if isinstance(data, dict) and data.get("format_version") == 1:
-        fail([f"{d / 'precedence-findings.json'} is in format version 1 (categories A/B/C and grades), "
+    version = data.get("format_version") if isinstance(data, dict) else None
+    if type(version) is int and version == 1:
+        fail([f"{src} is in format version 1 (categories A/B/C and grades), "
               f"which is superseded. Update it to version {FORMAT_VERSION}: relationship types, centrality, "
               f"form of inclusion, credit statuses and flags (see references/publish.md and "
               f"assets/precedence-findings.example.json). The write-up's summary table and README need the "
               f"same update."])
+    if type(version) is int and version == FORMAT_VERSION:
+        # A version 2 file: its old stats go now, and come back only if it validates.
+        try:
+            out.unlink()
+        except FileNotFoundError:
+            pass
     check_types(data, errors)
     if errors:
         fail(errors)

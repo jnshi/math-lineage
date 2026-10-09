@@ -3,17 +3,27 @@
 #
 #   bash build.sh <writeup dir> <prior-work/INDEX.md> [main .tex, default precedence-findings.tex]
 #
-# Steps: regenerate parts/bibliography.tex (make_bib.py, next to this script;
-# the build stops if it reports a problem); delete the previous PDF, logs and
-# text; run pdflatex three times into <writeup>/build (from a clean build/ the
-# table of contents settles only on the third pass); dump the PDF text to
-# build/full.txt; check the gates.
+# Steps: delete the PASS stamp build/<main>.pass; regenerate
+# parts/bibliography.tex (make_bib.py, next to this script; the build stops if
+# it reports a problem); delete the previous PDF, logs and text; run the lint
+# tex_gate.py (next to this script) on the main file (--main) and on
+# parts/*.tex (except preamble.tex; the generated bibliography.tex is checked,
+# since "% BIB" lines reach it as raw TeX) and findings/*.tex (not
+# subfolders), and stop before compiling if it reports a hit; check that TeX
+# can be confined (sandbox_check, tex_sandbox.sh); run pdflatex confined to
+# <writeup> (sandbox_pdflatex) three times into <writeup>/build (from a clean
+# build/ the table of contents settles only on the third pass); check every
+# object of the PDF (pdf_check.py); dump the PDF text to build/full.txt; check
+# the gates.
 #
-# Exit status 0 only if every gate passes: pdflatex exit 0, no "!" errors, a
-# PDF, no undefined reference or citation (including \hyperref targets and
-# warnings wrapped in the log), no overfull box over 10pt, and no hit from
-# forbidden-patterns.txt (next to this script). Hits from warning-patterns.txt
-# are printed for review but do not fail the build.
+# Exit status 0 only if every gate passes: the lint, the sandbox check,
+# pdflatex exit 0, pdf_check.py, no
+# "!" errors, a PDF, no undefined reference or citation (including \hyperref
+# targets and warnings wrapped in the log), no overfull box over 10pt, and no
+# hit from forbidden-patterns.txt (next to this script). Hits from
+# warning-patterns.txt are printed for review but do not fail the build. On
+# "result: PASS" it writes build/<main>.pass holding the PDF's sha256;
+# publish_prep.sh requires it.
 set -uo pipefail
 if [ $# -lt 2 ]; then
   echo "usage: $0 <writeup dir> <prior-work/INDEX.md> [main.tex]" >&2
@@ -24,7 +34,8 @@ writeup=$1
 index=$2
 main=${3:-precedence-findings.tex}
 base=${main%.tex}
-for f in forbidden-patterns.txt warning-patterns.txt make_bib.py; do
+rm -f "$writeup/build/$base.pass"
+for f in forbidden-patterns.txt warning-patterns.txt make_bib.py tex_gate.py tex_sandbox.sh pdf_check.py; do
   if [ ! -f "$here/$f" ]; then
     echo "missing $here/$f" >&2
     exit 2
@@ -45,7 +56,29 @@ fi
 "$py" -I -X utf8 "$here/make_bib.py" "$writeup" "$index" "$main" || exit 1
 cd "$writeup" || exit 1
 mkdir -p build || exit 1
-rm -f "build/$base.pdf" "build/$base.log" "build/$base".pass*.log build/full.txt
+rm -f "build/$base.pdf" "build/$base.log" "build/$base".pass*.log build/full.txt "build/$base.pass"
+
+# Source gate: nothing that reads or writes files, runs code or defines macros.
+# It runs before pdflatex, so a hit is never compiled.
+gate=()
+for f in parts/*.tex findings/*.tex; do
+  [ -f "$f" ] || continue
+  case "$f" in
+    parts/preamble.tex) continue ;;
+  esac
+  gate+=("$f")
+done
+gate_rc=0
+"$py" -I -X utf8 "$here/tex_gate.py" --main "$main" || gate_rc=1
+if [ ${#gate[@]} -gt 0 ]; then
+  "$py" -I -X utf8 "$here/tex_gate.py" "${gate[@]}" || gate_rc=1
+fi
+if [ "$gate_rc" != 0 ]; then
+  echo "source gate: the commands above are not allowed in the write-up (only the macros of parts/preamble.tex)"
+  echo "result: FAIL (tex-gate)"
+  exit 1
+fi
+
 # Pattern files without comments, blank lines or CRs.
 for tier in forbidden warning; do
   tr -d '\r' < "$here/$tier-patterns.txt" | sed -e '/^#/d' -e '/^[[:space:]]*$/d' -e 's/^@build //' > "build/$tier.pat" || exit 1
@@ -73,10 +106,17 @@ pattern_hits() {
   done | sed 's/^\([0-9]*\):[[:space:](]*/p.\1: /' | awk '!seen[$0]++'
 }
 
+# TeX runs confined to the writeup folder: see tex_sandbox.sh.
+. "$here/tex_sandbox.sh"
+if ! sandbox_check; then
+  echo "result: FAIL (sandbox)"
+  exit 1
+fi
 status=0
 for pass in 1 2 3; do
-  pdflatex -interaction=nonstopmode -halt-on-error -output-directory=build "$main" > "build/$base.pass$pass.log" 2>&1
+  sandbox_pdflatex -interaction=nonstopmode -halt-on-error -output-directory=build "$main" > "build/$base.pass$pass.log" 2>&1
   status=$?
+  [ "$status" = 124 ] && break
 done
 log="build/$base.log"
 pdf="build/$base.pdf"
@@ -121,6 +161,10 @@ fi
 
 if [ -f "$pdf" ]; then
   pdfinfo "$pdf" 2>/dev/null | grep Pages
+  echo "PDF objects (only internal and web links allowed):"
+  if ! "$py" -I -X utf8 "$here/pdf_check.py" "$pdf"; then
+    fail="$fail pdf-check"
+  fi
   if pdftotext -enc UTF-8 "$pdf" build/full.txt; then
     echo "forbidden strings in the PDF text (expect none):"
     hits=$(pattern_hits build/full.txt build/forbidden.pat)
@@ -143,6 +187,13 @@ fi
 
 if [ -n "$fail" ]; then
   echo "result: FAIL ($(echo $fail))"
+  exit 1
+fi
+# The PASS stamp: the PDF's sha256 (python's hashlib, for portability).
+if ! "$py" -I -c 'import hashlib, sys; h = hashlib.sha256(open(sys.argv[1], "rb").read()).hexdigest(); open(sys.argv[2], "w", newline="\n").write(h + "\n")' \
+     "$pdf" "build/$base.pass"; then
+  rm -f "build/$base.pass"
+  echo "result: FAIL (cannot write build/$base.pass)"
   exit 1
 fi
 echo "result: PASS"

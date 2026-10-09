@@ -9,61 +9,64 @@ belongs to.} It proves {ONE OR TWO SENTENCES: THE MAIN RESULT}.
 Section~\ref{sec:overview} summarizes the paper and fixes the notation used
 throughout this document. {EITHER: The preprint relies on {N} companion
 preprints from the same release, \cite{OAI-Companion1}, which it cites as
-\texttt{{BIB KEY}}. They are not treated as earlier work here. OR: The
-preprint cites no other preprint from the same release.}
+\texttt{{BIB KEY}}. They belong to the same release, so they are not treated as
+earlier work here. OR: The preprint cites no other preprint from the same
+release.}
 
 \paragraph{What this document reports.}
-Each finding is a load-bearing part of the preprint (a technique,
-construction, estimate, proof route or result) that an identifiable earlier
-paper already contains, where the preprint does not cite that paper for it at
-the place it is used. The one exception is overstated novelty, described
-below. Textbook tools and ``should cite the original rather than a later
-source'' quibbles are not reported. Findings are listed by centrality, then by
-how close the relationship is.
+Each finding is a citation the preprint is missing: part of the preprint's
+mathematics (a technique, construction, estimate, proof route or result) that
+an identifiable earlier paper already contains, where the preprint does not
+cite that paper for it where it is used. ``Earlier'' means publicly available
+before the preprint's date. The one exception, overstated novelty, is
+described below. Not reported: textbook tools in their textbook form, and
+cases where the preprint cites a later source that covers the content rather
+than the original. Findings are ordered by centrality, then by relationship in
+the order listed below, then by position in the preprint.
 
 \paragraph{Relationships.}
 \begin{description}[leftmargin=1.5em,font=\normalfont\itshape]
+\item[same result.] An earlier paper, or several earlier papers together, prove essentially the same statement.
 \item[same technique.] The earlier technique, construction or theory is
 reused essentially intact, possibly in a new setting or with new ingredients
 around it.
 \item[adapted.] The earlier technique's structure is followed, with a change
 at its core: a different object, or a key step replaced.
-\item[fragment.] One identifiable piece of the earlier technique is reused.
+\item[proof shortcut.] A published result would replace or substantially
+shorten a large part of the argument.
 \item[same route.] An earlier paper proposed the proof strategy, even
 heuristically, and the preprint carries it out.
-\item[same result.] An earlier paper proves essentially the same statement.
+\item[fragment.] One identifiable piece of the earlier technique is reused.
 \item[weaker result.] An earlier paper proves a weaker, special-case or
 partial-range version of a statement the preprint proves.
-\item[subsuming result.] A published result would replace or substantially
-shorten a large part of the argument.
 \end{description}
 
 \paragraph{Centrality.}
-Each finding also gets a best-effort judgment of how much of the preprint
-depends on it: \emph{main result} when the earlier work covers the main result
-itself, or most of it; \emph{central} when the proof of the main theorem runs
-through it; \emph{supporting} when it is an input to a central step;
-\emph{peripheral} otherwise. An earlier weaker result takes the centrality of
-the statement it precedes, at most central. Each finding states the chain of
-results it feeds, so the judgment can be checked.
+Each finding also gets a best-effort judgment of how much of the preprint's
+main argument depends on it: \emph{main result} (reserved for earlier work that
+covers the main result itself, or most of it), \emph{central},
+\emph{supporting} or \emph{peripheral}. An earlier weaker result is never
+labelled main result. Each finding states the chain of results it feeds, so
+the basis for the judgment is visible.
 
 \paragraph{Citations.}
-The ``Credited?'' column of the summary names the earlier work and says what
-the preprint cites for the content in question: \emph{not cited} (the work is
-not in the bibliography), \emph{cited for other content}, \emph{credited
-elsewhere} (cited for this content, but not where it is used), or
-\emph{credited in part}. A citation counts only when it is \emph{for that
-specific content}; citing the same paper nearby for a different result does
-not count. Content the preprint credits where it is used, directly or through
-a cited location that itself credits the earlier work{IF COMPANIONS: (such as
-a companion lemma)}, is not reported, except when its novelty is overstated
-(below).
+The ``Cited?'' column of the summary names the earlier work and says what the
+preprint cites for the content in question: \emph{not cited} (the work is not
+in the bibliography), \emph{cited for other content}, \emph{credited elsewhere}
+(cited for this content, but not where it is used), or \emph{credited in
+part}. A citation counts only when it is \emph{for that specific content};
+citing the same paper nearby for a different result does not count. Content
+the preprint credits where it is used, directly or through a cited location
+that itself credits the earlier work{IF COMPANIONS: (such as a companion
+lemma)}, is not reported, except when its novelty is overstated (below). For
+overstated novelty, the column says where the preprint does cite the work.
 
 \paragraph{Flags.}
 \begin{description}[leftmargin=1.5em,font=\normalfont\bfseries]
-\item[Attribution gap.] The relationship is same technique, adapted, same
-route or same result; the finding is main result, central or supporting; and
-the preprint cites none of its earlier works for this content anywhere.
+\item[Attribution gap.] Marks the most serious missing citations: the
+relationship is same technique, adapted or same result; the centrality is main
+result, central or supporting; and the preprint cites the principal earlier
+work for this content nowhere.
 \item[Overstated novelty.] The preprint does cite the earlier work for this
 content, but its abstract, a statement of its contributions, or the framing of
 a main result presents that content as new, explicitly or in the way a reader
@@ -72,15 +75,21 @@ credits is reported.
 \end{description}
 
 \paragraph{How to check a claim.}
-Locations in the preprint{IF COMPANIONS: and its companions} use its compiled
-numbering (sections, equations, theorems, lemmas, propositions) and, where
-helpful, page numbers in its PDF. Locations in other sources give the theorem,
-equation and printed page of the version listed in the bibliography. Each
-finding ends with a short checklist of the passages to put side by side.
+Locations in the preprint{IF COMPANIONS: and its companions} use its section,
+equation and theorem numbers and the page numbers printed in its PDF.
+Locations in other sources give the theorem, equation and printed page of the
+version listed in the bibliography. Each finding ends with a short checklist
+of the passages to put side by side.
 
-\paragraph{Provenance.}
-This document was generated by LLM agents ({MODEL}) running the
-precedence-review skill (\url{jnshi/math-lineage}, commit \texttt{{COMMIT}}),
-makes no claim of completeness, and has not been vetted by a human. The job was run by {NAME}{IF THEY SUPPLIED INPUT THAT SHAPED A
-FINDING: , who also supplied the leads behind finding~\ref{f:<slug>}}.{ANY
-DISCLOSURE THE OPERATOR ASKS TO ADD, VERBATIM.}
+% Provenance: keep this block commented out until the publish step, then
+% remove the leading "% " from each line and fill in the placeholders. It
+% names the user, their models and their input: publish only the exact text
+% the user approved (references/publish.md, section 1).
+% \paragraph{Provenance.}
+% This document was generated by LLM agents ({MODEL}) running the
+% precedence-review skill
+% (\href{https://github.com/jnshi/math-lineage/tree/{COMMIT}/.claude/skills/precedence-review}{jnshi/math-lineage},
+% commit \texttt{{COMMIT}}), makes no claim of completeness, and has not been
+% vetted by a human. It was run by {NAME}{IF THEY SUPPLIED INPUT THAT SHAPED A
+% FINDING: , who also supplied the leads behind finding~\ref{f:<finding>}}.{ANY
+% DISCLOSURE THE OPERATOR ASKS TO ADD, VERBATIM.}

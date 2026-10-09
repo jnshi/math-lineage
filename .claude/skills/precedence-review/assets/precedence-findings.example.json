@@ -21,21 +21,21 @@
       "adapted": "The earlier technique's structure is followed, with a change at its core: a different object, or a key step replaced.",
       "fragment": "One identifiable piece of the earlier technique is reused.",
       "same route": "An earlier paper proposed the proof strategy, even heuristically, and the preprint carries it out.",
-      "same result": "An earlier paper proves essentially the same statement.",
+      "same result": "An earlier paper, or several earlier papers together, prove essentially the same statement.",
       "weaker result": "An earlier paper proves a weaker, special-case or partial-range version of a statement the preprint proves.",
-      "subsuming result": "A published result would replace or substantially shorten a large part of the argument."
+      "proof shortcut": "A published result would replace or substantially shorten a large part of the argument."
     },
     "centrality": {
-      "main result": "Best-effort: the earlier work covers the main result itself, or most of it, not just a step in its proof. A weaker result is never main result; it takes the centrality of the statement it precedes, at most central.",
-      "central": "Best-effort: the proof of the main theorem runs through it.",
-      "supporting": "Best-effort: it is an input to a central step.",
-      "peripheral": "Best-effort: an extension, a side result, a remark, or one of several interchangeable inputs."
+      "main result": "Best-effort judgment: the earlier work covers the main result itself, or most of it. Never a weaker result.",
+      "central": "Best-effort judgment: much of the main argument depends on it.",
+      "supporting": "Best-effort judgment: the main argument depends on it, but less.",
+      "peripheral": "Best-effort judgment: little of the main argument depends on it."
     },
     "form_of_inclusion": {
-      "none": "The author-persona check would add nothing; the finding is recorded here only, not in the report.",
-      "citation": "A citation at the point of use.",
-      "sentence": "A clause or a sentence.",
-      "paragraph": "A short paragraph."
+      "none": "As judged by the author-persona check: not worth a pointer, or for overstated novelty no change to the abstract or framing. Recorded here only, not in the report.",
+      "citation": "As judged by the author-persona check: a citation at the point of use.",
+      "sentence": "As judged by the author-persona check: a clause or a sentence; for overstated novelty, a clause or sentence changed in the abstract, contribution statements or framing.",
+      "paragraph": "As judged by the author-persona check: a short paragraph; for overstated novelty, a larger revision of the abstract or framing."
     },
     "credit_status": {
       "not_cited": "The work is not in the preprint's bibliography.",
@@ -45,7 +45,7 @@
       "credited": "The preprint cites the work for this content. Allowed only in a finding with overstated novelty."
     },
     "flags": {
-      "attribution_gap": "True when the relationship is same technique, adapted, same route or same result; the centrality is main result, central or supporting; and the preprint cites none of its earlier works for this content anywhere (every source is not_cited or cited_for_other_content).",
+      "attribution_gap": "True when the relationship is same technique, adapted or same result; the centrality is main result, central or supporting; and the principal earlier work (listed first among the sources) is not cited for this content anywhere (not_cited or cited_for_other_content).",
       "overstated_novelty": "True when the preprint cites the earlier work for this content, but its abstract, a statement of its contributions, or the framing of a main result presents that content as new, explicitly or in the way a reader would reasonably take it. It is the one case in which content the preprint credits is reported. novelty_claim says where the claim is made."
     }
   },
@@ -129,7 +129,7 @@
       "id": "F1",
       "slug": "main-theorem-covered",
       "in_report": true,
-      "relationship": "subsuming result",
+      "relationship": "same result",
       "centrality": "main result",
       "form_of_inclusion": "paragraph",
       "attribution_gap": false,

@@ -1,0 +1,71 @@
+% Example finding: the form and length of a full entry. The mathematics and
+% the source (key AuthorAuthor2018-Example) are illustrative only. Copy the
+% form, never the content.
+\finding[Smallest-eigenvalue comparison for a deformed Hessian]{A Gaussian comparison bound for the smallest eigenvalue of a deformed TAP Hessian}{example-comparison}
+
+\paragraph{Summary.}
+The bound on the smallest eigenvalue of the deformed Hessian in
+\ploc{Lemma~4.3 (p.~21)}{stability.tex:410--455} follows the Gaussian comparison
+argument of Author and Author \sloc{AuthorAuthor2018-Example}{Lemma~3.2,
+p.~14}, and the preprint does not cite that paper anywhere. The preprint
+presents the bound without attribution; its only nearby citation, to the
+semicircle law, covers the limiting spectrum and not the comparison step.
+\rel{same technique}: the comparison process, the choice of interpolation and
+the resulting variance inequality are the same, applied to a Hessian with an
+added diagonal.
+
+\paragraph{Setup.}
+$H_D = W + D$, where $W$ is the coupling matrix of Section~\ref{sec:overview}
+and $D$ is a diagonal matrix with entries in $[-\delta,\delta]$; $\lambda_{\min}(H_D)$
+is its smallest eigenvalue.
+
+\paragraph{Role in the argument.}
+Lemma~4.3 gives the positivity input to the Hessian-failure count:
+\ploc{Lemma~4.3}{stability.tex:410} $\to$ \ploc{Proposition~5.1}{stability.tex:600}
+$\to$ \ploc{Theorem~1.1}{introduction.tex:33}. The same bound is used again in
+\ploc{\S6.2}{residuals.tex:120}.
+
+\paragraph{The earlier technique.}
+For a symmetric Gaussian matrix $W$ and a deterministic symmetric $A$,
+\sloc{AuthorAuthor2018-Example}{Lemma~3.2, p.~14} compares
+$\min_{\|x\|=1}\ip{x}{(W+A)x}$ with a scalar Gaussian process through
+Sudakov--Fernique, obtaining
+$\E\lambda_{\min}(W+A)\ge \lambda_{\min}(A)-2+o(1)$.
+
+\paragraph{Correspondence.}
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.2\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+ & Preprint & Author--Author \cite{AuthorAuthor2018-Example}\\
+\midrule
+\endfirsthead
+\toprule
+ & Preprint & Author--Author \cite{AuthorAuthor2018-Example}\\
+\midrule
+\endhead
+Matrix & $H_D=W+D$, $D$ diagonal \ploc{(4.7)}{stability.tex:415} & $W+A$, $A$ deterministic (eq.~(3.4), p.~14)\\
+\addlinespace
+Comparison & Sudakov--Fernique against $g_1+\ip{x}{Dx}$ \ploc{(4.9)}{stability.tex:430} & Sudakov--Fernique against $g_1+\ip{x}{Ax}$ (proof of Lemma~3.2, p.~15)\\
+\addlinespace
+Conclusion & $\E\lambda_{\min}(H_D)\ge -2-\delta-o(1)$ \ploc{(4.11)}{stability.tex:450} & $\E\lambda_{\min}(W+A)\ge\lambda_{\min}(A)-2+o(1)$ (Lemma~3.2)\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{Differences.}
+\begin{itemize}
+\item The deformation is diagonal and depends on the observation, so the
+preprint conditions on it before comparing.
+\item Concentration of $\lambda_{\min}$ is added through Gaussian
+Lipschitz concentration, which the earlier lemma does not state.
+\end{itemize}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item \ploc{(4.9)}{stability.tex:430} against the comparison process in the proof
+of \sloc{AuthorAuthor2018-Example}{Lemma~3.2, p.~15}.
+\item \ploc{(4.11)}{stability.tex:450} against the statement of
+\sloc{AuthorAuthor2018-Example}{Lemma~3.2, p.~14} with $A=D$.
+\end{enumerate}
+
