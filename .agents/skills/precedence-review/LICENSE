@@ -3,7 +3,7 @@ Licensing of the precedence-review skill
 
 Copyright 2026 Jonathan Shi
 
-This folder (.claude/skills/precedence-review/) is licensed for noncommercial
+This folder (.agents/skills/precedence-review/) is licensed for noncommercial
 use only, under two licenses:
 
 - scripts/, except scripts/tex_sandbox.sh: PolyForm Noncommercial License
