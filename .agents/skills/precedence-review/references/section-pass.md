@@ -146,7 +146,7 @@ Write only inside `prior-work/`, `{REVIEW_DIR}` and your scratch subfolder. Do n
 - **Section with a top-priority lead** (for example, a mechanism used there with no citation, when the same mechanism elsewhere is credited). Mark it as highest priority, and spell out the verification: grep the whole section for any citation, read the source's lemma and its proof, and compare.
 
 ## Coordinator loop after each hand-back
-1. **Read the report.** Read its findings, cross-references and leads, for example `sed -n '/^## Findings/,/^## Ruled out/p'` and `sed -n '/^## Leads/,$p'`. Don't open the whole report unless needed.
+1. **Read the report.** Read its findings, cross-references, ruled-out entries and leads, for example `sed -n '/^## Findings/,/^## Searched/p'` and `sed -n '/^## Leads/,$p'`. Don't open the whole report unless needed.
 2. **Check each earlier work's relationship type and credit status against the definitions and the specific-content rule.** Agents often treat a citation nearby for something else as credit, call a whole technique a "fragment", or split one approach into parts and set each aside on a different ground (one part done differently, another made of standard tools); judge the approach as a whole. For overstated novelty, check that the claimed passage is in the abstract, a statement of significant contributions or the framing of a main result.
    - If you change one, edit the report and add a blockquote "Note (coordinator, <date>)" with the reason.
    - These notes stay internal.
