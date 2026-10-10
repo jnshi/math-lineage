@@ -1,0 +1,2116 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,tabularx,longtable,array}
+\usepackage{xltabular}% tabularx-style tables that can break across pages
+\usepackage{enumitem}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{cite}% sorts and compresses numeric citations
+\usepackage[colorlinks=true,linkcolor=Blue,citecolor=Blue,urlcolor=Blue]{hyperref}
+
+% ---------------------------------------------------------------------
+% Shared notation
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\Lgen}{\mathcal{L}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Ent}{Ent}
+\DeclareMathOperator{\KL}{KL}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\ran}{ran}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\ip}[2]{\langle #1,#2\rangle}
+% Locators.  \ploc{compiled locator}{TeX file:line} cites the preprint (or a
+% companion).  Only the compiled locator (section, equation, result, page of the
+% PDF) is printed.  The TeX file:line stays in the source to help checkers find
+% the passage and never appears in the PDF.  \sloc{key}{locator} cites a source.
+\newcommand{\ploc}[2]{#1}
+\newcommand{\sloc}[2]{\cite[#2]{#1}}
+\newcommand{\grade}[1]{\textsc{#1}}
+% Uniform list and table styling across all findings.
+\setlist{itemsep=2pt,topsep=3pt,parsep=0pt,leftmargin=1.6em}
+\setlist[enumerate]{label=\arabic*.}
+\setlist[itemize]{label=\textbullet}
+\renewcommand{\arraystretch}{1.15}
+% Findings are numbered by LaTeX, so nobody types an ID.  In the main file,
+% \findinggroup{S} (or {P}, {C}) after each findings \section sets the ID prefix
+% and restarts the count; IDs follow the order of the \input lines.  Each
+% fragment opens with
+%   \finding{<title>}{<slug>}   or   \finding[<short title>]{<title>}{<slug>}
+% which prints \subsection{S3. <title>} (with "S3. <short title>" in the table
+% of contents and PDF bookmarks when a short title is given) and does
+% \label{f:<slug>}, so \ref{f:<slug>} prints the ID "S3" as a link.  Refer to
+% another finding as finding~\ref{f:<slug>}.  Before any \findinggroup the
+% IDs print as ?1, ?2, ... (as in a standalone test of one fragment).
+\makeatletter
+\newcounter{finding}
+\newcommand{\finding@prefix}{?}
+\renewcommand{\thefinding}{\finding@prefix\arabic{finding}}
+\newcommand{\findinggroup}[1]{\gdef\finding@prefix{#1}\setcounter{finding}{0}}
+\newcommand{\finding}[3][]{%
+  \stepcounter{finding}%
+  \protected@edef\finding@id{\thefinding}% fix the ID now: "S3", not a counter reference
+  \edef\finding@next{\noexpand\finding@sect{\finding@id}}%
+  \finding@next{#1}{#2}{#3}}
+% #1 ID (already expanded), #2 short title (may be empty), #3 title, #4 slug.
+\newcommand{\finding@sect}[4]{%
+  \if\relax\detokenize{#2}\relax
+    \subsection{#1. #3}%
+  \else
+    \subsection[#1. #2]{#1. #3}%
+  \fi
+  \def\@currentlabel{#1}% \ref prints the ID; hyperref links it to this subsection
+  \label{f:#4}}
+\makeatother
+% ---------------------------------------------------------------------
+
+\title{Uncredited precedence in\\ ``A spectral gap throughout the high-temperature
+Sherrington--Kirkpatrick phase''\\[4pt]
+\large (OpenAI, September 24, 2026)}
+\date{October 8, 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Summary of findings}
+
+Grades and categories are defined in Section~\ref{sec:about}. Locations refer
+to the preprint's compiled numbering. ``Credited?'' names the earlier work and
+says what the preprint cites for the content in question.
+
+\begin{center}\footnotesize
+\begin{xltabular}{\linewidth}{@{}l l >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{0.2\linewidth} >{\raggedright\arraybackslash}p{0.25\linewidth}@{}}
+\toprule
+ID & Grade & Technique or result & In the preprint & Credited?\\
+\midrule
+\endhead
+\ref{f:fmm-cfm-kac-rice} & \grade{Strong} &
+Kac--Rice complexity of TAP critical points in planted SK: gradient
+density, determinant rate, relative-entropy rate with its zero at the Bayes
+point; the count restricted to Hessian failures, with a Sudakov--Fernique
+bound on the smallest Hessian eigenvalue &
+\S5.1--5.4, (5.4)--(5.9), Lemmas~5.3--5.5 (pp.~28--38); Lemmas~3.2--3.5;
+Lemmas~4.1--4.2 &
+Fan--Mei--Montanari 2018
+\cite{FanMeiMontanari2018-TAPFreeEnergyVariationalInference};
+Celentano--Fan--Mei 2021
+\cite{CelentanoFanMei2021-LocalConvexityTAPZ2Sync}: not cited\\
+\addlinespace
+\ref{f:huang-sellke-approx-crit} & \grade{Strong} &
+Approximate-critical-point control from an annealed Kac--Rice bound:
+smoothing, a local lower bound in which the volume cancels the determinant,
+and Markov &
+Lemma~5.6 and the exclusion step in the proof of Proposition~5.1
+(pp.~35--38) &
+Huang--Sellke 2023
+\cite{HuangSellke2023-StrongTopologicalTrivialization}: not cited;
+presented as the preprint's own\\
+\midrule
+\ref{f:chatterjee-stein} & \grade{Partial} &
+Stein identity for $\tanh$ under a cosh-tilted Gaussian, used to compare a
+field with an Onsager-corrected field &
+(6.8)--(6.9) (p.~45); Lemma~6.5 (pp.~53--54); proof of Proposition~7.2
+(p.~57) &
+Chatterjee 2007 \cite{Chatterjee2007-SpinGlassesSteinsMethod}: not cited\\
+\addlinespace
+\ref{f:eams-framework} & \grade{Partial} &
+Planted SK law under Gaussian observation and its likelihood transfer;
+state-evolution fixed point &
+(5.4) (p.~28); \S5.4 (pp.~39--40); Lemma~4.2 (p.~25) &
+El~Alaoui--Montanari--Sellke 2022
+\cite{ElAlaouiMontanariSellke2022-SamplingSKAlgorithmicSL}: cited in \S1.1
+as a parallel use, not at the points of use\\
+\addlinespace
+\ref{f:eag-roadmap} & \grade{Partial} &
+Route to a Poincar\'e inequality through covariance bounds at
+stochastic-localization fields via the inverse TAP Hessian &
+Proposition~5.1, Proposition~7.2, \S2 &
+El~Alaoui--Gaitonde 2022 \cite{ElAlaouiGaitonde2022-CovarianceMatrixSK}:
+cited only for a different result (its Theorem~1.1)\\
+\addlinespace
+\ref{f:hmrw-stopped-sl} & \grade{Partial} &
+Stopped stochastic localization with exceptional paths &
+\S2.2 and \S2.4 (pp.~7--10); Corollary~5.2 &
+Huang--Mohanty--Rajaraman--Wu 2024
+\cite{HuangEtAl2024-WeakPoincareSimulatedAnnealing}: not cited; Chen--Eldan
+cited for the version without exceptional paths\\
+\addlinespace
+\ref{f:pha-uniform-diagonal} & \grade{Partial} &
+Resolvent diagonals controlled uniformly over all diagonal deformations by
+metric projection, regular increments, concentration and chaining &
+Lemma~3.1, \S3.3 (pp.~17--19) &
+Davies--Lee--Sandhu--Shi 2026
+\cite{DaviesEtAl2026-PotentialHessianAscentIIISampling}: not cited\\
+\addlinespace
+\ref{f:dlss-weak-poincare} & \grade{Partial} (B) &
+Weak Poincar\'e inequality for SK Glauber dynamics at $\beta<1/2$ via
+approximate stochastic localization &
+Theorem~1.1 (p.~3); \S1.1 (p.~4) &
+Davies--Lee--Sandhu--Shi 2026 \cite{DaviesEtAl2026-WeakPoincareApproxSL}:
+not cited; the later cited Wang and Boban--Li--Oveis Gharan both discuss
+and imply it\\
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\clearpage
+
+\tableofcontents
+
+\section{About this document}\label{sec:about}
+
+\paragraph{The preprint.}
+The preprint is \emph{A spectral gap throughout the high-temperature
+Sherrington--Kirkpatrick phase}, dated September~24, 2026, with author line
+``OpenAI'' \cite{OAI-SpectralGap}. It is one of 719 manuscripts in the
+\texttt{openai/math} release, all produced by an unreleased internal OpenAI
+model. It proves that for every fixed inverse temperature $0<\beta<1$, the
+zero-field Gaussian SK Gibbs measure satisfies, with probability tending to one
+over the disorder, a Poincar\'e inequality for the unscaled heat-bath
+Dirichlet form with a constant depending only on $\beta$.
+Section~\ref{sec:overview} summarizes the paper and fixes the notation used
+throughout this document. The preprint cites no other preprint from the same
+release.
+
+\paragraph{What counts as a finding.}
+This document reports only:
+\begin{description}[leftmargin=1.5em,font=\normalfont\bfseries]
+\item[(A) Unattributed reuse.] A technique, construction, identity, estimate or
+body of theory developed in an identifiable earlier paper is reused without
+attribution: either nothing is cited, or the citation given covers something
+else or something narrower than what is reused.
+\item[(B) Same-problem precedence.] Earlier, uncited partial progress on the
+same problem, such as a weaker or special-case version of a statement the
+preprint proves.
+\item[(C) Structural.] A published result would replace or substantially
+shorten a large part of the argument, or contradicts a claim the preprint
+makes about why part of the argument is necessary.
+\end{description}
+Textbook tools and ``should cite the original rather than a later source''
+quibbles are not reported.
+
+\paragraph{Grades.}
+\begin{description}[leftmargin=1.5em,font=\normalfont\bfseries]
+\item[\grade{Strong}.] The earlier technique is reused essentially intact
+without credit for that content. This holds even when the preprint combines it
+with new ingredients or applies it in a new setting. New ingredients are
+listed as differences and do not lower the grade.
+\item[\grade{Partial}.] Only a fragment of the earlier technique is reused, or
+the credit is present but only indirectly.
+\end{description}
+Same-problem findings (B) are graded by how close the earlier result comes to
+the preprint's: \grade{Strong} when it proves essentially the same statement,
+\grade{Partial} when it is a weaker, special-case or partial-range version.
+Structural findings (C) are graded by impact instead:
+\begin{description}[leftmargin=1.5em,font=\normalfont\bfseries]
+\item[\grade{Major}.] A route, a section, or a component of the main theorem
+becomes a citation.
+\item[\grade{Moderate}.] A multi-page chain of lemmas becomes a citation.
+\end{description}
+Grades measure how completely the \emph{earlier technique} is reused, not how
+much of the preprint's argument it accounts for. Credit counts as indirect
+only when the preprint cites a source \emph{for that specific content}, and
+the cited location itself covers or credits the original. Citing the same
+paper nearby for a different result does not count. This matters because the
+preprint states that ``we prove the model-specific estimates in the sections
+below'' (\S1.2, p.~5), and most of its later sections contain no citations.
+
+\paragraph{How to check a claim.}
+Locations in the preprint use its compiled numbering (sections, equations,
+theorems, lemmas, propositions) and, where helpful, page numbers in its PDF.
+Locations in other sources give the theorem, equation and page of the version
+listed in the bibliography. Each finding ends with a short checklist of the
+passages to put side by side.
+
+\paragraph{Provenance.}
+This document was generated by LLM agents (Claude Opus~5.5) running the
+\texttt{precedence-review} skill (\texttt{jnshi/math-lineage}, commit
+\texttt{d1ea740}), makes no claim of completeness, and has not been vetted
+by a human. The job was
+run by Jonathan Shi, who also supplied the leads behind
+finding~\ref{f:pha-uniform-diagonal}. Jonathan Shi in part designed the skill
+around this preprint and makes no claim of impartiality.
+\section{The preprint in brief, and notation}\label{sec:overview}
+
+\paragraph{Model and theorem.}
+Fix $0<\beta<1$ and write $j=\beta^2$. The disorder $J$ is a symmetric
+$n\times n$ matrix with zero diagonal and independent entries
+$J_{ik}\sim N(0,j/n)$ for $i<k$. For a field $h\in\R^n$, the Gibbs law on
+$\{-1,1\}^n$ is
+\[
+ \mu_h(x)\propto\exp\Bigl\{\tfrac12 x^{\mathsf T}Jx+h^{\mathsf T}x\Bigr\},
+\]
+so $\mu_0$ is the zero-field SK model. With $P_i^h$ the conditional
+expectation under $\mu_h$ given all spins but the $i$th, the unscaled
+heat-bath Dirichlet form is
+$\D_h(f)=\sum_{i}\E_{\mu_h}(f-P_i^hf)^2$
+\ploc{(1.1)}{introduction.tex:22--24}. The main result
+\ploc{(Theorem~1.1)}{introduction.tex:33--42} is that, with probability
+tending to one over $J$, $\Var_{\mu_0}(f)\le C_\beta\D_0(f)$ for every
+$f:\{-1,1\}^n\to\R$. The conditional mean and variance of $x_i$ under
+$\mu_{h}$ are $m^1_i=\tanh h^1_i$ and $v^1_i=1-(m^1_i)^2$, where
+$h^1=h+Jx$ is the local field \ploc{(\S1.2)}{introduction.tex:152--161}.
+For a vector $v$, $\langle v\rangle=n^{-1}\sum_iv_i$.
+
+\paragraph{Route of the proof.}
+A spin sample is observed in Gaussian noise,
+\[
+ X\sim\mu_0,\qquad Y(t)=tX+B(t),\qquad 0\le t\le T,
+\]
+with $B$ a standard Brownian motion \ploc{(1.4)}{introduction.tex:198--201};
+given the observations up to time $t$, the spin law is $\mu_{Y(t)}$. This is
+stochastic localization in its Gaussian-channel form.
+Section~2 of the preprint transfers three inputs back to $\mu_0$:
+\begin{enumerate}
+\item stability of the TAP field equation at every field visited by the
+observation path, except on an event of probability $e^{-an}$
+\ploc{(Proposition~5.1, built on \S\S3--5)}{stability.tex:35--60};
+\item at such stable fields, a directional covariance bound
+$\norm{\Cov_{\mu_h}(G,x)}^2\le C(\Var_{\mu_h}(G)+\D_h(G))$
+\ploc{(Proposition~7.2)}{consequences.tex:89--98} and a bound on the mean of
+$x$ under $f^2\mu_h$ \ploc{(Proposition~7.3)}{consequences.tex:198--243},
+both obtained from finite recursions and residual identities
+\ploc{(\S6)}{residuals.tex};
+\item a terminal gap $\Var_{\mu_{Y(T)}}f\le2\D_{Y(T)}(f)$ at a large fixed
+time $T$ \ploc{(Proposition~8.3)}{terminal.tex:334--346}.
+\end{enumerate}
+
+\paragraph{The field map and stability.}
+Fields are written in the coordinates $y=\operatorname{arctanh}m$. Put
+$m(y)=\tanh y$, $q(y)=\langle m(y)^2\rangle$, $b(y)=1-q(y)$ and
+$V_y=\operatorname{diag}(1-m(y)^2)$. The field map
+\ploc{(5.1)}{stability.tex:10--19} is
+\[
+ F_{J,h_0}(y)=y-h_0+\bigl(jb(y)I-J\bigr)m(y),
+\]
+whose zeros are the TAP equations with Onsager term $jb\,m$. For a
+nonnegative diagonal matrix $A$, the stability matrix
+\ploc{(5.2)}{stability.tex:24--28} is
+\[
+ \mathsf H_J(y,A)=I+A^{1/2}\Bigl(jb(y)I-J-\tfrac{2j}{n}m(y)m(y)^{\mathsf T}\Bigr)A^{1/2};
+\]
+at $A=V_y$ it is $V_y^{1/2}\,\mathcal H(m)\,V_y^{1/2}$, where
+$\mathcal H(m)=\operatorname{diag}(1/(1-m^2))+j(1-q)I-J-\tfrac{2j}{n}mm^{\mathsf T}$
+is the Hessian of the negative TAP free energy. ``Stable'' means that every
+approximate zero, $\norm{F_{J,h_0}(y)}\le2\rho_0\sqrt n$, has
+$\mathsf H_J(y,A)\succ cI$ for all diagonal $A$ near $V_y$
+\ploc{(5.3)}{stability.tex:45--56}.
+
+\paragraph{The stability integral.}
+Stability is proved under the planted law
+\ploc{(5.4)}{stability.tex:112--116}
+\[
+ \widetilde J=W+\tfrac jn\one\one^{\mathsf T},\qquad h_0=t\one+\sqrt t\,g,
+\]
+with $W$ a GOE matrix of scale $j$ and $g$ standard Gaussian, using the
+smoothed integral \ploc{(5.5)}{stability.tex:120--127}
+\[
+ I_{t,\sigma}(\mathcal E)=(2\pi\sigma^2)^{-n/2}\int
+ \one_{\{(y,\widetilde J)\in\mathcal E\}}
+ \exp\Bigl\{-\frac{\norm{F_{\widetilde J,h_0}(y)}^2}{2\sigma^2}
+ +\frac{njb(y)^2}{2}\Bigr\}\,dy .
+\]
+Its exponential rate is a function of the empirical law $P$ of the
+coordinates of $y$: with $M=\E_P\tanh$, $q=\E_P\tanh^2$, $b=1-q$,
+$d=t+jM$, $s=t+\sigma^2+jq$, $S=s+jq$ and $a=\E_P[(y-d)\tanh y]$, the rate is
+$\psi-\KL(P\Vert N(d,s))$ with $\psi=j(a-sb)^2/(2sS)$
+\ploc{(5.6)--(5.9)}{stability.tex:136--224}. The preprint's scalar entropy
+inequality \ploc{(Lemma~4.1)}{entropy.tex:16--30} states
+$\KL(P\Vert N(d,s))\ge\psi$, with equality only at $P=N(d,s)$; the relevant
+equality law is $N(s_*(t),s_*(t))$, where $s_*=t+j\,\E_{N(s_*,s_*)}\tanh$
+\ploc{(Lemma~4.2)}{entropy.tex:220--243}.
+
+\paragraph{The recursion.}
+At a field $h_0$, starting from a spin sample $x\sim\mu_{h_0}$, the preprint
+runs \ploc{(6.1)}{residuals.tex:36--43}
+\[
+ m^0=x,\quad b_0=0,\quad m^l=\tanh h^l,\quad b_l=\langle1-(m^l)^2\rangle,\quad
+ h^{l+1}=h_0+Jm^l-jb_lm^{l-1},
+\]
+with residuals $R_l=m^{l-1}-m^l$, through a fixed finite depth. Spin-flip
+derivatives are $d_if(x)=(f(x)-f(x^{(i)}))/(2x_i)$, where $x^{(i)}$ flips
+the $i$th spin, and $\norm G_*^2=\E_{\mu_{h_0}}G^2+\D_{h_0}(G)$
+\ploc{(\S1.2)}{introduction.tex:143--161}.
+
+% IDs are assigned by LaTeX in the order of the \input lines (S1, S2, ... after
+% \findinggroup{S}). Withdrawing or reordering a finding is just deleting or
+% moving its \input line.
+\section{Strong findings}\label{sec:strong}
+\findinggroup{S}
+% =====================================================================
+% Finding fmm-cfm-kac-rice (Strong): Fan--Mei--Montanari's Kac--Rice
+% complexity computation for TAP critical points in planted SK, with
+% Celentano--Fan--Mei's restricted count of Hessian failures (including
+% their Sudakov--Fernique bound for the smallest Hessian eigenvalue).
+% =====================================================================
+\finding[Kac--Rice complexity of TAP critical points]{The Kac--Rice complexity method for TAP critical points in planted SK, with the count restricted to Hessian failures}{fmm-cfm-kac-rice}
+
+\paragraph{Summary.}
+The stability proposition of the preprint is proved with the Kac--Rice
+computation of Fan, Mei and Montanari (``FMM'')
+\cite{FanMeiMontanari2018-TAPFreeEnergyVariationalInference} for critical
+points of the TAP free energy in planted SK: the gauge $x=\one$, the TAP
+gradient, its density from $\Cov(Wm)$, the determinant rate
+\sloc{FanMeiMontanari2018-TAPFreeEnergyVariationalInference}{Prop.~3.2, (3.5), p.~9},
+and the relative-entropy rate
+\sloc{FanMeiMontanari2018-TAPFreeEnergyVariationalInference}{Prop.~3.5 and \S3.4, pp.~10--11},
+which vanishes at the Bayes point
+\sloc{FanMeiMontanari2018-TAPFreeEnergyVariationalInference}{Prop.~5.2, p.~22}.
+As Celentano, Fan and Mei (``CFM'') do
+\sloc{CelentanoFanMei2021-LocalConvexityTAPZ2Sync}{Lemmas~4.7--4.9, Cor.~4.10, pp.~17--18},
+it restricts the count to Hessian failures near the Bayes law, and it uses
+CFM's Sudakov--Fernique comparison
+\sloc{CelentanoFanMei2021-LocalConvexityTAPZ2Sync}{Lemma~4.1, p.~15} (which
+CFM apply to the smallest eigenvalue of the TAP Hessian) as its bulk input. In the preprint this is
+\ploc{\S5.1--\S5.2 and the bound (5.25) (pp.~28--37)}{stability.tex:107--700, 864--906},
+with \ploc{Lemma~3.5 (p.~20)}{matrices.tex:721--741} for the determinant and
+\ploc{Lemma~3.2 (p.~12)}{matrices.tex:145--236} for the comparison; at
+$t=\sigma=0$ its scalar rate is, term by term, FMM's variational functional
+of $\rho$ from \S3.4, whose constrained supremum is their complexity.
+Neither FMM nor CFM is cited, and the words Kac, Rice and complexity do
+not occur. The only citation on TAP-Hessian positivity is Celentano
+\cite{Celentano2022-SudakovFerniquePostAMPTAPConvexity}, for local convexity
+of the El Alaoui--Montanari--Sellke TAP free energy near late AMP iterates
+\ploc{(\S1.1, p.~4)}{introduction.tex:118--125}; that paper proves this
+without the Kac--Rice formula and credits CFM for the analogous result for
+the FMM free energy and for key steps
+\sloc{Celentano2022-SudakovFerniquePostAMPTAPConvexity}{pp.~4--5}. Lemma~3.2
+presents the comparison as a standard Gaussian fact with only Vitale cited. Grade: \grade{Strong}, because FMM's computation is
+reproduced at the level of equations and CFM's restricted count at the level
+of statements, without credit.
+
+\paragraph{Setup.}
+Section~\ref{sec:overview} defines $F$, $\mathsf H_J(y,A)$, $V_y$, the
+planted law (5.4), the integral $I_{t,\sigma}$ (5.5) and the scalar
+parameters $M,q,b,d,s,S,a,\psi$ (we write $a$ for the preprint's
+$a_y=\langle(y-d\one)m\rangle$). The finding also uses:
+\begin{itemize}
+\item \emph{Gaussian reduction}
+\ploc{(Lemma~5.3, (5.8), pp.~28--29)}{stability.tex:157--203}. With
+$z=y-d\one+jbm$ and $\varphi_{d,s}$ the $N(d,s)$ density,
+\[
+ \E I_{t,\sigma}(\mathcal E)=\int\sqrt{s/S}\,\prod_i\varphi_{d,s}(y_i)\,e^{n\psi}\,
+ \P\bigl((y,\widetilde J)\in\mathcal E\,\big|\,Wm+\sqrt{t+\sigma^2}\,g'=z\bigr)\,dy .
+\]
+By Lemma~4.1 the unrestricted rate $\psi-\KL(P\Vert N(d,s))$ is $\le0$
+\ploc{(5.9), p.~29}{stability.tex:205--224}; by
+\ploc{Lemma~4.2}{entropy.tex:220--243}, equality at $\sigma=0$ holds only on
+the curve $P_t=N(s_*(t),s_*(t))$.
+\item \emph{Witness set} \ploc{(\S5.4, p.~37)}{stability.tex:881--890}: for
+$t\ge t_0$, $E_t(W)$ is the set of $y$ for which some diagonal
+$0\le A\le(1+\eta)I$ with $\norm{A-V_y}_{\mathrm F}\le\epsilon_*\sqrt n$ has
+$\lambda_{\min}(\mathsf H_{\widetilde J}(y,A))\le c_E$.
+\item \emph{Determinant} \ploc{(Lemma~3.5, (3.26), p.~20)}{matrices.tex:721--741}:
+for each fixed $0<\gamma\le\gamma_0(j,\varepsilon)$, with probability
+$1-Ce^{-cn}$, simultaneously over diagonal $0\le V\le I$ and $E$ of bounded
+rank and norm, $L=I+(jbI-W)V+E$ with
+$b=n^{-1}\Tr V$ has $n^{-1}\log\det(L^{\mathsf T}L+\gamma I)\le jb^2+\varepsilon$;
+it is applied to $L=F'_{\widetilde J,h_0}(y)$
+\ploc{(p.~38)}{stability.tex:938--957}.
+\item \emph{Bulk comparison}
+\ploc{(Lemma~3.2, (3.8), p.~12)}{matrices.tex:145--159}: for deterministic
+diagonal $0\le A\le a_+I$, $ja_+^2<1$, $\chi_A=n^{-1}\Tr A$,
+$S_A(\tau;W)=I+\tau^2j\chi_AA-\tau A^{1/2}WA^{1/2}\succeq c_0I$ for all
+$\tau\in[0,1]$ with probability $1-Ce^{-cn}$. At $\tau=1$, $A=V_y$ it is
+$V_y^{1/2}(\cdot)V_y^{1/2}$ of the TAP Hessian minus its rank-one terms.
+\end{itemize}
+
+\paragraph{Role in the argument.}
+\ploc{Proposition~5.1 (p.~27)}{stability.tex:35--60}, input~1 in
+Section~\ref{sec:overview}, says that along the observation path every
+approximate zero of $F$ has $\mathsf H_J(y,A)\succ cI$ for all nearby $A$.
+Its proof rests on $\E I_{t,\sigma}(E_t)\le e^{-a_0n}$
+\ploc{(5.25), p.~37}{stability.tex:891--906}, which is the Kac--Rice count
+of this finding: the scalar rate excludes everything outside a neighborhood
+of $P_t$ \ploc{(Lemma~5.4, pp.~29--31)}{stability.tex:226--389}, and near
+$P_t$ the conditional Hessian fails with probability at most $e^{-a_*n}$
+\ploc{(Lemma~5.5, pp.~31--35)}{stability.tex:399--700}. Passing from (5.25)
+to approximate zeros (Gaussian smoothing and the local-volume
+Lemma~5.6) is finding~\ref{f:huang-sellke-approx-crit}, where Lemma~3.5's
+rate cancels the weight $e^{njb^2/2}$; the planted law and its transfer
+are finding~\ref{f:eams-framework}.
+
+\paragraph{The earlier technique.}
+FMM and CFM study $Y=(\lambda/n)xx^{\mathsf T}+W_{\mathrm F}$ with
+$x\in\{\pm1\}^n$ and $W_{\mathrm F}$ a GOE matrix with off-diagonal variance
+$1/n$, and the TAP free energy at inverse temperature $\beta$; CFM take the
+Bayes (Nishimori) case $\beta=\lambda>1$. Write
+$Q=\norm m^2/n$ and $M=\ip{\one}{m}/n$. We denote FMM's
+scalar auxiliary variable (their $y$) by $\vartheta$, their
+$A(\rho)=\int x\operatorname{arctanh}x\,\rho(dx)$ by $a_{\mathrm F}$, and
+their $L(m)$ by $L_{\mathrm F}(m)$.
+\begin{enumerate}
+\item \emph{Gauge and derivatives}
+\sloc{FanMeiMontanari2018-TAPFreeEnergyVariationalInference}{\S3, (3.2)--(3.3), p.~8}:
+by sign symmetry $x=\one$, and
+\begin{align*}
+ g_n(m)&=\operatorname{arctanh}(m)-\tfrac{\beta\lambda}{n}\ip{\one}{m}\one-\beta W_{\mathrm F}m+\beta^2(1-Q)m,\\
+ H_n(m)&=\operatorname{diag}\bigl(1/(1-m^2)\bigr)-\tfrac{\beta\lambda}{n}\one\one^{\mathsf T}-\beta W_{\mathrm F}+\beta^2(1-Q)I-\tfrac{2\beta^2}{n}mm^{\mathsf T}.
+\end{align*}
+\item \emph{Kac--Rice integrand.}
+$\E\,\mathrm{Crit}_n\le\int\E\bigl[|\det H_n(m)|\,\big|\,g_n(m)=0\bigr]p_m(0)\,dm$
+\sloc{FanMeiMontanari2018-TAPFreeEnergyVariationalInference}{Prop.~3.1, (3.4), p.~9},
+with
+$\E[|\det H_n(m)|\mid g_n(m)=0]\le e^{nL_{\mathrm F}(m)+o(n)}$,
+$L_{\mathrm F}(m)=\tfrac{\beta^2}{2}(1-Q)^2+\tfrac1n\sum_i\log\tfrac1{1-m_i^2}$
+\sloc{FanMeiMontanari2018-TAPFreeEnergyVariationalInference}{Prop.~3.2, (3.5), p.~9},
+proved in \S4 by free convolution. The gradient density uses
+$W_{\mathrm F}m\overset d=Q^{1/2}v+\beta^{-1}\vartheta m$ with
+independent $v\sim N(0,I_n)$ and $\vartheta\sim N(0,\beta^2/n)$; $p_m(0)$
+integrates over $\vartheta$
+\sloc{FanMeiMontanari2018-TAPFreeEnergyVariationalInference}{Lemma~3.3, p.~9}.
+\item \emph{Rate.} Sanov and Varadhan give
+\[
+ \limsup_n\tfrac1n\log\E\,\mathrm{Crit}_n\le\sup_\rho\sup_\vartheta
+ \bigl\{J(\rho,\vartheta)-H(\rho|\pi_0)-\vartheta^2/(2\beta^2)+\log2\bigr\},
+\]
+where $J$ collects $L_{\mathrm F}$ and the density of Lemma~3.3
+\sloc{FanMeiMontanari2018-TAPFreeEnergyVariationalInference}{Cor.~3.4, (3.6), pp.~9--10; Prop.~3.5, p.~10; App.~B, pp.~32--35}.
+The supremum over $\vartheta$ is computed in closed form
+\sloc{FanMeiMontanari2018-TAPFreeEnergyVariationalInference}{\S3.4, p.~11}:
+\begin{equation*}
+ \sup_\vartheta\bigl[\cdots\bigr]
+ =\frac1{4\beta^2}\Bigl(\beta^2(1-q)+\frac{\beta\lambda\varphi^2}{q}-\frac{a_{\mathrm F}}{q}\Bigr)^2
+ -H(\rho\,|\,\rho_{\varphi,q}),
+\end{equation*}
+with $(q,\varphi,a_{\mathrm F})$ the moments of $\rho$ and $\rho_{\varphi,q}$
+(density $h_{\varphi,q}$) the image of $N(\beta\lambda\varphi,\beta^2q)$
+under $\tanh$.
+\item \emph{Bayes point}
+\sloc{FanMeiMontanari2018-TAPFreeEnergyVariationalInference}{Prop.~5.2, p.~22; proof p.~24}:
+the complexity $S_\star$ vanishes at $(q_\star,\varphi_\star,a_\star,e_\star)$,
+using $\xi\sim N(\lambda^2q_\star,\lambda^2q_\star)$, the identity
+$\E\tanh\xi=\E\tanh^2\xi$ and $a_\star=\E\,\xi\tanh\xi$; for
+$\lambda\ge\lambda_0$,
+$S_\star\le-c(\lambda)[(a-a_\star)^2+(q-q_\star)^2+(\varphi-\varphi_\star)^2+(e-e_\star)^2]$
+whenever $|q-q_\star|,|\varphi-\varphi_\star|\le c_0/\lambda^2$ ($a,e$ free).
+\end{enumerate}
+CFM restrict the count to Hessian failures near the Bayes law, with
+$g_n,H_n$ at $\beta=\lambda$ and a threshold $t_{\mathrm H}$:
+\begin{itemize}
+\item \emph{Localization}
+\sloc{CelentanoFanMei2021-LocalConvexityTAPZ2Sync}{Lemma~4.7, p.~17; proof pp.~41--43}:
+critical points with overlaps, entropy and free energy near the Bayes values lie in
+$\mathcal D_\eta$, where the empirical law of $\operatorname{arctanh}m_i$ is
+$W_2$-within $\eta$ of $N(\lambda^2q_\star,\lambda^2q_\star)$; the proof
+reduces to that product density and a $W_2$ deviation bound.
+\item \emph{Restricted Kac--Rice}
+\sloc{CelentanoFanMei2021-LocalConvexityTAPZ2Sync}{Lemma~4.8, p.~17}: for
+$\mathcal C=\{m\in T:g_n(m)=0,\ \ell(m,W)+U<t_{\mathrm H}\}$ with
+$U\sim\mathrm{Unif}[-c,c]$,
+$\E|\mathcal C|\le\int_T\E\bigl[|\det H_n(m)|\,\one\{\ell(m,W)+U<t_{\mathrm H}\}\,\big|\,g_n(m)=0\bigr]p_{g_n(m)}(0)\,dm$.
+\item \emph{Conditional Hessian}
+\sloc{CelentanoFanMei2021-LocalConvexityTAPZ2Sync}{Lemma~4.9, p.~18; Lemma~B.2, p.~43}:
+with
+$\ell_\varepsilon^+(m)=\inf\{\lambda_{\min}H_n(u):\norm{u-m}\le\sqrt{\varepsilon n}\}$,
+every $m\in\mathcal D_\eta$ has
+$\P[\ell_\varepsilon^+(m)<3t_{\mathrm H}\mid g_n(m)=0]\le e^{-c_1n}$
+\sloc{CelentanoFanMei2021-LocalConvexityTAPZ2Sync}{proof of Cor.~4.10, p.~50}. The lower bound on
+its conditional mean comes from the comparison
+\sloc{CelentanoFanMei2021-LocalConvexityTAPZ2Sync}{Lemma~4.1, p.~15; proof App.~A.4, p.~33}
+\[
+ \E\sup_x\bigl[v(x)^{\mathsf T}W_{\mathrm F}v(x)+f(x)\bigr]
+ \le\E\sup_x\Bigl[\tfrac2{\sqrt n}\norm{v(x)}\ip{\zeta}{v(x)}+f(x)\Bigr],
+ \qquad\zeta\sim N(0,I_n),
+\]
+with the TAP diagonal and Onsager term in $f$.
+\item \emph{Assembly}
+\sloc{CelentanoFanMei2021-LocalConvexityTAPZ2Sync}{proof of Cor.~4.10, p.~50}:
+by Cauchy--Schwarz the restricted count is at most
+$\int_{\mathcal D_\eta}\E[|\det H_n|^2\mid g_n=0]^{1/2}p(0)\,dm\le e^{c_1n/4}$
+(Lemma~B.3, p.~49, from FMM's zero at the Bayes point) times
+$\sup_m\P[\ell_\varepsilon^+<3t_{\mathrm H}\mid g_n=0]^{1/2}\le e^{-c_1n/2}$.
+\end{itemize}
+
+\paragraph{Correspondence.}
+On the Nishimori line $\lambda=\beta$, $j=\beta^2$, $W=\beta W_{\mathrm F}$
+and $\beta\lambda=j$; the preprint's $y$ is $\operatorname{arctanh}m$, and
+its side-information field is $h_0=t\one+\sqrt t\,g$.
+
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.25cm}%
+>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Object & Preprint \cite{OAI-SpectralGap} & FMM / CFM\\
+\midrule
+\endfirsthead
+\toprule
+Object & Preprint \cite{OAI-SpectralGap} & FMM / CFM\\
+\midrule
+\endhead
+Disorder
+& $\widetilde J=W+\frac jn\one\one^{\mathsf T}$ \ploc{(5.4), p.~28}{stability.tex:109--118}
+& $\beta Y$ at $x=\one$ (FMM p.~8; CFM Lemmas~4.6--4.8)\\
+\addlinespace
+Gradient, Hessian
+& $F_{\widetilde J,h_0}(y)=y-h_0+(jbI-\widetilde J)m$ \ploc{(5.1), p.~26}{stability.tex:10--19};
+$L=F'(y)=I+(jbI-W)V_y-\frac jn\one\one^{\mathsf T}V_y-\frac{2j}n mm^{\mathsf T}V_y$ \ploc{(p.~38)}{stability.tex:938--945}
+& $F=g_n(\tanh y)-h_0$ and $L=H_n(m)V_y$ ((3.2)--(3.3))\\
+\addlinespace
+Gradient law
+& $\Cov(Wm)=jqI+\frac jnmm^{\mathsf T}$; observation noise adds $(t+\sigma^2)I$ \ploc{(proof of Lemma~5.3, p.~28)}{stability.tex:174--186}
+& $\Cov(\beta W_{\mathrm F}m)=\beta^2(QI+mm^{\mathsf T}/n)$ (FMM Lemma~3.3)\\
+\addlinespace
+Determinant
+& weight $e^{njb^2/2}$ in (5.5); Lemma~3.5; ``the determinant rate in Lemma~3.5 matches the weight in (5.5)'' \ploc{(p.~38)}{stability.tex:946--947}
+& $e^{nL_{\mathrm F}(m)}$ (FMM Prop.~3.2); first display below\\
+\addlinespace
+Deterministic equivalent
+& $\E K_{ii}=1+O(n^{-1})$ \ploc{(3.18), p.~16}{matrices.tex:433--436}; $G_A\approx A$ \ploc{(Lemma~3.4, (3.23), p.~19)}{matrices.tex:659--677}
+& at spectral parameter $0$ the Stieltjes fixed-point equation (4.4) has the root $1-Q$, giving resolvent diagonal $1-m_i^2$ (FMM (4.18), Lemma~4.9, p.~19)\\
+\addlinespace
+Product density
+& $\prod_i\varphi_{d,s}(y_i)$, $d=t+jM$, $s=t+\sigma^2+jq$ \ploc{(5.6)--(5.7), p.~28}{stability.tex:136--153}
+& $h_{\varphi,q}$, i.e.\ $N(\beta\lambda\varphi,\beta^2q)$ in $\operatorname{arctanh}$ coordinates (FMM p.~11)\\
+\addlinespace
+Rate
+& $\psi-\KL(P\Vert N(d,s))$; exponent identity in Lemma~5.3 \ploc{(5.9) and p.~29}{stability.tex:187--196, 205--215}
+& FMM \S3.4 display; second display below\\
+\addlinespace
+Large deviations
+& finite cover with Donsker--Varadhan tests against $N(d,s)^{\otimes n}$ \ploc{(proof of Lemma~5.4, (5.10)--(5.11), pp.~30--31)}{stability.tex:270--342}
+& Varadhan upper bound and Sanov w.r.t.\ $\pi_0$ (FMM Prop.~3.5, App.~B)\\
+\addlinespace
+Bayes point
+& equality iff $P=N(d,s)$, where $a=sb$ \ploc{(Lemma~4.1, (4.1), pp.~22--24)}{entropy.tex:16--29, 198--203}; $\E_{N(s,s)}\tanh=\E_{N(s,s)}\tanh^2$ and $P_t=N(s_*,s_*)$ \ploc{(4.10), Lemma~4.2, p.~25}{entropy.tex:220--259}
+& $S_\star=0$ at $\xi\sim N(\lambda^2q_\star,\lambda^2q_\star)$, $\E\tanh\xi=\E\tanh^2\xi$ (FMM Prop.~5.2)\\
+\addlinespace
+Localization
+& weak neighborhood of $P_t$ plus $\langle y^2\one_{\{|y|>R_1\}}\rangle\le\nu$ \ploc{(Lemma~5.4(ii),(iv), pp.~29--31)}{stability.tex:240--262, 365--388}
+& $W_2$-ball $\mathcal D_\eta$ of $N(\lambda^2q_\star,\lambda^2q_\star)$ in $\operatorname{arctanh}m$ (CFM Lemma~4.7)\\
+\addlinespace
+Restricted count
+& $I_{t,\sigma}(E_t)$, with the conditional probability factor in (5.8)
+& CFM Lemma~4.8\\
+\addlinespace
+Hessian failure
+& near $P_t$, conditional failure probability $\le e^{-a_*n}$, simultaneously over $\norm{A-V_y}_{\mathrm F}\le\epsilon_*\sqrt n$ (Lemma~5.5); conditional law (5.12) \ploc{(p.~32)}{stability.tex:437--471}
+& $\P[\ell_\varepsilon^+(m)<3t_{\mathrm H}\mid g_n=0]\le e^{-c_1n}$ on $\mathcal D_\eta$ (CFM Lemma~4.9; proof of Cor.~4.10, p.~50); conditional law CFM Lemma~B.2\\
+\addlinespace
+Bulk comparison
+& $X_p=w^{\mathsf T}Ww$ vs.\ $Y_p=2\sqrt{j/n}\,\norm w\,\zeta^{\mathsf T}w$, $w=A^{1/2}p$, shift $-\tau^2j\chi_A\norm w^2$; increments differ by $\frac{2j}{n}[(\norm w^2-\norm{w'}^2)^2+2(\norm w\norm{w'}-w^{\mathsf T}w')^2]$ \ploc{(Lemma~3.2, p.~13)}{matrices.tex:179--195}; used in Lemma~5.5 \ploc{(pp.~32, 34)}{stability.tex:481--483, 638--639}
+& CFM Lemma~4.1 at GOE scale $j$; App.~A.4 bounds the same increment difference\\
+\addlinespace
+Assembly
+& excluded scalar regions have negative rates; elsewhere $e^{-a_*n}$ times an unrestricted integral $\le e^{\varepsilon n}$ (Lemma~5.4(i)) \ploc{(5.25), p.~37}{stability.tex:891--906}
+& $e^{-c_1n/2}\cdot e^{c_1n/4}$ via Cauchy--Schwarz, Lemma~B.3 (CFM p.~50)\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\noindent\emph{Determinant weight.} At $\lambda=\beta$ the Jacobian of $F$
+factors as $L=H_n(m)V_y$, and $dm=\prod_i(1-m_i^2)\,dy$, so
+\[
+ \det L=\det H_n(m)\prod_i(1-m_i^2),\qquad
+ e^{nL_{\mathrm F}(m)}\,dm
+ =e^{njb^2/2}\prod_i\frac1{1-m_i^2}\cdot\prod_i(1-m_i^2)\,dy
+ =e^{njb^2/2}\,dy ,
+\]
+and Lemma~3.5's bound $\frac1{2n}\log\det(L^{\mathsf T}L+\gamma I)\le\frac{jb^2}2+\frac\varepsilon2$
+is FMM's $L_{\mathrm F}(m)$ minus the Jacobian term. At $t=0$ the center
+$z=y-jM\one+jbm$ of Lemma~5.3 is FMM's $u(m)=g_n(m)+\beta W_{\mathrm F}m$, so
+as $\sigma\to0$ the unrestricted integrand of Lemma~5.3 becomes FMM's bound
+$e^{nL_{\mathrm F}(m)}p_m(0)\,dm$ on the Kac--Rice integrand, written in $y$.
+
+\smallskip\noindent\emph{Rate.} The two closing computations are the same
+simplification, after FMM's supremum over $\vartheta$ and the preprint's exact
+Gaussian integral over the rank-one direction (prefactor $\sqrt{s/S}$):
+\begin{gather*}
+ \text{FMM, p.~11:}\quad
+ \tfrac{\beta^2(1-q)^2}{2}+\tfrac{\beta^2\chi_2^2}{4}+\chi_4
+ =\tfrac1{4\beta^2}\Bigl(\beta^2(1-q)+\tfrac{\beta\lambda\varphi^2}{q}-\tfrac{a_{\mathrm F}}{q}\Bigr)^2,\\
+ \text{Preprint, p.~29:}\quad
+ -\tfrac{Ba}{s}-\tfrac{B^2q}{2s}+\tfrac{j(a+Bq)^2}{2sS}+\tfrac{jb^2}{2}
+ =\tfrac{j(a-sb)^2}{2sS}\qquad(B=jb),
+\end{gather*}
+where $\chi_2,\chi_4$ are FMM's coefficients and $\beta^2(1-q)^2/2$ and
+$jb^2/2$ are the determinant terms. At
+$t=\sigma=0$ and $\lambda=\beta$: $\varphi=M$, $d=jM=\beta\lambda\varphi$,
+$s=jq$, $S=2jq$ and $a=a_{\mathrm F}-jM^2$, so
+\[
+ \psi=\frac{j(a-sb)^2}{2sS}=\frac{(a_{\mathrm F}-j\varphi^2-jq(1-q))^2}{4jq^2}
+ =\frac1{4\beta^2}\Bigl(\beta^2(1-q)+\frac{\beta\lambda\varphi^2}{q}-\frac{a_{\mathrm F}}{q}\Bigr)^2,
+\]
+and $\KL(P\Vert N(jM,jq))=H(\rho\,|\,\rho_{\varphi,q})$ because relative
+entropy is invariant under the bijection $\tanh$ ($\rho$ is the law of
+$\tanh y$ under $P$). The preprint's rate is this functional with the
+reference Gaussian shifted by $t$ in mean and $t+\sigma^2$ in variance (so
+$S=s+jq$ replaces $2jq$).
+
+\paragraph{What is new in the preprint.}
+\begin{itemize}
+\item \emph{Side information below the threshold.} FMM and CFM have no
+external field. The field $h_0=t\one+\sqrt t\,g$ moves the Bayes law to
+$N(s_*(t),s_*(t))$ with $s_*(t)>0$ for $t>0$, so the count is nontrivial for
+$j<1$, where without a field $q_\star=0$
+\sloc{FanMeiMontanari2018-TAPFreeEnergyVariationalInference}{Prop.~5.5, p.~23}.
+\item \emph{A global sharp sign.} Lemma~4.1 gives
+$\KL(P\Vert N(d,s))\ge j(a-sb)^2/(2sS)$ for every $P$, every $s\ge jq$ and
+every $0<j<1$, with equality only at $N(d,s)$, by the monotone transport
+$y\mapsto y-u\tanh y$ and a Gaussian second-moment comparison. FMM's
+negativity is local and needs $\lambda\ge\lambda_0$ large; CFM localize
+first instead of proving a sign.
+\item \emph{The determinant rate re-proved} (Lemma~3.5) by integrating
+loop equations in the coupling $\tau\in[0,1]$, with $\gamma$-regularization,
+simultaneously over all diagonals $V$ and finite-rank $E$, in place of FMM's
+free-convolution route at fixed $m$.
+\item \emph{Conditional-Hessian positivity re-proved} (Lemma~5.5):
+whitening by $S_A$, Gram entries from Lemma~3.4, and an explicit
+$3\times3$ Gram matrix with Schur-complement determinant
+$(d_0+2g_1)(d_0+g_1)^2>0$ \ploc{(5.16)--(5.17), pp.~33--34}{stability.tex:549--587},
+in place of CFM's Sudakov--Fernique variational formula; Lemma~3.2 itself
+is unconditional, along $\tau\in[0,1]$, with a one-line scalar reduction.
+\item \emph{Perturbed diagonals}: positivity over a Frobenius ball of
+diagonals $A$ around $V_y$, where CFM use a ball of points $u$.
+\item \emph{Tail localization by an exponential tilt} (Lemma~5.4(iv)) in
+place of CFM's $W_2$ deviation bound; no Cauchy--Schwarz, as the
+determinant enters as a deterministic weight.
+\item \emph{Uniformity in $t\in[0,T]$}: uniform rates, a
+small-time margin \ploc{(5.23), p.~37}{stability.tex:842--862} and a time
+mesh \ploc{(pp.~38--39)}{stability.tex:997--1020}.
+\end{itemize}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item \emph{Rate.} \ploc{(5.6)--(5.7), p.~28}{stability.tex:136--153}, the
+exponent identity in \ploc{the proof of Lemma~5.3, p.~29}{stability.tex:187--196}
+and \ploc{(5.9), p.~29}{stability.tex:205--215}, against FMM Lemma~3.3
+(p.~9) and the \S3.4 display (p.~11): substitute $s=jq$, $S=2jq$,
+$a=a_{\mathrm F}-j\varphi^2$ as above.
+\item \emph{Weight.} \ploc{(5.5), p.~28}{stability.tex:119--131}, the
+display of $L$ and the remark on the determinant rate
+\ploc{(p.~38)}{stability.tex:938--947}, and
+\ploc{Lemma~3.5, p.~20}{matrices.tex:721--741}, against FMM (3.3) (p.~8)
+and Prop.~3.2 (p.~9): check $L=H_n(m)V_y$ and the Jacobian identity.
+\item \emph{Bayes point.} The equality case of
+\ploc{Lemma~4.1 (p.~24)}{entropy.tex:198--203} and
+\ploc{(4.10) in the proof of Lemma~4.2 (p.~25)}{entropy.tex:250--259},
+against FMM Prop.~5.2 (p.~22) and its proof (p.~24).
+\item \emph{Restricted count.} $E_t$ and
+\ploc{(5.25), p.~37}{stability.tex:881--906},
+\ploc{Lemma~5.5, p.~31}{stability.tex:399--423} and
+\ploc{Lemma~3.2, pp.~12--13}{matrices.tex:145--217}, against CFM
+Lemmas~4.7--4.8 (p.~17), Lemma~4.9 and Cor.~4.10 (p.~18), the proof of
+Cor.~4.10 (p.~50), and Lemma~4.1 (p.~15) with App.~A.4 (p.~33).
+\end{enumerate}
+% =====================================================================
+% Finding (Strong): Huang--Sellke approximate-critical-point control
+% from annealed Kac--Rice bounds, reused in Lemma 5.6 and the exclusion
+% step of the proof of Proposition 5.1.
+% =====================================================================
+\finding{Approximate-critical-point control from annealed Kac--Rice bounds}{huang-sellke-approx-crit}
+
+\paragraph{Summary.}
+To exclude unstable \emph{approximate} solutions of the TAP field equation,
+the preprint uses the device of Huang and Sellke (HS)
+\cite{HuangSellke2023-StrongTopologicalTrivialization} that turns an
+exponentially small annealed Kac--Rice bound on exact critical points with
+a bad property into high-probability non-existence of approximate ones
+\sloc{HuangSellke2023-StrongTopologicalTrivialization}{\S5: Theorem~5.2, p.~28; Lemma~5.11, pp.~33--35; proof of Theorem~5.2, p.~36}.
+The device has four parts: a Gaussian rerandomization, so that approximate
+critical points contribute to a Kac--Rice integral; a local lower bound in
+which the inverse-Jacobian volume of a region adapted to the Jacobian
+cancels the determinant factor; inheritance of the bad property on that
+region; and Markov's inequality against the annealed bound. In the preprint
+these are the smoothed integral \ploc{(5.5)}{stability.tex:119--134} with
+the convolution in \ploc{the proof of Lemma~5.3 (p.~28)}{stability.tex:179--182},
+\ploc{Lemma~5.6 (pp.~35--37)}{stability.tex:713--832}, and
+\ploc{the exclusion step in the proof of Proposition~5.1 (pp.~37--38)}{stability.tex:908--969}.
+The preprint does not cite HS and presents the step as its own
+\ploc{(\S1.1, p.~4; \S1.3, p.~5)}{introduction.tex:122--125; 191--194};
+Sellke appears in its bibliography only as a coauthor of
+El~Alaoui--Montanari--Sellke
+\cite{ElAlaouiMontanariSellke2022-SamplingSKAlgorithmicSL}, cited for
+Gaussian observations, planted laws and AMP, which contains no such step. Grade: \grade{Strong}, because all
+four parts reappear for HS's purpose: ruling out approximate critical
+points with an atypical Hessian.
+
+\paragraph{Setup.}
+Section~\ref{sec:overview} defines $F=F_{\widetilde J,h_0}$,
+$\mathsf H_J(y,A)$, the planted law (5.4) and $I_{t,\sigma}$ (5.5). This
+finding also needs:
+\begin{itemize}
+\item \emph{Jacobian.} $L=F'(y)=I+(jbI-\widetilde J)V_y-\tfrac{2j}{n}mm^{\mathsf T}V_y$
+(not symmetric) and $Q=L^{\mathsf T}L+\gamma I$, $\gamma>0$ fixed
+\ploc{(Lemma~5.6)}{stability.tex:719--721}.
+\item \emph{Bad set and annealed bound.} For $t\ge t_0$, $E_t(W)$ is the set
+of $y$ for which some diagonal $0\le A\le(1+\eta)I$ with
+$\norm{A-V_y}_{\mathrm F}\le\epsilon_*\sqrt n$ has
+$\lambda_{\min}(\mathsf H_{\widetilde J}(y,A))\le c_E$; for $t<t_0$,
+$E_t=\{q(y)\ge q_0\}$ \ploc{(p.~37)}{stability.tex:883--890}. The Kac--Rice
+computation of finding~\ref{f:fmm-cfm-kac-rice} gives
+$\E I_{t,\sigma}(E_t)\le e^{-a_0n}$ for $0\le t\le T$, $0<\sigma\le\sigma_*$
+\ploc{(5.25)}{stability.tex:891--897}.
+\item \emph{Witness} \ploc{(5.26)}{stability.tex:911--916}:
+$\norm{F(y)}\le\rho\sqrt n$, $\norm{A-V_y}_{\mathrm F}\le\frac12\epsilon_*\sqrt n$
+and $\lambda_{\min}(\mathsf H_{\widetilde J}(y,A))\le\frac12c_E$.
+\item \emph{Determinant event}
+\ploc{(Lemma~3.5, p.~20, applied on p.~38)}{matrices.tex:721--741; stability.tex:948--955}:
+with probability at least $1-Ce^{-a_1n}$, simultaneously for all $y$,
+$n^{-1}\log\det Q\le jb(y)^2+\varepsilon_1$.
+\item \emph{Reading of (5.5).} For a standard Gaussian $\tilde g$,
+$F_{\widetilde J,h_0+\sigma\tilde g}=F_{\widetilde J,h_0}-\sigma\tilde g$, so
+the area formula gives
+\[
+ \E_{\tilde g}\#\{y\in E:F_{\widetilde J,h_0+\sigma\tilde g}(y)=0\}
+ =(2\pi\sigma^2)^{-n/2}\int_E e^{-\norm{F(y)}^2/(2\sigma^2)}\,|\det L(y)|\,dy .
+\]
+So $I_{t,\sigma}(E)$ is the right-hand side with $|\det L(y)|$ replaced by
+the weight $e^{njb(y)^2/2}$, calibrated to its exponential scale
+\ploc{(p.~28)}{stability.tex:129--131}: the smoothed, weighted count
+$\E_{\tilde g}\sum e^{njb(y)^2/2}/|\det L(y)|$ over the zeros $y\in E$ of the
+rerandomized $F_{\widetilde J,h_0+\sigma\tilde g}$. In the proof of
+Lemma~5.3 the rerandomization turns $\sqrt t\,g$ into
+$\sqrt{t+\sigma^2}\,g'$.
+\end{itemize}
+
+\paragraph{Role in the argument.}
+Proposition~5.1 must hold at every approximate zero
+($\norm F\le2\rho_0\sqrt n$), not only at exact zeros:
+\ploc{Lemma~5.7 (p.~40)}{stability.tex:1105--1207} turns positivity on the
+whole small-residual region into a unique zero, within $C\norm{F(y)}$ of
+every $y$ there, and \S\S6--7 compare the approximate fields of the
+recursion (6.1) with that zero \ploc{(p.~45)}{residuals.tex:287--300}.
+The device turns (5.25) into the statement that at a fixed time no witness
+(5.26) exists, except with probability $Ce^{-a_2n}$; diagonal removal, a
+time mesh and the planted-to-ordinary transfer then give Proposition~5.1
+\ploc{(pp.~38--40)}{stability.tex:971--1094}.
+
+\paragraph{The earlier technique.}
+HS study a multi-species spherical spin glass $H_N$ on a product of spheres
+$\mathcal S_N$, with Riemannian gradient and Hessian
+$\nabla_{\mathrm{sp}},\nabla^2_{\mathrm{sp}}$, rescaled radial derivative
+$\nabla_{\mathrm{rad}}$, and distorted Hessian $J_N(x)$ ((5.11), p.~32).
+$\mathrm{Crt}_N^{\overline{\mathcal D},\varepsilon,\upsilon}(H_N)$ is the set
+of $x$ with $\norm{\nabla_{\mathrm{sp}}H_N(x)}\le\varepsilon\sqrt N$ whose
+tuple (radial derivative, overlap with the external field, energy, Hessian
+spectrum, spectral law) is $\upsilon$-far from a set $\overline{\mathcal D}$
+((5.2), p.~28).
+\begin{itemize}
+\item \emph{Theorem~5.2} (p.~28), introduced as ``of significant independent
+interest'': if
+$\E|\mathrm{Crt}_N^{\overline{\mathcal D},0,\upsilon/2}(H_N)|\le e^{-c_0N}$
+(5.3), then for some small $\varepsilon=\varepsilon(\xi,\upsilon,c_0)$,
+$\P[|\mathrm{Crt}_N^{\overline{\mathcal D},\varepsilon,\upsilon}(H_N)|\ge1]\le e^{-cN}$.
+\item \emph{Ingredients.} The rerandomization
+$H_{N,\delta}=\sqrt{1-\delta}\,H_N+\sqrt\delta\,H_N'$ with $H_N'$ an
+independent copy (5.1); the constants
+$(\varepsilon,\alpha,\eta,\iota)=(\delta^{10},\delta^{1/3},\delta^{1/10},\delta^{1/100})$
+((5.12), p.~32); and a typical set $K_N(\varepsilon)$ of probability at
+least $1-e^{-c(\varepsilon)N}$ on which, simultaneously for all $x$, the
+spectral law of $J_N(x)$ is $\varepsilon$-close to its deterministic
+counterpart (Definition~13 and Proposition~5.8, p.~32).
+\item \emph{Lemma~5.11} (pp.~33--35). If $H_N\in K_N(\varepsilon)$ and
+$\norm{\nabla_{\mathrm{sp}}H_N(x)}\le\varepsilon\sqrt N$ (5.15), then in
+expectation over $H_N'$ there are at least $e^{-o_\delta(N)}$ critical
+points $y\in B_{\alpha\sqrt N}(x)$ of $H_{N,\delta}$ whose energy, radial
+derivative and Hessian are within $\iota^2N$, $\iota^2$, $\iota$ of those of
+$H_N$ at $x$ ((5.16)--(5.19)). Proof: the Kac--Rice lower bound (5.20) is
+the density at $0$ of $\nabla_{\mathrm{sp}}H_{N,\delta}(y)$ given $H_N$
+(5.22) times the conditional expected
+$|\det\nabla^2_{\mathrm{sp}}H_{N,\delta}(y)|$, which Lemma~5.9 (p.~32)
+evaluates as
+$\exp(N\int\log|\lambda|\,d\mu_{\xi,\nabla_{\mathrm{rad}}H_N(x)}\pm o_\iota(N))$
+(5.21). The density is integrated over balls $S_1$ of radius
+$\alpha^2\sqrt{N/2}$ in the span $T_1(x)$ of eigenvectors of $J_N(x)$ with
+eigenvalues in $[-\eta,\eta]$ and $S_2$ of radius $\alpha\sqrt{N/2}$ in its
+complement, with the Taylor step Lemma~5.10. The change of
+variables $v_2=J_N(x)s_2$ gives $|\det(J_N(x)|_{S_2(x)})|^{-1}$ (5.23),
+which by $K_N(\varepsilon)$ cancels (5.21) up to $e^{o_\delta(N)}$ (p.~35).
+\item \emph{Proof of Theorem~5.2} (p.~36). By (5.16)--(5.19), Proposition~2.4
+and $y\in B_{\alpha\sqrt N}(x)$ (for the overlap), these critical points are
+$\upsilon/2$-far from $\overline{\mathcal D}$, so their expected number given
+$H_N$ is at least
+$e^{-o_\varepsilon(N)}\one\{H_N\in K_N(\varepsilon,\upsilon)\}$ (5.24), where
+$K_N(\varepsilon,\upsilon)$ is the set of $H_N\in K_N(\varepsilon)$ with
+$\mathrm{Crt}_N^{\overline{\mathcal D},\varepsilon,\upsilon}(H_N)\neq\varnothing$. Since
+$H_{N,\delta}$ has the law of $H_N$, averaging against (5.3) gives
+$\P[H_N\in K_N(\varepsilon,\upsilon)]\le e^{-cN}$ once $\varepsilon$ is small
+given $c_0$.
+\end{itemize}
+
+\paragraph{Correspondence.}
+Dictionary: residual tolerance $\rho\leftrightarrow\varepsilon$, smoothing
+variance $\sigma^2\leftrightarrow\delta$, radius $r\leftrightarrow\alpha$,
+regularization $\sqrt\gamma\leftrightarrow\eta$, annealed rate
+$a_0\leftrightarrow c_0$, the preprint's local-volume loss $\varepsilon$
+((5.20)) $\leftrightarrow o_\delta(1)$; $F$ and $L$ play $\nabla_{\mathrm{sp}}H_N$ and
+$J_N$. (So HS's $\varepsilon$ is not the preprint's; HS's $r$ in $N-r$ is the
+number of species.)
+
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{1.95cm}%
+>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Step & Preprint \cite{OAI-SpectralGap} & HS \cite{HuangSellke2023-StrongTopologicalTrivialization}\\
+\midrule
+\endfirsthead
+\toprule
+Step & Preprint \cite{OAI-SpectralGap} & HS \cite{HuangSellke2023-StrongTopologicalTrivialization}\\
+\midrule
+\endhead
+Annealed input
+& $\E I_{t,\sigma}(E_t)\le e^{-a_0n}$ \ploc{(5.25), p.~37}{stability.tex:891--897}
+& $\E|\mathrm{Crt}_N^{\overline{\mathcal D},0,\upsilon/2}|\le e^{-c_0N}$ ((5.3), p.~28)\\*
+\addlinespace
+Bad point
+& witness \ploc{(5.26)}{stability.tex:911--916}
+& $x\in\mathrm{Crt}_N^{\overline{\mathcal D},\varepsilon,\upsilon}$ ((5.2), (5.15))\\*
+\addlinespace
+Smoothing
+& field rerandomized by $\sigma\tilde g$; kernel of variance $\sigma^2$ at
+$F(y)$ in (5.5) \ploc{(p.~28)}{stability.tex:119--128}
+& $H_{N,\delta}$ (5.1); kernel of variance $\delta/(1-\delta)$ at
+$\nabla_{\mathrm{sp}}H_N(y)$ ((5.20), (5.22))\\
+\addlinespace
+Det.\ weight
+& deterministic $e^{njb(y)^2/2}$ \ploc{(5.5)}{stability.tex:119--131}
+& conditional $\E|\det\nabla^2_{\mathrm{sp}}H_{N,\delta}(y)|$ (Lemma~5.9, (5.21))\\
+\addlinespace
+Det.\ at the point
+& Lemma~3.5 event, all $y$ at once \ploc{(p.~38)}{stability.tex:948--955}
+& $K_N(\varepsilon)$, all $x$ at once (Def.~13(c), Prop.~5.8; used p.~35)\\
+\addlinespace
+Region and volume
+& ellipsoid $y+\sigma Q^{-1/2}g''$, $\norm{g''}\le2\sqrt n$, inside the
+$r\sqrt n$-ball if $2\sigma/\sqrt\gamma\le r$; factor $(\det Q)^{-1/2}$
+\ploc{(5.21), p.~36}{stability.tex:745--758}
+& $S_1\oplus S_2$, capturing half the Gaussian mass as
+$\alpha\eta\gg\sqrt\delta$; factor $|\det(J_N(x)|_{S_2(x)})|^{-1}$
+((5.23), pp.~34--35)\\
+\addlinespace
+Taylor step
+& $R_F=F(y+\Delta)-F(y)-L\Delta$ \ploc{(5.22), p.~36}{stability.tex:765--797}
+& Lemma~5.10 ((5.14), p.~33)\\
+\addlinespace
+Cancellation
+& (5.19) cancels $jb(y)^2/2$ up to $\varepsilon_1/2$, giving $\ge e^{-\varepsilon n}$ (5.20)
+\ploc{(p.~37)}{stability.tex:818--831}
+& $|\det|^{-1}$ cancels (5.21), leaving $e^{-o_\delta(N)}$ (p.~35)\\
+\addlinespace
+Inheritance
+& the same $A$ witnesses instability on the $r\sqrt n$-ball, so the ball lies in $E_t$
+(for $t<t_0$, Lipschitz continuity of $q$)
+\ploc{(pp.~37--38)}{stability.tex:908--936}
+& (5.16)--(5.19), Prop.~2.4 and $y\in B_{\alpha\sqrt N}(x)$ make the nearby
+critical points $\upsilon/2$-far (p.~36)\\
+\addlinespace
+Markov
+& witness on the determinant event $\Rightarrow I_{t,\sigma}(E_t)\ge e^{-\varepsilon n}$;
+Markov and (5.25) give $Ce^{-a_2n}$ \ploc{(p.~38)}{stability.tex:958--969}
+& (5.24) averaged against (5.3):
+$e^{-c_0N}\ge e^{-o_\varepsilon(N)}\P[K_N(\varepsilon,\upsilon)]$ (p.~36)\\
+\addlinespace
+Constants
+& $\varepsilon<a_0/2$, then $\varepsilon_1$, then $\gamma$, then $\sigma$, then $\rho$
+\ploc{(Lemma~5.6, pp.~35--36; p.~38)}{stability.tex:736--740; 958--962}
+& (5.12), then $\varepsilon$ small given $c_0$ (pp.~32, 36)\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\noindent As the device requires, residual $\ll$ smoothing $\ll$ neighborhood:
+$\rho\ll\sigma\le r\sqrt\gamma/2$ against
+$\varepsilon=\delta^{10}\ll\sqrt\delta\ll\alpha\eta$. The local lower
+bounds (HS (5.23); the preprint's (5.21)) and the determinant inputs that
+cancel them read, with HS's species factors omitted:
+\begin{gather*}
+ (2\pi\delta)^{-\frac{N-r}2}\!\int_{B_{\alpha\sqrt N}(x)}\!
+ e^{-\frac{1-\delta}{2\delta}\norm{(\xi')^{-1/2}\diamond\nabla_{\mathrm{sp}}H_N(y)}^2}dy
+ \ge\frac{e^{-\iota N}\operatorname{Vol}(S_1(x))}{2(1+\iota)^{\frac{N-r}2}}
+ \bigl|\det(J_N(x)|_{S_2(x)})\bigr|^{-1},\\
+ (2\pi\sigma^2)^{-\frac n2}\!\int_{\norm{y'-y}\le r\sqrt n}\!
+ e^{-\frac{\norm{F(y')}^2}{2\sigma^2}+\frac{njb(y')^2}2}dy'
+ \ge(\det Q)^{-\frac12}\P(\mathcal B)\,
+ \E\Bigl[e^{\frac{\norm{g''}^2}2-\frac{\norm{F(y+\Delta)}^2}{2\sigma^2}+\frac{njb(y+\Delta)^2}2}\Bigm|\mathcal B\Bigr];\\
+ \det(J_N(x)|_{S_2(x)})=e^{N\int\log|\lambda|\,d\mu_{\xi,\nabla_{\mathrm{rad}}H_N(x)}\pm o_\delta(N)}
+ \quad\text{vs.}\quad
+ \tfrac1n\log\det Q\le jb(y)^2+\varepsilon_1 .
+\end{gather*}
+
+\paragraph{What is new in the preprint.}
+\begin{itemize}
+\item Smoothing acts on the field only. Since $h_0$ does not enter
+$\mathsf H_J(y,A)$ \ploc{(p.~27)}{stability.tex:29--33}, inheritance is a
+deterministic Lipschitz bound, and HS's control of the rerandomized Hessian
+(Lemma~5.9 and its use on p.~33) has no counterpart.
+\item No exact zeros of a rerandomized system are counted: the smoothed
+integral, with its deterministic weight, is itself the annealed object;
+Lemma~5.3 reduces it to a scalar integral against a conditional
+probability; \ploc{Lemma~5.4}{stability.tex:226--268} bounds the former and
+\ploc{Lemma~5.5}{stability.tex:399--423} the latter, uniformly in
+$0<\sigma\le\sigma_*$, giving (5.25).
+\item Regularization $Q=L^{\mathsf T}L+\gamma I$ of a non-symmetric
+Jacobian, a Gaussian ellipsoid and Jensen's inequality replace the
+near-kernel split $S_1\oplus S_2$, which uses the eigenvectors of a
+symmetric Hessian.
+\item The Ising TAP field equation, a bad set defined through diagonals $A$
+near $V_y$, and uniformity in $t\in[0,T]$.
+\end{itemize}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item \emph{Statements.} HS Theorem~5.2 and the plan opening HS \S5 (p.~28)
+against \ploc{the opening of \S5.3 (p.~35)}{stability.tex:702--711} and
+\ploc{the exclusion paragraph in the proof of Proposition~5.1 (pp.~37--38)}{stability.tex:908--969}.
+\item \emph{Smoothing.} HS (5.1), (5.20), (5.22) (pp.~28, 33--34) against
+\ploc{(5.5) and the proof of Lemma~5.3 (p.~28)}{stability.tex:119--134; 179--182},
+via the area formula in the Setup.
+\item \emph{Local lower bound.} The proof of HS Lemma~5.11 from (5.22) to
+its end (pp.~34--35), with Lemma~5.10 (p.~33), against
+\ploc{the proof of Lemma~5.6 (pp.~36--37)}{stability.tex:744--832}: region,
+change of variables, Taylor remainder, cancellation.
+\item \emph{Inheritance, Markov, constants.} HS's proof of Theorem~5.2
+(p.~36) and (5.12) (p.~32) against
+\ploc{p.~38}{stability.tex:921--969}: the ball inside $E_t$, the choice of
+$\varepsilon,\varepsilon_1,\gamma,\sigma,\rho$, and Markov with (5.25).
+\end{enumerate}
+
+\section{Partial findings}\label{sec:partial}
+\findinggroup{P}
+\finding[Stein equation for tanh under a cosh-tilted Gaussian]{The Stein equation for \texorpdfstring{$\tanh$}{tanh} under a cosh-tilted Gaussian, used to compare a field with an Onsager-corrected field}{chatterjee-stein}
+
+\paragraph{Summary.}
+Chatterjee \cite{Chatterjee2007-SpinGlassesSteinsMethod} derives the TAP
+equations by Stein's method for the cosh-tilted Gaussian laws
+$\psi\propto\cosh(ax+b)e^{-(x-\mu)^2/2\sigma^2}$: a Stein operator whose
+equation for $u(x)=\tanh(ax+b)$ has right side $\tanh(ax+b)-\tanh(a\mu+b)$,
+its bounded solution, and its use at the Gibbs local field, centred at the
+Onsager-corrected field, with the Onsager coefficient as variance parameter
+(in the units $z=\beta\ell+h$)
+\sloc{Chatterjee2007-SpinGlassesSteinsMethod}{\S1.8, (12)--(15), p.~7; Lemma~1.3, p.~8; \S3.4, pp.~20--23; Corollary~1.2, p.~5}.
+The preprint's scalar identity
+\ploc{(6.8)--(6.9), p.~45}{residuals.tex:245--279} is this Stein equation,
+with the solution in closed form. It drives the induction step of the weak
+residual rule \ploc{(proof of Lemma~6.5, p.~54)}{residuals.tex:966--1004},
+where at $p=1$ it compares the Gibbs-sample local field with an
+Onsager-corrected field, and it gives the comparison with the TAP root behind
+Proposition~7.2 \ploc{((6.12)--(6.13), pp.~45--46; (7.3), p.~57)}{residuals.tex:316--342; consequences.tex:113--131}.
+The preprint does not cite Chatterjee; it introduces (6.9) as ``a scalar
+identity valid for arbitrary real fields'' and cites Bolthausen
+\cite{Bolthausen2012-IterativeTAPConstruction} only for the Onsager-corrected
+form of the recursion \ploc{(\S1.1, p.~4; \S6.1, p.~42)}{introduction.tex:125--128; residuals.tex:32--34}.
+Grade: \grade{Partial}, because the operator, its bounded solution and the
+field--centre--parameter configuration are reused; Chatterjee's $L^2$ estimate
+of $\langle Tf\rangle$, the main work of his method, is not.
+
+\paragraph{Setup.}
+Section~\ref{sec:overview} defines $J$, $j=\beta^2$, $\mu_{h_0}$, the recursion
+(6.1) ($m^l,b_l,h^l,R_l$), $F_{J,h_0}$, $d_i$ and $\norm\cdot_*$. In (6.1) the
+field $h^{l+1}$ carries the Onsager term $-jb_lm^{l-1}$; $h^1=h_0+Jx$ carries
+none. This finding also needs:
+\begin{itemize}
+\item \emph{Kernel} \ploc{(6.8)}{residuals.tex:250--253}: for $z,r_0,a\in\R$,
+$\Phi(z;r_0,a)=\int_0^1e^{a(1-u^2)/2}\cosh(u(z-r_0))\,du/(\cosh z\cosh r_0)$.
+\item \emph{Tests} \ploc{(Definition~6.2, p.~44)}{residuals.tex:179--222}:
+vectors $U$ built from the primary fields by finite recipes. The site partial
+$\partial_l$ differentiates the explicit argument $h_i^l$ with all else fixed;
+``admissible from level $p+1$'' means every explicit primary argument has
+index at least $p+1$, so $\partial_pU=0$. Auxiliary fields carry
+an Onsager correction, $y=Jw-j\sum_ln^{-1}\bigl(\sum_i\partial_lw_i\bigr)m^{l-1}-\cdots$
+\ploc{(6.7)}{residuals.tex:199--205}.
+\item \emph{TAP root}: at a stable field, $r$ is the zero of $F_{J,h_0}$,
+$t_*=\tanh r$, $q_*=n^{-1}\norm{t_*}^2$, so $r=h_0+Jt_*-j(1-q_*)t_*$
+\ploc{(\S6.4, p.~45)}{residuals.tex:288--291}.
+\item \emph{Conditional-spin identity}: since
+$\E_{\mu_{h_0}}[x_i\mid x_{-i}]=m^1_i=\tanh h^1_i$ and $v^1_i=1-(m^1_i)^2$,
+$\E\sum_i(x_i-m_i^1)GU_i=\E\sum_iv_i^1d_i(GU_i)$
+\ploc{(6.31), p.~53}{residuals.tex:920--924}.
+\end{itemize}
+
+\paragraph{Role in the argument.}
+Lemma~6.5 bounds tested residuals, $|\E GR_p^{\mathsf T}U|\le C\norm G_*$, with
+a square-reweighted version (6.30). It yields the moment bounds on
+$S_l=R_l^{\mathsf T}m^l/\sqrt n$ that select two small consecutive residuals
+\ploc{(Lemma~7.1)}{consequences.tex:18--83} and the residual estimates in
+Propositions~7.2 and~7.3, i.e.\ input~2 of Section~\ref{sec:overview}. Its base
+case is (6.31); its induction step applies (6.9) at
+$(z,r_0,a)=(h_i^p,h_i^{p+1},j(b_p-b_{p-1}))$ to rewrite
+$R_{p+1}=\tanh h^p-\tanh h^{p+1}$ through earlier residuals. In the proof of
+Proposition~7.2, (6.9) at $(h^k_i,r_i,j(1-b_{k-1}-q_*))$ and its
+$r_0$-derivative turn the implicit test vector into the magnetization error
+$(m^k-t_*)^{\mathsf T}e$ and the coefficient discrepancy $L_*$; this gives the
+directional covariance bound (7.2)
+\ploc{(pp.~56--58)}{consequences.tex:89--185}.
+
+\paragraph{The earlier technique.}
+Chatterjee's Gibbs measure is
+$G_N(\sigma)\propto\exp\{\beta N^{-1/2}\sum_{i<j}g_{ij}\sigma_i\sigma_j+h\sum_i\sigma_i\}$,
+and $\langle\cdot\rangle$ there is the Gibbs average.
+\begin{itemize}
+\item \emph{Fields} \sloc{Chatterjee2007-SpinGlassesSteinsMethod}{(5), p.~3; (10), p.~5}:
+the local field $\ell_i=N^{-1/2}\sum_{j\ne i}g_{ij}\sigma_j$ and the
+Onsager-corrected centre
+$r_i=N^{-1/2}\sum_{j\ne i}g_{ij}\langle\sigma_j\rangle-\beta(1-q)\langle\sigma_i\rangle$,
+so that $\beta r_i+h$ is the argument of $\tanh$ in the TAP equations.
+\item \emph{Stein's method for mixture Gaussians}
+\sloc{Chatterjee2007-SpinGlassesSteinsMethod}{\S1.8, p.~7}: $M(a,b,\mu,\sigma^2)$
+has density $\psi\propto\cosh(ax+b)e^{-(x-\mu)^2/2\sigma^2}$ (12), a mixture of
+$N(\mu\pm a\sigma^2,\sigma^2)$; $\int\tanh(ax+b)\psi=\tanh(a\mu+b)$ (14); the
+operator $Tf=f'-\bigl(\frac{x-\mu}{\sigma^2}-a\tanh(ax+b)\bigr)f$ characterizes
+$M$; and the Stein equation is $Tf=u-\int u\psi$ (15). Lemma~1.3 (p.~8) gives
+a solution $f(x,\mu)$ with $|f|,|\partial_xf|,|\partial_\mu f|\le C\norm u_\infty$
+uniformly in $(x,\mu)$, namely
+$f=\rho^{-1}\int_{-\infty}^x\rho(t,\mu)(u(t)-\int u\psi)\,dt$ with
+$\rho=\cosh(ax+b)e^{-(x-\mu)^2/2\sigma^2}$ (\S3.6, p.~25). Chatterjee
+identifies the correction term in the mixture identity (9) with the
+Onsager correction (pp.~4--5).
+\item \emph{Application} \sloc{Chatterjee2007-SpinGlassesSteinsMethod}{Theorem~1.1, p.~5; \S3.4, pp.~20--23}:
+the law of $\ell_1$ is close to $M(\beta,h,r_1,1-q)$. With $f$ solving (15)
+for these parameters ((38), p.~20), Gaussian integration by parts in
+$(g_{1j})_j$ (Lemma~1.4, p.~9) and the overlap concentration (2) (p.~2),
+followed by the standard conditional-mean identity
+$\langle\sigma_1f\rangle=\langle\tanh(\beta\ell_1+h)f\rangle$ (p.~22), show
+that
+$\langle(\ell_1-r_1-\beta(1-q)\tanh(\beta\ell_1+h))f\rangle-(1-q)\langle\partial_xf\rangle
+=-(1-q)\langle Tf\rangle$ is small in $L^2$ over the disorder. With
+$u=\tanh(\beta x+h)$ and (14), this is Corollary~1.2 (p.~5):
+$\langle\sigma_i\rangle\approx\tanh(\beta r_i+h)$.
+\end{itemize}
+The substitution $z=\beta x+h$ maps $M(\beta,h,\mu',1-q)$ to
+$M(1,0,\beta\mu'+h,\beta^2(1-q))$. In these units the centre is the TAP field
+$\beta r_i+h$ and $\sigma^2=\beta^2(1-q)$ is its Onsager coefficient, and with
+$(a,b)=(1,0)$,
+\[
+ -\sigma^2\,Tf=(x-\mu-\sigma^2\tanh x)f-\sigma^2\partial_xf
+\]
+for every $f$, and the Stein equation (15) for $u=\tanh$ reads
+$Tf=\tanh x-\tanh\mu$.
+
+\paragraph{Correspondence.}
+In the table below Chatterjee's tilt is $(1,0)$, and his $\mu$ and $\sigma^2$
+are the preprint's $r_0$ and $a$; rows 6--8 are the $p=1$ step of Lemma~6.5.
+
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{1.9cm}%
+>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Object & Preprint \cite{OAI-SpectralGap} & Chatterjee \cite{Chatterjee2007-SpinGlassesSteinsMethod}\\
+\midrule
+\endfirsthead
+\toprule
+Object & Preprint \cite{OAI-SpectralGap} & Chatterjee \cite{Chatterjee2007-SpinGlassesSteinsMethod}\\
+\midrule
+\endhead
+Operator
+& $(z-r_0-a\tanh z)-a\partial_z$ \ploc{(6.9)}{residuals.tex:256--260}
+& $-\sigma^2T$, $T=\partial_x-\bigl(\frac{x-\mu}{\sigma^2}-\tanh x\bigr)$ (\S1.8)\\
+\addlinespace
+Right side
+& $\tanh z-\tanh r_0$ \ploc{(6.9)}{residuals.tex:256--260}
+& $\tanh x-\int\tanh\psi=\tanh x-\tanh\mu$ ((14), (15))\\
+\addlinespace
+Solution
+& $\Phi(z;r_0,a)$ \ploc{(6.8)}{residuals.tex:250--253}, any $a\in\R$
+& $f(x,\mu)$ (\S3.6); $\Phi=-f/\sigma^2$ for $\sigma^2=a>0$\\
+\addlinespace
+Bounds
+& $0<\Phi\le e^{|a|/2}$; for $a$ in a bounded interval, each fixed-order derivative in $(z,r_0,a)$ is at most $C\Phi$, uniformly in $z,r_0$ \ploc{(p.~45)}{residuals.tex:266--274}
+& $|f|,|\partial_xf|,|\partial_\mu f|\le C\norm u_\infty$, uniformly in $x,\mu$ (Lemma~1.3)\\
+\addlinespace
+Centre derivative
+& $[(z-r_0-a\tanh z)-a\partial_z]\partial_{r_0}\Phi=\Phi-\operatorname{sech}^2r_0$ \ploc{(p.~46)}{residuals.tex:338--340}
+& $f$ defined on $\R^2$; $\partial_\mu f$ enters at $\mu=r_1$ (\S3.4, (39), pp.~21--22)\\
+\addlinespace
+Field $z$
+& $h^1_i=h_{0,i}+(Jx)_i$, at the Gibbs sample $x$
+& $\beta\ell_1+h$, at a Gibbs sample (5)\\
+\addlinespace
+Centre $r_0$
+& $h^2_i=h_{0,i}+(Jm^1)_i-jb_1x_i$
+& $\beta r_1+h=h+\beta N^{-1/2}\sum_jg_{1j}\langle\sigma_j\rangle-\beta^2(1-q)\langle\sigma_1\rangle$ (10)\\
+\addlinespace
+Parameter
+& $a_1=jb_1$, the Onsager coefficient of $h^2$ ($h^1$ has none); generally the centre's minus the field's Onsager coefficient, $j(b_p-b_{p-1})$ or $j(1-b_{k-1}-q_*)$
+& $\sigma^2=\beta^2(1-q)$, the Onsager coefficient of $\beta r_1+h$ ($\beta\ell_1+h$ has none)\\
+\addlinespace
+TAP comparison
+& $(m^k-t_*)^{\mathsf T}e=\sum_i[(h_i^k-r_i-am_i^k)-a\partial_k](\Phi(h^k_i;r_i,a)e_i)$, with $r$ the TAP root \ploc{(6.13), p.~46; (7.3), p.~57}{residuals.tex:330--336; consequences.tex:115--126}
+& $\langle\tanh(\beta\ell_i+h)\rangle$ against $\tanh(\beta r_i+h)$ through $T$ with $u=\tanh(\beta x+h)$ (Corollary~1.2)\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\noindent At $p=1$ the preprint's centre and parameter have Chatterjee's form
+with the Gibbs means $\langle\sigma_j\rangle$ replaced by the conditional means
+$m^1_j$ at the sample, $\langle\sigma_1\rangle$ by $x_1$, and
+$1-q\approx N^{-1}\sum_i(1-\langle\sigma_i\rangle^2)$ by
+$b_1=n^{-1}\sum_i(1-(m^1_i)^2)$; the values differ. Side by side, with
+$z=\beta\ell_1+h$, $\mu=\beta r_1+h$, $\sigma^2=\beta^2(1-q)$ on the left
+\sloc{Chatterjee2007-SpinGlassesSteinsMethod}{p.~22} and
+$U'_i=\Phi(h_i^p;h_i^{p+1},a_p)U_i$, $\partial_pU=0$ on the right
+\ploc{(proof of Lemma~6.5, p.~54)}{residuals.tex:966--986}:
+\begin{gather*}
+ \bigl\langle(\ell_1-r_1-\beta(1-q)\tanh(\beta\ell_1+h))f\bigr\rangle-(1-q)\langle\partial_xf\rangle
+ =\beta^{-1}\bigl\langle(z-\mu-\sigma^2\tanh z)f-\sigma^2\partial_zf\bigr\rangle,\\
+ R_{p+1}^{\mathsf T}U=\sum_i\bigl[(h_i^p-h_i^{p+1}-a_p\tanh h_i^p)-a_p\partial_p\bigr]U'_i
+ =(h^p-h^{p+1}-a_pm^p)^{\mathsf T}U'-a_p\sum_i\partial_pU'_i .
+\end{gather*}
+
+\paragraph{What is new in the preprint.}
+\begin{itemize}
+\item The identity is used exactly and pointwise at fixed $J$, with no claim
+about the law of any field. It holds for every real $a$, and is applied with
+$a_p=j(b_p-b_{p-1})$ ($|a_p|\le j$; $a_1=jb_1\ge0$, either sign for $p\ge2$)
+and with $a=j(1-b_{k-1}-q_*)$, which is $O(\rho)$ by
+\ploc{(6.11)}{residuals.tex:301--305} and of either sign.
+\item The closed form gives, for $a$ in a bounded interval, bounds on
+derivatives of every order in $(z,r_0,a)$ and on the ratios $\partial^\alpha\Phi/\Phi$, uniformly in the
+fields, so that $\Phi U$ can enter further recipes; the $r_0$-derivative
+identity yields the discrepancy $L_*$.
+\item Chatterjee's $L^2$ estimate of $\langle Tf\rangle$ (Gaussian integration by
+parts over the disorder and overlap concentration) is replaced by algebra:
+$h^p-h^{p+1}-a_pm^p=JR_p+a_pR_p-jb_{p-1}R_{p-1}$, symmetry of $J$ with the
+Onsager-corrected auxiliary field (6.7), cancellation of
+$-a_p\sum_i\partial_pU'_i$ against the Onsager term through (6.34), and strong
+induction on $p$ down to (6.31), including the square-reweighted form (6.30)
+\ploc{(pp.~53--54)}{residuals.tex:886--1034}.
+\item Centres built from one sample ($m^1$, $x$, $b_1$) rather than Gibbs
+averages; validity for all $\beta<1$ at stable fields rather than under the
+overlap hypothesis (2), which Chatterjee has for $\beta\le\beta_0$.
+\end{itemize}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item \emph{The identity.} \ploc{(6.8)--(6.9), p.~45}{residuals.tex:245--264}
+against Chatterjee \S1.8 (operator $T$, (14), (15)), p.~7, and the formula for
+$f$ in \S3.6, p.~25: set Chatterjee's tilt to $(1,0)$, his $\mu$ to $r_0$ and
+his $\sigma^2$ to the preprint's $a$; then
+$-\sigma^2T$ is the operator of (6.9), and $\Phi=-f/\sigma^2$ (both are
+bounded solutions; the homogeneous solution $1/\rho$ is unbounded).
+\item \emph{The $p=1$ configuration.} The induction step in the
+\ploc{proof of Lemma~6.5, p.~54}{residuals.tex:966--1004} with (6.1) at $p=1$,
+against Chatterjee (5), (10), pp.~3--5, and the display on p.~22, after
+$z=\beta\ell_1+h$.
+\item \emph{The TAP-root comparison.}
+\ploc{(6.12)--(6.13), pp.~45--46}{residuals.tex:316--342} and
+\ploc{(7.3) with the paragraph after it, p.~57}{consequences.tex:113--132}
+against Corollary~1.2, p.~5, and the remark on p.~11 that the TAP argument is
+$\beta r_i+h$.
+\end{enumerate}
+\finding[Planted law, likelihood transfer and state-evolution fixed point]{The planted stochastic-localization framework for SK at its points of use: planted law with likelihood transfer, and the state-evolution fixed point}{eams-framework}
+
+\paragraph{Summary.}
+Proposition~5.1 is proved under a planted law and then transferred to the SK
+disorder. That law, with the likelihood identity behind the transfer, is the
+planted model of El~Alaoui, Montanari and Sellke (AMS) for the SK observation
+process
+\sloc{ElAlaouiMontanariSellke2022-SamplingSKAlgorithmicSL}{\S4.1, (4.1)--(4.9), Proposition~4.2, (4.14), pp.~10--12},
+and the equality law that locates the zero set of the preprint's Kac--Rice
+rate is the AMS state-evolution fixed point, in the form given by their
+Nishimori identity
+\sloc{ElAlaouiMontanariSellke2022-SamplingSKAlgorithmicSL}{(2.5), (4.16), Proposition~4.4, Lemma~4.5(c), pp.~5, 12--14}.
+In the preprint they are the planted law
+\ploc{(5.4), p.~28}{stability.tex:109--118}, its derivation and transfer
+\ploc{(\S5.4, pp.~39--40)}{stability.tex:1022--1083}, and
+\ploc{Lemma~4.2 (pp.~25--26)}{entropy.tex:220--336}; the Kac--Rice
+computation run under this law is finding~\ref{f:fmm-cfm-kac-rice}.
+AMS is cited once, in the introduction
+\ploc{(\S1.1, p.~4)}{introduction.tex:118--120}, as a parallel combination of
+Gaussian observations, planted laws and AMP; nothing is cited where these
+ingredients are used.
+Grade: \grade{Partial}, because credit for the planted law is present only at
+claim level and as a parallel use, and the fixed point is a fragment of the
+AMS state-evolution lemma, re-proved largely by a different route.
+
+\paragraph{Setup.}
+Section~\ref{sec:overview} defines $J$, $\mu_h$, $Y(t)$, the planted law (5.4),
+the integral (5.5), its rate and $s_*$. This finding also needs:
+\begin{itemize}
+\item \emph{Size bias.} Under the original law, $J$ is the zero-diagonal
+ disorder, $X\sim\mu_0$ given $J$, and $Y(t)=tX+B(t)$
+ \ploc{(Proposition~5.1, p.~27)}{stability.tex:35--48}. Put
+ $Z(J)=\sum_xe^{x^{\mathsf T}Jx/2}$, $L(J)=Z(J)/\E Z(J)$ and
+ $D_X=\operatorname{diag}(X)$ \ploc{(\S5.4, p.~39)}{stability.tex:1022--1038}.
+\item \emph{Failure probability.} $p_n(J)$ is the conditional probability,
+ given $J$, that the stability implication (5.3) fails at some
+ $t\in[0,T]$ along $Y$ \ploc{(p.~39)}{stability.tex:1067--1070}.
+\item \emph{Consistency equations} \ploc{(4.7), p.~25}{entropy.tex:206--213}.
+ For a law $P$ on $\R$: $M=\E_P\tanh y$, $q=\E_P\tanh^2y$, $d=t+jM$,
+ $s=t+\sigma^2+jq$; $N(d,s)$ has mean $d$ and variance $s$. The proof of
+ Lemma~4.2 sets $F(s)=\E_{N(s,s)}\tanh y$
+ \ploc{(p.~26)}{entropy.tex:300--304}, so (4.8) reads $s_*=t+jF(s_*)$, and
+ $q_*(t)=\E_{N(s_*,s_*)}\tanh^2y$ (4.9).
+\end{itemize}
+
+\paragraph{Role in the argument.}
+Proposition~5.1, the first input in Section~\ref{sec:overview}, asks that
+$p_n(J)\le e^{-an}$ for typical $J$. Its proof bounds the integral (5.5) under
+the planted law (5.4), excludes unstable approximate zeros at fixed times,
+passes to the whole path by a mesh, and then undoes the planting
+\ploc{(\S5.4, p.~37)}{stability.tex:838--840}: the planted bound becomes
+$\E[L(J)p_n(J)\one_{\{\norm J\le2\sqrt j+\theta\}}]\le Ce^{-a_4n}$ under the
+original law, and the lower tail of $L$ with Markov's inequality gives
+$p_n(J)\le e^{-an}$ on an event $\mathcal J_n$ of probability $1-o(1)$
+\ploc{(pp.~39--40)}{stability.tex:1022--1083}. Lemma~4.2 identifies the zero
+set of the scalar rate at $\sigma=0$ as the curve $P_t=N(s_*(t),s_*(t))$
+\ploc{(after (5.9), p.~29)}{stability.tex:216--222}. Strict negativity of the
+rate away from this curve gives Lemma~5.4(ii), and Lemma~5.5 computes the
+conditional Hessian at $s=s_*(t)$ \ploc{(proof, p.~33)}{stability.tex:506--511}.
+
+\paragraph{The earlier technique.}
+AMS sample from the SK measure by discretizing the stochastic-localization
+SDE of a Gibbs sample, with the drift computed by AMP; the analysis runs under
+a planted model. In their (bold) notation, $\boldsymbol A\sim\mathsf{GOE}(n)$
+has entries $N(0,1/n)$ off the diagonal and $N(0,2/n)$ on it,
+$\mu_{\boldsymbol A}(\boldsymbol x)\propto e^{\frac\beta2\ip{\boldsymbol x}{\boldsymbol A\boldsymbol x}}$
+on $\{-1,1\}^n$ \sloc{ElAlaouiMontanariSellke2022-SamplingSKAlgorithmicSL}{(1.1), p.~2},
+and $\boldsymbol m(\boldsymbol A,\boldsymbol y)$ is the mean of its tilt by
+$e^{\ip{\boldsymbol y}{\boldsymbol x}}$ ((1.2), p.~3).
+\begin{itemize}
+\item \emph{Planted model} (\S4.1, p.~10). With $\bar\nu$ uniform on
+ $\{-1,1\}^n$,
+ \[
+ \mu_{\rm pl}(d\boldsymbol x,d\boldsymbol A)\propto
+ \exp\Bigl\{-\tfrac n4\bigl\lVert\boldsymbol A-\beta\boldsymbol x\boldsymbol x^{\mathsf T}/n\bigr\rVert_F^2\Bigr\}\,
+ \bar\nu(d\boldsymbol x)\,d\boldsymbol A\qquad(4.1).
+ \]
+ Its $\boldsymbol x$-marginal is
+ $\bar\nu$; given $\boldsymbol x$,
+ $\boldsymbol A=\frac\beta n\boldsymbol x\boldsymbol x^{\mathsf T}+\boldsymbol W$ with
+ $\boldsymbol W\sim\mathsf{GOE}(n)$ (4.3); $\mu_{\rm pl}(\cdot\mid\boldsymbol A)=\mu_{\boldsymbol A}$;
+ and $\mu_{\rm pl}(d\boldsymbol A)=\mu_{\mathsf{GOE}}(d\boldsymbol A)\,Z_{\mathsf{SK}}(\boldsymbol A)$ with
+ $Z_{\mathsf{SK}}(\boldsymbol A)=2^{-n}\sum_{\boldsymbol x}\exp\{\frac\beta2\ip{\boldsymbol x}{\boldsymbol A\boldsymbol x}-\frac{\beta^2n}4\}$
+ ((4.5)--(4.6)). Footnote~3 (p.~10) compares with the zero-diagonal model.
+\item \emph{Path laws and likelihood} (pp.~11--12). $\mathbb Q$:
+ $\boldsymbol A\sim\mu_{\mathsf{GOE}}$ and
+ $d\boldsymbol y=\boldsymbol m(\boldsymbol A,\boldsymbol y)\,dt+d\boldsymbol B$ (4.8), a
+ process with the law of $t\boldsymbol x+\bar{\boldsymbol B}(t)$,
+ $\boldsymbol x\sim\mu_{\boldsymbol A}$ ((4.12) and the paragraph after it).
+ $\P$: $\boldsymbol x_0\sim\bar\nu$,
+ $\boldsymbol A\sim\mu_{\rm pl}(\cdot\mid\boldsymbol x_0)$,
+ $\boldsymbol y(t)=t\boldsymbol x_0+\boldsymbol B(t)$ (4.9). Proposition~4.2 (p.~11)
+ and (4.14) (p.~12):
+ $\frac{d\P}{d\mathbb Q}(\boldsymbol A,\boldsymbol y)=Z_{\mathsf{SK}}(\boldsymbol A)$. For
+ $\beta<1$, the log-normal limit of $Z_{\mathsf{SK}}$ (Theorem~4.1, p.~11) and
+ Le~Cam's first lemma make $\P$ and $\mathbb Q$ contiguous, and ``all results
+ proven under $\P$ transfer to $\mathbb Q$'' (p.~12).
+\item \emph{State evolution} (pp.~12--15). Under $\P$, the AMP field
+ $\boldsymbol z^k$ of Algorithm~1 ((4.15), p.~12) satisfies: the empirical law
+ of $(x_{0,i}z^k_i)_i$ converges to $N(\tilde\gamma_k,\tilde\gamma_k)$,
+ $\tilde\gamma_k=\gamma_k+t$ (Propositions~4.3--4.4, pp.~12--13), where
+ $\gamma_{k+1}=\beta^2\E\tanh(\tilde\gamma_k+\sqrt{\tilde\gamma_k}\,G)$,
+ $G\sim N(0,1)$ ((4.16) with Proposition~4.4). Since (4.16) and (4.17)
+ at $j=k$ differ only by $\tanh$ against $\tanh^2$, Proposition~4.4
+ ($\Sigma_{k+1,k+1}=\gamma_{k+1}$, with $\Sigma_{k,k}+t=\tilde\gamma_k$) amounts to
+ $\E\tanh(\tilde\gamma_k+\sqrt{\tilde\gamma_k}\,G)=\E\tanh^2(\tilde\gamma_k+\sqrt{\tilde\gamma_k}\,G)$,
+ and (4.16) becomes
+ $\gamma_{k+1}=\beta^2(1-\operatorname{mmse}(\tilde\gamma_k))$ (4.20), with
+ $\operatorname{mmse}(\gamma)=1-\E\tanh^2(\gamma+\sqrt\gamma\,G)$ (p.~13).
+\item \emph{Fixed point} (Lemma~4.5, pp.~13--14).
+ (c)~$\gamma_*=\beta^2(1-\operatorname{mmse}(\gamma_*+t))$ (4.21) has a
+ nonnegative solution for $t\ge0$, unique for $t>0$ (p.~14),
+ and $\gamma_k\to\gamma_*$. AMS label the lemma as Lemma~6.1 of Deshpande,
+ Abbe and Montanari \cite{NL-DeshpandeAbbeMontanari2017}, and take from
+ there the monotonicity and convexity of $\operatorname{mmse}$ (part (a)). The
+ sampler's constant is
+ $q_*=\lim_kq_k$, $q_{k+1}=\E\tanh^2(\beta^2q_k+t+\sqrt{\beta^2q_k+t}\,G)$
+ ((2.5), p.~5), so $\gamma_*=\beta^2q_*$.
+\end{itemize}
+
+\paragraph{Correspondence.}
+Dictionary: $J=\beta\boldsymbol A$ off the diagonal, $j=\beta^2$, $X=\boldsymbol x$
+(or $\boldsymbol x_0$), $Y(t)=\boldsymbol y(t)$, and $s=\gamma+t$.
+
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{1.9cm}%
+>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Object & Preprint & AMS \cite{ElAlaouiMontanariSellke2022-SamplingSKAlgorithmicSL}\\
+\midrule
+\endfirsthead
+\toprule
+Object & Preprint & AMS \cite{ElAlaouiMontanariSellke2022-SamplingSKAlgorithmicSL}\\
+\midrule
+\endhead
+Original law
+& $J$, $X\sim\mu_0$, $Y(t)=tX+B(t)$ \ploc{(Proposition~5.1, p.~27)}{stability.tex:35--48}
+& $\mathbb Q$ (4.8) in the form (4.12): $t\boldsymbol x+\bar{\boldsymbol B}(t)$, $\boldsymbol x\sim\mu_{\boldsymbol A}$\\
+\addlinespace
+Likelihood
+& $L(J)=Z(J)/\E Z(J)$ \ploc{(p.~39)}{stability.tex:1022--1027}
+& $Z_{\mathsf{SK}}(\boldsymbol A)$ (4.6)\\
+\addlinespace
+Size-biased law
+& density $\propto e^{x^{\mathsf T}Jx/2}$ times the Gaussian density; $X$ uniform; given $X$, $J_{ik}$ independent with mean $jX_iX_k/n$, variance $j/n$ \ploc{(p.~39)}{stability.tex:1028--1033}
+& (4.1), (4.3): $\boldsymbol x\sim\bar\nu$, $\boldsymbol A=\frac\beta n\boldsymbol x\boldsymbol x^{\mathsf T}+\boldsymbol W$; $\mu_{\rm pl}(\cdot\mid\boldsymbol A)=\mu_{\boldsymbol A}$\\
+\addlinespace
+Diagonal
+& independent $N(j/n,2j/n)$ entries added \ploc{(p.~39)}{stability.tex:1033--1034}
+& GOE diagonal plus spike $\beta/n$ (4.3); footnote~3 (p.~10)\\
+\addlinespace
+Observation
+& ``Conditional observation paths given $J$ are unchanged by size bias'' \ploc{(p.~39)}{stability.tex:1037--1038}
+& $\P$ (4.9); $d\P/d\mathbb Q$ depends on $\boldsymbol A$ only (Proposition~4.2)\\
+\addlinespace
+Gauge
+& conjugation by $D_X$ gives (5.4) \ploc{(pp.~28, 39)}{stability.tex:109--118; 1034--1037}
+& $\P$ at time $t$, conjugated by $\operatorname{diag}(\boldsymbol x_0)$ (first display below)\\
+\addlinespace
+Transfer
+& $\E[Lp_n\one]\le Ce^{-a_4n}$, (5.27), Markov: $p_n\le e^{-an}$ on $\mathcal J_n$ \ploc{(pp.~39--40)}{stability.tex:1067--1083}
+& $\E_{\P}F=\E_{\mathbb Q}[Z_{\mathsf{SK}}F]$ (4.14); contiguity (p.~12)\\
+\addlinespace
+\midrule
+Fixed point
+& $s_*=t+j\E_{N(s_*,s_*)}\tanh y$ \ploc{(4.8), p.~25}{entropy.tex:224--226}
+& fixed-point form of (4.16); (4.21) (p.~14)\\
+\addlinespace
+Nishimori
+& $\E_{N(s,s)}\tanh y=\E_{N(s,s)}\tanh^2y$ \ploc{(4.10), p.~25}{entropy.tex:250--259}
+& Proposition~4.4: (4.16) and (4.17) agree at $j=k$, giving (4.20) (pp.~12--13)\\
+\addlinespace
+Overlap
+& $q_*(t)=(s_*-t)/j$ \ploc{(4.9)}{entropy.tex:236--241}
+& $q_*=\gamma_*/\beta^2$ (2.5)\\
+\addlinespace
+Equality law
+& $P_t=N(s_*,s_*)$ \ploc{(display after (5.9), p.~29)}{stability.tex:216--222}
+& limit law of $(x_{0,i}z^k_i)_i$ at the fixed point (Propositions~4.3--4.4)\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\smallskip\noindent\emph{Planted law.} With $D=\operatorname{diag}(\boldsymbol x_0)$, AMS's
+$\P$ at time $t$ gives
+\[
+ \widetilde J:=\beta D\boldsymbol AD=\tfrac jn\one\one^{\mathsf T}+\beta D\boldsymbol WD,
+ \qquad h_0:=D\boldsymbol y(t)=t\one+D\boldsymbol B(t),
+\]
+where $\beta D\boldsymbol WD$ is GOE of scale $j$ and $D\boldsymbol B(t)\sim\sqrt t\,g$,
+both independent of $\boldsymbol x_0$: this is the preprint's (5.4). For the likelihood, with
+$J=\beta(\boldsymbol A-\operatorname{diag}\boldsymbol A)$ and $\E Z(J)=2^ne^{j(n-1)/4}$,
+\[
+ Z_{\mathsf{SK}}(\boldsymbol A)=L(J)\,e^{\frac\beta2\Tr\boldsymbol A-\frac{\beta^2}4},
+\]
+and the last factor tilts each $\beta A_{ii}\sim N(0,2j/n)$ to $N(j/n,2j/n)$,
+the diagonal the preprint adds. So the preprint's size-biased law is AMS's
+$\P$, its original law is $\mathbb Q$, and its planted estimate is (4.14)
+integrated against $p_n(J)\one_{\{\norm J\le2\sqrt j+\theta\}}$.
+
+\smallskip\noindent\emph{Fixed point.} With $s_*=\gamma_*+t$ and
+$j=\beta^2$,
+\[
+ s_*=t+j\,\E_{N(s_*,s_*)}\tanh y
+ \iff
+ \gamma_*=\beta^2\,\E\tanh\bigl(\gamma_*+t+\sqrt{\gamma_*+t}\,G\bigr)
+ =\beta^2\bigl(1-\operatorname{mmse}(\gamma_*+t)\bigr),
+\]
+the last equality being the preprint's Nishimori identity (4.10), which is
+what AMS Proposition~4.4 asserts through (4.16)--(4.17); in particular
+$F(s)=1-\operatorname{mmse}(s)$ and $s_*=\beta^2q_*+t$, with $q_*$ from AMS
+(2.5). The Lipschitz constant in Lemma~4.2, with the same comparison proof,
+and its upper size bound correspond to AMS (4.24) and to the upper half of
+(4.23).
+
+\paragraph{What is new in the preprint.}
+\begin{itemize}
+\item A quantitative transfer in place of contiguity:
+ $\E Z^2/(\E Z)^2\le(1-j)^{-1/2}$, Paley--Zygmund and Gaussian concentration
+ of $\log Z$ give $\P\{L(J)<e^{-\delta n}\}\to0$
+ \ploc{(5.27), p.~39}{stability.tex:1040--1065}, and Markov's inequality
+ converts the exponentially small planted bound into exponentially small
+ conditional failure probabilities $p_n(J)$ for typical $J$.
+\item The planted law is used, in the gauge $x=\one$ and with the diagonal kept
+ during the computation and removed afterwards, inside the smoothed Kac--Rice
+ integral (5.5) (finding~\ref{f:fmm-cfm-kac-rice}); AMS use it for AMP state
+ evolution.
+\item The fixed-point equation arises as the equality case of the scalar
+ entropy inequality (Lemma~4.1) under the consistency equations (4.7), and
+ the proof shows that a consistent Gaussian $N(d,s)$ must have $d=s$
+ \ploc{(pp.~25--26)}{entropy.tex:266--298}; in AMS the Nishimori form
+ comes from Bayes optimality (Proposition~4.4).
+\item A direct proof of the derivative bound $F'\in[0,1]$, by Gaussian
+ differentiation and the odd-sign inequality (4.11)
+ \ploc{(p.~25)}{entropy.tex:260--267}, applied on
+ \ploc{p.~26}{entropy.tex:304--316}; uniqueness then follows by
+ contraction for every $t\ge0$, including $t=0$. AMS derive the same bound,
+ as $-\operatorname{mmse}'\in[0,1]$ (pp.~14--15), from
+ $\operatorname{mmse}'(0)=-1$ and the convexity in Lemma~4.5(a), and prove
+ uniqueness for $t>0$ by concavity.
+\end{itemize}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item \emph{Planted law.} Put \ploc{(5.4) (p.~28)}{stability.tex:109--118}
+ and the size-bias paragraph of \ploc{\S5.4 (p.~39)}{stability.tex:1022--1038}
+ beside AMS (4.1)--(4.6) (p.~10) and (4.9) (p.~11); check the gauge and
+ diagonal identities displayed above.
+\item \emph{Likelihood transfer.} Compare the sentence on conditional
+ observation paths, and the planted estimate together with its Markov step
+ \ploc{(pp.~39--40)}{stability.tex:1037--1038; 1067--1083}, against AMS
+ Proposition~4.2 (p.~11), (4.12)--(4.14) and the transfer sentence (p.~12).
+\item \emph{Fixed point.} Compare \ploc{Lemma~4.2, (4.8)--(4.10)
+ (p.~25)}{entropy.tex:220--259} with AMS (4.16) (p.~12),
+ Proposition~4.4 and (4.20) (p.~13), (4.21) (p.~14) and (2.5) (p.~5), using
+ $s_*=\gamma_*+t$ and $j=\beta^2$.
+\end{enumerate}
+\finding[A route to a Poincar\'e inequality via the inverse TAP Hessian]{A route to a Poincar\'e inequality from covariance bounds at stochastic-localization fields, via the inverse TAP Hessian}{eag-roadmap}
+
+\paragraph{Summary.}
+El Alaoui and Gaitonde (AG below)
+\sloc{ElAlaouiGaitonde2022-CovarianceMatrixSK}{\S2, pp.~3--4} set out,
+without proofs, a route, which they call possibly relevant to Poincar\'e and
+log-Sobolev inequalities for the SK model at every $\beta<1$: at fields $y$
+produced by stochastic localization, $\Cov(\mu_y)$ should be the inverse of
+the negative TAP Hessian; its expected operator norm would be bounded given a
+Frobenius approximation bound and uniform positive definiteness of that matrix
+outside probability $O(1/n)$; and an operator-norm covariance bound along stochastic localization gives a
+Poincar\'e inequality by the technique of Eldan--Shamir and Chen--Eldan.
+The preprint carries out this route: it proves positivity of exactly this
+matrix, in symmetrized form, at every approximate TAP root on the observation
+path \ploc{(Proposition~5.1, p.~27)}{stability.tex:35--60}; at those fields,
+with the TAP linear-response vector as test vector
+\ploc{(\S6.4, pp.~45--48)}{residuals.tex:281--548}, it proves a covariance
+bound \ploc{(Proposition~7.2, p.~56)}{consequences.tex:89--98} equivalent up
+to constants to $\norm{\Cov_{\mu_h}(x)}\le C$; and it transfers that bound to
+$\mu_0$ \ploc{(\S2, pp.~7--10)}{observation.tex:1--212}.
+The preprint cites AG only for their zero-field Theorem~1.1
+\ploc{(\S1.1, p.~4)}{introduction.tex:89--92}; it says neither that AG
+proposed the route nor that Proposition~7.2 is an operator-norm covariance
+bound at the posterior fields.
+Grade: \grade{Partial}, because what AG contribute is a route, not proofs,
+and their one concrete step, the Frobenius bound (2.7) with that positivity
+at the mean of $\mu_y$, is not reused: the preprint
+never forms $\mathcal H\Cov{}-I$, and its positivity holds at every approximate
+root outside probability $e^{-an}$. The transfer step is Eldan--Shamir's and
+Chen--Eldan's (the preprint credits Chen--Eldan), and the linear-response
+formula Plefka's and Adhikari et al.'s, as AG say.
+
+\paragraph{Setup.}
+AG write the coupling matrix as $\beta A$, with $A_{ii}=0$ and
+$A_{ij}=A_{ji}=g_{ij}/\sqrt n$ for standard Gaussians $g_{ij}$
+\sloc{ElAlaouiGaitonde2022-CovarianceMatrixSK}{Thm~1.3, p.~2}, and the
+external field as $y$; so $J=\beta A$, $j=\beta^2$, and AG's $\mu_y$ is the
+preprint's $\mu_h$ at $h=y$. They put $Q(m)=\norm m^2/n$,
+$D(m)=\operatorname{diag}(1/(1-m_i^2))$ (pp.~3--4) and, with $\operatorname{ent}$ the
+binary entropy (their $h$),
+$\mathcal F_{\mathrm{TAP}}(m)=\frac\beta2\ip m{Am}+\sum_i\operatorname{ent}(m_i)
++\frac{n\beta^2}4(1-Q(m))^2$ ((2.3), p.~3). In the preprint, $y$ is instead
+the coordinate $\operatorname{arctanh}m$ and $A$ a nonnegative diagonal
+matrix; in the tables below each letter keeps its meaning in its own column.
+$V_y$, $\mathsf H_J(y,A)$ and $\mathcal H(m)$ are as in
+Section~\ref{sec:overview}. In the implicit construction at a stable field
+$h_0$ with root $r$, $t_*=\tanh r$
+\ploc{(\S6.4, pp.~45--47)}{residuals.tex:288--443}, $m^k=\tanh h^k$ is an
+iterate of (6.1) near $t_*$; $A$ is a positive diagonal within
+$C\rho\sqrt n$ of $V_{h^k}$ in Frobenius norm, with average $\chi$
+((6.12), (6.17)); and the test vector $w$ solves the linear system (6.18),
+whose matrix is $I+AL_2$ with
+$L_2=j\chi I-J+\frac jn(m^{k-1}+t_*)\ell^{\mathsf T}$, $\ell\approx-t_*$.
+
+\paragraph{Role in the argument.}
+This route is the architecture of the proof. Proposition~5.1 gives, before
+the stopping time of Corollary~5.2, a margin for $\mathsf H_J$ at every
+approximate root; Lemma~6.3 turns it into a bounded inverse for the implicit
+system (6.18) \ploc{(proof, p.~47)}{residuals.tex:410--438} and the margin
+(6.15) \ploc{(p.~46)}{residuals.tex:364--373}; Proposition~7.2 turns
+the test vector into the covariance bound (1.5); and \S2.2 inserts that bound
+into $u'(t)=-\E[\one_{\{t<\tau\}}\norm{\Cov_t(f,x)}^2]$, giving
+$u'\ge-C_{\mathrm d}(u+d_0)$ and the retained variance (2.4)
+\ploc{(p.~8)}{observation.tex:70--86}; with the terminal gap and the
+bad-path bound this gives Theorem~1.1 with $C_\beta=4e^{C_{\mathrm d}T}$
+\ploc{(\S2.4, p.~10)}{observation.tex:188--209}.
+
+\paragraph{The earlier technique.}
+For zero field and $\beta<1$, AG \cite{ElAlaouiGaitonde2022-CovarianceMatrixSK}
+(arXiv v3, 2024) prove $\E\norm{\Cov(\mu)}_{\mathrm{op}}\le C(\beta)$
+(Thm~1.1, p.~2) by inverting the resolvent bound
+$\E\norm{((1+\beta^2)I-\beta A)\Cov(\mu)-I}_F^2\le C(\beta)$ (Thm~1.3, p.~2)
+off an event of probability $e^{-c(\varepsilon)n}$ ((1.5)--(1.11), pp.~2--3).
+Their \S2, announced on p.~2, proposes three steps at a nonzero field:
+\begin{enumerate}
+\item \emph{Linear response} ((2.2)--(2.5), p.~3). For a typical field,
+ $\log Z(y)=\max_m\{\mathcal F_{\mathrm{TAP}}(m)+\ip ym\}+o_{\P}(n)$, and two
+ $y$-derivatives suggest
+ \[
+ \Cov(\mu_y)\approx-\bigl(\nabla^2\mathcal F_{\mathrm{TAP}}(m)\bigr)^{-1}
+ =\Bigl(D(m)-\beta A+\beta^2\bigl(1-Q(m)\bigr)I-\tfrac{2\beta^2}nmm^{\mathsf T}\Bigr)^{-1},
+ \]
+ with $m$ the maximizer. AG credit the formula, as a heuristic, to Plefka \cite{NL-Plefka1982} and to
+ \sloc{AdhikariEtAl2021-DynamicalApproachTAPSK}{(1.12), p.~6} (AG p.~4).
+\item \emph{Positivity} (p.~4). For $\beta$ small enough (e.g.\ below the AT
+ line when $y$ is Gaussian), one may try to prove the Frobenius bound (2.7)
+ $\E\norm{(-\nabla^2\mathcal F_{\mathrm{TAP}}(m))\Cov(\mu_y)-I}_F^2\le C(\beta)$,
+ with $m$ the mean of $\mu_y$. A bound on $\E\norm{\Cov(\mu_y)}_{\mathrm{op}}$
+ would follow, by the argument of (1.10), once
+ $\lambda_{\max}(\nabla^2\mathcal F_{\mathrm{TAP}}(m))\le-\varepsilon$ outside an
+ event of probability $O(1/n)$. AG note that Celentano's local strong
+ concavity \cite{Celentano2022-SudakovFerniquePostAMPTAPConvexity} holds only
+ with probability $1-o_n(1)$, short of that rate.
+\item \emph{Transfer} (p.~4). By the technique of Eldan and Shamir
+ \cite{NL-EldanShamir2022}, generalized by Chen and Eldan
+ \cite{ChenEldan2022-LocalizationSchemes}, operator-norm covariance bounds at
+ the fields visited by Eldan's stochastic localization yield Poincar\'e and
+ log-Sobolev inequalities for $\mu$. In Chen--Eldan
+ the step is the Cauchy--Schwarz bound
+ $\ip{v_t}{C_tv_t}\le\norm{C_t^{1/2}\Cov(\nu_t)C_t^{1/2}}_{\mathrm{op}}\Var_{\nu_t}\varphi$
+ \sloc{ChenEldan2022-LocalizationSchemes}{(14), p.~22}, integrated along
+ stochastic localization in \sloc{ChenEldan2022-LocalizationSchemes}{(20), p.~24}.
+\end{enumerate}
+
+\paragraph{Correspondence.}
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.13\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Step & AG \S2 & Preprint\\
+\midrule
+\endfirsthead
+\toprule
+Step & AG \S2 & Preprint\\
+\midrule
+\endhead
+Fields
+& $\mu_y\propto\exp\{\frac\beta2\sigma^{\mathsf T}A\sigma+\ip y\sigma\}$ (2.1),
+ $y$ from Eldan's stochastic localization (p.~4)
+& $\mu_h$ at $h=Y(t)=tX+B(t)$ \ploc{(1.4), p.~6}{introduction.tex:198--203},
+ credited to Eldan and El~Alaoui--Montanari \ploc{(p.~4)}{introduction.tex:105--108}\\
+\addlinespace
+TAP point
+& Maximizer $m$ of $\mathcal F_{\mathrm{TAP}}(m)+\ip ym$ ((2.2), p.~3)
+& Unique zero $r$ of $F_{J,h_0}$ \ploc{(Lemma~5.7, p.~40)}{stability.tex:1105--1125};
+ $\tanh r$ is the critical point of the potential $\Phi$ of its proof
+ \ploc{(p.~40)}{stability.tex:1143--1156} (not the kernel $\Phi$ of (6.8)), and
+ $\Phi=-\mathcal F_{\mathrm{TAP}}-\ip{h_0}{\cdot}+n(\log2+j/4)$\\
+\addlinespace
+TAP Hessian
+& $-\nabla^2\mathcal F_{\mathrm{TAP}}(m)$ ((2.5), p.~3)
+& $\mathsf H_J(y,V_y)=V_y^{1/2}\Phi''(m)V_y^{1/2}$
+ \ploc{(5.2), p.~27; p.~40}{stability.tex:24--30, 1150--1156}\\
+\addlinespace
+Positivity
+& $\lambda_{\max}(\nabla^2\mathcal F_{\mathrm{TAP}}(m))\le-\varepsilon$ at the
+ mean vector $m$ of $\mu_y$, outside probability $O(1/n)$; Celentano's $1-o(1)$
+ falls short (p.~4)
+& $\mathsf H_J(y,A)\succ cI$ at all approximate zeros $y$ of $F_{J,Y(t)}$,
+ diagonals $A$ near $V_y$ and $t\le T$, outside probability $e^{-an}$
+ \ploc{(5.3), p.~27}{stability.tex:35--60}; like AG, the preprint
+ contrasts Celentano's local convexity with what it needs (AG: a
+ quantitative probability; the preprint: every approximate root along the
+ path), without crediting AG \ploc{(p.~4)}{introduction.tex:120--124}\\
+\addlinespace
+Linear response
+& $\Cov(\mu_y)\approx(-\nabla^2\mathcal F_{\mathrm{TAP}}(m))^{-1}$ ((2.4),
+ p.~3), to be made precise by (2.7) (p.~4)
+& Test vector $w=(I+AL_2)^{-1}Ae$ \ploc{(6.18), p.~47}{residuals.tex:410--443},
+ which the preprint calls its linear-response test
+ \ploc{(\S6, p.~41)}{residuals.tex:4--10}\\
+\addlinespace
+Covariance bound
+& $\E\norm{\Cov(\mu_y)}_{\mathrm{op}}\le C$ (p.~4)
+& $\norm{\Cov_{\mu_{h_0}}(G,x)}\le C(\Var G+\D_{h_0}(G))^{1/2}$ for all $G$
+ at every stable field \ploc{(7.2), p.~56}{consequences.tex:89--98};
+ equivalent up to constants to $\norm{\Cov_{\mu_{h_0}}(x)}\le C'$\\
+\addlinespace
+Transfer
+& Eldan--Shamir, Chen--Eldan (p.~4)
+& $u'\ge-C_{\mathrm d}(u+d_0)$ from (1.5), then (2.4)
+ \ploc{(\S2.2, p.~8)}{observation.tex:70--86}; framework credited to
+ Chen--Eldan \ploc{(pp.~4, 7)}{introduction.tex:108--110; observation.tex:6--9}\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+The two key formulas side by side, with AG's $\beta A$ equal to $J$,
+$j=\beta^2$ and $m=\tanh y$, so that $b(y)=1-Q(m)$ and $V_y^{-1}=D(m)$:
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+AG & Preprint\\
+\midrule
+\endfirsthead
+\toprule
+AG & Preprint\\
+\midrule
+\endhead
+TAP Hessian, (2.5), p.~3:
+$-\nabla^2\mathcal F_{\mathrm{TAP}}(m)=D(m)-\beta A+\beta^2(1-Q(m))I-\frac{2\beta^2}nmm^{\mathsf T}$
+& Stability matrix \ploc{(5.2), p.~27}{stability.tex:24--28} at $A=V_y$:
+$\mathsf H_J(y,V_y)=V_y^{1/2}\bigl(D(m)+jb(y)I-J-\frac{2j}nmm^{\mathsf T}\bigr)V_y^{1/2}
+=V_y^{1/2}\bigl(-\nabla^2\mathcal F_{\mathrm{TAP}}(m)\bigr)V_y^{1/2}$\\
+\addlinespace
+Linear response, (2.4), p.~3: $\Cov(\mu_y)\approx\bigl(-\nabla^2\mathcal F_{\mathrm{TAP}}(m)\bigr)^{-1}$
+& Test vector, \ploc{(6.18), p.~47}{residuals.tex:410--416}, source $w_0=Ae$:
+$w=A^{1/2}\bigl(I+A^{1/2}L_2A^{1/2}\bigr)^{-1}A^{1/2}e$, with
+$I+A^{1/2}L_2A^{1/2}=\mathsf H_J(h^k,A)+O(\rho)$; and
+$A^{1/2}\mathsf H_J(h^k,A)^{-1}A^{1/2}=\mathcal H(m^k)^{-1}$ at $A=V_{h^k}$\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+Since $V_y\preceq I$, the margin $\mathsf H_J(y,V_y)\succ cI$ gives
+$-\nabla^2\mathcal F_{\mathrm{TAP}}(m)\succeq cD(m)\succeq cI$: AG's condition
+with $\varepsilon=c$, at the approximate TAP roots rather than at the mean of
+$\mu_y$. In the second row, the source $w_0=Ae$ has $u_0=e$,
+$p_0=0$ \ploc{(p.~48)}{residuals.tex:509--514}, so (6.18) reads
+$(I+AL_2)w=Ae$, and $(I+AL_2)^{-1}A=A^{1/2}(I+A^{1/2}L_2A^{1/2})^{-1}A^{1/2}$;
+the matrix the preprint places within $O(\rho)$ of $I+A^{1/2}L_2A^{1/2}$
+\ploc{(p.~47)}{residuals.tex:418--423} is
+$I+jb_kA-A^{1/2}JA^{1/2}-\frac{2j}nA^{1/2}m^k(m^k)^{\mathsf T}A^{1/2}
+=\mathsf H_J(h^k,A)$, as $b(h^k)=b_k$. Proposition~7.2 is an operator-norm bound:
+for $G=e^{\mathsf T}x$ with $\norm e=1$, $d_iG=e_i$, so
+$\D_{h_0}(G)=\E\sum_iv^1_ie_i^2\le1$, and (7.2) gives
+$\norm{\Cov(x)e}^2\le C^2(e^{\mathsf T}\Cov(x)e+1)$, hence
+$\norm{\Cov_{\mu_{h_0}}(x)}\le C^2+C$; conversely, Cauchy--Schwarz gives
+$\norm{\Cov(G,x)}^2\le\norm{\Cov(x)}\Var G$. In \S2.2 it enters where
+Chen--Eldan's (14) uses $\norm{\Cov(\nu_t)}_{\mathrm{op}}$.
+
+\paragraph{What is new in the preprint.}
+\begin{itemize}
+\item Positivity at \emph{every} approximate root, for perturbed diagonals,
+ simultaneously for $t\le T$, outside probability $e^{-an}$
+ (Proposition~5.1), far stronger than the $O(1/n)$ rate AG name, as the
+ bad-path bound of \S2.3 requires; it is proved by a Kac--Rice computation
+ and an approximate-root exclusion
+ (findings~\ref{f:fmm-cfm-kac-rice} and~\ref{f:huang-sellke-approx-crit}).
+\item A deterministic covariance bound at every stable field, without the
+ resolvent bound (2.7): the preprint tests the TAP residual of a
+ Gibbs-sample-started recursion against $w$ through spin-flip residual
+ identities
+ \ploc{(Lemmas~6.5--6.6, pp.~53--55; (7.3), p.~57)}{residuals.tex:886--1069; consequences.tex:113--132}
+ and the scalar identity (6.9) (finding~\ref{f:chatterjee-stein}).
+\item Exceptional paths: the preprint stops at the first failure of stability
+ and bounds the variance on bad paths, for every $f$, by the $f^2$-tilted
+ observation law and Proposition~7.3
+ \ploc{(\S2.3, pp.~8--9)}{observation.tex:90--160}
+ (finding~\ref{f:hmrw-stopped-sl}).
+\item A terminal gap at a large fixed time
+ \ploc{(Proposition~8.3, p.~63)}{terminal.tex:334--346}, which AG do not
+ discuss.
+\end{itemize}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item \emph{Matrix.} Put AG (2.3)--(2.5) (p.~3) beside
+ \ploc{(5.1)--(5.2) (pp.~26--27)}{stability.tex:10--28} and the potential in
+ the proof of \ploc{Lemma~5.7 (p.~40)}{stability.tex:1143--1156}, with
+ $J=\beta A$, $j=\beta^2$ and AG's $y$ as $h_0$.
+\item \emph{Positivity.} Compare the paragraph after AG (2.7) (p.~4) with
+ \ploc{Proposition~5.1 and Corollary~5.2 (p.~27)}{stability.tex:35--72}.
+\item \emph{Linear response.} Compare AG (2.4)--(2.5) (p.~3) with the opening
+ of \ploc{\S6 (p.~41)}{residuals.tex:4--10} and the inversion of (6.18) in
+ the proof of \ploc{Lemma~6.3 (p.~47)}{residuals.tex:410--443}.
+\item \emph{Route and credit.} Read AG p.~2 (pointer to \S2) and the two
+ paragraphs after (2.7), on Celentano and on Eldan--Shamir (p.~4); then the
+ preprint's \ploc{\S1.1 (p.~4)}{introduction.tex:89--124},
+ \ploc{Proposition~7.2 (p.~56)}{consequences.tex:89--98} and
+ \ploc{\S2.2 (p.~8)}{observation.tex:70--86}.
+\end{enumerate}
+\finding[Stopped stochastic localization with exceptional paths]{Stopped stochastic localization with exceptional paths}{hmrw-stopped-sl}
+
+\paragraph{Summary.}
+Huang, Mohanty, Rajaraman and Wu (HMRW) introduce stopped localization as
+``a generic tool'' for weak Poincar\'e inequalities: stop a stochastic
+localization at the first failure of a high-probability path estimate that
+does not involve the test function, call a path bad if it
+stops early or if its terminal measure fails the terminal inequality, and
+split the retained variance into a good part, bounded by the terminal
+inequality, and a bad part
+\sloc{HuangEtAl2024-WeakPoincareSimulatedAnnealing}{\S2, p.~15; \S6.2, Lemmas~6.6 and~6.8, pp.~26--27; Lemmas~4.11 and~A.6, pp.~20 and~74}.
+The preprint's transfer from posterior estimates to Theorem~1.1 has this
+skeleton: a test-function-independent stopping time $\tau=T\wedge\tau_0$ at
+the first possible loss of field stability
+\ploc{(Corollary~5.2, p.~27; \S2.2, p.~7)}{stability.tex:62--97; observation.tex:45--51},
+the bad event with its bound \ploc{(2.3)}{observation.tex:53--68}, stopped variance retention
+\ploc{(2.4)}{observation.tex:70--88}, and the good/bad split
+\ploc{(\S2.4, p.~10)}{observation.tex:188--205}.
+The preprint does not cite HMRW. For the framework of its \S2 it cites
+El~Alaoui--Montanari for the Gaussian channel and Chen--Eldan for ``the
+variance/Dirichlet-form framework'' \ploc{(\S2, p.~7)}{observation.tex:3--9},
+and Lehec only for the drift-energy identity
+\ploc{(\S2.3, p.~8)}{observation.tex:104--105}. Chen--Eldan's annealing
+theorem gives the good half, with the Dirichlet-form monotonicity (2.2) in
+the role of their Proposition~48, but assumes the terminal gap almost surely,
+with no exceptional paths
+\sloc{ChenEldan2022-LocalizationSchemes}{Theorem~46 and Proposition~48, pp.~32--33};
+the uncredited content is the stopping-and-exceptional-path scaffold.
+Grade: \grade{Partial}, because that scaffold is reused while HMRW's defining
+step, charging the bad part by $\operatorname{osc}(f)^2$ times its
+probability, is replaced by an $f^2$-tilted entropy bound.
+
+\paragraph{Setup.}
+Section~\ref{sec:overview} of this document defines $\mu_h$, $\D_h$ and the
+observation process $Y(t)$. This finding also needs:
+\begin{itemize}
+\item \emph{Test function.} $\E_{\mu_0}f=0$, $\E_{\mu_0}f^2=1$ and
+$d_0=\D_0(f)$. With $\E_t$ the expectation under $\mu_{Y(t)}$,
+$M_t=\E_tf$, $N_t=\E_tf^2$ and $V_t=N_t-M_t^2=\Var_{\mu_{Y(t)}}(f)$
+\ploc{(\S2.2, p.~8)}{observation.tex:70--74}.
+\item \emph{Stopping.} $\tau_0$ is the first $t\le T$ with
+$d_J(Y(t))\le\rho_0$, where $d_J(h)$ is the infimum of
+$\norm{F_{J,h}(y)}/\sqrt n$ over pairs $(y,A)$ with $A$ near $V_y$ and
+$\mathsf H_J(y,A)\not\succ cI$. Then
+$\P(\tau_0\le T\mid J)\le e^{-an}$ on the matrix event of
+\ploc{Proposition~5.1}{stability.tex:35--60}
+\ploc{(Corollary~5.2 and its proof, p.~27)}{stability.tex:62--97}. Set
+$\tau=T\wedge\tau_0$.
+\item \emph{Bad paths.} With the terminal set
+$\mathcal T_n(J)=\{h:\Var_{\mu_h}(g)\le2\D_h(g)\text{ for every }g\}$, which
+$Y(T)$ misses with probability at most $e^{-cn}$
+\ploc{(Proposition~8.3, (8.14), p.~63)}{terminal.tex:334--350}, a path is bad
+if $\tau_0\le T$, or if $\tau_0>T$ and $Y(T)\notin\mathcal T_n(J)$. Then
+$\P(\mathrm{bad})\le2e^{-an}$ \ploc{(2.3)}{observation.tex:60--67}; on good
+paths $\tau=T$.
+\item \emph{Tilted observation law.} $\P^f$ is the law of the observation path
+when $X\sim f^2\mu_0$; its density on $\mathcal F_\tau$ is $N_\tau$
+\ploc{(\S2.3, p.~8)}{observation.tex:90--97}.
+\end{itemize}
+
+\paragraph{Role in the argument.}
+The preprint's \ploc{\S2}{observation.tex:1--212} uses this skeleton to carry
+back to $\mu_0$, uniformly over $f$, the three inputs of its
+\ploc{\S1.4}{introduction.tex:197--245} (listed in
+Section~\ref{sec:overview}). Before $\tau$ the field is stable, so the
+directional covariance bound holds for every $f$ and gives
+$u'\ge-C_{\mathrm d}(u+d_0)$ for $u(t)=\E V_{t\wedge\tau}$, hence (2.4). The
+terminal gap on good paths and $\P^f$ on bad ones then give $d_0\ge v/4$ and
+$C_\beta=4e^{C_{\mathrm d}T}$
+\ploc{(\S2.4, p.~10)}{observation.tex:188--209}. The introduction
+\ploc{(\S1.1, p.~4)}{introduction.tex:105--116} motivates the
+$f^2$-weighting by the variance that an exponentially rare observation event
+can carry: this scaffold's bad part.
+
+\paragraph{The earlier technique.}
+HMRW \cite{HuangEtAl2024-WeakPoincareSimulatedAnnealing} (arXiv v2,
+November 2024) use stochastic localization with driving matrix $C_t$,
+$\mu_t(x)\propto\mu_0(x)\exp(-\frac12\ip{x}{\Sigma_tx}+\ip{y_t}{x})$,
+$\Sigma_t=\int_0^tC_s^2\,ds$ (Definition~6.2, p.~25). A
+$(\rho_{\rm PI},\varepsilon)$-weak Poincar\'e inequality for Glauber dynamics
+is $\Var_\pi[f]\le\rho_{\rm PI}^{-1}\mathcal E(f,f)+\varepsilon\operatorname{osc}(f)^2$
+(Definition~A.1, p.~73).
+\begin{itemize}
+\item \emph{Stopping} (\S6.2, p.~26). Approximate conservation of variance can
+be ensured by stopping ``the localization scheme whenever it fails to hold''.
+Lemma~6.6: for every $\varphi$,
+\[
+ \tau=T\wedge\inf\bigl\{t:\norm{C_t^{1/2}\Cov(\mu_t)C_t^{1/2}}_{\rm op}\ge K\bigr\}
+ \quad\Longrightarrow\quad
+ \E\Var_{\mu_\tau}[\varphi]\ge e^{-TK}\Var_\mu[\varphi].
+\]
+Remark~6.7 notes that for variance retention alone the localization may
+depend on $\varphi$, and extends the stopping to any rate-of-decay condition,
+``by stopping the localization process whenever these conditions fail to
+hold''. Lemma~6.8 uses the $\varphi$-independent $\tau$ of Lemma~6.6.
+\item \emph{Exceptional paths} (Lemma~6.8, p.~27). If with probability
+$1-\eta_1$ the covariance bound holds for all $t\in[0,T]$, and with
+probability $1-\eta_2$ the measure $\mu_T$ satisfies a
+$(\rho_{\rm PI},\delta)$-weak Poincar\'e inequality, then $\mu$ satisfies a
+$(\rho_{\rm PI}e^{-TK},e^{TK}(\delta+\eta_1+\eta_2))$-weak Poincar\'e
+inequality. Proof: use the decomposition $\mu=\E\mu_\tau$; $\tau=T$ with
+probability $1-\eta_1$, so $\mu_\tau$ satisfies the terminal inequality with
+probability at least $1-\eta_1-\eta_2$; conclude by Lemma~4.11.
+\item \emph{Good/bad split} (Lemma~4.11, p.~20; Glauber version Lemma~A.6,
+p.~74, which uses Fact~A.3, p.~73:
+$\mathcal E_\pi(f,f)\ge\E_z\mathcal E_{\pi_z}(f,f)$). If $\E_z\Var_{\pi_z}[f]\ge C_{\rm Var}\Var_\pi[f]$ for all $f$ and
+$\pi_z$ satisfies a $(\rho_{\rm PI},\delta)$-weak Poincar\'e inequality with
+probability $1-\eta$, then $\pi$ satisfies a
+$(\rho_{\rm PI}C_{\rm Var},(\delta+\eta)/C_{\rm Var})$-weak one. The proof
+calls $z$ good if $\pi_z$ satisfies the inequality, applies it inside
+$\E[\mathcal E_{\pi_z}(f,f)\one_{\rm good}]$, and bounds $\E[\Var_{\pi_z}[f]\one_{\text{not good}}]$ by
+$\eta(\operatorname{osc}(f)^2+\sup\norm{\nabla f}^2)$, which is
+$\eta\operatorname{osc}(f)^2$ in the Glauber form (Lemma~A.6).
+\item \emph{Application} (\S7, p.~29). For spherical spin glasses (driving
+matrix $\mathrm{Id}$, large constant $T$), a high-probability covariance
+bound along the path (Lemma~7.6) and an endpoint weak
+Poincar\'e inequality (Lemma~7.7) are plugged into Lemma~6.8.
+\end{itemize}
+Davies, Lee, Sandhu and Shi apply these lemmas, with credit to HMRW, to
+Glauber dynamics for SK
+\sloc{DaviesEtAl2026-WeakPoincareApproxSL}{Lemma~2.10, p.~9; Theorem~5.5, p.~22}
+(see finding~\ref{f:dlss-weak-poincare}).
+
+\paragraph{Correspondence.}
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.1cm}%
+>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Step & Preprint & HMRW \cite{HuangEtAl2024-WeakPoincareSimulatedAnnealing}\\
+\midrule
+\endfirsthead
+\toprule
+Step & Preprint & HMRW \cite{HuangEtAl2024-WeakPoincareSimulatedAnnealing}\\
+\midrule
+\endhead
+Localization
+& $Y(t)=tX+B(t)$, posterior $\mu_{Y(t)}$ \ploc{(1.4)}{introduction.tex:198--203}
+& driving matrix $\mathrm{Id}$ (Def.~6.2; \S7, p.~29)\\
+\addlinespace
+Stopping
+& $\tau=T\wedge\tau_0$, $\tau_0$ the first $t$ with $d_J(Y(t))\le\rho_0$; ``does not use the test function'' \ploc{(Cor.~5.2; \S2.2)}{stability.tex:62--97; observation.tex:46--51}
+& $\tau=T\wedge$ first $t$ with $\norm{C_t^{1/2}\Cov(\mu_t)C_t^{1/2}}_{\rm op}\ge K$ (Lemma~6.6; proof of Lemma~6.8)\\
+\addlinespace
+Path estimate
+& for $J\in\mathcal J_n$, $\P(\tau_0\le T\mid J)\le e^{-an}$ \ploc{(Prop.~5.1, Cor.~5.2)}{stability.tex:35--72}
+& bound on $[0,T]$ with probability $1-\eta_1$ (Lemma~6.8); for typical $H_N$, with probability $1-e^{-cN^{1/5}}$ (Lemma~7.6)\\
+\addlinespace
+Retention
+& $\E V_\tau\ge v-(1-v)d_0$, $v=e^{-C_{\mathrm d}T}$ \ploc{(2.4)}{observation.tex:75--86}
+& $\E\Var_{\mu_\tau}[\varphi]\ge e^{-TK}\Var_\mu[\varphi]$ (Lemma~6.6)\\
+\addlinespace
+Terminal inequality
+& $\Var_{\mu_{Y(T)}}(f)\le2\D_{Y(T)}(f)$ for every $f$, except with probability $e^{-cn}$ \ploc{(Prop.~8.3)}{terminal.tex:334--350}
+& $\mu_T$ satisfies a weak Poincar\'e inequality with probability $1-\eta_2$ (Lemmas~6.8, 7.7)\\
+\addlinespace
+Bad paths
+& $\{\tau_0\le T\}\cup\{\tau_0>T,\ Y(T)\notin\mathcal T_n(J)\}$, $\P(\mathrm{bad})\le2e^{-an}$ \ploc{(2.3)}{observation.tex:60--67}
+& $\tau<T$ or $\mu_T$ fails; probability $\le\eta_1+\eta_2$ (proof of Lemma~6.8)\\
+\addlinespace
+Good part
+& $\E[\one_{\rm good}V_\tau]\le2\E\D_{Y(T)}(f)\le2d_0$ \ploc{(\S2.4)}{observation.tex:195--199}, the last step by $\E\D_{Y(t)}(f)\le\D_0(f)$ \ploc{(2.2)}{observation.tex:34--43}
+& $\mathcal E_\pi(f,f)\ge\rho_{\rm PI}\E[\Var_{\pi_z}[f]\one_{\rm good}]-\delta\rho_{\rm PI}\operatorname{osc}(f)^2$ (proof of Lemma~4.11, in its Glauber form, Lemma~A.6; first step by Fact~A.3)\\
+\addlinespace
+Bad part (not reused)
+& $\E[\one_{\rm bad}V_\tau]\le\E[\one_{\rm bad}N_\tau]=\P^f(\mathrm{bad})\le v/4$ \ploc{(\S2.4, with (2.9))}{observation.tex:158--160; 188--194}
+& $\E[\Var_{\pi_z}[f]\one_{\text{not good}}]\le\eta\operatorname{osc}(f)^2$ (proof of Lemma~4.11, in its Glauber form, Lemma~A.6)\\
+\addlinespace
+Conclusion
+& $\Var_{\mu_0}f\le C_\beta\D_0(f)$ \ploc{(Theorem~1.1)}{introduction.tex:33--39}, with $C_\beta=4e^{C_{\mathrm d}T}$ \ploc{(\S2.4, p.~10)}{observation.tex:206--209}
+& $(\rho_{\rm PI}e^{-TK},e^{TK}(\delta+\eta_1+\eta_2))$-weak Poincar\'e (Lemma~6.8)\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\noindent With $\pi_z=\mu_\tau$, $\eta=\eta_1+\eta_2$ and
+$C_{\rm Var}=e^{-TK}$, HMRW's chain in the Glauber form (first line) and the
+preprint's (second line) read
+\begin{gather*}
+ \mathcal E_\mu(f,f)\ge\rho_{\rm PI}\E\bigl[\Var_{\mu_\tau}[f]\one_{\rm good}\bigr]
+ -\delta\rho_{\rm PI}\operatorname{osc}(f)^2,\qquad
+ \E\bigl[\Var_{\mu_\tau}[f]\one_{\rm bad}\bigr]\le(\eta_1+\eta_2)\operatorname{osc}(f)^2;\\
+ 2d_0\ge2\E\D_{Y(T)}(f)\ge\E[\one_{\rm good}V_\tau],\qquad
+ \E[\one_{\rm bad}V_\tau]\le\E[\one_{\rm bad}N_\tau]=\P^f(\mathrm{bad}),
+\end{gather*}
+each closed by its retention bound (Lemma~6.6, resp.\ (2.4)), where
+$V_\tau=\Var_{\mu_{Y(\tau)}}(f)$ plays the role of $\Var_{\mu_\tau}[f]$. The
+good halves coincide (a true Poincar\'e inequality is the case $\delta=0$);
+the bad halves differ.
+
+\paragraph{What is new in the preprint.}
+\begin{itemize}
+\item The bad part is bounded under the $f^2$-tilted observation law, not by
+$\operatorname{osc}(f)^2$: $\P^f(\mathrm{bad})\le v/4$ uniformly over
+normalized $f$ with $d_0\le1$, from the stopped drift-energy identity (2.5),
+the square-reweighted mean estimate (1.6) (Proposition~7.3) applied before
+$\tau$, the weighted Dirichlet identity (2.6), the entropy bound (2.7) and the
+log-sum inequality \ploc{(\S2.3, pp.~8--9)}{observation.tex:90--160}.
+This is what yields a Poincar\'e inequality rather than a weak one.
+\item Variance retention through $u'\ge-C_{\mathrm d}(u+d_0)$, driven by
+$\norm{\Cov_{\mu_h}(G,x)}^2\le C(\Var_{\mu_h}(G)+\D_h(G))$ and (2.2), in place
+of a covariance cap with retention $e^{-TK}$.
+\item The stopping criterion is field stability, the least normalized residual
+$d_J(Y(t))$ of an unstable witness $(y,A)$, whose rarity is proved by a Kac--Rice-type
+Gaussian integral (Proposition~5.1; finding~\ref{f:fmm-cfm-kac-rice}), not a
+covariance norm.
+\item Heat-bath Glauber dynamics on $\{-1,1\}^n$ for SK at every $\beta<1$,
+with a true terminal Poincar\'e inequality at a large fixed time
+(Proposition~8.3).
+\end{itemize}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item \emph{Stopping rule.} \ploc{Corollary~5.2 and its proof (p.~27)}{stability.tex:62--97}
+and \ploc{the first paragraph of \S2.2 (p.~7)}{observation.tex:46--51} against
+HMRW Lemma~6.6, the sentence before Lemma~6.5 and Remark~6.7 (p.~26).
+\item \emph{Bad event.} \ploc{\S2.2, (2.3), p.~7}{observation.tex:53--68}
+against the proof of HMRW Lemma~6.8 (p.~27) and their \S2 (p.~15); compare
+Proposition~5.1 (p.~27) and Proposition~8.3 (p.~63) with HMRW
+Lemmas~7.6--7.7 (p.~29).
+\item \emph{Good/bad split.} \ploc{The two displays in \S2.4 (p.~10)}{observation.tex:188--199}
+against the proof of HMRW Lemma~A.6 (p.~74), that is, of Lemma~4.11 (p.~20)
+with Fact~A.3: the good halves match, (2.2) playing Fact~A.3; the bad halves
+differ.
+\item \emph{Cited framework.} Chen--Eldan Theorem~46 (p.~32) and its proof
+from Proposition~48 (p.~33), the counterpart of (2.2): a stopping time is
+allowed, and the terminal spectral gap is assumed almost surely.
+\end{enumerate}
+\finding[Uniform-in-diagonal estimates by projection and chaining]{Resolvent estimates uniform over adaptive diagonals by metric projection, concentration and chaining}{pha-uniform-diagonal}
+
+\paragraph{Summary.}
+The preprint's Lemma~3.1 bounds $\norm{\operatorname{diag}(Q-\mathsf P(Q))}_2$,
+with $\mathsf P(Q)$ a noncrossing prediction, by a constant ($O(n^{-1/2})$
+normalized) simultaneously over words $Q$ in a GOE matrix $W$ (or $J$) with at
+most one inverse $K_A=(I-AW+B_AA)^{-1}$, $B_A=jn^{-1}\Tr A$, and over diagonal
+parameters that ``may be chosen after the random matrix has been observed''
+\ploc{(Lemma~3.1 and (3.7), p.~12)}{matrices.tex:114--130}.
+Its proof \ploc{(\S3.3, pp.~17--19)}{matrices.tex:541--647} follows the
+assembly that Davies, Lee, Sandhu and Shi use in Theorem~B.9 for the
+same uniformity over all diagonals: metric projection of the GOE onto an
+operator-norm ball, increments regular in the diagonal parameters
+(H\"older-$\frac12$ in the preprint), Gaussian concentration, and chaining at
+the natural scale
+\sloc{DaviesEtAl2026-PotentialHessianAscentIIISampling}{p.~18; Lemma~B.8, p.~159; Theorem~B.9, pp.~160--162; Corollary~B.35, p.~179}.
+The preprint does not cite Davies et al.; in \S3 it cites only Speicher and
+Vitale, for other points \ploc{(pp.~11--12)}{matrices.tex:77--79; 170--174}.
+Grade: \grade{Partial}, because the assembly of standard steps in Theorem~B.9
+of Davies et al.\ is followed for the same purpose, while the objects controlled
+differ and the mean computation is the preprint's own.
+
+\paragraph{Correspondence.}
+With the normalized GOE $A$ of Davies et al., the preprint's $W$ is $\beta A$;
+for its diagonal $A=D^{-1}$, $K_A=\bar QD$ with $\bar Q=(B_AI-\beta A+D)^{-1}$.
+Davies et al.\ bound the diagonal of $D\bar Q^2D=K_A^{\mathsf T}K_A$ (two inverse
+factors), Lemma~3.1 words with one. Neither contains the other.
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{1.7cm}%
+>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Step & Davies et al.\ \cite{DaviesEtAl2026-PotentialHessianAscentIIISampling} & Preprint \cite{OAI-SpectralGap}\\
+\midrule
+\endfirsthead
+\toprule
+Step & Davies et al.\ \cite{DaviesEtAl2026-PotentialHessianAscentIIISampling} & Preprint \cite{OAI-SpectralGap}\\
+\midrule
+\endhead
+Statement
+& Cor.~B.35 ($\beta<1/2$, $\gamma=(1-2\beta)/2$): with probability $1-e^{-O((\log n)^\xi)}$, for all $D\succeq I$, $a\in[0,1]$, $\norm{E_{\mathcal D_n}[D(aI-\beta A+D)^{-2}D]-F'(a)D(F(a)I+D)^{-2}D}_{L^2}\le C\beta/(\gamma^4\sqrt n)$
+& (3.7), $j<1$: with probability $1-Ce^{-c_1n}$, for all words $Q$ of length $\le L$ with at most one $K_A(J)$ and all $0\le A\le a_+I$ with $S_A(1;J)\succeq cI$, $\norm{\operatorname{diag}(Q-\mathsf P(Q))}_2\le C$\\
+\addlinespace
+Truncation
+& $\bar A=\Pi_{C_{\rm op}}(A)$, metric projection in $\norm\cdot_{L^2}$ onto $\{\norm M_{\rm op}\le C_{\rm op}\}$, 1-Lipschitz (Thm~B.9)
+& $\widehat W=\Pi_R(W)$, metric projection in Frobenius norm onto $\{\norm M\le R\}$, nonexpansive; also a cutoff $f(S_A)$ \ploc{(pp.~13--14)}{matrices.tex:247--268}\\
+\addlinespace
+Increments
+& $\norm{\nabla\Phi_\theta-\nabla\Phi_{\tilde\theta}}_{L^2}\le\beta\rho(\theta,\tilde\theta)$ on the ball, for $\Phi_\theta=\operatorname{tr}_n(TD(aI-\beta A+D)^{-2}D)$, $\theta=(a,D^{-1},T)$ (Lemma~B.8); global via $\Pi_{C_{\rm op}}$ (p.~161)
+& $\operatorname{Lip}_{\rm F}(\widehat Q_\theta-\widehat Q_{\theta'})\le C\sqrt\Delta$ if $\norm{\theta-\theta'}_\infty\le\Delta\le1$, on the ball, then via $\Pi_R$ \ploc{(3.12), p.~14}{matrices.tex:270--312}\\
+\addlinespace
+Chaining
+& Herbst for increments; $\gamma_2$ and Dudley's integral over $2n+1$ parameters: $\E\sup_\theta|Z_\theta|\le C\beta/(\gamma^4\sqrt n)$, and w.h.p.; duality in $T$ (pp.~161--162)
+& Gaussian scale $C\sqrt{\Delta/n}$; meshes of spacing $2^{-\ell}$, union bound at $C'\sqrt{\ell+1}\,2^{-\ell/2}$ per level: $\sup_\theta\,N_k(\widehat Q_\theta-\E\widehat Q_\theta)\le C$, probability $1-Ce^{-c_1n}$ \ploc{(3.22), p.~18}{matrices.tex:576--610}\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item \emph{Increments.} \ploc{Pages~13--14, to (3.12),}{matrices.tex:247--312}
+against Lemma~B.8 and Theorem~B.9 (pp.~159--161).
+\item \emph{Chaining.} \ploc{Proof of Lemma~3.1 to (3.22)
+(pp.~17--18)}{matrices.tex:543--610} against that of Theorem~B.9 (pp.~161--162).
+\item \emph{Objects and means.} \ploc{Lemma~3.1 (p.~12)}{matrices.tex:114--134}
+against Corollary~B.35 (p.~179); means by loop equations
+\ploc{(Lemma~3.3, pp.~15--17)}{matrices.tex:327--539} and by free interpolation
+(Proposition~B.23, p.~169).
+\end{enumerate}
+\finding[Weak Poincar\'e inequality for SK Glauber at \texorpdfstring{$\beta<1/2$}{beta<1/2}]{A weak Poincar\'e inequality for SK heat-bath Glauber dynamics at \texorpdfstring{$\beta<1/2$}{beta<1/2} via approximate stochastic localization}{dlss-weak-poincare}
+
+\paragraph{Summary.}
+Davies, Lee, Sandhu and Shi (DLSS; arXiv v1, July~9, 2026) proved by
+approximate stochastic localization that for every $\beta<1/2$ and
+$\delta>0$, with probability at least $1-\delta$ for large $n$, heat-bath Glauber dynamics for the zero-field
+SK model satisfies the weak Poincar\'e inequality
+$\Var_{\mu_0}(f)\le e^{C/\epsilon}\D_0(f)+\epsilon\operatorname{osc}(f)^2$ for
+all $\epsilon\in(0,1)$ \sloc{DaviesEtAl2026-WeakPoincareApproxSL}{Cor.~1.5, p.~2},
+the first functional inequality for this chain past the threshold
+$\beta\approx0.295$ of Anari, Koehler and Vuong (DLSS, p.~1).
+It is a weaker version, on half the range, of the preprint's
+\ploc{Theorem~1.1 (p.~3)}{introduction.tex:33--42}, which implies it for
+$C\ge\max(\log C_\beta,0)$.
+DLSS was posted before both works the preprint cites for $\beta<1/2$, Wang
+(cited version August~28, 2026) and Boban, Li and Oveis Gharan (BLO;
+September~11, 2026), whose results also imply it on its range: BLO's constant
+unscaled gap
+\sloc{BobanLiOveisGharan2026-RankOnePerturbedTrickledownSK}{Thm.~1.5, Cor.~1.6, p.~5}
+and the Poincar\'e inequality behind Wang's cited Theorem~1.1
+\sloc{Wang2026-OptimalMixingGlauberSKBetaHalf}{Thm.~3.1, p.~8}.
+The preprint does not cite DLSS: its history passes from Anari, Koehler and
+Vuong directly to Wang and BLO \ploc{(\S1.1, p.~4)}{introduction.tex:75--87},
+both of which discuss DLSS
+\sloc{Wang2026-OptimalMixingGlauberSKBetaHalf}{p.~5},
+\sloc{BobanLiOveisGharan2026-RankOnePerturbedTrickledownSK}{p.~7}.
+Grade: \grade{Partial} (B): a weaker, partial-range version of the main
+theorem, with none of its proof reused.
+
+\paragraph{Correspondence.}
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.12\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+ & Preprint & DLSS \cite{DaviesEtAl2026-WeakPoincareApproxSL}\\
+\midrule
+\endfirsthead
+\toprule
+ & Preprint & DLSS \cite{DaviesEtAl2026-WeakPoincareApproxSL}\\
+\midrule
+\endhead
+Chain
+& heat-bath, form $\D_0$ \ploc{(1.1), p.~3}{introduction.tex:22--31}
+& Glauber, $\mathcal E(f,f)=\ip{f}{(I-P)f}_{\mu}=n^{-1}\D_0(f)$
+ (Def.~2.1, p.~6)\\
+\addlinespace
+On $\mu_0$
+& $\Var_{\mu_0}(f)\le C_\beta\D_0(f)$, $\beta<1$, probability $\to1$
+ \ploc{(Thm.~1.1, p.~3)}{introduction.tex:33--42}
+& a $(\frac1ne^{-C/\epsilon},\epsilon)$-WPI, $\epsilon\in(0,1)$,
+ $\beta<\frac12$, probability $\ge1-\delta$ (Cor.~1.5, p.~2)\\
+\addlinespace
+Posterior at time $T$
+& $\Var_{\mu_Y}(f)\le2\D_Y(f)$, any law of $X$, $\beta<1$, outside
+ probability $e^{-cn}$, one fixed $c$
+ \ploc{(Prop.~8.3, p.~63)}{terminal.tex:334--350}
+& $\mu_{\beta A,y_T}$:
+ $\Var\le c(\beta)^{-1}\D+e^{-Cn}\operatorname{osc}^2$, $X$ Gibbs,
+ $\beta<\frac12$, outside probability $e^{-Cn}$, any fixed $C$
+ (Thm.~5.1, p.~21): weaker inequality, but a rate as large as wanted\\
+\addlinespace
+Back to $\mu_0$
+& stopping without $f$; gap on good paths; bad paths under the
+ $f^2$-tilted law \ploc{(\S\S2.2--2.4, pp.~7--10)}{observation.tex:45--212}
+& WPI decomposition (Cor.~3.2, p.~16); proximal-sampler WPI from
+ $s$-conductance, $s=\epsilon$ (Thm.~4.4, p.~18; Lemma~4.5, p.~20)\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item DLSS Corollary~1.5 (p.~2), Definitions~2.1 and~2.3 (p.~6) and
+ $\operatorname{Err}=\operatorname{osc}^2$ (p.~7) against
+ \ploc{(1.1) and Theorem~1.1 (p.~3)}{introduction.tex:22--42}: for
+ $\epsilon<1$, $e^{C/\epsilon}\ge e^{C}\ge C_\beta$.
+\item The history \ploc{(\S1.1, p.~4)}{introduction.tex:75--87} against
+ DLSS's date and p.~1, Wang (Thm.~3.1, p.~8; p.~5) and BLO (Cor.~1.6,
+ p.~5; p.~7).
+\item DLSS Corollary~3.2 (p.~16), Theorem~4.4 (p.~18) and Theorem~5.1
+ (p.~21) against \ploc{\S\S2.2--2.4 (pp.~7--10)}{observation.tex:45--212} and
+ \ploc{Proposition~8.3 (p.~63)}{terminal.tex:334--350}: no step is shared.
+ DLSS use the stopping scaffold of finding~\ref{f:hmrw-stopped-sl} only
+ inside Theorem~5.1 (their Theorem~5.5, p.~22).
+\end{enumerate}
+
+\begin{thebibliography}{99}
+\small
+\bibitem{FanMeiMontanari2018-TAPFreeEnergyVariationalInference} Z. Fan, S. Mei, A. Montanari, "TAP free energy, spin glasses, and variational inference", Ann. Probab. 49 (2021). arXiv:1808.07890v2.
+\bibitem{CelentanoFanMei2021-LocalConvexityTAPZ2Sync} M. Celentano, Z. Fan, S. Mei, "Local convexity of the TAP free energy and AMP convergence for Z2-synchronization", Ann. Statist. 51 (2023). arXiv:2106.11428v3.
+\bibitem{HuangSellke2023-StrongTopologicalTrivialization} B. Huang, M. Sellke, "Strong topological trivialization of multi-species spherical spin glasses" (Aug 2023; v3 May 2025). arXiv:2308.09677v3.
+\bibitem{Chatterjee2007-SpinGlassesSteinsMethod} S. Chatterjee, "Spin glasses and Stein's method" (2007; v3 2009). arXiv:0706.3500v3.
+\bibitem{ElAlaouiMontanariSellke2022-SamplingSKAlgorithmicSL} A. El Alaoui, A. Montanari, M. Sellke, "Sampling from the Sherrington-Kirkpatrick Gibbs measure via algorithmic stochastic localization", FOCS 2022 (full version). arXiv:2203.05093v2.
+\bibitem{ElAlaouiGaitonde2022-CovarianceMatrixSK} A. El Alaoui, J. Gaitonde, "Bounds on the covariance matrix of the Sherrington-Kirkpatrick model" (Dec 2022; v3 Nov 2024). arXiv:2212.02445v3.
+\bibitem{HuangEtAl2024-WeakPoincareSimulatedAnnealing} B. Huang, S. Mohanty, A. Rajaraman, D. X. Wu, "Weak Poincaré inequalities, simulated annealing, and sampling from spherical spin glasses" (Nov 2024; v2). arXiv:2411.09075v2.
+\bibitem{DaviesEtAl2026-PotentialHessianAscentIIISampling} E. Davies, H. Lee, J. S. Sandhu, J. Shi, "Potential Hessian Ascent III: Sampling the Sherrington-Kirkpatrick model at beta < 1/2" (May 5, 2026; v2 May 19, 2026). arXiv:2605.03718v2.
+\bibitem{DaviesEtAl2026-WeakPoincareApproxSL} E. Davies, H. Lee, J. S. Sandhu, J. Shi, "Weak Poincaré inequalities via approximate stochastic localization: application to sampling the Sherrington-Kirkpatrick model" (July 9, 2026). arXiv:2607.08160v1.
+\bibitem{OAI-SpectralGap} OpenAI, \emph{A spectral gap throughout the high-temperature Sherrington--Kirkpatrick phase}, OpenAI Math Release preprint, September 24, 2026, \url{https://github.com/openai/math}.
+\bibitem{Celentano2022-SudakovFerniquePostAMPTAPConvexity} M. Celentano, "Sudakov-Fernique post-AMP, and a new proof of the local convexity of the TAP free energy", Ann. Probab. 52 (2024). arXiv:2208.09550v1.
+\bibitem{Bolthausen2012-IterativeTAPConstruction} E. Bolthausen, "An iterative construction of solutions of the TAP equations for the Sherrington-Kirkpatrick model", Commun. Math. Phys. 325 (2014) 333-366. arXiv:1201.2891v1.
+\bibitem{NL-DeshpandeAbbeMontanari2017} Y. Deshpande, E. Abbe, A. Montanari, Asymptotic mutual information for the balanced binary stochastic block model, Information and Inference 6(2) (2017) 125--170, DOI 10.1093/imaiai/iaw017
+\bibitem{NL-Plefka1982} T. Plefka, Convergence condition of the TAP equation for the infinite-ranged Ising spin glass model, J. Phys. A: Math. Gen. 15 (1982), no. 6, 1971--1978
+\bibitem{NL-EldanShamir2022} R. Eldan, O. Shamir, Log concavity and concentration of Lipschitz functions on the Boolean hypercube, J. Funct. Anal. 282 (2022), no. 8, 109392, doi:10.1016/j.jfa.2022.109392
+\bibitem{ChenEldan2022-LocalizationSchemes} Y. Chen, R. Eldan, "Localization schemes: A framework for proving mixing bounds for Markov chains", Duke Math. J. 174 (2025). arXiv:2203.04163v2.
+\bibitem{AdhikariEtAl2021-DynamicalApproachTAPSK} A. Adhikari, C. Brennecke, P. von Soosten, H.-T. Yau, "Dynamical approach to the TAP equations for the Sherrington-Kirkpatrick model" (Feb 2021). arXiv:2102.10178v1.
+\bibitem{BobanLiOveisGharan2026-RankOnePerturbedTrickledownSK} M. Boban, A. Li, S. Oveis Gharan, "Rank-1-perturbed trickledown theorems: Mixing time of Glauber dynamics for the Sherrington-Kirkpatrick model up to beta<=1/2+eps" (Sept 11, 2026). arXiv:2609.13138v1.
+\bibitem{Wang2026-OptimalMixingGlauberSKBetaHalf} S. Wang, "Optimal mixing of Glauber dynamics for the Sherrington-Kirkpatrick model at beta<1/2" (v1 Aug 23, 2026; v2 Aug 28, 2026). arXiv:2608.22159v2.
+\end{thebibliography}
+
+\end{document}
