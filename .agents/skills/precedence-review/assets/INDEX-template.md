@@ -26,7 +26,7 @@ Papers downloaded while checking preprints in this repository for uncited preced
 - **Columns:**
   - "Cited by the preprint?" holds `<review>: <bib key>` if the reviewed preprint cites the work, otherwise `<review>: no`, where `<review>` names the review that added the row. Untagged rows from before this convention refer to whichever preprint was under review then; check the current preprint's bibliography yourself.
   - "Added by" names the review and the section whose agent downloaded the paper, e.g. `<review> §5`.
-  - "Relevance" says, in one or two sentences, why the paper was checked and what it contains, or `checked; not relevant to ...`. A later agent who uses the paper for a new purpose appends `[<review> §N] ...` (or `[<review> consolidation] ...`, etc.) to this cell.
+  - "Relevance" says, in one or two sentences, what the paper contains, with page references, and what it was checked for (`checked for §N: ...`). Record what you found, not a verdict such as "not relevant" or "standard": later agents read these cells and may need the paper for something else. A later agent who uses the paper for a new purpose appends `[<review> §N] ...` (or `[<review> consolidation] ...`, etc.) to this cell.
   - Rows imported from a library kept elsewhere (`scripts/merge_library.py`) carry a `<tag>:` prefix in "Cited by" and "Added by". Their "Cited by" refers to that review's preprint.
   - Add rows with the Edit tool, never through a shell command line: a title containing backquotes or `$(…)` would run as a command.
 - **Titles and dates:** copy the title exactly as the paper's title page gives it, and give the date of the first public version (e.g. "July 9, 2026" for a recent preprint). The bibliography of every write-up is generated from this file.

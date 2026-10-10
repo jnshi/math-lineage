@@ -62,9 +62,9 @@ Final message to the coordinator, under 250 words: the counts, the (c) items one
 - every lead left unresolved by a section agent;
 - **the earlier-result one-liners** that section passes recorded: a ruling on each, with dates and the theorem that would make it a same-result or weaker-result finding;
 - **every source that entered the library after section N, checked against sections ≤ N;**
-- every suggested merge, and every extension of a finding's location list. Merges are proposed to the user; they are not decided here;
+- every suggested merge or split, and every extension of a finding's location list. Merges and splits are proposed here, and decided by the coordinator (or by the user, if they asked to decide them);
 - **a compiled-locator table per finding:** compiled locator | TeX file:line | what is there, with each location spot-checked. Drafters start from these tables;
-- **a proposed relationship type and centrality for each finding,** with its dependency chain in compiled numbering, and the resulting magnitude order;
+- **a proposed relationship, principal and centrality for each finding,** with its dependency chain in compiled numbering, and the resulting magnitude order;
 - **the proof shortcuts noted across the review:** each one checked, with every hypothesis and normalization verified in the sources. Every verified one goes on to drafting.
 
 **Splitting.** If one agent would get more than about 15 leads, split the leads across agents by the finding they bear on. Each writes `CONSOLIDATION-<n>.md`. Give tasks 2–4 below (locators, classification, merges) to exactly one of them.
@@ -83,9 +83,9 @@ You are running the consolidation pass of a precedence review of the preprint "{
   - the preprint credits it where it is used;
   - it is textbook material in exactly the form used (name the passage);
   - it is a parallel: analogous work in another setting, with nothing to suggest the preprint drew on it (state the facts);
-  - it is a "cite the original rather than the later source" quibble.
+  - it is a "cite the original rather than the later source" quibble, for content the preprint uses (never an earlier result on the same problem).
 
-**Relationship types:** same technique (reused essentially intact; new ingredients around it don't change that), adapted (structure followed, core changed), fragment (one piece of the technique), same route (an earlier paper proposed the strategy), same result, weaker result (weaker, special-case or partial-range), proof shortcut (a published result would replace a large part of the argument).
+**Relationship types:** same technique (reused essentially intact; new ingredients around it don't change that), adapted (structure followed, core changed), fragment (one piece of the technique), same route (an earlier paper proposed the strategy), same result, weaker result (weaker, special-case or partial-range version of a main result, or of a statement presented as a significant contribution), proof shortcut (a published result would replace a large part of the argument).
 
 **Credit:** a citation counts only if it is for that specific content; citing the same paper nearby for something else is not credit. Content credited where it is used, directly or through a cited location that credits it, is not a finding unless its novelty is overstated.
 
@@ -97,14 +97,14 @@ You are running the consolidation pass of a precedence review of the preprint "{
    - **(i) No match:** the preprint doesn't use the content.
    - **(ii) Covered:** already captured by an existing finding, or credited by the preprint at the point of use.
    - **(iii) Adds to an existing finding:** say exactly what and where.
-   - **(iv) New finding:** give its relationship type and credit status, principal source first.
-2. **Compiled locators.** For each finding in FINDINGS.md, convert its TeX file:line locations into compiled locators (section, equation, lemma or proposition number, printed page), in one compact table per finding: compiled locator | TeX file:line | what is there. Spot-check that each location contains the claimed content (don't re-review), and list any wrong locator. Check that source pages are printed page numbers, not PDF indices.
-3. **Relationship and centrality.**
-   - For each finding, confirm or correct its relationship type, and name its principal earlier work.
+   - **(iv) New finding:** give each earlier work with its relationship type and credit status; task 3 names the principal.
+2. **Compiled locators.** For each finding in FINDINGS.md, convert its TeX file:line locations into compiled locators (section, equation, lemma or proposition number, printed page), in one compact table per finding: compiled locator | TeX file:line | what is there. Spot-check that each location contains the claimed content (don't re-review), and list any wrong locator. Check that source pages are printed page numbers, not PDF indices, and add one table of each source's offset (printed page = PDF index + k); every drafting and check brief carries it.
+3. **Relationship, principal and centrality.**
+   - For each finding, gather every earlier work bearing on it, from all sections and leads. Choose its relationship: the most severe that any of them holds, judged against the finding's whole content, not against one section's part. Name the principal, the work that holds it (when several hold it equally, the one the others credit or build on, otherwise the earliest), and quote its decisive correspondence. The others are satellites; say how each relates. For a classical named device whose canonical origin the preprint cites, or which it names by its standard name where it uses it, the finding's content is what is specific to the later work and missing from the origin (`scope-and-relationships.md`); judge the relationship and principal against that content.
    - Give its dependency chain in the preprint's compiled numbering (e.g. "Lemma 5.6 → Prop. 5.1 → Thm. 1.1").
    - Propose a centrality using your judgment: main result (reserved for earlier work that covers the main result itself, or most of it), central, supporting or peripheral, by how much of the main argument depends on it. A weaker result is never main result.
    - Then list the findings by magnitude: centrality first, then relationship (same result, same technique, adapted, proof shortcut, same route, fragment, weaker result), then reading order.
-4. **Merges.** Recommend merges where two findings are the same technique; the user decides.
+4. **Merges and splits.** Check each finding's components against the other findings, and give each component to the finding it matches in content. Recommend merging two findings that are the same idea, and splitting one that bundles distinct ideas from the same paper; the coordinator decides.
 
 Check the actual passages: the preprint TeX in `{PREPRINT_DIR}/build/sections/`, its compiled text with `\f` page breaks at `{SCRATCH}/paper.txt`, and the sources in `{REPO}/prior-work/` (grep INDEX.md for keys). Download a paper only if the preprint actually uses the content in question, arXiv only via `fetch_arxiv.sh`, and add an INDEX.md row with the Edit tool.
 
@@ -113,7 +113,7 @@ Check the actual passages: the preprint TeX in `{PREPRINT_DIR}/build/sections/`,
    - for each lead, the verdict (i)–(iv), with the decisive passages quoted briefly and their locators;
    - for any (iii)/(iv), the exact proposed change or new finding;
    - the compiled-locator tables;
-   - the relationship and centrality proposals with their chains, and the magnitude order;
+   - the relationship, principal and centrality proposals with their chains, and the magnitude order;
    - merge recommendations;
    - the verified proof shortcuts.
 2. Append a dated addendum ("Addendum {TODAY} (consolidation)") of 2–5 lines to each relevant section report, stating the verdict.
@@ -124,7 +124,7 @@ Check the actual passages: the preprint TeX in `{PREPRINT_DIR}/build/sections/`,
 Final message (under 200 words): the verdicts, any new or changed finding, wrong locators, centrality proposals and merge recommendations.
 ````
 
-**Before accepting a verdict, spot-check it.** Grep the decisive passage yourself, for example the source's sentence saying it "avoids" the technique, or the preprint for the technique's name. Then decide each finding's relationship and centrality, record them and the new findings and changes in `FINDINGS.md`, ask the user about merges, and move on to the write-up.
+**Before accepting a verdict, spot-check it,** and verify the decisive correspondence of each principal it names. Grep the decisive passage yourself, for example the source's sentence saying it "avoids" the technique, or the preprint for the technique's name. Then record each finding's relationship, principal and centrality in `FINDINGS.md`, with the new findings and changes. The agent's proposals stand unless a fact you checked contradicts one (a correspondence that fails at a step, a cited origin that contains the content, a date), or the user decides otherwise; record the fact with the change. Decide the merges and splits (or ask the user, if they asked to decide them) and the magnitude order, keeping the scale consistent across findings, and move on to the write-up.
 
 ## Passes not to run
 See "Left out on purpose" in SKILL.md. Forward-citation ("cited by") searches belong there too: OpenAlex shows zero citations for very recent preprints, and Google Scholar has no API and serves CAPTCHAs. Offer one only if the user asks, and never put the user's email in the requests.

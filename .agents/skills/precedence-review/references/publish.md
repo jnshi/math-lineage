@@ -17,7 +17,7 @@ Format version 1 (categories and grades) is superseded, and the validator reject
 1. **Set the title-page date** in `writeup/precedence-findings.tex` to the date of the final revision.
 2. **Draft the Provenance paragraph** at the end of `parts/about.tex`: remove the comment marks from the template's block and fill it in.
    - **The model:** the one you are running as, plus any model a subagent was given explicitly.
-   - **The skill's commit:** `git log -1 --format=%h -- .claude/skills/precedence-review`, from the version that ran the review. Check that the commit is on the remote (`git merge-base --is-ancestor <commit> origin/main`), since the PDF and README link to it.
+   - **The skill's commit:** `git log -1 --format=%h -- .agents/skills/precedence-review`, from the version that ran the review. Check that the commit is on the remote (`git merge-base --is-ancestor <commit> origin/main`), since the PDF and README link to it.
    - **The person who ran the job:** ask the user how their name should appear. Never fill it in from the git configuration, an email address or the account. In one clause, add any input of theirs that shaped a finding, such as leads they supplied.
    - **Any disclosure the operator asks you to add,** verbatim.
 
@@ -52,22 +52,22 @@ See `<skill>/assets/precedence-findings.example.json` for a complete example. It
 - `findings[]`: `{id, slug, in_report, relationship, centrality, form_of_inclusion, attribution_gap, overstated_novelty, novelty_claim?, technique, summary, preprint_locations[], credit_in_preprint, sources: [{key, locators, role, credit_status}]}`.
   - `id` is the printed ID (`F1`, `F2`, …, without gaps, in magnitude order) for a finding in the report, and `null` for one kept in the JSON only.
   - `slug` is the fragment's slug, which also identifies a JSON-only finding.
-  - `in_report` is false exactly when the persona's `form_of_inclusion` is `none`. Such findings stay here so the record of the missing citation survives. Findings withdrawn on a fact, or whose claims were rejected, are not in the JSON.
+  - `in_report` is false exactly when the persona's `form_of_inclusion` is `none`: an in-scope finding, or a component of a merged finding, that the persona judged not worth a pointer. Such records stay here so the record of the missing citation survives. Findings withdrawn on a fact, findings whose claims were rejected, and anything out of scope (including what the persona places under an exclusion) are not in the JSON.
   - `relationship`: `same result`, `same technique`, `adapted`, `proof shortcut`, `same route`, `fragment` or `weaker result` (in sort order).
   - `centrality`: `main result`, `central`, `supporting` or `peripheral` (best-effort judgment). A weaker result is never `main result`.
   - `form_of_inclusion`: `citation`, `sentence`, `paragraph` or `none`, from the author-persona check. With overstated novelty, it describes the change to the abstract or framing, and is never `citation`.
   - `attribution_gap`: derived, and recomputed by the validator. It holds when the relationship is same technique, adapted or same result; the centrality is main result, central or supporting; and the principal source is `not_cited` or `cited_for_other_content`.
-  - `overstated_novelty`: the preprint credits the earlier work for this content, directly or through a cited location that credits it, but its abstract, contribution statements or framing of a main result present it as new, explicitly or as a reader would reasonably take it. When true, `novelty_claim` says where (e.g. `"Abstract; framing of Theorem 1.1 (p. 2)"`), and every source is `credited`, `credited_elsewhere` or `credited_in_part`.
+  - `overstated_novelty`: the preprint credits the earlier work for this content, directly or through a cited location that credits it, but its abstract, statements of significant contributions or framing of a main result present it as new, explicitly or as a reader would reasonably take it. When true, `novelty_claim` says where (e.g. `"Abstract; framing of Theorem 1.1 (p. 2)"`), and every source is `credited`, `credited_elsewhere` or `credited_in_part`.
   - `technique` is the finding's title as printed (a gloss without citations). Keep it in sync when titles change.
   - `preprint_locations` uses compiled numbering and printed pages, for example `"§3 (p. 7)"` or `"Lemma 8.2 (pp. 31–32)"`.
   - `credit_in_preprint` is one sentence: what the preprint cites for this content, and where.
-  - `sources` lists the **principal** earlier work first. Each source has:
+  - `sources` lists the **principal** earlier work first: the one that holds the finding's relationship, judged against its whole content (if several hold it equally, the one the others credit or build on, otherwise the earliest). The others are satellites; if the idea's originator is among them, it comes next. Each source has:
     - `locators`: where in that work, with printed pages, or null;
     - `role`: what that work contributes to the finding, in a few words;
     - `credit_status`, one of:
       - `not_cited`: the work is not in the preprint's bibliography, and no location the preprint cites credits it for this content;
       - `cited_for_other_content`: it is in the bibliography, but not cited for this content;
-      - `credited_elsewhere`: it is credited for this content at other locations, directly or through a cited location that credits it (such as a companion lemma), but not where the content is used;
+      - `credited_elsewhere`: it is credited for this content at other locations, directly or through a cited location that credits it (such as a companion lemma), but not where the content is used, in a way that an expert reader who doesn't know the earlier work might not connect with it;
       - `credited_in_part`: it is credited for part of this content only;
       - `credited`: it is credited for this content. Only with overstated novelty.
 
@@ -117,7 +117,7 @@ Overwrite the preprint folder's `README.md` from `<skill>/assets/README-template
   - The last cell gives the credit status in a few words and the flags in bold;
 - one-line definitions of the terms;
 - links to the `.tex` and the two JSON files;
-- **last**, the one-line provenance, in the wording the user approved (§1): "**Provenance:** generated by LLM agents (<model>) running the [precedence-review](https://github.com/jnshi/math-lineage/tree/<commit>/.claude/skills/precedence-review) skill (commit <commit>); makes no claim of completeness, and has not been vetted by a human. Run by <name>", plus any disclosure the operator asked for in About.
+- **last**, the one-line provenance, in the wording the user approved (§1): "**Provenance:** generated by LLM agents (<model>) running the [precedence-review](https://github.com/jnshi/math-lineage/tree/<commit>/.agents/skills/precedence-review) skill (commit <commit>); makes no claim of completeness, and has not been vetted by a human. Run by <name>", plus any disclosure the operator asked for in About.
 
 ## 5. Pull request against `jnshi/math-lineage`
 **Ask the user before you create the branch, commit or push.** They may want to hold publication while checks are open.
