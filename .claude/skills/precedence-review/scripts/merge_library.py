@@ -226,7 +226,9 @@ for key in keys:
 note_start = f"- **Imported rows.** Rows whose \"Added by\" starts with `{tag}:`"
 note = (f"{note_start} were copied on "
         f"{datetime.date.today().isoformat()}, with their files, from the library of the `{tag}` review. "
-        f"In those rows the \"Cited by the preprint?\" cell refers to that review's preprint, not to this one.")
+        f"In those rows the \"Cited by the preprint?\" cell refers to that review's preprint, not to this one, "
+        f"and the Relevance notes were written for that review: read them for what a paper contains, never as a "
+        f"ruling on this preprint.")
 if down_new or chk_new:
     if not any(l.startswith(note_start) for l in dst):
         k = next(k for k, l in enumerate(dst) if l.strip() == DOWN)

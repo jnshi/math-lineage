@@ -1,56 +1,36 @@
 # Findings digest: {review}
 
-The coordinator maintains this file after every section. Section subagents read it instead of all the earlier reports; the full reports are `NN-*.md`. Author-persona checks never read it.
+The coordinator maintains this file after every section. Section subagents read it instead of all the earlier reports; the full reports are `NN-*.md`. Consolidation and the drafters read it too; author-persona checks never do. The rules (scope, relationships, credit, what may be ruled out) are in the briefs and in the skill's `references/scope-and-relationships.md`. They are not repeated here, so they cannot go out of date.
 
-**Scope:** techniques, constructions, results and proof routes that the preprint uses in its arguments, which an identifiable earlier paper already contains, where the preprint doesn't cite that paper for them where they are used.
-- That covers reused techniques, constructions and theory, proposed routes the preprint carries out, and earlier results on the same problem. The introduction pass searches for earlier results; later passes record one-liners.
-- Proof shortcuts are recorded only when noticed; nobody searches for them.
-- The one exception is overstated novelty: content the preprint cites, but presents as new in its abstract or framing.
+Here a finding is any candidate a section pass reported (`§N-k`). The write-up's findings (F1, F2, …) are those that survive consolidation, drafting and the author-persona check, possibly merged or split, so the two numberings don't correspond one to one.
 
-**Inclusion** is decided by the author-persona check, so don't drop a verified candidate on a judgment call: record the facts. Rule a candidate out only on facts:
-- the correspondence fails;
-- the source postdates the preprint;
-- it is credited where used;
-- it is textbook material in the form used (name the passage);
-- it is a parallel (state the facts);
-- it is a "cite the original" quibble;
-- it is a physics heuristic.
-
-**Relationship** (in sort order): same result · same technique (reused essentially intact, even with new ingredients around it) · adapted (structure followed, core changed) · proof shortcut · same route · fragment (one piece of the technique) · weaker result.
-
-**Centrality** (best-effort judgment of how much of the main argument depends on it): main result (the earlier work covers the main result itself, or most of it) · central · supporting · peripheral. A weaker result is never main result.
-
-**Credit status:** not cited · cited for other content · credited elsewhere (not where it is used) · credited in part · credited (only with overstated novelty).
-- A citation counts only if it is for that specific content; citing the same paper nearby for something else does not count.
-- A method citation covers the method's own lemmas.
-- Content credited where it is used, directly or through a cited location that credits it, is not a finding unless its novelty is overstated.
-- List the principal earlier work first.
-
-**Author-name check:** {for each finding: the source's names, and where, if anywhere, they appear in the preprint, its abstract and its bibliography}
+**Author-name check:** {for each finding: the source's author names, its bib key, and the names the source and the preprint give the approach; each sentence where they appear in the preprint, its abstract or its bibliography, and what that sentence cites}
 
 ## Findings
 
-| ID | Technique or result (sources, principal first, with locators) | Relationship | Where in the paper (dependency chain) | Credit status | Differences |
+Describe each finding by the section report's own statement of the shared approach, quoted rather than summarized, since later agents read this table instead of the reports. List its earlier works unranked: consolidation names the principal.
+
+| ID | Shared approach (the report's statement, quoted) | Earlier works (each with locator, relationship to this section's content, and credit status) | Where in the paper (dependency chain) | Differences | Hand-back check (locators read) |
 |---|---|---|---|---|---|
 
 ## Overstated novelty
 
-- **{ID}:** {the claim, quoted, and its location}; {the cited earlier work that covers it, and where the preprint cites it}.
+- **{ID}:** {the claim, quoted, and its location: the abstract, a statement of significant contributions, or the framing of a main result}; {the cited earlier work that covers it, and where the preprint cites it}.
 
 ## Earlier-result one-liners (for consolidation)
 
-- §N: {earlier result, locator, date}; {what in the preprint it precedes}.
+- §N: {earlier result, locator, date}; {the main result, or statement presented as a significant contribution, that it precedes}.
 
 ## Ruled out (don't re-check)
 
 - **{item}:** {the fact that rules it out} (§N).
 
-## Recurrences, corrections and merge candidates (for consolidation)
+## Recurrences, proposed works, corrections, and merge or split candidates (for consolidation)
 
 - §N: {finding} also at {locations}.
-- Merge candidates (the user decides at the write-up): {IDs, reason}.
+- §N: earlier work proposed for {finding}: {work, locator, its relationship to that section's part of the content, and its credit status; the evidence is in the §N report}.
+- Merge and split candidates (decided at consolidation, by the coordinator unless the user asked at the start to decide them): {IDs, reason}.
 - Corrections reported by agents: {what and where}.
-- Strongest judgment-call objection to a finding, with its factual premise (for the drafter to check; never passed to the persona): {ID: objection}.
 
 ## Proof shortcuts (noted)
 
@@ -58,12 +38,12 @@ The coordinator maintains this file after every section. Section subagents read 
 
 ## User decisions
 
-- {date}: {decision, verbatim where it matters}. Include whether the user wants to check the persona's reasoning before findings are dropped.
+- {date}: {decision, verbatim where it matters}. Include whether the user wants to check the persona's reasoning before findings are dropped, and whether they want to decide merges and splits.
 
 ## Write-up: slugs, order and changes during drafting
 
-| Slug | ID | Relationship | Centrality (dependency chain) | Flags | Drafting outcome (pages; proposed changes; dropped components; withdrawal and its fact) |
-|---|---|---|---|---|---|
+| Slug | ID | Relationship | Principal (named at consolidation) | Centrality (dependency chain) | Flags | Drafting outcome (pages; proposed changes; dropped components; withdrawal and its fact) |
+|---|---|---|---|---|---|---|
 
 ## Final verdicts
 

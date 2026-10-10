@@ -49,3 +49,8 @@ Exceptions to this fixed procedure include work on a zero-free region for the Ri
 We will preserve the public release history of this collection. Corrections and revisions will be recorded as new versions, with previously released versions remaining accessible. 
 
 To cite the individual manuscript, use the BibTeX block in its directory. 
+
+
+## License of the precedence-review skill
+
+The precedence-review skill (`.claude/skills/precedence-review/`) is licensed for noncommercial use only; see the LICENSE files in that folder. As an exception, its `SKILL.md`, `references/environment.md` and `scripts/tex_sandbox.sh` may also be used for commercial purposes: the first two under CC BY 4.0, and the script under the Apache License, Version 2.0.

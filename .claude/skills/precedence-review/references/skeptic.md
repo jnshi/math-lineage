@@ -21,7 +21,7 @@ Save this to `<scratch>/author-check-brief.md`. Each agent's prompt is a short h
 The header reads: "Today is {TODAY}. Your finding is **{ID}**, slug `{SLUG}`, in file `findings/{SLUG}.tex`." Take the ID from `print_summaries.py` after the last build. Extend the header by finding type:
 - **For a same-result or weaker-result finding:** "It concerns earlier results on the same problem."
 - **For a same-route finding:** "It concerns a proof route that an earlier paper proposed."
-- **For an overstated-novelty finding:** "Your preprint does cite this earlier work; the claim is that your abstract or framing presents the content as new. Judge that claim as a reader of your abstract would take it."
+- **For an overstated-novelty finding:** "Your preprint does cite this earlier work; the claim is that your abstract, a statement of your significant contributions, or the framing of a main result presents the content as new. First check that the passage is one of these; if it is not, say so. Then judge whether a reader would reasonably take it as presenting the content as new."
 - **For a proof-shortcut finding:** "It claims that published results make part of your argument unnecessary. Check carefully whether the claimed implication really holds, including every hypothesis and normalization."
 - **For a candidate that isn't in the report** (withdrawn by its drafter, or a late lead): state the claim inline, as the section pass first stated it, in the finding format (title, sources, your preprint's locations, correspondence, citation status, relationship and centrality). Correct factual details only. Don't mention that it was withdrawn or why, and don't point to any fragment.
 
@@ -31,7 +31,7 @@ You are the author of the preprint "{TITLE}" ({DATE}). You are responding to a r
 
 Right now, that value shows up as two practical concerns about your manuscript. First and foremost, you want it to be as understandable as possible to experts. An expert reader should be able to see where each idea comes from, recognize familiar machinery as familiar, and know where to find its origins and fuller treatments. Second, you want to give due respect to the work you may have built on.
 
-So you approach each piece of feedback with curiosity, not defensiveness. Would pointing to this earlier work help an expert understand your argument? Does it deserve acknowledgement as something you built on? And is the claim really true? Every pointer you add also costs your reader something: attention, and time spent away from what your paper itself contributes. No author wants readers to wade through pages of related work before reaching the argument. So ask not only whether a pointer would help an expert, but whether it earns its place, and in what form. You will also reject any attribution claim that isn't true, or is contrived or unrealistic. A false or strained attribution would mislead an expert reader about where an idea comes from and what it depends on. It would also give credit where none is due, which is no respect to anyone.
+So you approach each piece of feedback with curiosity, not defensiveness. Would pointing to this earlier work help an expert understand your argument? Does it deserve acknowledgement as something you built on? And is the claim really true? Every pointer you add also costs your reader something: attention, and time spent away from what your paper itself contributes. No author wants readers to wade through pages of related work before reaching the argument. Judge by what a careful author in your field would actually write. You cite what you use, and you place your main results and the contributions you announce among earlier work; you would not survey earlier, weaker versions of each intermediate lemma you prove yourself, and papers routinely leave those out. Re-proving a published result, or following an earlier method, is different: there your reader should be told. So ask not only whether a pointer would help an expert, but whether it earns its place, and in what form. You will also reject any attribution claim that isn't true, or is contrived or unrealistic. A false or strained attribution would mislead an expert reader about where an idea comes from and what it depends on. It would also give credit where none is due, which is no respect to anyone.
 
 ## Materials
 - **The report**, compiled: `{WRITEUP_DIR}/precedence-findings.pdf`, with its text in `{WRITEUP_DIR}/build/full.txt`.
@@ -40,7 +40,7 @@ So you approach each piece of feedback with curiosity, not defensiveness. Would 
   - Compiled text with page breaks (`\f`; the page is 1 plus the number of `\f` before a match): `{SCRATCH}/paper.txt`. Locators use printed page numbers; {SAY WHETHER THE PDF PAGE INDEX EQUALS THE PRINTED PAGE NUMBER}.
   - In the report's source, `\ploc{compiled}{file:line}` gives the TeX location as its hidden second argument, which helps you find passages quickly.
 - **Your companion preprints** (same release): {LIST, OR "none"}. Compiled text: {COMPANION TEXT FILES}.
-- **The earlier works:** `{REPO}/prior-work/` (`src/<Key>/` LaTeX where available, `papers/<Key>.pdf`, `text/<Key>.txt`). Grep `INDEX.md` to map citation keys to files. **Do not download anything.** If a check needs a work that isn't there, say so in your response. If you rely on a textbook passage that isn't there, mark it as unverified. For source papers, cite printed page numbers; some PDFs have an offset between the PDF index and the printed number.
+- **The earlier works:** `{REPO}/prior-work/` (`src/<Key>/` LaTeX where available, `papers/<Key>.pdf`, `text/<Key>.txt`). Grep `INDEX.md` to map citation keys to files. **Do not download anything.** If a check needs a work that isn't there, say so in your response. If you rely on a textbook passage that isn't there, mark it as unverified. For source papers, cite printed page numbers; some PDFs have an offset between the PDF index and the printed number: {SOURCE PAGE OFFSETS FROM CONSOLIDATION}.
 - Judge the finding on its own merits by reading the preprint and the sources yourself. **Don't open any other review notes in the repository:**
   - not `FINDINGS.md`, the `NN-*.md` reports or `CONSOLIDATION*.md`;
   - nothing under `{REVIEW_DIR}/author-checks/` other than the one file you write;
@@ -51,19 +51,19 @@ So you approach each piece of feedback with curiosity, not defensiveness. Would 
    - the preprint's statements and locators (compiled numbers and pages);
    - the earlier work's statements and locators;
    - the claimed correspondences and formulas, as transcribed;
-   - the claimed citation facts: what your preprint does and does not cite, and where.
+   - the claimed citation facts: what your preprint does and does not cite, and where, including anything it cites anywhere for the device by name.
 2. **Decide the form of inclusion**, as the author: what, if anything, you would add to your manuscript for this earlier work. Choose one:
    - **none**;
    - **a citation at the point of use** (a bare reference, no new prose);
    - **a clause or a sentence**;
    - **a short paragraph**.
 
-   For an overstated-novelty finding, the question is instead what you would change in your abstract, contribution statements or framing. The choices are none, a clause or sentence, or a larger revision ("short paragraph").
+   For an overstated-novelty finding, the question is instead what you would change in your abstract, statements of significant contributions or framing. The choices are none, a clause or sentence, or a larger revision ("short paragraph").
 
    Choose anything other than "none" only if you can affirm, for specific reasons, that it helps an expert reader enough to be worth their attention, or that it is owed as acknowledgement of something you built on, and that the claims it rests on are true. If you cannot affirm that, the answer is "none". You do not need to show that omitting it is justified; it is enough to explain why inclusion is not affirmed. Say exactly where any addition or change would go.
 3. **Judge the finding's claims:** Accept, Accept in part (say which parts hold and which don't), or Reject, each for specific reasons you can point to in the texts. "It's only a small part" or "my version is more general" doesn't make a reuse claim false. If the finding says your abstract or framing overstates novelty, judge whether a reader would reasonably take it that way.
 
-   The report's exclusions (About, "What this document reports") are fixed; don't widen or narrow them. If you find that the finding falls under one, say so as a fact. For example, the content is textbook material in exactly the form you used: name the passage.
+   The report's exclusions (About, "What this document reports") are fixed; don't widen or narrow them. If you find that the finding falls under one, say so and why. In particular, if you judge that the whole finding, in its totality, is a routine argument or something that could plausibly be found in a textbook, that is sufficient grounds to exclude it, even if the result was published before; you need not name a passage.
 4. **Give your view of the classification, and judge proportion.** Say whether the report's relationship type and centrality fit, under the report's own definitions (About), and whether its stated reasons hold. Also say whether the space the report gives this finding (its length and weight) is proportionate to the form of inclusion you chose. If it isn't, say what length would be (e.g. one row in the summary table and a few lines, rather than three pages).
 5. **Report write-up errors** in this finding: typos, grammar, wrong compiled locators or page numbers, mistranscribed formulas, wrong theorem numbers, notation inconsistencies, unclear or misleading sentences, and LaTeX rendering problems in the PDF. Give each its exact location (quote the text) and the correction.
 
@@ -84,17 +84,18 @@ So you approach each piece of feedback with curiosity, not defensiveness. Would 
 **Repeated runs, only if the user asks.** Fix the brief and the decision rule (number of runs, majority) before any result is in. Give each run its own output file, and read no result until all are in.
 
 ## Applying the verdicts
-1. **Back up** all fragments to `writeup/findings/pre-check/`.
+1. **Back up** all fragments to `writeup/findings/pre-check/`, and copy the current PDF and a flattened `.tex` (`scripts/flatten_tex.py`) to `writeup/pre-apply/`, so the user can compare before and after.
 2. **If the user asked at the start to check the persona's reasoning,** verify the reason behind each "none" and each "Reject" yourself, and put each one to them as a decision before acting on it.
 3. **Make the shared fixes yourself** before launching agents:
    - definitions missing from `about.tex`;
    - bibliography title corrections, in `prior-work/INDEX.md`, which is where the bibliography is generated from.
-4. **A finding whose form of inclusion is "none"** leaves the document: delete its `\input` line, move the fragment to `findings/retired/`, remove references to it, and note the reason in `FINDINGS.md`. It stays in the JSON with `in_report: false`, so the record of the missing citation survives. A finding whose claims are rejected outright leaves both.
-5. **Settle the classification and order.** You decide each finding's relationship and centrality, weighing the persona's view and any drafter proposal. Move `\input` lines to keep the magnitude order, and tell the user if IDs changed.
+4. **A finding whose form of inclusion is "none"** leaves the document: delete its `\input` line, move the fragment to `findings/retired/`, remove references to it, and note the reason in `FINDINGS.md`. It stays in the JSON with `in_report: false`, so the record of the missing citation survives. A finding whose claims are rejected outright, or that the check places under an exclusion, leaves both. Within a merged finding, a component the check judges "none" gets its own JSON-only record; a component whose claim is rejected, or that falls under an exclusion, gets none.
+5. **Settle the classification and order.** Adopt the persona's view of each finding's relationship and centrality: it is built to judge fairly, and weeding out overclaims is part of its job. Depart from it only where a fact you check in the texts contradicts it (a correspondence that fails at a step, a cited origin that contains the content, a date), or the user decides otherwise, and record the fact in `FINDINGS.md`. Where the persona accepts more than one choice, use the drafter's proposal if there is one, and otherwise keep the report's. If adopting its view changes a flag or a centrality, tell the user, who may ask for a repeat check. Move `\input` lines to keep the magnitude order, and tell the user if IDs changed.
+   - **A finding built around the wrong idea goes back to a drafter.** If the check finds that the finding's central claim (what the two papers share, or whose idea it is) doesn't hold as stated, but a missing citation remains, an apply edit would only trim the entry and leave it built around the wrong idea. Verify the decisive passage yourself; if the user asked to check the persona's reasoning, put it to them first. Then write a new Pointers block in your own words, with the facts the check established (citations, locators, what a cited work contains) but not its conclusions or prose, give its header the relationship and centrality those facts support, and relaunch a drafter with the drafting brief (`writeup.md`). Run a fresh blind check on the redraft once the other apply agents are back and the build passes, so that it reads a finished report, and apply that check's verdict. Redraft a finding at most once: if the fresh check rejects the central claim again, apply its verdict as for any other finding, and tell the user.
 6. **Launch one agent per remaining finding, in parallel.** Each prompt is short:
    - point to `<scratch>/apply-check-brief.md` (below);
    - give the ID, the slug and a private scratch subfolder;
-   - include a **"Verdict to apply" block that you distil** from `author-checks/<finding>.md`: the form of inclusion and the resulting length, the relationship and centrality you settled, which components to drop, a reworded reason if needed, the key errata, and the errata count;
+   - include a **"Verdict to apply" block** with your decisions: the form of inclusion and the resulting length, the relationship, centrality and principal source you settled, and which components to drop. Point to `author-checks/<finding>.md` for its claims and errata, with the errata count. Check any claim you restate against the source first;
    - include the Tool-pitfalls block.
 7. **When they return:**
    - Apply the cross-file items they report yourself: bibliography fixes, mismatches with other fragments such as a sibling finding describing a dropped claim, and summary-table cells.
@@ -121,13 +122,13 @@ You are revising ONE finding (a LaTeX fragment) in a report for **human experts 
 2. **Apply the verdict** (see "Verdict to apply" in your prompt). If the check accepted only part of the finding, or found the relationship type or its stated reason wrong, revise the finding's claims, title, Summary, Correspondence and How-to-check so they assert only what holds. Drop rejected components from the claim; don't keep them as "also" items. Use the relationship and centrality given in your verdict block.
 3. **Fit the length to the form of inclusion** given in your verdict block:
    - **A citation, clause or sentence:** rewrite as a **short entry of at most one page**, including the title. Make a backup copy first. The entry has three parts and nothing else:
-     - `\paragraph{Summary.}`, 3–5 sentences. First the earlier work, and that the preprint doesn't cite it for this content (or that its abstract or framing presents it as new). Then what the preprint does and where, the correspondence with its locators, and the relationship with its reason.
-     - `\paragraph{Correspondence.}`: one table of at most 4 body rows, each side in its own notation.
+     - `\paragraph{Summary.}`, 3–5 sentences. First the earlier work, and that the preprint doesn't cite it for this content (or that its abstract or framing presents it as new). Then what the preprint does and where, and the relationship with its reason.
+     - `\paragraph{Correspondence.}`: one table of at most 4 body rows, each side in its own notation, keeping only rows that show the shared content itself.
      - `\paragraph{How to check.}`: an `enumerate` of 2–3 side-by-side checks.
    - **A short paragraph:** keep a full entry, at most about 3 pages, using the headings that apply (Summary, Setup, Role in the argument, The earlier technique or result, Correspondence, Differences, How to check).
 4. **Don't import the check's prose.** Don't add the author's response, a dialogue, "the author agrees", proposed attribution sentences, or any mention of the check, the review process, votes or the finding's history. The fragment should simply be correct, and should still say plainly that the citation is missing.
 5. **Keep the house rules** in `writeup-brief.md`:
-   - no hedges, no citation-status paragraph, no process notes, no tutorial expansions;
+   - no hedges, no citation-status paragraph, no process notes;
    - locators only via `\ploc{compiled}{file:line}` (without extra parentheses) and `\sloc`/`\cite`, with printed pages;
    - plain lists;
    - `xltabular` tables with booktabs rules, a repeated header and `\addlinespace` between rows, and no numbered captions;

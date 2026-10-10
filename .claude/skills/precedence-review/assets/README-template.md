@@ -13,7 +13,7 @@ The write-up lists {N} missing citations: {N−k} places where earlier work alre
 | F3 | fragment | supporting | {technique} | [{Authors Year}](https://arxiv.org/abs/{id}) | for other content |
 
 **Terms:**
-- **Relationship:** same result (one or more earlier papers prove essentially the same statement); same technique (reused essentially intact); adapted (structure followed, core changed); proof shortcut (a published result would replace much of the argument); same route (an earlier paper proposed the strategy); fragment (one piece reused); weaker result (weaker, special-case or partial-range).
+- **Relationship** (between the preprint and the first earlier work listed, the closest one): same result (one or more earlier papers prove essentially the same statement); same technique (reused essentially intact); adapted (structure followed, core changed); proof shortcut (a published result would replace much of the argument); same route (an earlier paper proposed the strategy); fragment (one piece reused); weaker result (weaker, special-case or partial-range version of a main result or of a statement presented as a significant contribution).
 - **Centrality** (best-effort judgment): how much of the main argument depends on the finding: main result (the earlier work covers the main result itself, or most of it), central, supporting or peripheral.
 - **Attribution gap:** relationship same technique, adapted or same result; centrality supporting or higher; and the principal earlier work not cited for this content anywhere in the preprint.
 - **Overstated novelty:** the earlier work is cited for this content, but the abstract or framing presents it as new.

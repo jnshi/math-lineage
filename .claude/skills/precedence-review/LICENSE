@@ -1,0 +1,30 @@
+Licensing of the precedence-review skill
+========================================
+
+Copyright 2026 Jonathan Shi
+
+This folder (.claude/skills/precedence-review/) is licensed for noncommercial
+use only, under two licenses:
+
+- scripts/, except scripts/tex_sandbox.sh: PolyForm Noncommercial License
+  1.0.0, https://polyformproject.org/licenses/noncommercial/1.0.0
+
+  Required Notice: Copyright 2026 Jonathan Shi
+
+- Everything else in this folder, except the files listed under Exceptions:
+  Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0),
+  https://creativecommons.org/licenses/by-nc/4.0/legalcode
+
+Exceptions, which may also be used for commercial purposes:
+
+- SKILL.md and references/environment.md: Creative Commons Attribution 4.0
+  International (CC BY 4.0), https://creativecommons.org/licenses/by/4.0/legalcode
+
+- scripts/tex_sandbox.sh: Apache License, Version 2.0. Its full text is in
+  LICENSE-APACHE-2.0 in this folder.
+
+Reports produced with this skill, including text its templates place in them,
+are not subject to the licenses above.
+
+These terms apply from the commit that adds this file. Earlier versions of
+these files were published under the repository's Apache License, Version 2.0.

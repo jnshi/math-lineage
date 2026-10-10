@@ -1,6 +1,6 @@
 # The expert write-up
 
-A LaTeX report, titled "Missing citations in “⟨preprint title⟩”", for experts in the field who have **not read the preprint** and will **only read the PDF**. They must be able to check every claim against the two papers without reading the rest of the preprint. Each entry gives them a pointer the preprint doesn't: earlier work that already contains part of the preprint. Each entry also says plainly that the citation is missing, since that is the point of the exercise. Both are served by **precise correspondences**, not by tutorial prose, and by keeping each entry no longer than it is worth to the reader.
+A LaTeX report, titled "Missing citations in “⟨preprint title⟩”", for experts in the field who have **not read the preprint** and will **only read the PDF**. They must be able to check every claim against the two papers without reading the rest of the preprint. Each entry gives them a pointer the preprint doesn't: earlier work that already contains part of the preprint. Each entry also says plainly that the citation is missing, since that is the point of the exercise. Both are served by **precise correspondences**, and by keeping each entry no longer than it is worth to the reader.
 
 ## Structure
 ```
@@ -39,7 +39,7 @@ This can overlap with the last section pass.
 4. **List the findings** from `FINDINGS.md`, with the relationships, centralities and magnitude order you settled at consolidation.
    - Give each one a short slug, such as `kac-rice-complexity`, which becomes its file name.
    - Put their `\input` lines in the main file in magnitude order.
-   - Pending merges are the user's decision: recommend one and ask. Launch the drafters the decision doesn't affect in the meantime.
+   - Merges and splits are your decision, unless the user asked at the start to decide them; then recommend one and ask, and launch the drafters the decision doesn't affect in the meantime.
 
 ## Drafting brief
 Write the shared part to `<scratch>/writeup-brief.md`. Each agent's prompt is a pointer to that file ("read it completely first and follow it") followed by a `## YOUR FINDING` block. Launch all drafting agents **in parallel**, in the background.
@@ -50,21 +50,27 @@ You are drafting ONE finding for a LaTeX report about a mathematics preprint, ti
 ## Context
 - **The preprint:** "{TITLE}" ({DATE}). TeX: `{PREPRINT_DIR}/build/sections/*.tex`; bibliography: `{BIBLIOGRAPHY FILE}`; compiled PDF: `{PREPRINT_DIR}/{PDF NAME}`.
 - **Companions** (same release; not earlier work): {LIST WITH PATHS, OR "none"}.
-- **Compiled-text extractions with page breaks** (`\f`; the page of a match is 1 plus the number of `\f` before it): `{SCRATCH}/paper.txt` and {COMPANION TEXT FILES}. Find compiled numbers with `python3 -I -X utf8 "{SKILL}/scripts/pagefind.py" <txt> "<regex>"`. Its `p.N` is the PDF page index. **Use printed page numbers,** which the script shows in each page's first and last lines; many sources have an offset.
+- **Compiled-text extractions with page breaks** (`\f`; the page of a match is 1 plus the number of `\f` before it): `{SCRATCH}/paper.txt` and {COMPANION TEXT FILES}. Find compiled numbers with `python3 -I -X utf8 "{SKILL}/scripts/pagefind.py" <txt> "<regex>"`. Its `p.N` is the PDF page index. **Use printed page numbers,** which the script shows in each page's first and last lines; many sources have an offset: {SOURCE PAGE OFFSETS FROM CONSOLIDATION}.
 - **Review materials:** `{REVIEW_DIR}`: `FINDINGS.md` (the digest), the section reports `NN-*.md`, and `CONSOLIDATION.md`, whose compiled-locator table for your finding is your starting point. They hold detailed correspondences and locators **but may contain errors**.
 - **Source library:** `{REPO}/prior-work/` (`src/<Key>/` LaTeX where available, `papers/<Key>.pdf`, `text/<Key>.txt`). Grep `INDEX.md` for keys; don't read it whole.
 - **The write-up:** `{WRITEUP_DIR}`. Read `parts/overview.tex` (shared notation; don't repeat it) and `parts/about.tex` (the definitions readers see). For the target form and length, look at `{SKILL}/assets/example-finding.tex`; copy its form, not its content.
 - **Valid slugs for cross-references:** {ALL SLUGS}.
 
 ## Definitions (About has them in full)
-- **Relationship:** same technique (reused essentially intact; new ingredients around it don't change that); adapted (structure followed, core changed); fragment (one piece of the technique); same route (an earlier paper proposed the strategy); same result; weaker result (weaker, special-case or partial-range); proof shortcut (a published result would replace a large part of the argument).
+- **Relationship:** same technique (reused essentially intact; new ingredients around it don't change that); adapted (structure followed, core changed); fragment (one piece of the technique); same route (an earlier paper proposed the strategy); same result; weaker result (weaker, special-case or partial-range version of a main result, or of a statement presented as a significant contribution); proof shortcut (a published result would replace a large part of the argument).
 - **Centrality** (best-effort judgment): main result (the earlier work covers the main result itself, or most of it), central, supporting, peripheral.
-- **Credit status:** not cited; cited for other content; credited elsewhere (not where it is used); credited in part. A citation counts only if it is for that specific content.
+- **Credit status:** not cited; cited for other content; credited elsewhere (not where it is used, in a way that an expert reader who doesn't know the earlier work might not connect with it); credited in part. A citation counts only if it is for that specific content.
+- **Canonical origin:** for a classical named device (the Onsager correction, Kac–Rice, and the like), establish its origin first, and read what the origin contains. If the preprint cites that origin, or names the device by its standard name where it uses it, a later work is a missing citation only for content specific to it that the origin lacks; write the finding about that content.
 - **The one exception, overstated novelty:** the earlier work is cited, but the abstract or framing presents the content as new.
+
+## Approaches
+**Compare approaches, not only steps.** A technique is an approach to a problem: what the authors needed, the insight that a particular way of getting it would work, and the steps that carry it out. The approach and its insight are what an expert recognizes, and what earlier authors are owed credit for. Compare the two papers at that level as well as step by step: what each needed, how each chose to get it, and why that works. Standard tools put together in a specific way, for a specific need, in the same setting, are not standard. If a source gives its approach a name, take that as a strong sign that the approach is one unit, and look for it in the preprint under any name. If the preprint follows the approach but does a key step differently, the relationship is adapted; that is not a reason to drop it.
+
+In the Summary, state in a sentence or two the approach the two papers share, the insight behind it and whose insight it is, and keep that statement through any shortening. Where the steps differ, say which part of the approach each one serves.
 
 ## Structure
 ```
-\finding{<Title: a natural-language gloss of the technique or result, without citations>}{<SLUG>}
+\finding{<Title: a natural-language gloss of the approach or result, without citations>}{<SLUG>}
 \paragraph{Summary.}
 \paragraph{Setup.}
 \paragraph{Role in the argument.}
@@ -74,14 +80,14 @@ You are drafting ONE finding for a LaTeX report about a mathematics preprint, ti
 \paragraph{How to check.}
 ```
 These headings are a menu, not a requirement: leave out any that doesn't apply, and reorder where that reads better. (A proof shortcut may use: Summary, Setup, Role in the argument, The earlier results, How the earlier results apply, What the route still contributes, How to check.)
-- **Title.** A natural-language gloss of the technique or result, without citations: no author–year references and no work names. The summary table carries the works. Avoid en-dash chains of names, which don't break across lines.
+- **Title.** A natural-language gloss of the approach or result, without citations: no author–year references and no work names. The summary table carries the works. Avoid en-dash chains of names, which don't break across lines.
 - **Summary.** 4–6 sentences.
-  - **The first two say what the earlier work is and that the preprint doesn't cite it for this content.** Variants: it cites it only for something else, or only elsewhere. For overstated novelty: where the preprint does cite it, and where the abstract or framing presents the content as new. Don't soften or bury this.
-  - Then say where in the preprint (compiled locators), and give the relationship (`\rel{same technique}`) with a one-clause reason.
+  - **The first two say what the earlier work is and that the preprint doesn't cite it for this content.** Variants: it cites it only for something else, or only elsewhere. If the preprint cites the device's canonical origin, or names the device, say that first. For overstated novelty: where the preprint does cite it, and where the abstract or framing presents the content as new. Don't soften or bury this.
+  - Then say where in the preprint (compiled locators), and give the relationship (`\rel{same technique}`) with a one-clause reason. If several works are listed, say in a clause how each other work relates, and which originated the idea if that isn't the principal.
   - Describe the mathematics with verbs that fit the relationship: "follows", "adapts", "uses one step of", "carries out the route proposed in", "was first proved in".
 - **Setup.** Only the local notation needed, with what each object means. Refer to Section~\ref{sec:overview} for shared notation.
 - **Role in the argument.** A few sentences, including the chain of results the finding feeds, in compiled numbering ("Lemma 5.6 → Prop. 5.1 → Thm. 1.1"). Recurrences elsewhere go here in one sentence.
-- **The earlier technique / result.** Its precise statement in the source's own notation, with locators: just what the reader needs to see the correspondence. Don't write tutorial explanations: readers learn the shared structure from the precise correspondences, and tutorial prose only adds length. If the source itself calls the device standard, or credits a third paper for it, say so with the locator.
+- **The earlier technique / result.** Its precise statement in the source's own notation, with locators: just what the reader needs to see the correspondence. If the source itself calls the device standard, or credits a third paper for it, say so with the locator.
 - **Correspondence.** One table mapping objects and statements, each side in its own native notation, with compiled locators. Then the one or two key formulas side by side.
 - **Differences.** A short list of local, checkable differences from the earlier work: new ingredients, a different object, a different proof of a step. Not the preprint's contributions in general; the preprint states those itself.
 - **How to check.** An `enumerate` of 2–4 side-by-side checks with exact locations on both sides.
@@ -100,7 +106,7 @@ Length: **at most 3 pages**, usually 2–2.5 (a merged finding may use up to abo
 
 ## If the finding doesn't hold
 Re-verify every claim against the actual passages. The reports may be wrong; use the correct version and list corrections in your final message.
-- **Write the finding with the assigned relationship and centrality.** If you think another fits better, propose it with reasons in your final message, not in the fragment. The coordinator decides.
+- **Write the finding with the assigned relationship and centrality.** If you think another fits better, propose it with reasons in your final message, not in the fragment. The coordinator settles it after the persona check.
 - **Drop a component** whose correspondence fails, or that the preprint credits where it is used after all, and say so in your final message.
 - **Withdraw only on facts:**
   - the correspondence fails at a specific step;
@@ -149,25 +155,23 @@ The precise correspondences you write also feed that check, so precision about w
 
 **The `## YOUR FINDING` block** gives, for one finding:
 - **Header line:** the slug, which is also the file name; the relationship and centrality; and "overstated novelty" with the claim's location where it applies. Add the slugs of any findings it should cross-reference.
-- **Suggested title:** a natural-language gloss, without citations.
-- **What it is.** The technique, its earlier source(s) with library keys and main locators, principal source first; where the preprint uses it (file:line, so the agent can find it fast); what the preprint does and doesn't cite; and the dependency chain from consolidation.
+- **Pointers.** The earlier source(s) with library keys and main locators, principal source first; each source's own name for its approach, if it has one, and its motivation passage; where the preprint uses the content (file:line, so the agent can find it fast); what the preprint does and doesn't cite; and the dependency chain from consolidation. Don't describe what is shared: the drafter reads the section report and the two papers.
 - **Materials.** Which section reports and which findings in them; recurrence locations to mention in one sentence; relevant credit-map entries; consolidation corrections, written as explicit don'ts ("do not describe X as applying this device").
 - **Specific checks.** Anything the agent must verify. For example: does a cited source cover it? For a proof shortcut, check normalizations, hypotheses, and that the claimed independent route really is independent; grep its sections for references into the other route.
-- **Expected objections, as factual questions only.** If there is an obvious objection, turn it into checks of its factual premise: "Is this step credited to its source at the point of use?", "Is this exact form in a textbook? Name the passage." Don't add "feel free to withdraw", or ask the drafter to rule on whether the objection justifies omission: that wording leads drafters to withdraw findings on judgment calls.
 
 ## Processing drafting hand-backs
-- **Log each one in a short line:** the page count, any proposed change of relationship or centrality, dropped components. Proposals go into `FINDINGS.md`; you decide them after the persona check.
+- **Log each one in a short line:** the page count, any proposed change of relationship or centrality, dropped components. Proposals go into `FINDINGS.md`; after the persona check, they settle a choice the check leaves open (`skeptic.md`, step 5).
 - **A withdrawn finding:** delete its `\input` line, move the fragment to `findings/retired/`, and grep `f:<finding>` in every other fragment and in `summary.tex`, removing the references. Tell the user the fact behind it.
   - If the user asks, or you can't confirm the fact yourself, run a blind persona check on the original claim (`skeptic.md`).
   - If that check affirms inclusion, ask the user whether to reinstate it as a late finding.
 - **Report corrections the drafter found:** fold them into `FINDINGS.md`.
-- **Two findings overlapping, or "is X just Y twice?":** ask the user. Give numbered options (merge / keep separate / drop one as a component of the other) and your recommendation. If they choose a merge, one agent rewrites the surviving fragment, integrating each paragraph rather than appending. The cap is about 4 pages. The other fragment goes to `retired/`.
+- **Two findings overlapping, or "is X just Y twice?":** decide between merging, keeping them separate, or dropping one as a component of the other, by whether they are the same idea, and tell the user. If the user asked at the start to decide merges, give these as numbered options with your recommendation instead. For a merge, one agent rewrites the surviving fragment, integrating each paragraph rather than appending. The cap is about 4 pages. The other fragment goes to `retired/`.
 - **A late finding** (from a resumed section agent or a user lead): give it a new slug, put its `\input` line where its magnitude puts it, tell the user that IDs after it shift, add it to the slug list, and launch a drafter.
 
 ## Assembly
 1. **Check the main file's `\input` order** against magnitude: the relationships and centralities you set at consolidation, or, after the apply-verdicts pass, as you settled them. This order fixes the IDs.
 2. **Build once,** so that the `.aux` file holds the IDs.
-3. **Write `parts/summary.tex`.** Collect each finding's ID, slug, title and Summary with `python3 -I -X utf8 <skill>/scripts/print_summaries.py <writeup dir>`, which reads the IDs from the last build. Drafters' proposed cells are a good start. See `assets/summary.tex`.
+3. **Write `parts/summary.tex`.** Collect each finding's ID, slug, title and Summary with `python3 -I -X utf8 <skill>/scripts/print_summaries.py <writeup dir>`, which reads the IDs from the last build. Drafters' proposed cells are a good start; the "Technique or result" cell names the approach or result, not its tools. Like a title, it carries no author names or citations. See `assets/summary.tex`.
    - It is an unnumbered "Summary of findings" section with a short lead-in that says each row is a missing citation.
    - The table is a `\footnotesize` xltabular with columns **ID | Relationship | Centrality | Technique or result | In the preprint | Cited?**.
    - Each row starts with `\ref{f:<finding>} & \rel{<relationship>} & <centrality> &`, in that order; the JSON validator reads those cells. `\ref` prints the ID as a link; never type an ID.

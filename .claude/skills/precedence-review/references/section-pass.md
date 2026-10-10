@@ -32,21 +32,22 @@ You are one step in a sequential, section-by-section review of a single mathemat
 - {EITHER: Companion preprints, cited as {KEYS}, are in the same release under {PATHS}. They are not earlier work, but their credits matter for the specific-content rule below. OR: The preprint cites no companion preprints from the release.}
 
 ## Your assignment: §{N} "{SECTION TITLE}": `{FILE}` (lines {A}–{B}), pp. {C}–{D}
-{THE SUBSECTIONS WITH LINE NUMBERS, AND WHAT THE SECTION DOES ACCORDING TO THE PROOF OVERVIEW, IN 3–6 BULLETS}
+{THE SUBSECTIONS WITH LINE NUMBERS, AND WHAT THE SECTION DOES IN THE PREPRINT'S OWN WORDS (ITS OVERVIEW OR SECTION OPENING), IN 3–6 BULLETS}
 
-**Stay strictly within this section.** Read other sections only to understand notation or definitions that this one uses. Do not investigate arguments that live in other sections. If you notice something there, record it in one line under "Leads for later sections". {FOR LONG SECTIONS: The section is long, so budget your effort in this order: {RANKED LIST OF THE DEVICES IT USES WITHOUT A CITATION}.}
+**Stay strictly within this section.** Read other sections only to understand notation or definitions that this one uses. Do not investigate arguments that live in other sections. If you notice something there, record it in one line under "Leads for later sections". {FOR LONG SECTIONS: The section is long; spend your effort on what it uses without a citation.}
 
 ## What counts as a finding
 The scope: "Find the load-bearing techniques, constructions and results in this section that trace to an identifiable earlier paper, where an expert reading the preprint wouldn't find the pointer: nothing is cited for them at the point of use, or what is cited covers something else or something narrower. Also record earlier progress on the same problem that the preprint doesn't cite. Whether a pointer earns its place in the report is decided later; your job is to find and verify." "Load-bearing" means used in the section's arguments, not only mentioned as background.
 - **A finding:** an argument, construction, identity, estimate, body of theory or proof route used in this section that an identifiable earlier paper already contains, where the preprint does not cite that paper for it here. Either there is no citation at all, or the citation it gives covers something else or something narrower. Name the specific earlier source with its exact locator, and show the correspondence concretely (their statement or equation next to the preprint's).
-- **Give each finding a relationship type** (what the mathematics has in common, regardless of citations):
+- **For each earlier work, give its relationship type to this section's content** (what the mathematics has in common, regardless of citations). Don't rank the works or pick a principal: consolidation does that, once every work bearing on a finding is known.
   - **same technique:** reused essentially intact. New ingredients around it, a new setting or a combination with other tools don't change that; list them under "Differences";
   - **adapted:** its structure followed, with a change at its core (a different object, or a key step replaced);
   - **fragment:** one identifiable piece of the technique. A headline idea without its downstream machinery is still the technique, not a fragment;
   - **same route:** an earlier paper proposed the strategy, even heuristically, and this section carries it out.
 
-  Earlier results on the same problem (**same result**, **weaker result**) are the introduction pass's job. If you happen on an earlier, weaker version of a statement this section proves, record it in one line under "Earlier results" with its locator and date.
-- **Credit status,** for each earlier work: not cited (not in the bibliography); cited for other content; credited elsewhere (cited for this content, but not here); credited in part. Content credited here, directly or through a cited location that itself credits the work, is not a finding, with one exception: if the abstract, the contribution statements or the framing of a main result present it as new, as a reader would reasonably take it, record it as **overstated novelty**, quoting the claim and its location.
+  Earlier results on the same problem (**same result**, **weaker result**) are the introduction pass's job. If you happen on an earlier, weaker version of one of the preprint's main results, or of a statement it presents as a significant contribution, record it in one line under "Earlier results" with its locator and date. Weaker versions of other intermediate statements are not reported.
+- **Compare approaches, not only steps.** A technique is an approach to a problem: what the authors needed, the insight that a particular way of getting it would work, and the steps that carry it out. The approach and its insight are what an expert recognizes, and what earlier authors are owed credit for. Compare the two papers at that level as well as step by step: what each needed, how each chose to get it, and why that works. Standard tools put together in a specific way, for a specific need, in the same setting, are not standard. If a source gives its approach a name, take that as a strong sign that the approach is one unit, and look for it in the preprint under any name. If the preprint follows the approach but does a key step differently, the relationship is adapted; that is not a reason to drop it.
+- **Credit status,** for each earlier work: not cited (not in the bibliography); cited for other content; credited elsewhere (cited for this content, but not here, in a way that an expert reader who doesn't know the earlier work might not connect with it); credited in part. Content credited here, directly or through a cited location that itself credits the work, is not a finding, with one exception: if the abstract, the statements of significant contributions or the framing of a main result present it as new, as a reader would reasonably take it, record it as **overstated novelty**, quoting the claim and its location.
   - **Specific-content rule.** A citation counts only when it is *for that specific content*. Citing the same paper nearby for a different result does not count. A citation of a named method covers that method's own lemmas, but not a different device from the same paper. If the preprint re-proves content itself, a companion's parallel credits do not transfer.{IF THE PREPRINT SAYS ITS ESTIMATES ARE "PROVED BELOW", QUOTE THAT LINE HERE}
   - **Rule explicitly on every citation in or near this section that could count as credit** for content you examine: {LIST THEM, e.g. "the introduction's sentence at lines 118–125 citing [EAMS2022]"}. Say what each covers and what it doesn't, with locators.
 - **Don't drop a verified candidate on a judgment call** ("standard", "superseded by later cited work", "only a fragment"). Record the facts that bear on it instead: dates, what the source itself says about the device (e.g. that it calls it standard, or credits someone else), and what cited works cover. A later check decides inclusion.
@@ -54,9 +55,9 @@ The scope: "Find the load-bearing techniques, constructions and results in this 
   - the correspondence fails at a specific step;
   - the source postdates the preprint;
   - the preprint credits it here after all;
-  - it is a generic textbook or folklore tool in exactly its textbook form: name the textbook passage. A specific combination of tools that traces to a paper still counts. Examples of single tools for this section: {GENERIC TOOLS TYPICAL OF THIS SECTION'S AREA; NEVER A COMBINATION OF TOOLS};
+  - it is textbook or folklore material (a tool or a standard argument) in exactly its textbook form: name the textbook passage. A specific combination of tools that traces to a paper still counts;
   - it is a parallel: an earlier paper doing the analogous thing in another setting, with nothing to suggest the preprint drew on it. State the setting and the object;
-  - it is a "cite the original rather than a later source" quibble, where a cited source genuinely covers the content (including a cited source that itself credits the original);
+  - it is a "cite the original rather than a later source" quibble, where a cited source genuinely covers content used here (including a cited source that itself credits the original). This never rules out an earlier result on the same problem;
   - it is a physics heuristic or numerics.
 - "Earlier" means publicly available before {DATE}.
 - **Proof shortcuts:** don't search for these. If you happen to notice that a published result would replace or substantially shorten a large part of the paper's argument, record it under "Proof shortcuts (noted)". Give the paper span, the result with its locator, what becomes a citation, and what checking it would need.
@@ -66,14 +67,14 @@ Read these in `{REVIEW_DIR}`:
 - `FINDINGS.md`: the digest of all findings and rulings so far. Read it instead of the earlier reports. Open a specific `NN-*.md` report only if a cross-reference needs detail.
 - {IF THERE ARE COMPANIONS: The §{N} entries, if any, in `COMPANION-CREDIT-MAP.md`.}
 
-Don't re-report existing findings. If your section re-uses the same technique, cross-reference it in one line with exact locations, so the consolidation pass can extend the finding's location list. Report the use of a different technique or source as a new finding.
+Don't re-report existing findings. If your section uses content that an existing finding covers, cross-reference the finding in one line with exact locations, so the consolidation pass can extend its location list. Do this even if you trace the content to a different earlier work. Then also give that work with the same evidence as a finding entry: the full citation and locator, the correspondence side by side, its relationship to this section's part of the content, and its credit status. Consolidation places it. Report different content as a new finding.
 
 Leads for §{N} (unverified; verify or discard; don't limit yourself to these):
-{LEADS, EACH LABELLED BY ORIGIN: "**§K:**", "**Credit map:**", "**Sibling review:**", "**Coordinator:**". GIVE LIBRARY KEYS AND arXiv IDS FOR PAPERS ALREADY DOWNLOADED. FOR A DEVICE USED WITHOUT A CITATION, DESCRIBE IT PRECISELY AND NAME CANDIDATE AUTHORS OR PAPERS TO COMPARE.}
+{LEADS, EACH LABELLED BY ORIGIN: "**§K:**", "**Credit map:**", "**Sibling review:**", "**Coordinator:**". IN THE ORIGINATOR'S WORDS. GIVE LIBRARY KEYS AND arXiv IDS FOR PAPERS ALREADY DOWNLOADED, THE EARLIER SOURCE'S OWN NAME FOR ITS APPROACH IF IT HAS ONE, AND THE LOCATOR OF ITS MOTIVATION PASSAGE. NAME CANDIDATE AUTHORS OR PAPERS TO COMPARE. DON'T ADD YOUR OWN DESCRIPTION OF WHAT IS SHARED.}
 
 ## Procedure
 1. Read your section completely. Understand each statement and proof step well enough to state precisely what it does.
-2. Inventory each lemma / proposition / key proof step, with:
+2. Inventory the section's ideas, each in the section's own motivating sentence, and each lemma / proposition / key proof step, with:
    - its location (`\label`, file:line);
    - how the paper attributes it: the bib key and locator, the companion lemma, "standard", or nothing.
 3. Decide which items could plausibly come from identifiable earlier papers, and search for those. Tools:
@@ -82,12 +83,13 @@ Leads for §{N} (unverified; verify or discard; don't limit yourself to these):
    - citation trails. The bibliographies of papers the preprint cites (`prior-work/src/<Key>/*.bbl` or `*.bib`) often contain the uncited source of a technique.
    For a cited source, check whether it actually covers what is used.
 4. Verify before reporting. Never report from a title or abstract alone. Find and read the specific passage, then compare the statements and proofs side by side.
-5. Prioritize devices the section relies on that it uses without a citation and that aren't textbook tools; don't chase background.
+5. Check for credit before calling anything uncited. Search the whole preprint, including the abstract, the introduction and the bibliography, for the source's author names, its bib key and every occurrence of the device's name, and read each sentence to see what it cites. Reading these sentences, wherever they are, isn't investigating another section's arguments. For a classical named device (the Onsager correction, Kac–Rice, and the like), find its canonical origin first. If the preprint cites that origin, or names the device by its standard name where it uses it, record that credit with its locator, state it first in your entry, and keep the candidate for the content specific to the later development. Don't rule it out on this ground: consolidation and the author-persona check decide.
+6. Prioritize what the section relies on and uses without a citation; don't chase background.
 
 ## Shared paper library: download every paper you check
 - Root: `{REPO}/prior-work/`. `INDEX.md` is the running list and has the conventions; it is large. **Grep it** for the arXiv ID / DOI / title words / author names before downloading anything, rather than reading it whole; read only its "Layout and conventions" section at the top. `ls src/` lists the papers with LaTeX source. Not every paper has `src/`; `text/<Key>.txt` always exists for downloaded papers.
-- **Rows from other reviews.** The "Cited by the preprint?" column refers to whichever review added the row. Rows tagged with another review's name, and untagged rows added before this review started, may refer to another preprint; check this preprint's bibliography yourself.
-- Download every paper you actually check beyond a search snippet or abstract, including irrelevant ones, and record those as "checked; not relevant to …".
+- **Rows from other reviews.** The "Cited by the preprint?" column refers to whichever review added the row. Rows tagged with another review's name, and untagged rows added before this review started, may refer to another preprint; check this preprint's bibliography yourself. Their Relevance notes were written for that review, and older ones may carry verdicts ("not relevant", "standard"). Use them to learn what a paper contains, never to rule it out for your section.
+- Download every paper you actually check beyond a search snippet or abstract, including ones that turn out not to bear on your section. In its Relevance cell, say what the paper contains, with page references, and what you checked it for ("checked for §{N}: …"), not a verdict such as "not relevant" or "standard". Later sections and later reviews read these cells, and the paper may bear on their content.
 - arXiv papers: first look up the latest version (`curl -sSL --proto =https "https://export.arxiv.org/api/query?id_list=<id>" | grep "<id>"`), then run `bash "{REPO}/prior-work/tools/fetch_arxiv.sh" <Key> <arXiv id with version>`. It saves the PDF, the text and the LaTeX source, skips what exists, and backs off when arXiv rate-limits. Leave 3–5 s between calls.
 - Read the LaTeX source (`src/<Key>/`) for mathematical content. Use the PDF (Read tool with `pages`, one page or one range) for theorem and page numbers in locators. **Page numbers are the printed ones**, read from the page itself; many PDFs have an offset between the PDF index and the printed number.
 - Copy each paper's title into INDEX.md exactly as its title page gives it, and its date of first public posting.
@@ -107,10 +109,11 @@ Leads for §{N} (unverified; verify or discard; don't limit yourself to these):
    - `## Section summary`: what the section proves and how, with labels and file:line pointers; concise.
    - `## Inventory`: a table of item | location | the paper's attribution.
    - `## Findings`: numbered `§{N}-1`, `§{N}-2`, …, closest relationship first. Each entry gives:
-     - a title glossing the technique (no citations);
-     - its relationship type, or "overstated novelty" with the quoted claim and its location;
+     - a title glossing the approach (no citations);
+     - the shared approach and the insight behind it, in a sentence or two, with each paper's own statement of what it needed quoted side by side;
+     - "overstated novelty", if it applies, with the quoted claim and its location;
      - the paper's location, plus a quote of at most two lines or a paraphrase;
-     - the prior work, principal source first (full citation, arXiv/DOI, exact locator with printed page, library key);
+     - each earlier work (full citation, arXiv/DOI, exact locator with printed page, library key), with what it shares with this section's content and its relationship to that part, unranked;
      - the concrete correspondence, and the differences / new ingredients;
      - the credit status for each earlier work (anywhere in the paper? for this specific content? via which companion location?), with your ruling on each nearby citation;
      - where in the dependency chain the content sits (what it feeds, up to the main theorem), in compiled numbering;
@@ -119,7 +122,7 @@ Leads for §{N} (unverified; verify or discard; don't limit yourself to these):
      If there are no findings, say so plainly; that is a fine outcome.
    - `## Earlier results`: one line each (result, locator, date, and the statement here that it precedes). Omit it if there are none.
    - `## Proof shortcuts (noted)`: omit it if there are none.
-   - `## Cross-references`: existing findings that recur here, with exact locations.
+   - `## Cross-references`: existing findings that recur here, with exact locations, and any earlier work you propose for one, with its evidence as in a finding entry.
    - `## Ruled out`: each candidate ruled out, with the fact that rules it out.
    - `## Searched, nothing found`: the important items and the queries used.
    - `## Leads for later sections`: one line each, with section numbers and the specific earlier locators to compare.
@@ -131,7 +134,7 @@ Write only inside `prior-work/`, `{REVIEW_DIR}` and your scratch subfolder. Do n
 
 ## Variants
 - **Introduction pass (§1).** Replace the assignment with three checks:
-  - **Earlier results on the same problem** (same result, weaker result) for the main theorem: earlier rigorous results on the same quantity, or weaker, special-case and partial-range versions. Find these in the related-work narrative and beyond it, including works citing the main earlier papers. Also check that cited works are described accurately where it matters for priority (for example, whether a cited paper already covers a larger range than the preprint says).
+  - **Earlier results on the same problem** (same result, weaker result) for the main theorem and for statements the preprint presents as significant contributions: earlier rigorous results on the same quantity, or weaker, special-case and partial-range versions. Find these in the related-work narrative and beyond it, including works citing the main earlier papers. Also check that cited works are described accurately where it matters for priority (for example, whether a cited paper already covers a larger range than the preprint says).
   - **The abstract's and the introduction's novelty claims,** explicit or implied. For example "X is developed here", "we extend Y", or a main theorem presented as the paper's own. Are these techniques or results actually in earlier work? If the earlier work is uncited, that is an ordinary finding. If it is cited, for example in the related-work paragraph, but the abstract or framing presents the content as new, as a reader would reasonably take it, record it as **overstated novelty**, quoting the claim and its location. Check at the level of the claim.
   - **Leads.** Record technique-level suspicions as "Leads for later sections". Don't chase them into the proofs.
 
@@ -143,14 +146,13 @@ Write only inside `prior-work/`, `{REVIEW_DIR}` and your scratch subfolder. Do n
 - **Section with a top-priority lead** (for example, a mechanism used there with no citation, when the same mechanism elsewhere is credited). Mark it as highest priority, and spell out the verification: grep the whole section for any citation, read the source's lemma and its proof, and compare.
 
 ## Coordinator loop after each hand-back
-1. **Read the report.** Read its findings and leads, for example `sed -n '/^## Findings/,/^## Cross-references/p'` and `sed -n '/^## Leads/,$p'`. Don't open the whole report unless needed.
-2. **Check every relationship type and credit status against the definitions and the specific-content rule.** Agents often treat a citation nearby for something else as credit, or call a whole technique a "fragment".
+1. **Read the report.** Read its findings, cross-references and leads, for example `sed -n '/^## Findings/,/^## Ruled out/p'` and `sed -n '/^## Leads/,$p'`. Don't open the whole report unless needed.
+2. **Check each earlier work's relationship type and credit status against the definitions and the specific-content rule.** Agents often treat a citation nearby for something else as credit, call a whole technique a "fragment", or split one approach into parts and set each aside on a different ground (one part done differently, another made of standard tools); judge the approach as a whole. For overstated novelty, check that the claimed passage is in the abstract, a statement of significant contributions or the framing of a main result.
    - If you change one, edit the report and add a blockquote "Note (coordinator, <date>)" with the reason.
-   - If a finding is open to a judgment-call objection ("standard", "superseded", "only a fragment"), note the strongest one in `FINDINGS.md` with its factual premise. Drafters check the premise; the persona never sees the note.
    - These notes stay internal.
-3. **Verify each new finding's decisive correspondence yourself** before relaying it: read the source passage in `prior-work/src/` or `text/` next to the preprint's. Do the same for any claim that would change the picture, such as a claim that a published theorem makes a whole route unnecessary. It takes a few minutes per hand-back.
-4. **Run the author-name check for each new finding.** Use the Grep tool over every section, the abstract and the bibliography for the source's author names, technique names and bib key, printing the matching lines rather than only file names (`environment.md`). Record the result in `FINDINGS.md`.
-5. **Update `FINDINGS.md`.** Add a row per finding, with its relationship, credit status, dependency chain and differences; "Ruled out" entries; recurrence locations for consolidation; corrections the agent reported; earlier-result one-liners; proof shortcuts noted; and the running list of merge candidates.
+3. **Check that each new finding's claimed correspondence is really there** before relaying it: read the passages the report relies on, in `prior-work/src/` or `text/`, next to the preprint's, starting with the earlier work it rates most severe. In `FINDINGS.md`, note only what you read (the locators) and whether the claimed match was present or not found, without characterizing it: later agents read the digest. If a match is not found, resolve it before the next section starts. First resume the section agent with SendMessage to ask where the passage is, since the locator may simply be wrong. Then correct the report with a dated coordinator note, or, only if the match fails, move the candidate to "Ruled out" with the fact. The digest never carries a finding marked "not found". This is a reality check, so that later sections don't build on a match that isn't there. It is not the choice of principal, whose decisive correspondence you verify at consolidation. Do the same for any claim that would change the picture, such as a claim that a published theorem makes a whole route unnecessary. It takes a few minutes per hand-back.
+4. **Run the author-name check for each new finding.** Use the Grep tool over every section, the abstract and the bibliography for the source's author names, technique names and bib key, printing the matching lines rather than only file names (`environment.md`). Read each sentence where a name of the device occurs, and record what it cites. Record the result in `FINDINGS.md`.
+5. **Update `FINDINGS.md`.** Add a row per finding. Describe it by the report's own statement of the shared approach, quoted rather than summarized, since later agents read this digest instead of the reports. Give each earlier work's relationship and credit status, the dependency chain and the differences; "Ruled out" entries; recurrence locations for consolidation, and any earlier work a section proposed for an existing finding (the work, its locator, its relationship to that section's part of the content and its credit status; the evidence stays in the report); corrections the agent reported; earlier-result one-liners; proof shortcuts noted; and the running list of merge candidates.
 6. **Update `TIMING.md`.** Take duration, tokens and tool uses from the task notification's usage block. Take clock times from `date` at launch and at hand-back; don't estimate them.
 7. **Add leads to the running template.** Add the agent's leads for later sections. For leads addressed to the next section, grep the earlier reports and the credit map (`grep -h -n -i '§{N}' [0-9][0-9]-*.md COMPANION-CREDIT-MAP.md`).
 8. **Launch the next section.**
