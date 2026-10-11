@@ -29,7 +29,7 @@ You are the **coordinator**. Subagents do the reading, searching, drafting and c
 
 `<skill>` below means this skill's base directory. `<repo>` is the working copy of the reviews repository `jnshi/math-lineage`, and `<scratch>` is your session scratch directory. `<review>` is a short kebab-case name for the review, such as `sk-spectral-gap`. `<finding>` is a finding's slug.
 
-**License.** This skill is licensed for noncommercial use only (see the `LICENSE` files in this folder). If you are running it for a use that license doesn't permit (in short, use primarily for commercial advantage or monetary compensation), then the author has granted permission to use `SKILL.md`, `references/environment.md` and `scripts/tex_sandbox.sh`, but does not license you, your subagents or other agents to use the skill's other files. In that case, proceed with your own method in place of those files, follow `references/environment.md`, and compile any LaTeX through `scripts/tex_sandbox.sh` (source it, run `sandbox_check`, then `sandbox_pdflatex`). If you don't know, assume the use is permitted; there is no need to check.
+**License.** This skill is licensed for noncommercial use only (see the `LICENSE` files in this folder). If you are running it for a use that license doesn't permit (in short, use for a commercial purpose, other than use by a noncommercial organization such as a university, charity, public research organization or government institution), then the author has granted permission to use `SKILL.md`, `references/environment.md` and `scripts/tex_sandbox.sh`, but does not license you, your subagents or other agents to use the skill's other files. In that case, proceed with your own method in place of those files, follow `references/environment.md`, and compile any LaTeX through `scripts/tex_sandbox.sh` (source it, run `sandbox_check`, then `sandbox_pdflatex`). If you don't know, assume the use is permitted; there is no need to check.
 
 ## Scope
 
@@ -105,6 +105,7 @@ The layout follows `jnshi/math-lineage`, which mirrors the openai/math release: 
 2. **Locate the preprint and its companions.**
    - Note the actual file names: the PDF may be `paper.pdf` or `main.pdf`, and the bibliography `build/references.bib` or `build/references.tex` with `\bibitem`s.
    - Companions are preprints from the same release that the preprint cites. To find them, grep the bibliography for `openai/math`, "OpenAI", and titles that match folder names under `preprints/`. Confirm the list with the user.
+   - If the preprint's or a companion's PDF isn't checked out (a slim clone leaves PDFs out), check it out with `git sparse-checkout add`, as in `references/environment.md`.
    - Companions are **not** earlier work: use them only to understand imported inputs and to apply the specific-content rule.
    - **If there are no companions,** skip the credit map, drop the companion clauses from the briefs, and use About's no-companion sentence.
 3. **Map the sections from the compiled PDF's table of contents** (`pdftotext -enc UTF-8 -f 1 -l 3 <pdf> -`), not from file names.
