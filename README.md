@@ -1,56 +1,66 @@
-# Readme
+&emsp;*Quick links: [To read](#to-read) · [To contribute](#to-contribute) · [About the skill](#about-the-skill) · [Stats](#stats) · [Reviewed preprints](#reviewed-preprints) · [List of missing attributions](#list-of-missing-attributions)*
 
-This repository contains mathematical manuscripts and supporting proof artifacts produced by an internal OpenAI model. 
+On October 6, 2026, OpenAI released a [repository](https://github.com/openai/math) of 722 machine-generated manuscripts presenting solutions to major open problems across many fields of mathematics. A week earlier, the [Advisory Group on Mathematics and Artificial Intelligence](https://agmai.org) (AGMAI), a group of mathematicians that advises AI companies, had [recommended](https://agmai.org/general-sep29/) that a lab releasing such results first search the literature for related ideas and "cite the papers in which the ideas were first introduced". On the day of the release, AGMAI left it to the mathematical community to assess how far its recommendations had been followed ([statement](https://agmai.org/#openai-release)).
 
-As part of model development, we evaluate our models on open research problems. We expanded these evaluations after performance on our existing mathematical evaluations saturated. Some outputs build upon earlier results produced by the models.
+When a manuscript uses ideas and techniques from earlier papers without citing them, it removes the landmarks that normally help readers navigate a new paper, obscures what is truly new in it, and withholds credit from the people who introduced those ideas. Proper citation is therefore not considered optional in published works.
 
-This collection includes results at different stages of verification. Not all have accompanying Lean formalizations. We will continue to update this repository with Lean formalizations as we obtain them. 
+The goal of this repository is to search for and document some of this missing attribution, and so to help the community with its assessment and aid in understanding the new solutions. The approach uses LLM agents to handle this task at scale. Each report lists earlier works used by a preprint without citation, with locators in both papers so that readers can check each finding.
 
-Some of the unformalized results could have issues. We will endeavor to fix any such issues quickly.
-We are also exploring community-hosted repositories for these materials. 
+## To read
 
-## Navigating the collection
+In each reviewed manuscript's folder under [`preprints/`](preprints/), the report `precedence-findings.pdf` sits next to OpenAI's original manuscript, usually `paper.pdf` or `main.pdf`. The folder's `README.md` also summarizes the report in a table. The reviewed manuscripts are listed under [Reviewed preprints](#reviewed-preprints). Each report makes no claim of completeness, does not judge whether the manuscript is correct, and has not been vetted by a human.
 
-The current catalogue contains 719 manuscripts organized into 372 families. A family groups related papers, which may include a principal result, companion arguments, consequences, or alternative proofs. Each family is classified by mathematical discipline.
+This repository is a fork of [openai/math](https://github.com/openai/math). The manuscripts and their supporting material (`preprints/`, `lean/`, `reasoning_traces/`, [`CONTENTS.md`](CONTENTS.md), [`overview.pdf`](overview.pdf), [`history.md`](history.md)) are as released there; see [its README](https://github.com/openai/math#readme) for how they were produced.
 
-- Start with the [overview](overview.pdf) for descriptions of the families.
-- Use the [manuscript map](CONTENTS.md) to find individual papers and their supporting materials.
-- The [`preprints/`](preprints/) directory contains PDFs, source files, and manuscript-specific citation and build instructions.
-- The [Lean library](lean/README.md) and [formalization catalogue](lean/formalization.yaml) describe the available formal proofs, their associated papers, and verification configurations. See the [Comparator instructions](lean/ComparatorChallenges/README.md) for additional checking instructions. The repository has ~42% top-line results formalized.
-- Updates to the repo are described in the [history](history.md).
+## To contribute
 
-### Reasoning summaries
+To review a preprint that doesn't have a review yet (see [Reviewed preprints](#reviewed-preprints)):
+1. Make a slim clone of this repository, without `lean/` and the PDFs: about 270 MB instead of 3 GB. On Windows, run these commands in Git Bash.
+   ```bash
+   git clone -c core.longpaths=true --filter=blob:none --sparse https://github.com/jnshi/math-lineage
+   cd math-lineage
+   git sparse-checkout set --no-cone --stdin <<'EOF'
+   /*
+   !/lean/
+   !*.pdf
+   EOF
+   ```
+2. Open Claude Code, or another agent that reads [`AGENTS.md`](AGENTS.md), in the `math-lineage` folder, and ask it for a precedence review of the preprint. If you want to read a file that the slim clone left out, such as the preprint's PDF, ask the agent to check it out. The agent asks a few questions first, shows you the report before anything is published, and asks before opening a pull request against this repository.
 
-We are also releasing abridged summaries of the model's reasoning, covering the following results:
+A 66-page preprint took about 7.5M tokens and 5 hours.
 
-| Family | Subject |
-|---|---|
-| 007 | [Ordinary two-point correlations of multiplicative functions](reasoning_traces/ordinary-two-point-correlations.pdf) |
-| 017 | [The irrationality exponent of π](reasoning_traces/irrationality-exponent-of-pi.pdf) |
-| 087 | [Symmetric and general Mahler conjectures](reasoning_traces/symmetric-and-general-mahler-conjectures.pdf) |
-| 102 | [Ordinary NP-hardness at the basic semidefinite threshold](reasoning_traces/basic-semidefinite-threshold-np-hardness.pdf) |
-| 159 | [Quasipolynomial bounds for arithmetic progressions](reasoning_traces/quasipolynomial-arithmetic-progressions.pdf) |
-| 197 | [Kaplansky's direct-finiteness conjecture in characteristic two](reasoning_traces/kaplansky-direct-finiteness-characteristic-two.pdf) |
-| 221 | [The Mézard–Parisi formula for diluted spin glasses](reasoning_traces/mezard-parisi-formula.pdf) |
-| 271 | [Spontaneous magnetization in the quantum Heisenberg ferromagnet](reasoning_traces/spontaneous-magnetization-quantum-heisenberg-ferromagnet.pdf) |
-| 287 | [Isomorphism of free group factors](reasoning_traces/free-group-factor-isomorphism.pdf) |
-| 362 | [The three-dimensional relativistic Vlasov–Maxwell system](reasoning_traces/relativistic-vlasov-maxwell.pdf) |
+To report an error in a report, open an issue that names the preprint and the finding's ID.
 
+## About the skill
 
-## How the results were produced
+The [precedence-review skill](.agents/skills/precedence-review/SKILL.md) reads a preprint section by section and searches for earlier papers that already contain the techniques, constructions and results it uses. Each candidate is checked against the earlier paper itself. A separate agent then reviews each finding from the preprint author's point of view, and decides whether citing the earlier work would help an expert reader or is owed as credit.
 
-The vast majority of results were obtained with the same procedure using an unreleased internal OpenAI model. On average, each result used three hours of ChatGPT Pro thinking compute with that model. Over the course of the evaluation, the model was posed approximately 4,000 problems. Aggregating the output into result families and manuscripts and requiring an appropriate level of significance led to the catalog outlined above.
+Pull requests that improve the skill are welcome; please include a before-and-after of two preprint reviews in the PR, with the [SK model spectral gap](preprints/A-spectral-gap-throughout-the-high-temperature-Sherrington-Kirkpatrick-phase-September-24-2026/) as one of them.
 
-Exceptions to this fixed procedure include work on a zero-free region for the Riemann zeta function and proof of the Hodge Conjecture for CM abelian varieties. Additionally, the writeup for the Re(s) > 11/12 zero-free region for the Riemann zeta function was human edited for readability. 
+**License.** Most of the precedence-review skill is licensed under the [PolyForm Noncommercial License 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0). See the LICENSE files in the [skill folder](.agents/skills/precedence-review/) for details.
 
+## Stats
 
-## Versions and citations
+*Sketch, to be generated from each published report's `precedence-stats.json` and updated with every new report:*
+- preprints reviewed, out of 719 (optionally by field, using the field headings in [`overview.pdf`](overview.pdf));
+- findings in the reports, by relationship and by centrality;
+- attribution gaps, and findings with overstated novelty.
 
-We will preserve the public release history of this collection. Corrections and revisions will be recorded as new versions, with previously released versions remaining accessible. 
+## Reviewed preprints
 
-To cite the individual manuscript, use the BibTeX block in its directory. 
+*Sketch, updated with every new report: one row per reviewed preprint, in the numbered order of [`overview.pdf`](overview.pdf) (by result number, then in the order the result lists its manuscripts), under the overview's field headings. Fields with no reviewed preprint are left out.*
 
+<table>
+<thead><tr><th>Result</th><th>Preprint</th><th>Report date</th><th>Findings</th><th>Attribution gaps</th></tr></thead>
+<tbody>
+<tr><th colspan="5">⟨Field heading from overview.pdf⟩</th></tr>
+<tr><td>⟨result number⟩</td><td><a href="preprints/⟨folder⟩/">⟨title⟩</a></td><td>⟨date⟩</td><td>⟨N⟩</td><td>⟨g⟩</td></tr>
+</tbody>
+</table>
 
-## License of the precedence-review skill
+## List of missing attributions
 
-The precedence-review skill (`.agents/skills/precedence-review/`) is licensed for noncommercial use only; see the LICENSE files in that folder. As an exception, its `SKILL.md`, `references/environment.md` and `scripts/tex_sandbox.sh` may also be used for commercial purposes: the first two under CC BY 4.0, and the script under the Apache License, Version 2.0.
+*Sketch, generated from each published report's `precedence-findings.json`: a bibliography of the earlier works that the reports find missing, one entry per work, in alphabetical order of first author. It includes every earlier work in a finding printed in a report, unless the preprint credits the work for that content; findings with overstated novelty are left out. Works are merged across reports by arXiv id or DOI, and otherwise by exact title and author list.*
+
+- ⟨Authors⟩. ⟨Title⟩. ⟨Venue⟩, ⟨year⟩. [arXiv:⟨id⟩](https://arxiv.org/abs/⟨id⟩)
+- ⟨Authors⟩. ⟨Title⟩. ⟨Venue⟩, ⟨year⟩. [doi:⟨doi⟩](https://doi.org/⟨doi⟩)
