@@ -18,7 +18,7 @@ A precedence review reads a preprint section by section. It finds the techniques
 
 You are the **coordinator**. Subagents do the reading, searching, drafting and checking. You sequence the passes, keep the shared state, check each new finding's correspondence yourself, and keep the user informed.
 
-**Cost.** Budget about 0.3M subagent tokens per section, 0.45M for consolidation, and 0.6M per finding (drafting, author check, applying the verdict). A 66-page preprint with 8 sections and 8 findings used about 7.5M tokens over about 5 hours. **Estimate again before any extra round** (re-checks, repeated runs, redrafts): each costs about as much per finding as the first.
+**Cost.** Counting every token processed, as the published telemetry does (97% of them cache reads), budget about 5–25M tokens per section, 40M for consolidation and 15M per finding (drafting, author check, applying the verdict), plus about a quarter of the whole for the coordinator. A 27-page preprint with 7 sections and 8 findings processed about 350M tokens over about 4 active hours; a 66-page preprint took about 5 hours. **Estimate again before any extra round** (re-checks, repeated runs, redrafts): each costs about as much per finding as the first.
 
 **Before starting, settle five things with the user.**
 1. **That they want a full review.** Skip this only if they asked for a review and are set up for one: working in a jnshi/math-lineage checkout on a preprint from the release. Otherwise, say roughly what it will cost in hours and tokens, and offer the narrower alternative: answering their specific question about one claim, lemma or citation directly.

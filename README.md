@@ -27,7 +27,7 @@ To review a preprint that doesn't have a review yet (see [Reviewed preprints](#r
    ```
 2. Open Claude Code, or another agent that reads [`AGENTS.md`](AGENTS.md), in the `math-lineage` folder, and ask it for a precedence review of the preprint. If you want to read a file that the slim clone left out, such as the preprint's PDF, ask the agent to check it out. The agent asks a few questions first, shows you the report before anything is published, and asks before opening a pull request against this repository.
 
-A 66-page preprint took about 7.5M tokens and 5 hours.
+A 27-page preprint took about 350M tokens (97% cache reads) and 4 hours.
 
 To report an error in a report, open an issue that names the preprint and the finding's ID.
 
