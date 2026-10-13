@@ -95,6 +95,8 @@ The layout follows `jnshi/math-lineage`, which mirrors the openai/math release: 
 
 ## The passes, in order
 
+**Label each subagent by its pass.** Start the short description you give a subagent at launch with its pass: `section:`, `credit map:`, `consolidation:`, `draft:`, `persona check:`, `apply:`, `publish:` (such as writing the JSON) or `other:`. An agent working on one finding gets the finding's full slug and no ID, since IDs change at assembly: `draft: <finding>`, `persona check: <finding>`, `apply: <finding>`. When an agent repeats work, as in a redraft, a rerun, a relaunch or a test, say why: `draft: <finding> (redraft)`, `section: §3 (relaunched)`. The labels are published in the telemetry, which groups tokens by pass and matches the slugs to `precedence-findings.json`, so keep them to the pass, the section or slug, and a few words of reason, with no names, paths or IDs.
+
 **The order matters.** Every check of an open lead must finish before the write-up. The write-up then feeds the author-persona check, because that check tests the write-up's exact correspondences. If the user inserts a new pass, check whether any pending verification now lands after the write-up, and say so if it does.
 
 ### 0. Setup (you, no subagents)
@@ -206,8 +208,9 @@ These steps publish to `jnshi/math-lineage`. If the user chose another destinati
    - `precedence-findings.json`;
    - `precedence-stats.json`.
 
-   Then write the README, which summarizes the findings and ends with the provenance line.
-5. **Open a pull request against `jnshi/math-lineage`.**
+   Then write the README, which summarizes the findings and ends with the provenance line. In `jnshi/math-lineage`, the preprint folder already has a `README.md`, the release's or an earlier review's: replace it entirely.
+5. **Write the telemetry last, just before the pull request.** `scripts/run_telemetry.py` writes `precedence-telemetry.json` into the preprint folder: the run's tokens, cached and uncached, and its active time, by model, reasoning effort, pass and agent, from the transcripts of the sessions listed in `TIMING.md`. It also carries your estimate of the tokens that the deviations recorded there added or saved. Show the user the file before committing it, since it discloses the models and efforts they used, the agents' labels and your deviation estimates (`references/publish.md` §5).
+6. **Open a pull request against `jnshi/math-lineage`.**
    - Use a new branch holding only those files, plus `.gitignore` if it changed. In a sparse clone, stage them with `git add --sparse`.
    - Push the branch and run `gh pr create`.
    - Without push access, go through a fork, after asking. Without `gh`, use a pre-filled link to GitHub's website. Both paths are in `references/publish.md`.
@@ -280,6 +283,8 @@ The drafting and apply briefs contain these rules; check the PDF against them.
 - **Memory.** Record the user's rules, corrections and design decisions in memory if the environment has it. Don't record speculative design ideas unless asked.
 - **Privacy.** Never put the user's email or other identifying information in API requests, User-Agent strings or `mailto` parameters.
 - **Files under review.** While persona checks run, don't rebuild or edit the write-up: `build.sh` regenerates the PDF text they read. Make interim fixes after they finish.
+- **Sessions.** At the start of every session that works on the review, add its ID (in Claude Code, the environment variable `CLAUDE_CODE_SESSION_ID`) to `TIMING.md`. The published telemetry is computed from these sessions' transcripts.
+- **Deviations from the procedure.** When the run departs from this procedure in a way that could change its cost or its findings, add a line to the deviations list in `TIMING.md` when it happens. For example: a step skipped, merged or done out of order; parts run on another version of the skill; work redone because an agent failed or was relaunched; leads or drafts taken from an earlier run or another session; or the run used to test changes to the skill. The published telemetry carries an estimate of the tokens they added or saved.
 - **Relaunching agents.** Before relaunching one that seems to have failed, check that it really ended (its notification), and give each launch its own output file. An agent stopped by a usage limit keeps its context: resume it with SendMessage rather than relaunching it.
 - **Long-running checks.** Keep verification commands light, with explicit timeouts. A `du -sh` over a large clone stalls.
 - **Git.** Commit and push only in the publish step's pull request, after asking, or when the user asks. Never commit `prior-work/` or `reviews/`.
@@ -311,4 +316,5 @@ These cause most retries, especially on Windows with Git Bash. Paste the "Tool p
 | `scripts/flatten_tex.py` | Inline every `\input` into one standalone `.tex` for publishing. |
 | `scripts/publish_prep.sh` | From a passing build: flatten, compile the flat file confined, check both PDFs' objects, check that the text is identical and leaks no local paths or emails, validate the JSON, and copy the deliverables into the preprint folder. |
 | `scripts/precedence_stats.py` | Validate `precedence-findings.json` (format version 2) and write `precedence-stats.json`. |
+| `scripts/run_telemetry.py` | Write `precedence-telemetry.json`: the run's tokens, cached and uncached, and its active time, by model, reasoning effort, pass and agent, from Claude Code's session transcripts. |
 | `assets/` | Templates: INDEX, FINDINGS, TIMING, write-up preamble/main/about/summary, an example finding fragment, example JSON, README. |
