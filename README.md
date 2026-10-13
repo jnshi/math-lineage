@@ -14,7 +14,7 @@ Across all 4 reports, the findings involve 74 earlier works; for 69 of them, a p
 
 ## To read
 
-In each reviewed manuscript's folder under [`preprints/`](preprints/), the report `precedence-findings.pdf` sits next to OpenAI's original manuscript, usually `paper.pdf` or `main.pdf`. The folder's `README.md` also summarizes the report in a table. The reviewed manuscripts are listed under [Reviewed preprints](#reviewed-preprints). Each report makes no claim of completeness, does not judge whether the manuscript is correct, and has not been vetted by a human.
+In each reviewed manuscript's folder under [`preprints/`](preprints/), the report `precedence-findings.pdf` sits next to OpenAI's original manuscript, usually `paper.pdf` or `main.pdf`. The folder's `README.md` also summarizes the report in a table. The reviewed manuscripts are listed under [Reviewed preprints](#reviewed-preprints). The reports make no claim of completeness, do not judge whether the manuscript is correct, and generally have not been human-vetted.
 
 This repository is a fork of [openai/math](https://github.com/openai/math). The manuscripts and their supporting material (`preprints/`, `lean/`, `reasoning_traces/`, [`CONTENTS.md`](CONTENTS.md), [`overview.pdf`](overview.pdf), [`history.md`](history.md)) are as released there; see [its README](https://github.com/openai/math#readme) for how they were produced.
 
