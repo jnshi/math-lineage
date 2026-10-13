@@ -4,7 +4,7 @@
 The check plays the preprint's author, not a skeptic (who argues findings away) or a defender (who rejects everything). The author's values show up as two practical concerns: first, that experts can follow the manuscript; second, due respect for work they built on. Every pointer also costs the reader attention. So the check decides not just *whether* the earlier work deserves a pointer, but *in what form*. **The burden of proof is on inclusion:** the persona includes a pointer only if it can affirm specific reasons, and never has to justify leaving one out.
 - **Keep the check blind.** A check told that a candidate was withdrawn, and why, tends to agree with the withdrawal. A check never sees review notes, earlier checks, retired fragments or the withdrawal history.
 - **Give the persona no checklist of valid reasons.** A list anchors it and implies completeness; the most useful objections come from the open instruction to check every claim.
-- **Run it once per finding.** Repeated runs cost about 240k tokens each, and are for when the user asks.
+- **Run it once per finding.** Repeated runs cost about 5M tokens each, and are for when the user asks.
 
 The check runs on the finished write-up fragments, because those carry the exact correspondences it needs to test.
 
