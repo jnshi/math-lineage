@@ -149,4 +149,4 @@ You are revising ONE finding (a LaTeX fragment) in a report for **human experts 
 - Proposed cells for this finding's row in the summary table (Technique or result / In the preprint / Cited?), if any changed.
 ````
 
-**Bibliography working notes.** If a check flags notes in a bibliography entry, such as "author copy from …", "saved as …" or "text extraction garbled", don't strip them from `INDEX.md`. Agents use those notes. Rewrite such notes in INDEX.md, or in the fragment's `% BIB` line, as `[note: …]`. `make_bib.py` strips only `[note: …]` marks and clauses containing a URL or a file path, and it lists every other wordy parenthetical it keeps, so check that list on every build.
+**Bibliography working notes.** If a check flags notes in a bibliography entry, such as "author copy from …", "saved as …" or "text extraction garbled", don't delete them: agents use those notes. Move them to the row's Notes cell in `INDEX.md`, or, in the fragment's `% BIB` line, write them as `[note: …]`. `make_bib.py` strips only `[note: …]` marks and clauses containing a URL or a file path, and it lists every other wordy parenthetical it keeps, so check that list on every build.

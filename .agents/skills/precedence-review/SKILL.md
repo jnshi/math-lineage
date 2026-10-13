@@ -119,7 +119,7 @@ The layout follows `jnshi/math-lineage`, which mirrors the openai/math release: 
    - Older reviews may use format version 1, with grades instead of relationships; use only their sources and locators.
 6. **Set up the library.**
    - If `prior-work/` doesn't exist, create it with `INDEX.md` from `<skill>/assets/INDEX-template.md`.
-   - **Ask the user whether they keep a library from earlier reviews elsewhere.** If so, seed from it before the first agent downloads anything: `python3 -I -X utf8 <skill>/scripts/merge_library.py <their prior-work> <repo>/prior-work <tag>`. It copies papers without overwriting, and merges the INDEX rows tagged with their origin, because their "Cited by the preprint?" column refers to another preprint. Their Relevance notes were written for that review too, and older ones may carry verdicts ("not relevant", "standard"): they say what a paper contains, never whether it bears on this preprint. Read only what the user points you to in that location.
+   - **Ask the user whether they keep a library from earlier reviews elsewhere.** If so, seed from it before the first agent downloads anything: `python3 -I -X utf8 <skill>/scripts/merge_library.py <their prior-work> <repo>/prior-work <tag>`. It copies papers without overwriting, and merges the INDEX rows, with "Added by" tagged with their origin. Read only what the user points you to in that location.
    - Copy `<skill>/scripts/fetch_arxiv.sh` to `prior-work/tools/`.
    - Make sure `.gitignore` lists `prior-work/` and `reviews/`.
 7. **Create `reviews/<review>/`** with `FINDINGS.md` and `TIMING.md`, from `assets/FINDINGS-template.md` and `assets/TIMING-template.md`.

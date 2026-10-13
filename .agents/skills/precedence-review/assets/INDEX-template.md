@@ -1,6 +1,6 @@
 # Prior-work library: running list
 
-Papers downloaded while checking preprints in this repository for uncited precedence. The library is shared by all reviews, so check it before downloading anything. Search for the paper's arXiv ID, DOI and title words (grep; this file grows large).
+Papers downloaded while checking preprints in this repository for uncited precedence. The library is shared by all reviews, so check it before downloading anything. Search for the paper's arXiv ID, DOI and title words (grep; this file grows large). To find papers already here that bear on a topic, grep the titles in this file first. Then rank the full texts in `text/` by the number of matches for terms and theorem names (`grep -c`), and open the best few. Author names mostly match reference lists, and in `src/` the `.bbl` and `.bib` files hold only references.
 
 ## Layout and conventions
 
@@ -24,24 +24,23 @@ Papers downloaded while checking preprints in this repository for uncited preced
   - Example: `BauerschmidtDagallier2022-NearCriticalIsingLSI`.
 - **Sources:** open access only (arXiv preferred, with the version recorded). No shadow libraries and no paywall workarounds.
 - **Columns:**
-  - "Cited by the preprint?" holds `<review>: <bib key>` if the reviewed preprint cites the work, otherwise `<review>: no`, where `<review>` names the review that added the row. Untagged rows from before this convention refer to whichever preprint was under review then; check the current preprint's bibliography yourself.
   - "Added by" names the review and the section whose agent downloaded the paper, e.g. `<review> §5`.
-  - "Relevance" says, in one or two sentences, what the paper contains, with page references, and what it was checked for (`checked for §N: ...`). Record what you found, not a verdict such as "not relevant" or "standard": later agents read these cells and may need the paper for something else. A later agent who uses the paper for a new purpose appends `[<review> §N] ...` (or `[<review> consolidation] ...`, etc.) to this cell.
-  - Rows imported from a library kept elsewhere (`scripts/merge_library.py`) carry a `<tag>:` prefix in "Cited by" and "Added by". Their "Cited by" refers to that review's preprint.
+  - "Notes" holds facts about the file and the entry only: the PDF's page offset (printed page = PDF index + k), an author copy, a garbled text extraction, an unverified venue. Nothing about what the paper contains, what it was checked for, or how it bears on a preprint: that belongs in the review's reports.
+  - Rows imported from a library kept elsewhere (`scripts/merge_library.py`) carry a `<tag>:` prefix in "Added by".
   - Add rows with the Edit tool, never through a shell command line: a title containing backquotes or `$(…)` would run as a command.
 - **Titles and dates:** copy the title exactly as the paper's title page gives it, and give the date of the first public version (e.g. "July 9, 2026" for a recent preprint). The bibliography of every write-up is generated from this file.
 - **Formatting:** never put a literal `|` inside a cell: write ‖·‖ for norms and `abs(x)` for absolute values. Details belong in the review reports, not here.
-- **Provenance and verification notes:** put them in the Relevance cell. If a note must sit in the Citation or arXiv / DOI cell, write it as `[note: …]`, for example `[note: author copy from the author's homepage; venue not verified]`. The bibliography generator strips `[note: …]` marks and parenthetical clauses containing a URL or a file path, and nothing else. A note written as ordinary parentheses would reach the published bibliography. The generator lists every wordy parenthetical it keeps so you can catch one.
+- **Provenance and verification notes:** put them in the Notes cell. If a note must sit in the Citation or arXiv / DOI cell, write it as `[note: …]`, for example `[note: author copy from the author's homepage; venue not verified]`. The bibliography generator strips `[note: …]` marks and parenthetical clauses containing a URL or a file path, and nothing else. A note written as ordinary parentheses would reach the published bibliography. The generator lists every wordy parenthetical it keeps so you can catch one.
 - **The Citation cell is plain text,** not TeX. Write formulas plainly, for example "C^{1,1}" or "beta < 1/2"; the generator escapes everything.
 
 ## Downloaded papers
 
-| Key (file in `papers/`) | Citation (authors, title, venue, year) | arXiv / DOI | Cited by the preprint? | Added by | Relevance |
-|---|---|---|---|---|---|
+| Key (file in `papers/`) | Citation (authors, title, venue, year) | arXiv / DOI | Added by | Notes |
+|---|---|---|---|---|
 
 ## Checked but not downloaded
 
-Papers examined but not freely available, or whose downloads failed.
+Papers that could not be downloaded: not freely available, or the download failed. What was checked in them belongs in the review's reports.
 
-| Citation | arXiv / DOI / URL | Why not downloaded | What was checked | Added by |
-|---|---|---|---|---|
+| Citation | arXiv / DOI / URL | Why not downloaded | Added by |
+|---|---|---|---|
