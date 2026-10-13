@@ -1,0 +1,509 @@
+{
+  "format": "math-lineage/precedence-findings",
+  "format_version": 2,
+  "preprint": {
+    "id": "OAI:Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026",
+    "title": "Full support of the zero-temperature Sherrington-Kirkpatrick order parameter",
+    "date": "2026-09-27",
+    "path": "preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026",
+    "companions": []
+  },
+  "review": {
+    "date": "2026-10-13",
+    "report_pdf": "precedence-findings.pdf",
+    "report_tex": "precedence-findings.tex",
+    "locator_convention": "Preprint locations use the compiled numbering and page numbers of main.pdf. Source locators give printed page numbers of the version identified by the source's arXiv id or DOI (the arXiv version where both exist); for the aiXiv version, of aiXiv v1.1."
+  },
+  "definitions": {
+    "relationship": {
+      "same technique": "The earlier technique, construction or theory is reused essentially intact, possibly in a new setting or with new ingredients around it.",
+      "adapted": "The earlier technique's structure is followed, with a change at its core: a different object, or a key step replaced.",
+      "fragment": "One identifiable piece of the earlier technique is reused.",
+      "same route": "An earlier paper proposed the proof strategy, even heuristically, and the preprint carries it out.",
+      "same result": "An earlier paper, or several earlier papers together, prove essentially the same statement.",
+      "weaker result": "An earlier paper proves a weaker, special-case or partial-range version of one of the preprint's main results, or of a statement it presents as a significant contribution.",
+      "proof shortcut": "A published result would replace or substantially shorten a large part of the argument."
+    },
+    "centrality": {
+      "main result": "Best-effort judgment: the earlier work covers the main result itself, or most of it. Never a weaker result.",
+      "central": "Best-effort judgment: much of the main argument depends on it.",
+      "supporting": "Best-effort judgment: the main argument depends on it, but less.",
+      "peripheral": "Best-effort judgment: little of the main argument depends on it."
+    },
+    "form_of_inclusion": {
+      "none": "As judged by the author-persona check: not worth a pointer, or for overstated novelty no change to the abstract or framing. Recorded here only, not in the report.",
+      "citation": "As judged by the author-persona check: a citation at the point of use.",
+      "sentence": "As judged by the author-persona check: a clause or a sentence; for overstated novelty, a clause or sentence changed in the abstract, statements of significant contributions or framing.",
+      "paragraph": "As judged by the author-persona check: a short paragraph; for overstated novelty, a larger revision of the abstract or framing."
+    },
+    "credit_status": {
+      "not_cited": "The work is not in the preprint's bibliography, and no location the preprint cites credits it for this content.",
+      "cited_for_other_content": "The work is in the preprint's bibliography but is not cited for this content.",
+      "credited_elsewhere": "The preprint credits the work for this content at other locations, directly or through a cited location that credits it, but not where the content is used, in a way that an expert reader who doesn't know the earlier work might not connect with it.",
+      "credited_in_part": "The preprint credits the work for part of this content only, directly or through a cited location that credits it.",
+      "credited": "The preprint credits the work for this content, directly or through a cited location that credits it. Allowed only in a finding with overstated novelty."
+    },
+    "flags": {
+      "attribution_gap": "True when the relationship is same technique, adapted or same result; the centrality is main result, central or supporting; and the principal earlier work (listed first among the sources) is not cited for this content anywhere (not_cited or cited_for_other_content).",
+      "overstated_novelty": "True when the preprint cites the earlier work for this content, but its abstract, a statement of its significant contributions, or the framing of a main result presents that content as new, explicitly or in the way a reader would reasonably take it. It is the one case in which content the preprint credits is reported. novelty_claim says where the claim is made."
+    }
+  },
+  "sources": {
+    "Chen2026-FRSBFullIntervalSupportZeroTemp": {
+      "authors": [
+        "Hong-Bin Chen"
+      ],
+      "title": "FRSB in the SK spin glass: convergence to full-interval support at zero temperature",
+      "year": 2026,
+      "venue": "arXiv preprint",
+      "arxiv": "2607.18032",
+      "doi": null,
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "Chen2026"
+    },
+    "ChatGPT2026-FRSBFullIntervalSupportZeroTemp": {
+      "authors": [
+        "ChatGPT"
+      ],
+      "title": "FRSB in the SK spin glass: convergence to full-interval support at zero temperature",
+      "year": 2026,
+      "venue": "aiXiv preprint aixiv.260716.000001 (earlier version of Chen 2026, arXiv 2607.18032)",
+      "arxiv": null,
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "Zhou2025-FRSBSKLowTemperature": {
+      "authors": [
+        "Yuxin Zhou"
+      ],
+      "title": "Existence of full replica symmetry breaking for the Sherrington-Kirkpatrick model at low temperature",
+      "year": 2025,
+      "venue": "Comm. Pure Appl. Math. 79(7) (2026)",
+      "arxiv": "2504.00269",
+      "doi": "10.1002/cpa.70038",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "Zhou2026"
+    },
+    "Lopatto2026-FullRSBSK": {
+      "authors": [
+        "Patrick Lopatto"
+      ],
+      "title": "Full replica symmetry breaking in the Sherrington-Kirkpatrick model",
+      "year": 2026,
+      "venue": "arXiv preprint",
+      "arxiv": "2607.11756",
+      "doi": null,
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "Lopatto2026"
+    },
+    "AuffingerChen2013-PropertiesParisiMeasures": {
+      "authors": [
+        "Antonio Auffinger",
+        "Wei-Kuo Chen"
+      ],
+      "title": "On properties of Parisi measures",
+      "year": 2013,
+      "venue": "Probab. Theory Related Fields (2015)",
+      "arxiv": "1303.3573",
+      "doi": "10.1007/s00440-014-0563-y",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "ACProperties2015"
+    },
+    "Zhou2026-GardnerTransitionIsingPurePSpinII": {
+      "authors": [
+        "Yuxin Zhou"
+      ],
+      "title": "On the Gardner transition in the Ising pure p-spin glass II",
+      "year": 2026,
+      "venue": "arXiv preprint",
+      "arxiv": "2608.06523",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "ElAlaouiEtAl2020-OptimizationMeanFieldSpinGlasses": {
+      "authors": [
+        "Ahmed El Alaoui",
+        "Andrea Montanari",
+        "Mark Sellke"
+      ],
+      "title": "Optimization of mean-field spin glasses",
+      "year": 2020,
+      "venue": "Ann. Probab. 49(6) (2021)",
+      "arxiv": "2001.00904",
+      "doi": "10.1214/21-AOP1519",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "EAMS2021"
+    },
+    "AuffingerEtAl2017-SKInfiniteStepRSBZeroTemp": {
+      "authors": [
+        "Antonio Auffinger",
+        "Wei-Kuo Chen",
+        "Qiang Zeng"
+      ],
+      "title": "The SK model is infinite step replica symmetry breaking at zero temperature",
+      "year": 2017,
+      "venue": "Comm. Pure Appl. Math. (2020)",
+      "arxiv": "1703.06872",
+      "doi": "10.1002/cpa.21886",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "ACZ2017"
+    },
+    "ChenEtAl2016-EnergyLandscapeMixedEvenPSpin": {
+      "authors": [
+        "Wei-Kuo Chen",
+        "Madeline Handschy",
+        "Gilad Lerman"
+      ],
+      "title": "On the energy landscape of the mixed even p-spin model",
+      "year": 2016,
+      "venue": "Probab. Theory Related Fields (2018)",
+      "arxiv": "1609.04368",
+      "doi": "10.1007/s00440-017-0773-1",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "CHL2018"
+    },
+    "AuffingerChen2016-ParisiGroundStateMixedPSpin": {
+      "authors": [
+        "Antonio Auffinger",
+        "Wei-Kuo Chen"
+      ],
+      "title": "Parisi formula for the ground state energy in the mixed p-spin model",
+      "year": 2016,
+      "venue": "Ann. Probab. 45(6B) (2017)",
+      "arxiv": "1606.05335",
+      "doi": "10.1214/16-AOP1173",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "AC2017"
+    }
+  },
+  "findings": [
+    {
+      "id": "F1",
+      "slug": "chen-same-main-theorem",
+      "in_report": true,
+      "relationship": "same result",
+      "centrality": "main result",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": false,
+      "overstated_novelty": true,
+      "novelty_claim": "Abstract (p. 1)",
+      "technique": "Full support of the zero-temperature order parameter",
+      "summary": "Chen's paper proves that the zero-temperature minimizer for the pure, zero-field SK model has full support on [0,1), with strict increase and saturated consistency; the theorem first appeared in its aiXiv version of July 16, 2026, which Chen's paper credits. The preprint cites Chen's paper right after Theorem 1.1, but its abstract presents the theorem as new.",
+      "preprint_locations": [
+        "Abstract (p. 1)",
+        "Theorem 1.1 and (1.6) (p. 2)"
+      ],
+      "credit_in_preprint": "Chen's Theorem 1.3 is cited right after Theorem 1.1 (p. 2) as proving the same conclusion; the abstract names no earlier proof.",
+      "sources": [
+        {
+          "key": "Chen2026-FRSBFullIntervalSupportZeroTemp",
+          "locators": "Thm. 1.3, (1.8) (p. 3); p. 4; (4.40)-(4.41) (p. 25)",
+          "role": "the same theorem, in the same setting",
+          "credit_status": "credited"
+        },
+        {
+          "key": "ChatGPT2026-FRSBFullIntervalSupportZeroTemp",
+          "locators": "Thm. 1.2, (1.3) (p. 2)",
+          "role": "earlier aiXiv version of Chen 2026, where the theorem first appeared; credited by Chen 2026 (p. 1; App. C, p. 38)",
+          "credit_status": "credited"
+        }
+      ]
+    },
+    {
+      "id": "F2",
+      "slug": "zhou-gap-exclusion",
+      "in_report": true,
+      "relationship": "same technique",
+      "centrality": "central",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": true,
+      "overstated_novelty": false,
+      "technique": "Excluding support gaps by the endpoint contact relations and a positive third derivative",
+      "summary": "Gaps are excluded by playing the four endpoint contact relations against positivity of the third derivative of the self-consistency function, closed by the chord (trapezoid) comparison, which is Zhou's G > 0 argument; the third-derivative formula (2.14) is Zhou's. The preprint cites Zhou only for his interval-support theorem.",
+      "preprint_locations": [
+        "§1.2 and Figure 1 (p. 4)",
+        "Lemma 2.3, (2.13)-(2.14) (p. 7)",
+        "proof of Theorem 1.1 (p. 20)"
+      ],
+      "credit_in_preprint": "Zhou is cited only for his interval-support theorem (§1.1, p. 3); Lopatto's Sections 3, 7-9 are mentioned in the introduction for his crossing argument; Chen's paper is cited for other results.",
+      "sources": [
+        {
+          "key": "Zhou2025-FRSBSKLowTemperature",
+          "locators": "(7) (p. 9); G (p. 8); Thm. 5, Cor. 6 (p. 8); pp. 14-15",
+          "role": "originated the endpoint-relation gap exclusion with a positive third derivative, and the third-derivative formula",
+          "credit_status": "cited_for_other_content"
+        },
+        {
+          "key": "Lopatto2026-FullRSBSK",
+          "locators": "Lemma 2.5 (p. 6); Prop. 9.2 (pp. 50-51); p. 3",
+          "role": "the same formulas, and the frame with a conditional crossing; calls his strategy closely related to Zhou's",
+          "credit_status": "credited_elsewhere"
+        },
+        {
+          "key": "Chen2026-FRSBFullIntervalSupportZeroTemp",
+          "locators": "Prop. 4.3 (pp. 22-23); (3.38) (p. 14)",
+          "role": "adapts the frame at zero temperature, closing with a weighted identity",
+          "credit_status": "cited_for_other_content"
+        },
+        {
+          "key": "ChatGPT2026-FRSBFullIntervalSupportZeroTemp",
+          "locators": "Prop. 4.2 (pp. 30-31)",
+          "role": "earlier aiXiv version of Chen 2026's adaptation",
+          "credit_status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "F3",
+      "slug": "lopatto-slope-invariant",
+      "in_report": true,
+      "relationship": "same result",
+      "centrality": "supporting",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": false,
+      "overstated_novelty": false,
+      "technique": "The Cole-Hopf slope invariant as sign inequalities for the backward drift",
+      "summary": "Lemma 3.2's signs H <= 0, w <= 0 and H_x >= 0 are Lopatto's Cole-Hopf slope invariant K >= 0 and its consequences in x-coordinates (H = -CK), transported to zero temperature as in Chen's paper, whose maximum-principle proof of w <= 0 the preprint follows. The preprint mentions Lopatto's invariant only in its introduction.",
+      "preprint_locations": [
+        "Lemma 3.2 (pp. 11-12)"
+      ],
+      "credit_in_preprint": "Lopatto's Section 3 is mentioned in the introduction (§1.1, p. 3) as propagating Cole-Hopf inequalities; Chen's Prop. 3.11 is cited there for smooth-terminal approximation; nothing is cited at Lemma 3.2, and Chen's Lemma 3.4 nowhere.",
+      "sources": [
+        {
+          "key": "Lopatto2026-FullRSBSK",
+          "locators": "Prop. 3.6, (3.41), (3.43) (pp. 15-16); (3.65), (3.67) (p. 18)",
+          "role": "the slope invariant, its jump rule and initialization",
+          "credit_status": "credited_elsewhere"
+        },
+        {
+          "key": "Chen2026-FRSBFullIntervalSupportZeroTemp",
+          "locators": "proof of Prop. 3.11, (3.47) (p. 15); Lemma 3.4, (3.20) (p. 10); App. B.3, (B.11) (p. 32)",
+          "role": "the zero-temperature transport and the maximum-principle proof of w <= 0",
+          "credit_status": "credited_in_part"
+        },
+        {
+          "key": "ChatGPT2026-FRSBFullIntervalSupportZeroTemp",
+          "locators": "Props. 3.6-3.8, (3.32) (pp. 22-25)",
+          "role": "earlier aiXiv version of Chen 2026, where both first appeared",
+          "credit_status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "F4",
+      "slug": "zhou-ratio-sign",
+      "in_report": true,
+      "relationship": "same result",
+      "centrality": "supporting",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": true,
+      "overstated_novelty": false,
+      "technique": "Monotonicity of the ratio of the forward score to the drift",
+      "summary": "The ratio sign j = r d/dx(s/r) >= 0 and its invariance at jumps, which the preprint presents as its additional ingredient, follow in one line from Zhou's lower-history inequality (E.37), (E.41) and B > yC after a rescaling; the preprint does not cite this paper.",
+      "preprint_locations": [
+        "Lemma 3.3 (p. 12)",
+        "proof (p. 13)"
+      ],
+      "credit_in_preprint": "Not cited; the preprint's only Zhou citation is to a different paper.",
+      "sources": [
+        {
+          "key": "Zhou2026-GardnerTransitionIsingPurePSpinII",
+          "locators": "App. E.3, (E.31), (E.37), (E.41) (pp. 127-128); p. 130",
+          "role": "the lower-history inequalities that give the ratio sign",
+          "credit_status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "F5",
+      "slug": "chen-terminal-boundary-layer",
+      "in_report": true,
+      "relationship": "same result",
+      "centrality": "supporting",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": true,
+      "overstated_novelty": false,
+      "technique": "Excluding a terminal plateau by a square-root boundary layer",
+      "summary": "Lemma 6.3 (no terminal plateau) is Chen's Proposition 4.5, first in its aiXiv version, proved by the same boundary layer at t = 1; the preprint credits only the conclusion to Auffinger-Chen-Zeng's Remark 7, which sketches a different route, and gives the proof as its own.",
+      "preprint_locations": [
+        "Lemma 6.3 (pp. 19-20)",
+        "§1.1 (p. 3)"
+      ],
+      "credit_in_preprint": "Auffinger-Chen-Zeng Remark 7 is cited for the conclusion and El Alaoui-Montanari-Sellke as related; Chen's Prop. 4.5 is not cited.",
+      "sources": [
+        {
+          "key": "Chen2026-FRSBFullIntervalSupportZeroTemp",
+          "locators": "Prop. 4.5 (pp. 23-25)",
+          "role": "the same proposition, by the same boundary layer",
+          "credit_status": "cited_for_other_content"
+        },
+        {
+          "key": "ChatGPT2026-FRSBFullIntervalSupportZeroTemp",
+          "locators": "Prop. 4.4 (pp. 32-33)",
+          "role": "earlier aiXiv version of Chen 2026, where it first appeared",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "AuffingerEtAl2017-SKInfiniteStepRSBZeroTemp",
+          "locators": "Remark 7 (p. 15)",
+          "role": "asserts the conclusion and sketches a different, perturbative route",
+          "credit_status": "credited_in_part"
+        },
+        {
+          "key": "ElAlaouiEtAl2020-OptimizationMeanFieldSpinGlasses",
+          "locators": "Lemma 6.12 and proof of Thm. 5 (pp. 29-31)",
+          "role": "the c = 0 boundary layer whose fixed-window bounds the preprint adapts",
+          "credit_status": "credited_in_part"
+        },
+        {
+          "key": "ChenEtAl2016-EnergyLandscapeMixedEvenPSpin",
+          "locators": "proof of Thm. 6 (pp. 14-16)",
+          "role": "the gamma = 0 case",
+          "credit_status": "cited_for_other_content"
+        }
+      ]
+    },
+    {
+      "id": "F6",
+      "slug": "chl-origin-in-support",
+      "in_report": true,
+      "relationship": "same result",
+      "centrality": "supporting",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": true,
+      "overstated_novelty": false,
+      "technique": "The origin lies in the support: no initial interval of zero mass",
+      "summary": "Chen, Handschy and Lerman proved that 0 lies in the support of the zero-temperature Parisi measure at zero field; the preprint re-proves it, as the initial-gap case of Theorem 1.1, by the argument of Auffinger and Chen's proof of their Theorem 1(i), citing neither for it.",
+      "preprint_locations": [
+        "proof of Theorem 1.1, initial-gap case (p. 20)"
+      ],
+      "credit_in_preprint": "Chen-Handschy-Lerman and Auffinger-Chen are cited for other results.",
+      "sources": [
+        {
+          "key": "ChenEtAl2016-EnergyLandscapeMixedEvenPSpin",
+          "locators": "§3.2 (p. 18)",
+          "role": "0 in the support at zero field",
+          "credit_status": "cited_for_other_content"
+        },
+        {
+          "key": "AuffingerChen2013-PropertiesParisiMeasures",
+          "locators": "proof of Thm. 1(i) (p. 15)",
+          "role": "originated the argument the preprint uses, at positive temperature",
+          "credit_status": "cited_for_other_content"
+        },
+        {
+          "key": "Chen2026-FRSBFullIntervalSupportZeroTemp",
+          "locators": "Prop. 3.2 (pp. 8-9)",
+          "role": "states 0 in the support, from Chen-Handschy-Lerman",
+          "credit_status": "cited_for_other_content"
+        },
+        {
+          "key": "ElAlaouiEtAl2020-OptimizationMeanFieldSpinGlasses",
+          "locators": "proof of Thm. 5 (pp. 30-31)",
+          "role": "the same contradiction over a larger class",
+          "credit_status": "cited_for_other_content"
+        }
+      ]
+    },
+    {
+      "id": "F7",
+      "slug": "chen-eams-hypothesis-verified",
+      "in_report": true,
+      "relationship": "same result",
+      "centrality": "peripheral",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": false,
+      "overstated_novelty": false,
+      "technique": "Full support verifies the no-overlap-gap assumption of the optimization algorithm",
+      "summary": "Chen's paper already observes that zero-temperature full support verifies El Alaoui-Montanari-Sellke's no-overlap-gap assumption, so their algorithm is epsilon-optimal for SK; Corollary 7.3 states this crediting only El Alaoui-Montanari-Sellke.",
+      "preprint_locations": [
+        "Corollary 7.3 (§7.1, p. 25)",
+        "pp. 2-3"
+      ],
+      "credit_in_preprint": "Chen's paper is cited for other results; §7.1 cites only El Alaoui-Montanari-Sellke.",
+      "sources": [
+        {
+          "key": "Chen2026-FRSBFullIntervalSupportZeroTemp",
+          "locators": "§1 (p. 4)",
+          "role": "the same observation",
+          "credit_status": "cited_for_other_content"
+        }
+      ]
+    },
+    {
+      "id": null,
+      "slug": "plateau-preserving-approximation",
+      "in_report": false,
+      "relationship": "same technique",
+      "centrality": "supporting",
+      "form_of_inclusion": "none",
+      "attribution_gap": false,
+      "overstated_novelty": false,
+      "technique": "Passing constant-interval inequalities from smoothed finite-step data to general order parameters by plateau-preserving approximation",
+      "summary": "Lemma 2.3 and the proofs of Proposition 5.1 and Corollary 6.4 approximate the order parameter by step functions that keep the plateau value, with a smoothed terminal datum, as in the proof of Chen's Proposition 3.11 (first in its aiXiv version); the author-persona check judged it a routine approximation argument not worth a pointer, so it is recorded here only.",
+      "preprint_locations": [
+        "Lemma 2.3 (pp. 7-8)",
+        "proof of Proposition 5.1 (p. 17)",
+        "proof of Corollary 6.4 (p. 22)"
+      ],
+      "credit_in_preprint": "Chen's Prop. 3.11 is cited in the introduction (§1.1, p. 3) as smooth-terminal approximation; nothing is cited where the approximants are built or used.",
+      "sources": [
+        {
+          "key": "Chen2026-FRSBFullIntervalSupportZeroTemp",
+          "locators": "proof of Prop. 3.11 (pp. 15-16)",
+          "role": "the same plateau-preserving approximation at zero temperature",
+          "credit_status": "credited_elsewhere"
+        },
+        {
+          "key": "ChatGPT2026-FRSBFullIntervalSupportZeroTemp",
+          "locators": "proof of Prop. 3.8 (p. 24)",
+          "role": "earlier aiXiv version of Chen 2026, where it first appeared",
+          "credit_status": "credited_elsewhere"
+        },
+        {
+          "key": "Lopatto2026-FullRSBSK",
+          "locators": "proof of Prop. 3.7 (pp. 18-21)",
+          "role": "the positive-temperature version",
+          "credit_status": "cited_for_other_content"
+        },
+        {
+          "key": "Zhou2026-GardnerTransitionIsingPurePSpinII",
+          "locators": "App. E.10 (pp. 139-141)",
+          "role": "the same move for the pure p-spin model",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "AuffingerChen2016-ParisiGroundStateMixedPSpin",
+          "locators": "Thm. 2 (p. 5); proof of Lemma 2 (p. 10)",
+          "role": "the terminal-datum coupling",
+          "credit_status": "cited_for_other_content"
+        }
+      ]
+    },
+    {
+      "id": null,
+      "slug": "lopatto-backward-tails",
+      "in_report": false,
+      "relationship": "same technique",
+      "centrality": "supporting",
+      "form_of_inclusion": "none",
+      "attribution_gap": false,
+      "overstated_novelty": false,
+      "technique": "Backward tail estimates for finite Cole-Hopf cascades",
+      "summary": "The backward tails of Lemma 3.1 follow Lopatto's Lemma 3.2 and Corollary 3.3 at leading order (Gaussian tilting, good/bad split, induction over steps); the author-persona check judged it a routine estimate not worth a pointer, so this component of finding F3 is recorded here only.",
+      "preprint_locations": [
+        "Lemma 3.1, (3.3) (p. 9)",
+        "proof (p. 10)"
+      ],
+      "credit_in_preprint": "Lopatto's Section 3 is mentioned in the introduction (§1.1, p. 3); nothing is cited at Lemma 3.1.",
+      "sources": [
+        {
+          "key": "Lopatto2026-FullRSBSK",
+          "locators": "Lemma 3.2, (3.9) (p. 9); Cor. 3.3 (p. 12)",
+          "role": "the same tail class and estimate, at higher order",
+          "credit_status": "credited_elsewhere"
+        }
+      ]
+    }
+  ]
+}

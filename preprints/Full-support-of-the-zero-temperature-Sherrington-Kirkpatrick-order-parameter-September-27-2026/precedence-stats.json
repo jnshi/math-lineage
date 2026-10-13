@@ -1,0 +1,69 @@
+{
+  "format": "math-lineage/precedence-stats",
+  "format_version": 2,
+  "preprint": "OAI:Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026",
+  "generated_from": "precedence-findings.json",
+  "review_date": "2026-10-13",
+  "findings": {
+    "in_report": 7,
+    "json_only": [
+      "plateau-preserving-approximation",
+      "lopatto-backward-tails"
+    ],
+    "by_relationship": {
+      "same technique": 1,
+      "adapted": 0,
+      "fragment": 0,
+      "same route": 0,
+      "same result": 6,
+      "weaker result": 0,
+      "proof shortcut": 0
+    },
+    "by_centrality": {
+      "main result": 1,
+      "central": 1,
+      "supporting": 4,
+      "peripheral": 1
+    },
+    "by_form_of_inclusion": {
+      "none": 2,
+      "citation": 0,
+      "sentence": 7,
+      "paragraph": 0
+    },
+    "attribution_gaps": [
+      "F2",
+      "F4",
+      "F5",
+      "F6"
+    ],
+    "overstated_novelty": [
+      "F1"
+    ],
+    "ids_by_relationship": {
+      "same technique": [
+        "F2"
+      ],
+      "same result": [
+        "F1",
+        "F3",
+        "F4",
+        "F5",
+        "F6",
+        "F7"
+      ]
+    }
+  },
+  "earlier_works": {
+    "distinct": 9,
+    "not_in_preprint_bibliography": 2,
+    "in_preprint_bibliography": 7,
+    "finding_source_pairs_by_credit_status": {
+      "not_cited": 4,
+      "cited_for_other_content": 9,
+      "credited_elsewhere": 2,
+      "credited_in_part": 3,
+      "credited": 2
+    }
+  }
+}

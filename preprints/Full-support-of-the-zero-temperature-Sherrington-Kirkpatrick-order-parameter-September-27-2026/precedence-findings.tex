@@ -1,0 +1,969 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,tabularx,longtable,array}
+\usepackage{xltabular}% tabularx-style tables that can break across pages
+\usepackage{enumitem}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{cite}% sorts and compresses numeric citations
+\usepackage[colorlinks=true,linkcolor=Blue,citecolor=Blue,urlcolor=Blue]{hyperref}
+
+% ---------------------------------------------------------------------
+% Shared notation
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\Lgen}{\mathcal{L}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Ent}{Ent}
+\DeclareMathOperator{\KL}{KL}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\ran}{ran}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\ip}[2]{\langle #1,#2\rangle}
+% Locators.  \ploc{compiled locator}{TeX file:line} cites the preprint (or a
+% companion).  Only the compiled locator (section, equation, result, page of the
+% PDF) is printed.  The TeX file:line stays in the source to help checkers find
+% the passage and never appears in the PDF.  \sloc{key}{locator} cites a source.
+\newcommand{\ploc}[2]{#1}
+\newcommand{\sloc}[2]{\cite[#2]{#1}}
+% Relationship types and flags, as used in the summary table and the Summary
+% paragraphs: \rel{same technique}; \attrgap and \overstated tag a Cited?
+% cell (precedence_stats.py checks them against the JSON).
+\newcommand{\rel}[1]{\textit{#1}}
+\newcommand{\attrgap}{\textbf{attribution gap}}
+\newcommand{\overstated}{\textbf{overstated novelty}}
+% Uniform list and table styling across all findings.
+\setlist{itemsep=2pt,topsep=3pt,parsep=0pt,leftmargin=1.6em}
+\setlist[enumerate]{label=\arabic*.}
+\setlist[itemize]{label=\textbullet}
+\renewcommand{\arraystretch}{1.15}
+% Findings are numbered by LaTeX, so nobody types an ID.  In the main file,
+% \findinggroup{F} after the Findings \section sets the ID prefix and restarts
+% the count; IDs follow the order of the \input lines (by magnitude).  Each
+% fragment opens with
+%   \finding{<title>}{<slug>}   or   \finding[<short title>]{<title>}{<slug>}
+% which prints an unnumbered subsection "F3. <title>", adds "F3. <title>" (or
+% the short title) to the table of contents and PDF bookmarks, and does
+% \label{f:<slug>}, so \ref{f:<slug>} prints the ID "F3" as a link.  The
+% heading carries no LaTeX section number, so a finding never shows two
+% numbers (no "3.2 F2").  Refer to another finding as finding~\ref{f:<slug>}.
+% Before any \findinggroup the IDs print as ?1, ?2, ... (as in a standalone
+% test of one fragment).
+\makeatletter
+\newcounter{finding}
+\newcommand{\finding@prefix}{?}
+\renewcommand{\thefinding}{\finding@prefix\arabic{finding}}
+\newcommand{\findinggroup}[1]{\gdef\finding@prefix{#1}\setcounter{finding}{0}}
+\newcommand{\finding}[3][]{%
+  \stepcounter{finding}%
+  \protected@edef\finding@id{\thefinding}% fix the ID now: "F3", not a counter reference
+  \edef\finding@next{\noexpand\finding@sect{\finding@id}}%
+  \finding@next{#1}{#2}{#3}}
+% #1 ID (already expanded), #2 short title (may be empty), #3 title, #4 slug.
+\newcommand{\finding@sect}[4]{%
+  \subsection*{#1. #3}% hyperref anchors \subsection* itself, just above the heading
+  \if\relax\detokenize{#2}\relax
+    \addcontentsline{toc}{subsection}{#1. #3}%
+  \else
+    \addcontentsline{toc}{subsection}{#1. #2}%
+  \fi
+  \def\@currentlabel{#1}% \ref prints the ID; hyperref links it to this heading
+  \label{f:#4}}
+\makeatother
+% ---------------------------------------------------------------------
+\space%
+
+\title{Missing citations in\\ ``Full support of the zero-temperature
+Sherrington--Kirkpatrick order parameter''}
+\date{October 13, 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Summary of findings}
+
+Each row is a citation the preprint is missing: earlier work that already
+contains part of the preprint, which the preprint does not cite where that
+part appears. ``Cited?'' names the earlier work and says what, if anything, the
+preprint cites it for. The exception is a row flagged \emph{overstated
+novelty}: there the preprint cites the work, but its abstract or framing
+presents the content as new. Terms are defined in Section~\ref{sec:about};
+centrality is a best-effort judgment. Locations use the preprint's own
+numbering and printed pages.
+
+% Each row starts "\ref{f:<finding>} & \rel{<relationship>} & <centrality> &",
+% in that order: \ref prints the finding's ID (F1, F2, ...) as a link, and
+% precedence_stats.py reads those three cells. Put \attrgap and \overstated in
+% the Cited? cell of a row exactly when the JSON sets the flag. Never type an
+% ID: LaTeX assigns them from the main file's order (by magnitude).
+% The Technique or result cell, like a title, names the approach or result,
+% with no author names or citations.
+\begin{center}\footnotesize
+\begin{xltabular}{\linewidth}{@{}l >{\raggedright\arraybackslash}p{0.11\linewidth} >{\raggedright\arraybackslash}p{0.10\linewidth} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{0.17\linewidth} >{\raggedright\arraybackslash}p{0.24\linewidth}@{}}
+\toprule
+ID & Relationship & Centrality & Technique or result & In the preprint & Cited?\\
+\midrule
+\endfirsthead
+\toprule
+ID & Relationship & Centrality & Technique or result & In the preprint & Cited?\\
+\midrule
+\endhead
+\ref{f:chen-same-main-theorem} & \rel{same result} & main result &
+Full support on $[0,1)$ of the zero-temperature order parameter, with strict
+increase and (1.6) &
+Abstract (p.~1); Thm~1.1 (p.~2) &
+H.-B. Chen 2026 \cite{Chen2026-FRSBFullIntervalSupportZeroTemp}, first in
+its aiXiv version \cite{ChatGPT2026-FRSBFullIntervalSupportZeroTemp}: cited
+after Thm~1.1 (p.~2), not in the abstract; \overstated\\
+\addlinespace
+\ref{f:zhou-gap-exclusion} & \rel{same technique} & central &
+Gap exclusion by the endpoint contact relations against a positive third
+derivative on the gap &
+\S1.2 and Fig.~1 (p.~4); Lemma~2.3 (p.~7); proof of Thm~1.1 (p.~20) &
+Zhou 2025 \cite{Zhou2025-FRSBSKLowTemperature}: cited for other content;
+Lopatto 2026 \cite{Lopatto2026-FullRSBSK}: Prop.~9.2 credited elsewhere
+(\S1.1, p.~3), Lemma~2.5 cited for other content; H.-B. Chen 2026
+\cite{Chen2026-FRSBFullIntervalSupportZeroTemp}: cited for other content;
+\attrgap\\
+\addlinespace
+\ref{f:lopatto-slope-invariant} & \rel{same result} & supporting &
+The Cole--Hopf slope invariant as sign inequalities for the backward drift &
+Lemma~3.2 (p.~11) &
+Lopatto 2026 \cite{Lopatto2026-FullRSBSK}: credited elsewhere (\S1.1,
+p.~3); H.-B. Chen 2026 \cite{Chen2026-FRSBFullIntervalSupportZeroTemp}:
+credited elsewhere in part\\
+\addlinespace
+\ref{f:zhou-ratio-sign} & \rel{same result} & supporting &
+Monotonicity of the ratio of the forward score to the drift, invariant at
+jumps &
+Lemma~3.3 (pp.~12--13) &
+Zhou 2026 \cite{Zhou2026-GardnerTransitionIsingPurePSpinII}: not cited;
+\attrgap\\
+\addlinespace
+\ref{f:chen-terminal-boundary-layer} & \rel{same result} & supporting &
+Exclusion of a terminal plateau by a square-root boundary layer &
+Lemma~6.3 (pp.~19--20) &
+H.-B. Chen 2026 \cite{Chen2026-FRSBFullIntervalSupportZeroTemp}, first in
+its aiXiv version \cite{ChatGPT2026-FRSBFullIntervalSupportZeroTemp}: cited
+for other content; Auffinger--Chen--Zeng 2017
+\cite{AuffingerEtAl2017-SKInfiniteStepRSBZeroTemp}: credited for the
+conclusion; El Alaoui--Montanari--Sellke 2020
+\cite{ElAlaouiEtAl2020-OptimizationMeanFieldSpinGlasses}: credited in part;
+\attrgap\\
+\addlinespace
+\ref{f:chl-origin-in-support} & \rel{same result} & supporting &
+The origin lies in the support: no initial interval of zero mass &
+Proof of Thm~1.1, initial-gap case (p.~20) &
+Chen--Handschy--Lerman 2016 \cite{ChenEtAl2016-EnergyLandscapeMixedEvenPSpin}:
+cited for other content; Auffinger--Chen 2013
+\cite{AuffingerChen2013-PropertiesParisiMeasures}: cited for other content;
+\attrgap\\
+\addlinespace
+\ref{f:chen-eams-hypothesis-verified} & \rel{same result} & peripheral &
+Full support verifies the no-overlap-gap assumption, giving an
+$\epsilon$-optimal algorithm &
+Cor.~7.3 (p.~25); announced on pp.~2--3 &
+H.-B. Chen 2026 \cite{Chen2026-FRSBFullIntervalSupportZeroTemp}: cited for
+other content\\
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\clearpage
+\space%
+
+\tableofcontents
+
+\section{About this document}\label{sec:about}
+
+\paragraph{The preprint.}
+The preprint is \emph{Full support of the zero-temperature
+Sherrington--Kirkpatrick order parameter}, dated September~27, 2026, with
+author line ``OpenAI'' \cite{OAI-Preprint}. It is one of the preprints of the
+OpenAI Math Release. It proves that every minimizer of the zero-temperature
+Parisi functional for the pure, zero-field Sherrington--Kirkpatrick model has
+full support on $[0,1)$, and that the minimizing order parameter has a smooth,
+strictly positive density on $(0,1)$. Section~\ref{sec:overview} summarizes
+the paper and fixes the notation used throughout this document. The preprint
+cites no other preprint from the same release.
+
+\paragraph{What this document reports.}
+Each finding is a citation the preprint is missing: part of the preprint's
+mathematics (a technique, construction, estimate, proof route or result) that
+an identifiable earlier paper already contains, where the preprint does not
+cite that paper for it where it is used. ``Earlier'' means publicly available
+before the preprint's date. The one exception, overstated novelty, is
+described below. Not reported: textbook material in its textbook form; weaker versions of
+intermediate statements; and, for content the preprint uses, cases where it
+cites a later source that covers that content rather than the original. An
+earlier result on the same problem is reported even when later work that the
+preprint cites implies it. Findings are ordered by centrality, then by relationship in
+the order listed below, then by position in the preprint.
+
+\paragraph{Relationships.}
+A finding's relationship is the one between the preprint and the first
+earlier work listed for it (the principal), the work with the highest relationship in the
+order below; when several hold that relationship, however closely each matches,
+the one the others credit or build on, otherwise the earliest. Any other works listed relate to the same content more weakly or
+in part; the finding says how, including which work originated the idea when
+that is not the first.
+\begin{description}[leftmargin=1.5em,font=\normalfont\itshape]
+\item[same result.] An earlier paper, or several earlier papers together, prove essentially the same statement.
+\item[same technique.] The earlier technique, construction or theory is
+reused essentially intact, possibly in a new setting or with new ingredients
+around it.
+\item[adapted.] The earlier technique's structure is followed, with a change
+at its core: a different object, or a key step replaced.
+\item[proof shortcut.] A published result would replace or substantially
+shorten a large part of the argument.
+\item[same route.] An earlier paper proposed the proof strategy, even
+heuristically, and the preprint carries it out.
+\item[fragment.] One identifiable piece of the earlier technique is reused.
+\item[weaker result.] An earlier paper proves a weaker, special-case or
+partial-range version of one of the preprint's main results, or of a
+statement it presents as a significant contribution.
+\end{description}
+
+\paragraph{Centrality.}
+Each finding also gets a best-effort judgment of how much of the preprint's
+main argument depends on it: \emph{main result} (reserved for earlier work that
+covers the main result itself, or most of it), \emph{central},
+\emph{supporting} or \emph{peripheral}. An earlier weaker result is never
+labelled main result. Each finding states the chain of results it feeds, so
+the basis for the judgment is visible.
+
+\paragraph{Citations.}
+The ``Cited?'' column of the summary names the earlier work and says what the
+preprint cites for the content in question: \emph{not cited} (the work is not
+in the bibliography, and nothing the preprint cites credits it for this
+content), \emph{cited for other content}, \emph{credited elsewhere} (credited
+for this content, directly or through a cited location that credits it, but
+not where it is used, in a way that an expert reader who doesn't know the earlier work might not connect with it), or \emph{credited in part}. A citation counts only when it is \emph{for that specific content};
+citing the same paper nearby for a different result does not count. Content
+the preprint credits where it is used, directly or through a cited location
+that itself credits the earlier work, is not reported, except when its novelty is overstated (below). For
+overstated novelty, the column says where the preprint does cite the work.
+
+\paragraph{Flags.}
+\begin{description}[leftmargin=1.5em,font=\normalfont\bfseries]
+\item[Attribution gap.] Marks the most serious missing citations: the
+relationship is same technique, adapted or same result; the centrality is main
+result, central or supporting; and the preprint cites the principal earlier
+work for this content nowhere.
+\item[Overstated novelty.] The preprint does cite the earlier work for this
+content, but its abstract, a statement of its significant contributions, or the framing of
+a main result presents that content as new, explicitly or in the way a reader
+would reasonably take it. This is the one case in which content the preprint
+credits is reported.
+\end{description}
+
+\paragraph{How to check a claim.}
+Locations in the preprint use its section,
+equation and theorem numbers and the page numbers printed in its PDF.
+Locations in other sources give the theorem, equation and printed page of the
+version listed in the bibliography; where an entry lists both a journal and an
+arXiv version, they refer to the arXiv version. Each finding ends with a short checklist
+of the passages to put side by side.
+
+\paragraph{Provenance.}
+This document was generated by LLM agents (Claude Opus 5.5) running the
+precedence-review skill
+(\href{https://github.com/jnshi/math-lineage/tree/13ccc19ec/.agents/skills/precedence-review}{jnshi/math-lineage},
+commit \texttt{13ccc19}; parts of the review ran under the earlier versions
+\texttt{d1ea740} and \texttt{3808a6c}), makes no claim of completeness, and
+has not been vetted by a human. It was run by Jonathan Shi.
+\space%
+\section{The preprint in brief, and notation}\label{sec:overview}
+
+\paragraph{Model and variational problem.}
+The pure, zero-field Sherrington--Kirkpatrick Hamiltonian is
+$H_n(\sigma)=n^{-1/2}\sum_{i<j}J_{ij}\sigma_i\sigma_j$, normalized so that the
+covariance is $\xi(t)=t^2/2$ and $\xi''\equiv1$. The class $\mathcal U$
+consists of nonnegative, nondecreasing, right-continuous
+$\gamma:[0,1)\to[0,\infty)$ with $\int_0^1\gamma<\infty$, and $\mu_\gamma$ is
+the Stieltjes measure with $\mu_\gamma([0,t])=\gamma(t)$. The Parisi value
+function $\Phi_\gamma$ solves
+\[
+ \partial_t\Phi=-\tfrac12\bigl(\Phi_{xx}+\gamma(t)\Phi_x^2\bigr),
+ \qquad \Phi(1,x)=|x|,
+\]
+\ploc{(1.1)--(1.2)}{main.tex:65--78}, and the zero-temperature Parisi
+functional is $\mathcal P(\gamma)=\Phi_\gamma(0,0)-\frac12\int_0^1t\gamma(t)\,dt$
+\ploc{(1.3)}{main.tex:82--85}. Its minimum over $\mathcal U$ is the limiting
+ground-state energy per spin \ploc{(1.4)}{main.tex:100--103}.
+
+\paragraph{The optimal diffusion and the self-consistency function.}
+Write $u=\Phi_{\gamma,x}$ and let $X$ solve
+$dX_t=\gamma(t)u(t,X_t)\,dt+dB_t$, $X_0=0$ \ploc{(1.5)}{main.tex:109--113}. Set
+\[
+ q(t)=\E\bigl[u(t,X_t)^2\bigr],\qquad q'(t)=\E\bigl[\Phi_{\gamma,xx}(t,X_t)^2\bigr]
+\]
+\ploc{(2.12), Lemma~2.2}{regularity.tex:189--208}. The sources below write
+$\Gamma$ for this function, and $m$ for the value of a constant stretch of the
+order parameter.
+
+\paragraph{Main theorem.}
+\ploc{Theorem~1.1}{main.tex:119--131}: if $\gamma\in\mathcal U$ minimizes
+$\mathcal P$, then $\operatorname{supp}\mu_\gamma=[0,1)$, and $q(t)=t$ and
+$\E[\Phi_{\gamma,xx}(t,X_t)^2]=1$ for $0\le t<1$. Corollary~6.4 adds that
+$\gamma$ is smooth on $[0,1)$ with $\gamma(0)=0$ and $\gamma'>0$ on $(0,1)$.
+
+\paragraph{Contact conditions.}
+For a minimizer, the contact potential
+$G(s)=\int_s^1(q(t)-t)\,dt$ is nonnegative and vanishes on the support; at
+every interior support point, $q(s)=s$ and $q'(s)\le1$
+(\ploc{Lemma~6.2, p.~19}{variation.tex:81--128}).
+
+\paragraph{Notation on a constant interval.}
+On an interval where $\gamma\equiv c>0$, the preprint sets
+\[
+ r=c\Phi_x,\qquad v=r_x,\qquad w=r_{xx},\qquad z=r_{xxx},
+\]
+and proves
+\[
+ (q')'=c^{-2}\E\bigl[w^2-2v^3\bigr],\qquad
+ (q')''=c^{-2}\E\bigl[z^2-12vw^2+6v^4\bigr]
+\]
+along the diffusion (\ploc{(2.13)--(2.14), Lemma~2.3}{regularity.tex:240--261}).
+
+\paragraph{Proof route.}
+\begin{itemize}
+\item \ploc{Proposition~5.1}{curvature.tex:9--20}: on every positive constant
+interval, $q'''\ge(1000c^2)^{-1}\E v^4>0$, so $q'$ is strictly convex there.
+\item Interior gaps (\ploc{proof of Theorem~1.1, p.~20}{variation.tex:215--250}):
+on a gap $(a,b)$ with endpoints in the support, $q(a)=a$, $q(b)=b$ and
+$q'(a),q'(b)\le1$. Strict convexity puts $q'$ below its chord, hence below $1$,
+on $(a,b)$, so $q(b)-q(a)<b-a$, a contradiction
+(\ploc{Figure~1, p.~4}{gap-convexity.tex}). Gaps on which $\gamma=0$ are
+excluded by strict monotonicity of $q'$.
+\item A terminal plateau is excluded separately
+(\ploc{Lemma~6.3, pp.~19--20}{variation.tex:130--213}).
+\end{itemize}
+
+\paragraph{The machinery behind Proposition~5.1.}
+The preprint's \S\S3--4 work with a positive finite-step coefficient
+$c_1\le\dots\le c_N\le M$ and terminal datum $M^{-1}\log(2\cosh Mx)$
+(\ploc{\S3, p.~8}{signs.tex:17--23}). They factor the density of $X_t$ as
+$f=e^{c\Phi}g$, where $g$ solves the forward heat equation between jumps, and
+put $s=-\partial_x\log g$ (\ploc{\S3, p.~8}{signs.tex:35--56}). With backward
+time $\tau$ and $H=r_\tau/r$:
+\begin{itemize}
+\item \ploc{Lemma~3.2}{signs.tex:195--203}: on $x>0$, $w\le0$, $H\le0$ and
+$H_x\ge0$;
+\item \ploc{Lemma~3.3}{signs.tex:289--297}: $s_x\ge1/t$, $s_{xx}\le0$ on $x>0$,
+and $j:=s_x-(s/r)v=r\,\partial_x(s/r)\ge0$;
+\item \ploc{\S3.4 and Lemma~3.4}{signs.tex:396--433}: the variables
+$R=r^2$, $K=rs$, $b=-w/r$, $B=b-2v=-2H$, $S=z+bv-2Rb=2rH_x$ and
+$L=-rs_{xx}$ are nonnegative, and
+$\E_f[\D F+(v+R-K)F]=0$ for polynomials $F$, where $\D=r\partial_x$;
+\item \ploc{Lemma~4.1 and Proposition~4.2}{certificate.tex:117--193}: an exact
+identity over $\mathbb Q$ writes $z^2-12vw^2+6v^4$ as a sum of nonnegative
+terms plus such a divergence, giving
+$\E_f[z^2-12vw^2+6v^4]\ge10^{-3}\E_fv^4$.
+\end{itemize}
+\space%
+
+% IDs are assigned by LaTeX in the order of the \input lines (F1, F2, ...).
+% Order by magnitude: centrality (main result, central, supporting,
+% peripheral), then the relationship (same result, same technique, adapted,
+% proof shortcut, same route, fragment, weaker result), then reading order.
+% precedence_stats.py checks this order.
+% Withdrawing or reordering a finding is just deleting or moving its \input line.
+\section{Findings}\label{sec:findings}
+\findinggroup{F}
+\finding{Full support of the zero-temperature order parameter}{chen-same-main-theorem}
+
+\paragraph{Summary.}
+H.-B.~Chen's paper \sloc{Chen2026-FRSBFullIntervalSupportZeroTemp}{Thm~1.3,
+p.~3} (arXiv, July~20, 2026) proves that the minimizer of the
+zero-temperature Parisi functional of the pure, zero-field SK model has full
+support on $[0,1)$; the theorem first appeared in its aiXiv version, posted
+July~16, 2026 \sloc{ChatGPT2026-FRSBFullIntervalSupportZeroTemp}{Thm~1.2,
+p.~2}, which Chen's paper credits
+\sloc{Chen2026-FRSBFullIntervalSupportZeroTemp}{p.~1; App.~C, p.~38}.
+The preprint cites Chen's paper for this theorem right after
+\ploc{Theorem~1.1, p.~2}{main.tex:133--135}, but its abstract
+(\ploc{p.~1}{main.tex:33--36}) opens ``We prove that'' and presents the
+theorem as new, naming neither Chen's paper nor an earlier proof.
+The relationship is \rel{same result}: every assertion of
+\ploc{Theorem~1.1}{main.tex:119--131} (full support, strict increase of
+$\gamma$, and \ploc{(1.6)}{main.tex:125--130}) is in Chen's paper, for the
+same model, class, functional and notion of support.
+Both proofs follow the plan of Chen's paper, first set out in its aiXiv
+version \sloc{ChatGPT2026-FRSBFullIntervalSupportZeroTemp}{pp.~2--3}: exclude
+each component of the complement of the support directly at zero
+temperature, using that $\gamma$ is constant on it and the first-variation
+contact conditions (a gap between support points through the frame of
+finding~\ref{f:zhou-gap-exclusion}, a terminal plateau through the boundary
+layer of finding~\ref{f:chen-terminal-boundary-layer}).
+In the gap step, Chen's paper gets the contradiction from the crossing rule
+$\Gamma''=0\Rightarrow\Gamma'''>0$
+\sloc{Chen2026-FRSBFullIntervalSupportZeroTemp}{Prop.~4.2, p.~19} and the
+preprint from the unconditional bound $q'''\ge(1000c^2)^{-1}\E v^4$ of
+\ploc{Proposition~5.1}{curvature.tex:9--20}, a difference the preprint states
+(\ploc{pp.~2--3}{main.tex:135--137, 198--203}).
+
+\paragraph{Correspondence.}
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.15\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+ & Preprint & Chen \cite{Chen2026-FRSBFullIntervalSupportZeroTemp}\\
+\midrule
+\endfirsthead
+\toprule
+ & Preprint & Chen \cite{Chen2026-FRSBFullIntervalSupportZeroTemp}\\
+\midrule
+\endhead
+Setting & $\xi(t)=t^2/2$; $\mathcal U$, $\mu_\gamma([0,t])=\gamma(t)$; (1.2)--(1.3) (\ploc{pp.~1--2}{main.tex:41--87}) & $\xi(t)=t^2/2$; $\mathcal U$ (1.4), $\mathrm d\gamma([0,t])=\gamma(t)$; (1.5)--(1.6) (p.~3)\\
+\addlinespace
+Full support & every minimizer $\gamma\in\mathcal U$: $\operatorname{supp}\mu_\gamma=[0,1)$, and $\gamma(b)>\gamma(a)$ for $0\le a<b<1$ (\ploc{Theorem~1.1, p.~2}{main.tex:120--124}) & the minimizer $\gamma_\star$, unique by Chen, Handschy and Lerman \sloc{ChenEtAl2016-EnergyLandscapeMixedEvenPSpin}{Thm~4, p.~8}: $\operatorname{supp}_{[0,1)}\nu_\star=[0,1)$, $\nu_\star=\mathrm d\gamma_\star$ (Thm~1.3, (1.8), p.~3), and $\gamma_\star(t)-\gamma_\star(s)=\nu_\star((s,t])>0$ for $0\le s<t<1$ (p.~4)\\
+\addlinespace
+Saturated consistency & $\E[u_\gamma(t,X_t)^2]=t$, $\E[\Phi_{\gamma,xx}(t,X_t)^2]=1$, $0\le t<1$ \ploc{(1.6)}{main.tex:125--130} & $\Gamma(t)=t$ (4.40), $\E\,\mathsf C(t,X_t)^2=1$ (4.41), $0\le t<1$, where $\mathsf C=u_{xx}$ and $u=\Phi_\gamma$ (proof of Prop.~4.6, p.~25)\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item \ploc{Theorem~1.1, p.~2}{main.tex:119--131} against
+\sloc{Chen2026-FRSBFullIntervalSupportZeroTemp}{Thm~1.3, (1.8), p.~3}, the
+display on p.~4 of Chen's paper, and
+\sloc{ChatGPT2026-FRSBFullIntervalSupportZeroTemp}{Thm~1.2, p.~2}, whose
+(1.3) is the second identity in Chen's (1.8).
+\item \ploc{(1.6)}{main.tex:125--130} against
+\sloc{Chen2026-FRSBFullIntervalSupportZeroTemp}{(4.40)--(4.41), p.~25}.
+\item The preprint's abstract (\ploc{p.~1}{main.tex:33--36}) against its
+citation of Chen's paper after \ploc{Theorem~1.1, p.~2}{main.tex:133--135}.
+\end{enumerate}
+
+\space%
+\finding[Gap exclusion by endpoint contact and a positive third derivative]{Excluding support gaps by the endpoint contact relations and a positive third derivative}{zhou-gap-exclusion}
+
+\paragraph{Summary.}
+Zhou excludes a gap $(a,b)$ near the origin in the support of the
+near-critical SK Parisi measure by showing that the endpoint relations
+$\Gamma(a)=a$, $\Gamma(b)=b$, $\Gamma'(a),\Gamma'(b)\le1$
+\sloc{Zhou2025-FRSBSKLowTemperature}{(7), p.~9} contradict $G(a,b)>0$, which
+for short gaps he derives from a lower bound on
+$\partial_t^2G(a,a+)=\Gamma'''(a+)/(3\Gamma'(a))$ and a bound on
+$\partial_t^3G$ \sloc{Zhou2025-FRSBSKLowTemperature}{Thm~5(2)--(3), Cor.~6,
+p.~8; pp.~14--15}. The preprint cites Zhou
+only for his interval-support theorem
+(\ploc{\S1.1, p.~3}{main.tex:189--190}), and not where it uses his
+approach: \ploc{\S1.2, p.~4}{main.tex:243--257; gap-convexity.tex:1--31},
+\ploc{Lemma~2.3, p.~7}{regularity.tex:240--261} (whose (2.14) is Zhou's
+$\Gamma'''$ formula and sets the target of
+\ploc{\S\S3--4}{signs.tex:4--6; certificate.tex:3--7}) and the
+\ploc{proof of Theorem~1.1, p.~20}{variation.tex:223--234} (its initial-gap
+case is finding~\ref{f:chl-origin-in-support}).
+The approach and its insight are Zhou's (Lopatto
+\sloc{Lopatto2026-FullRSBSK}{p.~3} calls the general strategy closely related
+to Zhou's argument): on a gap the order parameter is constant, so $\Gamma$ has
+explicit higher derivatives along the optimal diffusion, and
+$\Gamma'''>0$ makes the trapezoid value $(b-a)(\Gamma'(a)+\Gamma'(b))/2$,
+at most $b-a$ by the slope relations, exceed $\int_a^b\Gamma'=b-a$.
+\rel{same technique}: the frame is reused intact, and the integrated chord
+bound is Zhou's $G(a,b)>0$; the steps differ only in the positivity the frame
+needs, which \ploc{Proposition~5.1, p.~17}{curvature.tex:9--20} gives on every
+positive constant interval, where Zhou's bound is local and near-critical
+and the crossings of Lopatto and Chen 2026, which the preprint
+cites, are conditional.
+Lopatto has the same formulas \sloc{Lopatto2026-FullRSBSK}{Lemma~2.5, p.~6},
+never cited, and the frame with such a crossing
+\sloc{Lopatto2026-FullRSBSK}{Prop.~9.2, pp.~50--51}, cited only through his
+Sections~3, 7--9 in the introduction (\ploc{p.~3}{main.tex:192--195});
+Chen's paper \sloc{Chen2026-FRSBFullIntervalSupportZeroTemp}{Prop.~4.3,
+pp.~22--23}, cited for other results, adapts the
+frame at zero temperature, closing with a weighted identity instead of the
+chord (first in its aiXiv version of July~16, 2026
+\sloc{ChatGPT2026-FRSBFullIntervalSupportZeroTemp}{Prop.~4.2, pp.~30--31}).
+
+\paragraph{Correspondence.}
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.11\linewidth}>{\raggedright\arraybackslash}p{0.28\linewidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+ & Preprint & Earlier work\\
+\midrule
+\endfirsthead
+\toprule
+ & Preprint & Earlier work\\
+\midrule
+\endhead
+Endpoint relations & $q(a)=a$, $q(b)=b$, $q'(a),q'(b)\le1$ (\ploc{(6.4), p.~19}{variation.tex:94--99}; \ploc{p.~20}{variation.tex:223--226}) & Zhou (7), p.~9. Lopatto (9.32), p.~51: $h(a)=h(b)=0$, $h'(a),h'(b)\le0$, $h=\Gamma-s$. Chen 2026 (4.23)--(4.24), p.~22: $\Gamma(a)=a$, $\Gamma(b)=b$, $\Gamma'(a+)\le1$, $\int_a^b(\Gamma-t)=0$\\
+\addlinespace
+Third derivative & $(q')''=c^{-2}\E[z^2-12vw^2+6v^4]$ (\ploc{(2.13)--(2.14), p.~7}{regularity.tex:254--258}) & Zhou p.~15, with $8\beta^6=(\xi'')^3$, here $1$, and $m=c$: $\Gamma'''=8\beta^6\E[((\partial_x^4\Phi)^2-12m\,\partial_x^2\Phi(\partial_x^3\Phi)^2+6m^2(\partial_x^2\Phi)^4)e^{W}]$. Lopatto (2.18), p.~6. Chen 2026 (3.38), p.~14: $\Gamma''$ only\\
+\addlinespace
+Closing step & $q'$ below its chord, hence below $1$, on $(a,b)$; integrating, $q(b)-q(a)<b-a$ (\ploc{p.~20}{variation.tex:227--234}) & Zhou: $G(a,b)>0$, $G(s,t)=(t-s)[\Gamma'(s)+\Gamma'(t)]/(\Gamma(t)-\Gamma(s))-2$ (pp.~8--9). Lopatto: $\max h'=\max\{h'(a),h'(b)\}\le0$, $0=\int_a^bh'$ (p.~51). Chen 2026: $\int_a^b(t-a)(b-t)\Gamma''=0$, so $\Gamma(b)-\Gamma(a)<(b-a)\Gamma'(a+)$ ((4.25)--(4.26), p.~23)\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item Zhou's $G$ (p.~8) and (7) (p.~9) against the chord display in the
+\ploc{proof of Theorem~1.1, p.~20}{variation.tex:229--234}: integrated, it
+gives $G(a,b)>0$ for $\Gamma=q$, while the four relations give $G(a,b)\le0$.
+\item Zhou's $\Gamma'''$ (p.~15) and Lopatto's Lemma~2.5 (p.~6) against
+\ploc{Lemma~2.3 and its proof, pp.~7--8}{regularity.tex:240--296}.
+\item Chen 2026, Prop.~4.3 (pp.~22--23; aiXiv, Prop.~4.2) against the
+\ploc{proof of Theorem~1.1, p.~20}{variation.tex:223--234}.
+\end{enumerate}
+
+\space%
+\finding[Cole--Hopf slope invariant as backward drift signs]{The Cole--Hopf slope invariant as sign inequalities for the backward drift}{lopatto-slope-invariant}
+
+\paragraph{Summary.}
+Lopatto's Proposition~3.6, which he calls the Cole--Hopf slope invariant,
+shows that every finite Cole--Hopf cascade from $\log\cosh$ satisfies
+$K\ge0$ and four further inequalities, where $KB=x_r$ is the speed of the
+level sets of the slope $B=u_x$ \sloc{Lopatto2026-FullRSBSK}{pp.~15--18};
+Chen's paper transports them to zero temperature
+by smoothing $|x|$ to $\lambda^{-1}\log\cosh\lambda x$ and rescaling (proof of
+Prop.~3.11), and proves $u_{xxx}\le0$ by a maximum principle (Lemma~3.4)
+\cite{Chen2026-FRSBFullIntervalSupportZeroTemp}, both already in its aiXiv
+version \cite{ChatGPT2026-FRSBFullIntervalSupportZeroTemp}. The preprint cites
+neither where it uses this content: it mentions Lopatto's invariant only in
+its introduction, in describing his proof, and cites Chen's Proposition~3.11
+only there, for ``smooth-terminal approximation''
+(\ploc{\S1.1, p.~3}{main.tex:192--197}); its \S3 cites Lopatto only for the
+density transform (\ploc{p.~12}{signs.tex:285--286}), and Chen's Lemma~3.4
+nowhere.
+\ploc{Lemma~3.2, p.~11}{signs.tex:195--203} states $w\le0$, $H=r_\tau/r\le0$
+and $H_x\ge0$ on $x>0$: \rel{same result},
+because in Lopatto's variables (the table below; not the preprint's
+certificate $B$, $K$) $H=-CK$, $H_x=-C(CK)_B$ and
+$w=cCC_B=-2cC(c+K)B$, so $H\le0$ is his $K\ge0$, $w\le0$ follows from it (it
+is his $C_B\le0$), and $H_x\ge0$ follows from his inequalities in a few lines.
+The approach is Lopatto's: follow the sign of $K$ through a finite cascade
+started at $\log\cosh$, where $K=0$, using that each Cole--Hopf step
+preserves it (by a maximum principle for $J=(BK)_B$ and the average (3.61))
+and that lowering the parameter from $a$ to $b$ adds
+$a-b$ to $K$; the preprint's maximum principles for $H$ and $H_x$ in $x$ are
+its own, and its proof of $w\le0$ follows Chen's paper.
+
+\paragraph{Correspondence.}
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.07\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+ & Preprint, \S3 & Lopatto \cite{Lopatto2026-FullRSBSK}; Chen \cite{Chen2026-FRSBFullIntervalSupportZeroTemp}\\
+\midrule
+\endfirsthead
+\toprule
+ & Preprint, \S3 & Lopatto \cite{Lopatto2026-FullRSBSK}; Chen \cite{Chen2026-FRSBFullIntervalSupportZeroTemp}\\
+\midrule
+\endhead
+Data & $0<c_1\le\dots\le c_N\le M$, terminal $M^{-1}\log(2\cosh Mx)$
+(\ploc{p.~8}{signs.tex:17--23}); on a step, $\gamma=c$ & cascades from
+$(\log\cosh,1)$ (Prop.~3.6, p.~15); $a=c$, $u=\Phi$, $B=r/c$, $C=v/c$, his
+time $r$ is $\tau$; Chen (3.47), p.~15: after $y=\lambda x$, coefficients
+$\le\lambda$ from $\lambda^{-1}\log\cosh\lambda x$ give such cascades\\
+\addlinespace
+Drift & $H=r_\tau/r=w/(2r)+v$ \ploc{(3.8), p.~11}{signs.tex:197--200} &
+$x_r=KB$ (3.44), p.~16, and $C_B=-2(a+K)B$ (3.39), p.~15, so $H=-CK$\\
+\addlinespace
+Signs & $w\le0$, $H\le0$, $H_x\ge0$ on $x>0$ \ploc{(3.8)}{signs.tex:197--200};
+$w\le0$ by a maximum principle (\ploc{p.~11}{signs.tex:220--229}) & $K\ge0$ (3.41), p.~16; $C_B\le0$ (p.~17);
+Chen: $u_{xxx}\le0$ (3.20), p.~10, by the same maximum principle, (B.11),
+p.~32\\
+\addlinespace
+Steps & terminal $H=(cM-M^2)\operatorname{sech}^2(Mx)$; jumps
+$H_{\rm new}=H_{\rm old}-(1-\alpha)v_{\rm old}$,
+$(H_x)_{\rm new}=(H_x)_{\rm old}-(1-\alpha)w_{\rm old}$, $\alpha=c_-/c_+$
+(\ploc{pp.~11--12}{signs.tex:241--245, 270--275}) & $K=J=0$ at the start (3.67);
+$K_b=K_a+a-b$ (3.65), p.~18; lowering $M$ to $c$ gives $K=M-c$, and (3.65)
+gives the jump rules\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item Put $r=cB$, $v=cC$, $w=cCC_B$ into \ploc{(3.8)}{signs.tex:197--200}
+and use \sloc{Lopatto2026-FullRSBSK}{(3.38), (3.39), (3.44), pp.~15--16} to
+get $H=-CK$. For $H_x\ge0$: with his $z=-\frac12C_B$ (3.42),
+$\varphi:=-B(CK)_B$ vanishes at $B=0$, and
+$\varphi_B={BK(a+2J-K)}+{zBK_B}+{CK_B}+{(3zJ-CJ_B)}\ge0$ by (3.41), (3.43).
+\item Terminal $H$ and jumps (\ploc{pp.~11--12}{signs.tex:241--245, 270--275})
+against \sloc{Lopatto2026-FullRSBSK}{(3.65), (3.67), p.~18}, scaled by
+\sloc{Chen2026-FRSBFullIntervalSupportZeroTemp}{(3.47), p.~15}.
+\item The proof of $w\le0$ on \ploc{p.~11}{signs.tex:220--229} against
+\sloc{Chen2026-FRSBFullIntervalSupportZeroTemp}{Lemma~3.4, p.~10; App.~B.3,
+(B.11), p.~32}, times $c$.
+\end{enumerate}
+
+\space%
+\finding[Monotonicity of the ratio of score to drift]{Monotonicity of the ratio of the forward score to the drift}{zhou-ratio-sign}
+
+\paragraph{Summary.}
+Zhou's August 2026 paper on the Gardner transition in the Ising pure $p$-spin
+glass proves in App.~E.3 that $w_0=W_y/B$ (in the table's variable $y$,
+Zhou's $x$), the lower-history part of his density score divided by the slope
+$B$, is nondecreasing on $y>0$, since $R=W_{yy}/C$ is
+\sloc{Zhou2026-GardnerTransitionIsingPurePSpinII}{(E.37), (E.41), p.~128};
+the preprint does not cite this paper, and cites Zhou only for interval
+support near the critical temperature \cite{Zhou2025-FRSBSKLowTemperature}
+(\ploc{\S1.1, p.~3}{main.tex:189--190}).
+It states the ratio sign $j=r\,\partial_x(s/r)\ge0$, with its invariance at
+forward jumps, in \ploc{Lemma~3.3, p.~12}{signs.tex:289--297}, as ``the
+additional ratio sign needed by the coercive identity''
+(\ploc{\S3.3}{signs.tex:287}), and proves it on
+\ploc{p.~13}{signs.tex:338--393} from $a\ge1/t$ and $s_{xx}\le0$ (Zhou's
+$W_{yy}\ge0$ and $-W_{yyy}\ge0$, (E.31)) and the backward signs of
+\ploc{Lemma~3.2}{signs.tex:195--203}.
+\rel{same result}: after the table's rescaling, $s/r=y/(\theta mB)+w_0/m$, and
+$B>yC$ \sloc{Zhou2026-GardnerTransitionIsingPurePSpinII}{p.~130} makes the
+first term nondecreasing.
+Both need such a sign for forward-density terms of a third-derivative identity
+on a constant interval (for Zhou, the covariance identity (E.27), which the
+sign enters through (E.45); in the preprint,
+Lemma~3.3~$\to$ \ploc{Lemma~3.4}{signs.tex:416--433}~$\to$
+\ploc{Lemma~4.1 and Proposition~4.2}{certificate.tex:117--193}~$\to$
+\ploc{Proposition~5.1}{curvature.tex:9--20}~$\to$
+\ploc{Theorem~1.1}{main.tex:119--131}), and both use Zhou's insight of
+measuring the score against the drift: a jump adds a multiple of the drift to
+the score, so the ratio's monotonicity survives jumps, and on the Gaussian
+first step it is concavity of the drift.
+Between jumps Zhou propagates $R_y\ge0$ and averages, while the preprint
+propagates $\rho=s_x/s-v/r\ge0$, each by a maximum principle; Zhou's p.~3 says
+his appendix proofs were drafted by language models, pending his revision.
+
+\paragraph{Correspondence.}
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.1\linewidth}>{\raggedright\arraybackslash\hsize=0.8\hsize}X>{\raggedright\arraybackslash\hsize=1.2\hsize}X@{}}
+\toprule
+ & Preprint \cite{OAI-Preprint} & Zhou \sloc{Zhou2026-GardnerTransitionIsingPurePSpinII}{App.~E, pp.~124--130}\\
+\midrule
+\endfirsthead
+\toprule
+ & Preprint \cite{OAI-Preprint} & Zhou \sloc{Zhou2026-GardnerTransitionIsingPurePSpinII}{App.~E, pp.~124--130}\\
+\midrule
+\endhead
+Data & $0<c_1\le\dots\le c_N\le M$; terminal datum $M^{-1}\log(2\cosh Mx)$;
+$X_0=0$ (\ploc{\S3, pp.~8--9}{signs.tex:17--56}) & masses
+$m=c/M\in(0,1]$, atoms $d=\delta/M$; $W=0$ before the first atom (E.28);
+upper cone (E.52) from $\log\cosh y$ (E.46), $J=1-m\ge0$ (E.50), also
+for $m=1$\\
+\addlinespace
+Dictionary & $r=c\Phi_x$, $v=r_x$; $f=e^{c\Phi}g$, with $g$ a heat solution
+between jumps and $g_+=g_-e^{-\delta\Phi}$ at a jump $\delta=c_+-c_-$
+\ploc{(3.2), p.~9}{signs.tex:35--55}; $s=-\partial_x\log g$, $a=s_x$ &
+$\theta=M^2t$, $y=Mx$ (Zhou's $t$, $x$); $U=M\Phi-\log2$ solves (E.1); $B=U_y$, $C=U_{yy}$
+(E.2), not the $B$ of Section~\ref{sec:overview};
+$g\propto pe^{-mU}\propto e^{-y^2/(2\theta)-W}$ (E.4)--(E.5), $p$ the density
+of $MX_t$; $r=MmB$, $v=M^2mC$,
+$s=x/t+MW_y$, $a=1/t+M^2W_{yy}$\\
+\addlinespace
+Ratio sign & $j=a-(s/r)v=r\,\partial_x(s/r)\ge0$
+\ploc{(3.11), p.~12}{signs.tex:291--294}; first step: $s=x/t$ and $r\ge xv$;
+later steps: maximum principle for $\rho=s_x/s-v/r$
+\ploc{(3.16)}{signs.tex:338--376} & $s/r=y/(\theta mB)+w_0/m$, so
+$j=M^2[(B-yC)/(\theta B)+C(R-w_0)]$ on $y>0$, with $B>yC$ (p.~130) and
+$R\ge w_0$ (E.41), from $R_y\ge0$ (E.37), which uses (E.52); first step:
+$W=0$\\
+\addlinespace
+Jumps & $j_+=j_-$ by cancellation (\ploc{p.~13}{signs.tex:378--390}), with
+$s_+=s_-+\delta\Phi_x$ \ploc{(3.15), p.~12}{signs.tex:313--317} & the atom $W\mapsto W+dU$ (E.28) gives
+$R\mapsto R+d$ and $w_0\mapsto w_0+d$; $B$, $C$ continuous\\
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item Check the dictionary (\ploc{\S3, pp.~8--9}{signs.tex:17--56}; Zhou's
+  (E.1)--(E.5), (E.28)
+  \sloc{Zhou2026-GardnerTransitionIsingPurePSpinII}{pp.~124--127}), derive
+  $j$ from \ploc{(3.11)}{signs.tex:291--294}, (E.32) and (E.40), and read off
+  its signs from (E.41) and $B>yC$ (p.~130).
+\item Compare the first step and jump on
+  \ploc{p.~13}{signs.tex:344--346, 378--390} with (E.28) and the line after
+  (E.36) \sloc{Zhou2026-GardnerTransitionIsingPurePSpinII}{pp.~127--128}.
+\end{enumerate}
+
+\space%
+\finding{Excluding a terminal plateau by a square-root boundary layer}{chen-terminal-boundary-layer}
+
+\paragraph{Summary.}
+H.-B.~Chen's paper \sloc{Chen2026-FRSBFullIntervalSupportZeroTemp}{Prop.~4.5,
+pp.~23--25} proves that the zero-temperature minimizer has no constant stretch
+ending at~$1$, first in its aiXiv predecessor of July~16, 2026
+\sloc{ChatGPT2026-FRSBFullIntervalSupportZeroTemp}{Prop.~4.4, pp.~32--33},
+which it credits
+\sloc{Chen2026-FRSBFullIntervalSupportZeroTemp}{p.~1; App.~C, p.~38}; the
+preprint cites Chen's paper only for other results and the aiXiv version
+nowhere.
+The preprint proves the same statement as \ploc{Lemma~6.3,
+pp.~19--20}{variation.tex:130--213}, which settles the terminal and
+empty-support cases of the \ploc{proof of Theorem~1.1,
+p.~20}{variation.tex:215--221}, and gives the proof as its own
+(\ploc{p.~19}{variation.tex:137--139}; \ploc{\S1.1, p.~3}{main.tex:183--185}),
+crediting only the conclusion to Auffinger, Chen and Zeng
+\sloc{AuffingerEtAl2017-SKInfiniteStepRSBZeroTemp}{Remark~7, p.~15}, who
+assert it and indicate a different, perturbative route without details.
+Both proofs run a boundary layer at $t=1$: the Cole--Hopf formula makes
+$u(1-\epsilon,\sqrt\epsilon\,y)$ a sign average under the tilt
+$e^{c\sqrt\epsilon|y+Z|}$, harmless at this scale, so $1-u^2$ is of order one
+on a window of width $\sqrt\epsilon$ where $X_t$ has density of order one;
+then $1-q(t)$ is at least of order $\sqrt{1-t}$, and $G<0$ near~$1$
+contradicts $G\ge0$.
+The case $c=0$ goes back to Chen, Handschy and Lerman
+\sloc{ChenEtAl2016-EnergyLandscapeMixedEvenPSpin}{proof of Thm.~6,
+pp.~14--16}, for $\gamma\equiv0$, and to El Alaoui, Montanari and Sellke
+\cite{ElAlaouiEtAl2020-OptimizationMeanFieldSpinGlasses}; the extension to a
+positive plateau, which behaves like $c=0$ in this layer, first appears in
+the aiXiv version of Chen's paper.
+\rel{same result}: as $0\in S$ (Chen's Prop.~3.2), $S$ is closed and the
+minimizer unique \sloc{ChenEtAl2016-EnergyLandscapeMixedEvenPSpin}{Thm.~4,
+p.~8}, every terminal plateau lies in one starting at $\max S\in S$, so
+Chen's Proposition~4.5 is Lemma~6.3; the preprint replaces Chen's limits
+(4.30) and (4.33), and the asymptotic (4.38), by fixed-window lower bounds
+adapted from the El Alaoui--Montanari--Sellke argument, which it calls
+related (\ploc{p.~19}{variation.tex:140--143}).
+
+\paragraph{Correspondence.}
+Here $\epsilon=1-t$, $h(t,y)=\E e^{c|y+\sqrt{1-t}\,Z|}$, $p_v$ is the
+$N(0,v)$ density, $\rho_s$ the law of $X_s$ ($s\in(a,1)$ fixed); Chen's $u$
+is the preprint's $\Phi$, and Chen's $\rho_t$ the density of $X_t$.
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.15\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+ & Preprint, Lemma~6.3 & Chen \cite{Chen2026-FRSBFullIntervalSupportZeroTemp}\\
+\midrule
+\endfirsthead
+\toprule
+ & Preprint, Lemma~6.3 & Chen \cite{Chen2026-FRSBFullIntervalSupportZeroTemp}\\
+\midrule
+\endhead
+Statement & for a minimizer, no $a<1$ and finite $c\ge0$ with $\gamma=c$ on
+$(a,1)$ (\ploc{p.~19}{variation.tex:130--134}) & for the minimizer
+$\gamma_\star$, no $a<1$ with $(a,1)\cap S=\varnothing$ and $a\in S$,
+Prop.~4.5, p.~23; $0\in S$, Prop.~3.2, p.~8\\
+\addlinespace
+Gradient at scale $\sqrt\epsilon$ & for $|y|\le\sqrt\epsilon$,
+$u(t,y)=\E[\operatorname{sgn}(y+\sqrt\epsilon Z)e^{c|y+\sqrt\epsilon Z|}]/
+\E e^{c|y+\sqrt\epsilon Z|}$ (\ploc{p.~20}{variation.tex:187--195}) &
+$\mathsf B_\varepsilon(y):=u_x(1-\varepsilon,\sqrt\varepsilon\,y)=
+\E[\operatorname{sign}(y+Z)e^{m\sqrt\varepsilon|y+Z|}]/
+\E e^{m\sqrt\varepsilon|y+Z|}$, (4.28)--(4.29), p.~23\\
+\addlinespace
+Law of $X_t$ on the plateau &
+$k_{s,t}(x,y)=p_{t-s}(y-x)h(t,y)/h(s,x)$
+\ploc{(6.6), p.~19}{variation.tex:157--169}; its mixture against $\rho_s$
+is bounded below on $|y|\le1$ \ploc{(6.7), p.~20}{variation.tex:171--185} &
+$Q=\rho_te^{-mu}$ solves the heat equation, (3.21)--(3.22), p.~10;
+$\rho_{1-\varepsilon}(\sqrt\varepsilon\,y)\to\rho_1(0)>0$, (4.33), p.~24\\
+\addlinespace
+Layer and contradiction & $1-q(t)\ge C\sqrt{1-t}$
+\ploc{(6.5), p.~19}{variation.tex:145--149}; $G<0$ near $1$, against
+Lemma~6.2 (\ploc{p.~20}{variation.tex:209--212}) &
+$1-\Gamma(t)\sim(4/\sqrt\pi)\,\rho_1(0)\sqrt{1-t}$, (4.38), and $G<0$ near
+$1$, against (3.8), p.~25\\
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item The display for $u(t,y)$ (\ploc{p.~20}{variation.tex:187--195}) after
+$y\mapsto\sqrt\epsilon\,y$ against
+\sloc{Chen2026-FRSBFullIntervalSupportZeroTemp}{(4.28)--(4.29), p.~23} with
+$m=c$; \ploc{(6.6)}{variation.tex:157--169} against
+\sloc{Chen2026-FRSBFullIntervalSupportZeroTemp}{(3.21)--(3.22), p.~10} with
+$e^{mu}=h$.
+\item The end of the proof of Lemma~6.3 (\ploc{p.~20}{variation.tex:196--212})
+against \sloc{Chen2026-FRSBFullIntervalSupportZeroTemp}{(4.35)--(4.38) and
+Step~4, pp.~24--25}, and the whole proof against
+\sloc{ChatGPT2026-FRSBFullIntervalSupportZeroTemp}{(4.19)--(4.25),
+pp.~32--33}; \ploc{(6.7)}{variation.tex:171--185} and the bound
+$1-u^2\ge\kappa$ against
+\sloc{ElAlaouiEtAl2020-OptimizationMeanFieldSpinGlasses}{Lemma~6.12, p.~29,
+and the end of the proof of Thm.~5, p.~31}, where $c=0$.
+\end{enumerate}
+
+\space%
+\finding[The origin lies in the support]{The origin lies in the support: no initial interval of zero mass}{chl-origin-in-support}
+
+\paragraph{Summary.}
+Chen, Handschy and Lerman (CHL) proved in 2016 that at zero external field
+the smallest point of the support of the zero-temperature Parisi measure
+is~$0$ \sloc{ChenEtAl2016-EnergyLandscapeMixedEvenPSpin}{\S3.2, p.~18}, for
+the mixed even $p$-spin models, SK with $\xi(s)=s^2/2$ among them. The
+preprint cites their paper only for other results, such as uniqueness and
+the variational conditions (\ploc{\S1.1, p.~3}{main.tex:173--175, 207--211};
+\ploc{pp.~5, 18, 20}{regularity.tex:9--11; variation.tex:8--10;
+order-parameter-regularity.tex:10--11}), but not for this result, which it
+proves again without a citation as the initial-component case of the
+\ploc{proof of Theorem~1.1, p.~20}{variation.tex:239--242}.
+The argument it uses, and the insight behind it, are Auffinger and Chen's
+\sloc{AuffingerChen2013-PropertiesParisiMeasures}{proof of Thm~1(i), p.~15}
+for the positive-temperature analogue $0\in\operatorname{supp}\mu_P$: on an
+initial interval of zero mass the slope of the self-consistency function
+increases strictly, so the function, which vanishes at $0$ by symmetry,
+cannot climb to the diagonal at a positive first support point~$b$, where
+the contact condition bounds its slope by~$1$; the preprint cites that paper
+only for its moment method (\ploc{pp.~3, 20}{main.tex:215--218;
+order-parameter-regularity.tex:7--9}).
+\rel{same result}: CHL's statement is the conclusion of the step, for the
+same functional and class, and their overlap map $\psi_1$ is $q$ on $[0,q_h]$ (below), so
+they reach the same two-fixed-point contradiction, which they close with
+W.-K. Chen's fixed-point uniqueness theorem \cite[Thm~5]{NL-Chen2014} rather
+than with a slope bound on the gap.
+H.-B. Chen's 2026 paper \sloc{Chen2026-FRSBFullIntervalSupportZeroTemp}{Prop.~3.2,
+pp.~8--9}, like its aiXiv version
+\sloc{ChatGPT2026-FRSBFullIntervalSupportZeroTemp}{p.~17}, states $0\in S$
+and takes it from CHL, and El Alaoui, Montanari and Sellke
+\sloc{ElAlaouiEtAl2020-OptimizationMeanFieldSpinGlasses}{proof of Thm~5,
+pp.~30--31} run the same contradiction over a larger, non-monotone class;
+the preprint cites H.-B. Chen's paper (not its aiXiv version) and that proof
+only for other content (the proof for its terminal segment,
+\ploc{p.~19}{variation.tex:140--143}).
+
+\paragraph{Correspondence.}
+Here $b=\min S$ if $0\notin S$, and $q_h$ is the smallest support point of
+CHL's minimizer $\gamma_h$. At $h=0$ their overlap map is
+$\psi_1(s)=\E\,\partial_x\Phi_{\gamma_h}(q_h,\chi_1)\,\partial_x\Phi_{\gamma_h}(q_h,\chi_2)$,
+$\E\chi_i^2=\xi'(q_h)$, $\E\chi_1\chi_2=\xi'(s)$. As
+$u(t,B_t)=\E[u(b,B_b)\mid B_t]$ on $[0,b]$,
+$q(s)=\E[u(b,\chi_1)u(b,\chi_2)]$ with $\Var\chi_i=b$,
+$\Cov(\chi_1,\chi_2)=s$, which is $\psi_1(s)$ when $\xi'(s)=s$ and $q_h=b$.
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.11\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+ & Preprint & CHL \cite{ChenEtAl2016-EnergyLandscapeMixedEvenPSpin} & Auffinger--Chen \cite{AuffingerChen2013-PropertiesParisiMeasures}\\
+\midrule
+\endfirsthead
+\toprule
+ & Preprint & CHL \cite{ChenEtAl2016-EnergyLandscapeMixedEvenPSpin} & Auffinger--Chen \cite{AuffingerChen2013-PropertiesParisiMeasures}\\
+\midrule
+\endhead
+Statement & $0\in S$, any minimizer
+(\ploc{p.~20}{variation.tex:239--242}) & $q_h=0$ at $h=0$ (p.~18; also
+p.~4) & $0\in\operatorname{supp}\mu_P$, positive temperature (Thm~1(i),
+p.~4)\\
+\addlinespace
+Gap ends & $q(0)=0$ (\ploc{Lemma~2.2, p.~7}{regularity.tex:200--208});
+$q(b)=b$, $q'(b)\le1$ by \ploc{(6.4), p.~19}{variation.tex:94--97} &
+$\psi_1(0)=0$ (Lemma~4, p.~11); $\psi_1(q_h)=q_h$,
+$\xi''(q_h)\E(\partial_{xx}\Phi_{\gamma_h})^2\le1$ (34)--(35), p.~18 &
+$\Gamma=\Gamma_{\mu_P}$ of (18), p.~8: $\Gamma(0)=0$; $\Gamma(q_m)=q_m$,
+$\Gamma'(q_m)\le1$ (Thm~5, p.~9; p.~15)\\
+\addlinespace
+Closing step & $(q')'=\E\Phi_{xxx}^2>0$ on $(0,b)$
+(\ploc{Lemma~2.3, p.~8}{regularity.tex:260, 298--307}), so $q'<q'(b)\le1$
+and $q(b)<b$ & two fixed points $0$, $q_h$ of $\psi_1$, against W.-K. Chen's
+Thm~5 & $\Gamma''=\gamma_{1,\mu_P}>0$ on $(0,q_m)$ (Prop.~3, pp.~8--9): one
+fixed point on $[0,q_m]$\\
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item The initial-component case (\ploc{p.~20}{variation.tex:239--242}) and
+the $c=0$ clause of \ploc{Lemma~2.3}{regularity.tex:260} (proof on
+\ploc{p.~8}{regularity.tex:298--307}) against
+\sloc{AuffingerChen2013-PropertiesParisiMeasures}{proof of Thm~1(i), p.~15}
+and \sloc{AuffingerChen2013-PropertiesParisiMeasures}{Prop.~3, (20)--(22),
+pp.~8--9} with $\mu([0,u])=0$, $\xi'''=0$.
+\item The same step against
+\sloc{ChenEtAl2016-EnergyLandscapeMixedEvenPSpin}{\S3.2, p.~18}: (34)--(35)
+are $q(b)=b$, $q'(b)\le1$ of \ploc{(6.4)}{variation.tex:94--97}; and
+\sloc{ChenEtAl2016-EnergyLandscapeMixedEvenPSpin}{(5)--(6), Thm~4, p.~8} at
+$h=0$ against \ploc{(1.2)--(1.3)}{main.tex:75--85}.
+\item \sloc{Chen2026-FRSBFullIntervalSupportZeroTemp}{end of the proof of
+Prop.~3.2, p.~9} and \sloc{ChatGPT2026-FRSBFullIntervalSupportZeroTemp}{p.~17}:
+$0\in S$, taken from CHL.
+\end{enumerate}
+
+\space%
+\finding[Full support verifies the no-overlap-gap assumption]{Full support verifies the no-overlap-gap assumption of the optimization algorithm}{chen-eams-hypothesis-verified}
+
+\paragraph{Summary.}
+Chen's paper \sloc{Chen2026-FRSBFullIntervalSupportZeroTemp}{\S1, p.~4}
+already observes that its zero-temperature full-support theorem verifies, for
+SK, the no-overlap-gap assumption of El Alaoui, Montanari and Sellke, under
+which their message-passing algorithm comes within any $\epsilon>0$ of the
+optimum. The preprint cites Chen's paper only for the full-support theorem and
+proof steps: its \ploc{Corollary~7.3, p.~25}{algorithm-application.tex:13--34}
+and the announcements of it on
+\ploc{pp.~2, 3 and~25}{main.tex:145--147, 225--230; algorithm-application.tex:4--5}
+name or cite only El Alaoui, Montanari and Sellke, for the assumption and the
+corollary. The shared approach is one deduction: full support makes the
+minimizer strictly increasing on $[0,1)$, which is exactly their Assumption~2
+for SK, so their Corollary~2.2 applies; they posed the assumption for this use
+and expected it to hold for SK
+\sloc{ElAlaouiEtAl2020-OptimizationMeanFieldSpinGlasses}{p.~8}, and the
+observation that the zero-temperature full-support theorem settles it for SK is
+already in Chen's paper (the theorem itself is
+finding~\ref{f:chen-same-main-theorem}). The relationship is
+\rel{same result}, since both papers draw the same conclusion by this
+deduction; to apply Corollary~2.2, the preprint adds an independent diagonal
+that puts $H_n$ in its Gaussian input format, carrying over the guarantee and
+the cost, and takes the operation count $C(\epsilon)n^2$ from Theorem~3 of El
+Alaoui, Montanari and Sellke. Corollary~7.3 feeds no other result of the
+preprint, hence \emph{peripheral}.
+
+\paragraph{Correspondence.}
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.17\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+ & Preprint & Chen \cite{Chen2026-FRSBFullIntervalSupportZeroTemp}\\
+\midrule
+\endfirsthead
+\toprule
+ & Preprint & Chen \cite{Chen2026-FRSBFullIntervalSupportZeroTemp}\\
+\midrule
+\endhead
+Strict increase & $\operatorname{supp}\mu_\gamma=[0,1)$, so $\gamma(b)>\gamma(a)$ for $0\le a<b<1$ (\ploc{Theorem~1.1, p.~2}{main.tex:119--124}) & $\operatorname{supp}_{[0,1)}\nu_\star=[0,1)$ (Theorem~1.3, p.~3), so $\gamma_\star(t)-\gamma_\star(s)=\nu_\star((s,t])>0$ for $0\le s<t<1$ (p.~4)\\
+\addlinespace
+Assumption & Assumption~2 of El Alaoui et al.\ for $\xi(t)=t^2/2$ (\ploc{proof of Corollary~7.3}{algorithm-application.tex:31--33}) & Assumption~2 of El Alaoui et al.\ for SK (p.~4)\\
+\addlinespace
+Conclusion & their Corollary~2.2: $\Pr\{H_n(\sigma^{\rm alg})\ge\max_\sigma H_n(\sigma)-\epsilon n\}\to1$ (\ploc{Corollary~7.3}{algorithm-application.tex:15--26}) & their Corollary~2.2: energy within any fixed $\varepsilon>0$ of the limiting optimum (p.~4)\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item The proof of \ploc{Corollary~7.3, p.~25}{algorithm-application.tex:31--34}
+against \sloc{Chen2026-FRSBFullIntervalSupportZeroTemp}{p.~4}, the paragraph
+beginning ``Full support is also relevant to optimization algorithms,'' and
+both against
+\sloc{ElAlaouiEtAl2020-OptimizationMeanFieldSpinGlasses}{Assumption~2,
+Corollary~2.2 and (2.8), p.~8}.
+\item The paragraphs on \ploc{pp.~2--3}{main.tex:133--230} and
+\ploc{\S7.1, pp.~25--26}{algorithm-application.tex:1--59}: Chen's paper is
+cited for Theorem~1.3 and for proof steps, but not for the algorithmic
+application.
+\end{enumerate}
+
+\space%
+
+\begin{thebibliography}{99}
+\small
+\bibitem{Chen2026-FRSBFullIntervalSupportZeroTemp} Hong-Bin Chen, FRSB in the SK spin glass: convergence to full-interval support at zero temperature, arXiv preprint, 2026. arXiv:2607.18032v1.
+\bibitem{ChatGPT2026-FRSBFullIntervalSupportZeroTemp} ChatGPT, FRSB in the SK Spin Glass: Convergence to Full-Interval Support at Zero Temperature, aiXiv preprint, 2026. aiXiv:aixiv.260716.000001.
+\bibitem{Zhou2025-FRSBSKLowTemperature} Yuxin Zhou, Existence of full replica symmetry breaking for the Sherrington-Kirkpatrick model at low temperature, Comm. Pure Appl. Math. 79(7) (2026) 1746-1770. arXiv:2504.00269v2.
+\bibitem{Lopatto2026-FullRSBSK} Patrick Lopatto, Full replica symmetry breaking in the Sherrington-Kirkpatrick model, arXiv preprint, 2026. arXiv:2607.11756v3.
+\bibitem{Zhou2026-GardnerTransitionIsingPurePSpinII} Yuxin Zhou, On the Gardner transition in the Ising pure p-spin glass II, arXiv preprint, 2026. arXiv:2608.06523v1.
+\bibitem{AuffingerEtAl2017-SKInfiniteStepRSBZeroTemp} Antonio Auffinger, Wei-Kuo Chen, Qiang Zeng, The SK model is infinite step replica symmetry breaking at zero temperature, Comm. Pure Appl. Math. (2020). arXiv:1703.06872v2.
+\bibitem{ElAlaouiEtAl2020-OptimizationMeanFieldSpinGlasses} Ahmed El Alaoui, Andrea Montanari, Mark Sellke, Optimization of mean-field spin glasses, Ann. Probab. 49 (2021). arXiv:2001.00904v1.
+\bibitem{ChenEtAl2016-EnergyLandscapeMixedEvenPSpin} Wei-Kuo Chen, Madeline Handschy, Gilad Lerman, On the energy landscape of the mixed even p-spin model, Probab. Theory Related Fields (2018). arXiv:1609.04368v4.
+\bibitem{AuffingerChen2013-PropertiesParisiMeasures} Antonio Auffinger, Wei-Kuo Chen, On properties of Parisi measures, Probab. Theory Related Fields (2015). arXiv:1303.3573v1.
+\bibitem{OAI-Preprint} OpenAI, \emph{Full support of the zero-temperature Sherrington--Kirkpatrick order parameter}, OpenAI Math Release preprint, September 27, 2026, \url{https://github.com/openai/math}.
+\bibitem{NL-Chen2014} Wei-Kuo Chen, Chaos in the mixed even-spin models, Comm. Math. Phys. 328 (2014), 867--901, doi:10.1007/s00220-014-1888-1
+\end{thebibliography}
+\space%
+
+\end{document}

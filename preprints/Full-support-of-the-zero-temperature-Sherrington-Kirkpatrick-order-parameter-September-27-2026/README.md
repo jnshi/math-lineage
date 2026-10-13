@@ -1,19 +1,31 @@
-# [Full support of the zero-temperature Sherrington–Kirkpatrick order parameter](main.pdf)
+# Precedence review: Full support of the zero-temperature Sherrington–Kirkpatrick order parameter
 
-**Author:** OpenAI
+**Preprint:** [Full support of the zero-temperature Sherrington–Kirkpatrick order parameter](main.pdf) (OpenAI, September 27, 2026)
 
-**Date:** September 27, 2026
+**Write-up:** [Missing citations in “Full support of the zero-temperature Sherrington–Kirkpatrick order parameter”](precedence-findings.pdf) (October 13, 2026)
 
-## Citation
+The write-up lists 7 missing citations: 6 places where earlier work already contains part of the preprint and the preprint doesn't cite it there, and 1 where the preprint cites the earlier work but its abstract or framing presents the content as new. 4 of the 7 are attribution gaps. Of the 9 earlier works involved, 2 are absent from the preprint's bibliography.
 
-To cite this manuscript:
+| ID | Relationship | Centrality | Technique or result | Earlier work | Cited? |
+|---|---|---|---|---|---|
+| F1 | same result | main result | Full support on [0,1) of the zero-temperature order parameter, with strict increase and (1.6) | [H.-B. Chen 2026](https://arxiv.org/abs/2607.18032), first in its aiXiv version (aiXiv:aixiv.260716.000001) | after Thm 1.1, not in the abstract; **overstated novelty** |
+| F2 | same technique | central | Gap exclusion by the endpoint contact relations against a positive third derivative on the gap | [Zhou 2025](https://arxiv.org/abs/2504.00269); [Lopatto 2026](https://arxiv.org/abs/2607.11756); [H.-B. Chen 2026](https://arxiv.org/abs/2607.18032) | Zhou, Chen: for other content; Lopatto: Prop. 9.2 elsewhere (introduction); **attribution gap** |
+| F3 | same result | supporting | The Cole–Hopf slope invariant as sign inequalities for the backward drift | [Lopatto 2026](https://arxiv.org/abs/2607.11756); [H.-B. Chen 2026](https://arxiv.org/abs/2607.18032) | Lopatto: elsewhere (introduction); Chen: elsewhere, in part |
+| F4 | same result | supporting | Monotonicity of the ratio of the forward score to the drift, invariant at jumps | [Zhou 2026](https://arxiv.org/abs/2608.06523) | no; **attribution gap** |
+| F5 | same result | supporting | Exclusion of a terminal plateau by a square-root boundary layer | [H.-B. Chen 2026](https://arxiv.org/abs/2607.18032), first in its aiXiv version; [Auffinger–Chen–Zeng 2017](https://arxiv.org/abs/1703.06872); [El Alaoui–Montanari–Sellke 2020](https://arxiv.org/abs/2001.00904) | Chen: for other content; Auffinger–Chen–Zeng: for the conclusion; El Alaoui–Montanari–Sellke: in part; **attribution gap** |
+| F6 | same result | supporting | The origin lies in the support: no initial interval of zero mass | [Chen–Handschy–Lerman 2016](https://arxiv.org/abs/1609.04368); [Auffinger–Chen 2013](https://arxiv.org/abs/1303.3573) | for other content; **attribution gap** |
+| F7 | same result | peripheral | Full support verifies the no-overlap-gap assumption, giving an ε-optimal algorithm | [H.-B. Chen 2026](https://arxiv.org/abs/2607.18032) | for other content |
 
-```bibtex
-@misc{OAI:Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026,
-  author = {{OpenAI}},
-  title = {{Full support of the zero-temperature Sherrington--Kirkpatrick order parameter}},
-  howpublished = {OpenAI Math Release preprint
-                  \href{https://github.com/openai/math/blob/main/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/main.pdf}{OAI:Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026}},
-  year = {2026}
-}
-```
+**Terms:**
+- **Relationship** (between the preprint and the first earlier work listed, the one that holds the finding's most severe relationship): same result (one or more earlier papers prove essentially the same statement); same technique (reused essentially intact); adapted (structure followed, core changed); proof shortcut (a published result would replace much of the argument); same route (an earlier paper proposed the strategy); fragment (one piece reused); weaker result (weaker, special-case or partial-range version of a main result or of a statement presented as a significant contribution).
+- **Centrality** (best-effort judgment): how much of the main argument depends on the finding: main result (the earlier work covers the main result itself, or most of it), central, supporting or peripheral.
+- **Attribution gap:** relationship same technique, adapted or same result; centrality supporting or higher; and the principal earlier work not cited for this content anywhere in the preprint.
+- **Overstated novelty:** the earlier work is credited for this content, directly or through a cited location that credits it, but the abstract or framing presents it as new.
+
+**Other files:**
+- LaTeX source: [precedence-findings.tex](precedence-findings.tex)
+- Machine-readable findings: [precedence-findings.json](precedence-findings.json)
+- Statistics: [precedence-stats.json](precedence-stats.json)
+- Run telemetry (tokens and active time, by model, reasoning effort, pass and agent): [precedence-telemetry.json](precedence-telemetry.json)
+
+**Provenance:** generated by LLM agents (Claude Opus 5.5) running the [precedence-review](https://github.com/jnshi/math-lineage/tree/13ccc19ec/.agents/skills/precedence-review) skill (commit 13ccc19; parts of the review ran under the earlier versions d1ea740 and 3808a6c); makes no claim of completeness, and has not been vetted by a human. Run by Jonathan Shi.
