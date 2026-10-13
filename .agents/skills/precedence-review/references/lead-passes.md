@@ -62,12 +62,13 @@ Final message to the coordinator, under 250 words: the counts, the (c) items one
 - every lead left unresolved by a section agent;
 - **the earlier-result one-liners** that section passes recorded: a ruling on each, with dates and the theorem that would make it a same-result or weaker-result finding;
 - **every source that entered the library after section N, checked against sections ≤ N;**
-- every suggested merge or split, and every extension of a finding's location list. Merges and splits are proposed here, and decided by the coordinator (or by the user, if they asked to decide them);
+- every suggested merge or split, and every extension of a finding's location list. Merges and splits are decided here (or recommended to the user, if they asked to decide them), and each finding gets a cross-reference list;
 - **a compiled-locator table per finding:** compiled locator | TeX file:line | what is there, with each location spot-checked. Drafters start from these tables;
-- **a proposed relationship, principal and centrality for each finding,** with its dependency chain in compiled numbering, and the resulting magnitude order;
-- **the proof shortcuts noted across the review:** each one checked, with every hypothesis and normalization verified in the sources. Every verified one goes on to drafting.
+- **a proposed relationship, principal and centrality for each finding,** with its dependency chain in compiled numbering, and the resulting magnitude order. The drafters receive these as proposals;
+- **the proof shortcuts noted across the review:** each one checked, with every hypothesis and normalization verified in the sources. Every verified one goes on to drafting;
+- **open questions for each finding's drafter,** where it couldn't settle something itself.
 
-**Splitting.** If one agent would get more than about 15 leads, split the leads across agents by the finding they bear on. Each writes `CONSOLIDATION-<n>.md`. Give tasks 2–4 below (locators, classification, merges) to exactly one of them.
+**Splitting.** If one agent would get more than about 15 leads, split the leads across agents by the finding they bear on. Each writes `CONSOLIDATION-<n>.md`. Give tasks 2–5 below (locators, classification, merges, open questions) to exactly one of them.
 
 **Brief.** Fill in the `{…}` fields:
 
@@ -100,11 +101,12 @@ You are running the consolidation pass of a precedence review of the preprint "{
    - **(iv) New finding:** give each earlier work with its relationship type and credit status; task 3 names the principal.
 2. **Compiled locators.** For each finding in FINDINGS.md, convert its TeX file:line locations into compiled locators (section, equation, lemma or proposition number, printed page), in one compact table per finding: compiled locator | TeX file:line | what is there. Spot-check that each location contains the claimed content (don't re-review), and list any wrong locator. Check that source pages are printed page numbers, not PDF indices, and add one table of each source's offset (printed page = PDF index + k); every drafting and check brief carries it.
 3. **Relationship, principal and centrality.**
-   - For each finding, gather every earlier work bearing on it, from all sections and leads. Choose its relationship: the most severe that any of them holds, judged against the finding's whole content, not against one section's part. Name the principal, the work that holds it (when several hold it equally, the one the others credit or build on, otherwise the earliest), and quote its decisive correspondence. The others are satellites; say how each relates. For a classical named device whose canonical origin the preprint cites, or which it names by its standard name where it uses it, the finding's content is what is specific to the later work and missing from the origin (`scope-and-relationships.md`); judge the relationship and principal against that content.
+   - For each finding, gather every earlier work bearing on it, from all sections and leads. Choose its relationship: the most severe that any of them holds, judged against the finding's whole content, not against one section's part. Name the principal, the work that holds it (works holding the same relationship type are tied, however closely each matches; among them, the one the others credit or build on, otherwise the earliest), and quote its decisive correspondence. The others are satellites. For a classical named device whose canonical origin the preprint cites, or which it names by its standard name where it uses it, the finding's content is what is specific to the later work and missing from the origin (`scope-and-relationships.md`); judge the relationship and principal against that content, and state that narrowed content as part of your proposal.
    - Give its dependency chain in the preprint's compiled numbering (e.g. "Lemma 5.6 → Prop. 5.1 → Thm. 1.1").
    - Propose a centrality using your judgment: main result (reserved for earlier work that covers the main result itself, or most of it), central, supporting or peripheral, by how much of the main argument depends on it. A weaker result is never main result.
    - Then list the findings by magnitude: centrality first, then relationship (same result, same technique, adapted, proof shortcut, same route, fragment, weaker result), then reading order.
-4. **Merges and splits.** Check each finding's components against the other findings, and give each component to the finding it matches in content. Recommend merging two findings that are the same idea, and splitting one that bundles distinct ideas from the same paper; the coordinator decides.
+4. **Merges and splits.** Check each finding's components against the other findings, and give each component to the finding it matches in content. Merge two findings that are the same idea, and split one that bundles distinct ideas from the same paper, with a short reason for each. {IF THE USER ASKED TO DECIDE MERGES AND SPLITS: "Recommend these instead; the user decides."} Then write each finding's cross-reference list: each location near its content that another finding owns, given as the location and that finding's ID.
+5. **Open questions.** For each finding, list anything its drafter should settle that you couldn't: a correspondence you couldn't confirm, conflicting rulings from two sections, a passage you couldn't read. Give questions and locators.
 
 Check the actual passages: the preprint TeX in `{PREPRINT_DIR}/build/sections/`, its compiled text with `\f` page breaks at `{SCRATCH}/paper.txt`, and the sources in `{REPO}/prior-work/` (grep INDEX.md for keys). Download a paper only if the preprint actually uses the content in question, arXiv only via `fetch_arxiv.sh`, and add an INDEX.md row with the Edit tool.
 
@@ -114,17 +116,18 @@ Check the actual passages: the preprint TeX in `{PREPRINT_DIR}/build/sections/`,
    - for any (iii)/(iv), the exact proposed change or new finding;
    - the compiled-locator tables;
    - the relationship, principal and centrality proposals with their chains, and the magnitude order;
-   - merge recommendations;
+   - the merge and split decisions with their reasons, and each finding's cross-reference list;
+   - the open questions for each finding;
    - the verified proof shortcuts.
-2. Append a dated addendum ("Addendum {TODAY} (consolidation)") of 2–5 lines to each relevant section report, stating the verdict.
+2. Record each correction or addition to a section report once, as a note "Note (consolidation): …" directly under the report entry it concerns: a wrong locator, a ruling you change, a work you see differently from the report, a location or work you add to a finding. A correction that fits no single entry goes in your own file instead.
 3. Edit nothing else, apart from `prior-work/` additions.
 
 {TOOL PITFALLS BLOCK, WITH THE SCRATCH SUBFOLDER `{SCRATCH}/consolidation/`}
 
-Final message (under 200 words): the verdicts, any new or changed finding, wrong locators, centrality proposals and merge recommendations.
+Final message (under 200 words): the verdicts, any new or changed finding, wrong locators, centrality proposals and merge decisions.
 ````
 
-**Before accepting a verdict, spot-check it,** and verify the decisive correspondence of each principal it names. Grep the decisive passage yourself, for example the source's sentence saying it "avoids" the technique, or the preprint for the technique's name. Then record each finding's relationship, principal and centrality in `FINDINGS.md`, with the new findings and changes. The agent's proposals stand unless a fact you checked contradicts one (a correspondence that fails at a step, a cited origin that contains the content, a date), or the user decides otherwise; record the fact with the change. Decide the merges and splits (or ask the user, if they asked to decide them) and the magnitude order, keeping the scale consistent across findings, and move on to the write-up.
+**Before accepting a verdict, spot-check it.** Grep the decisive passage yourself, for example the source's sentence saying it "avoids" the technique, or the preprint for the technique's name. Then record each finding's proposed relationship, principal and centrality in `FINDINGS.md`, with the new findings and changes. If a fact you checked contradicts a proposal (a correspondence that fails at a step, a cited origin that contains the content, a date), note it under the report entry it concerns, as a correction the drafter will read, and in `FINDINGS.md`. Apply the agent's merge and split decisions (or put its recommendations to the user, if they asked to decide them), and move on to the write-up.
 
 ## Passes not to run
 See "Left out on purpose" in SKILL.md. Forward-citation ("cited by") searches belong there too: OpenAlex shows zero citations for very recent preprints, and Google Scholar has no API and serves CAPTCHAs. Offer one only if the user asks, and never put the user's email in the requests.
