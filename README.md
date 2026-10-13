@@ -43,7 +43,7 @@ The plan is also to collect findings, corrections and vetting from experts, alon
 
 The [precedence-review skill](.agents/skills/precedence-review/SKILL.md) reads a preprint section by section and searches for earlier papers that already contain the techniques, constructions and results it uses. Each candidate is checked against the earlier paper itself. A separate agent then reviews each finding [from the preprint author's point of view](.agents/skills/precedence-review/references/skeptic.md), and decides whether citing the earlier work would help an expert reader or is owed as credit.
 
-Pull requests that improve the skill are welcome; please include a before-and-after of two preprint reviews in the PR, with the [SK model spectral gap](preprints/A-spectral-gap-throughout-the-high-temperature-Sherrington-Kirkpatrick-phase-September-24-2026/) as one of them.
+Pull requests that improve the skill are welcome; if it can substantially affect the final result, please include a before-and-after of two preprint reviews in the PR, with the [SK model spectral gap](preprints/A-spectral-gap-throughout-the-high-temperature-Sherrington-Kirkpatrick-phase-September-24-2026/) as one of them.
 
 **License.** The precedence-review skill is licensed under a mix of the [PolyForm Noncommercial License 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0) and the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0). See the LICENSE files in the [skill folder](.agents/skills/precedence-review/) for details.
 
