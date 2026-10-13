@@ -27,7 +27,7 @@ To review a preprint that doesn't have a review yet (see [Reviewed preprints](#r
    ```
 2. Open Claude Code, or another agent that reads [`AGENTS.md`](AGENTS.md), in the `math-lineage` folder, and ask it for a precedence review of the preprint. If you want to read a file that the slim clone left out, such as the preprint's PDF, ask the agent to check it out. The agent asks a few questions first, shows you the report before anything is published, and asks before opening a pull request against this repository.
 
-A full review takes about 5 hours of agent time. Counting every token the agents process, almost all of them cache reads, the review of the 27-page [zero-temperature SK full-support preprint](preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/) used about 350M tokens, not counting work it redid after the skill changed; each review's `precedence-telemetry.json` gives the breakdown.
+A 27-page preprint took about 350M tokens, mostly cache reads, and 5 hours.
 
 To report an error in a report, open an issue that names the preprint and the finding's ID.
 
