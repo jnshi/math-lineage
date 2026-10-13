@@ -1,10 +1,14 @@
-&emsp;*Quick links: [To read](#to-read) · [To contribute](#to-contribute) · [About the skill](#about-the-skill) · [Stats](#stats) · [Reviewed preprints](#reviewed-preprints) · [List of missing attributions](#list-of-missing-attributions)*
+&emsp;*Quick links: [To read](#to-read) · [To contribute](#to-contribute) · [About the skill](#about-the-skill) · [Reviewed preprints](#reviewed-preprints) · [List of missing attributions](#list-of-missing-attributions)*
 
 On October 6, 2026, OpenAI released a [repository](https://github.com/openai/math) of 722 machine-generated manuscripts presenting solutions to major open problems across many fields of mathematics. A week earlier, the [Advisory Group on Mathematics and Artificial Intelligence](https://agmai.org) (AGMAI), a group of mathematicians that advises AI companies, had [recommended](https://agmai.org/general-sep29/) that a lab releasing such results first search the literature for related ideas and "cite the papers in which the ideas were first introduced". On the day of the release, AGMAI left it to the mathematical community to assess how far its recommendations had been followed ([statement](https://agmai.org/#openai-release)).
 
 When a manuscript uses ideas and techniques from earlier papers without citing them, it removes the landmarks that normally help readers navigate a new paper, obscures what is truly new in it, and withholds credit from the people who introduced those ideas. Proper citation is therefore not considered optional in published works.
 
 The goal of this repository is to search for and document some of this missing attribution, and so to help the community with its assessment and aid in understanding the new solutions. The approach uses LLM agents to handle this task at scale. Each report lists earlier works used by a preprint without citation, with locators in both papers so that readers can check each finding.
+
+*Sketch, generated from each published report's `precedence-stats.json` and updated with every new report; it may also give the counts by field, using the field headings in [`overview.pdf`](overview.pdf):*
+
+So far, ⟨n⟩ of the 719 preprints have been reviewed. The reports list ⟨N⟩ findings (⟨counts by relationship⟩; ⟨counts by centrality⟩), of which ⟨g⟩ are attribution gaps and ⟨k⟩ show overstated novelty.
 
 ## To read
 
@@ -25,11 +29,13 @@ To review a preprint that doesn't have a review yet (see [Reviewed preprints](#r
    !*.pdf
    EOF
    ```
-2. Open Claude Code, or another agent that reads [`AGENTS.md`](AGENTS.md), in the `math-lineage` folder, and ask it for a precedence review of the preprint. If you want to read a file that the slim clone left out, such as the preprint's PDF, ask the agent to check it out. The agent asks a few questions first, shows you the report before anything is published, and asks before opening a pull request against this repository.
+2. Start an agent that reads [`AGENTS.md`](AGENTS.md) in the `math-lineage` folder, and ask it for a precedence review of the preprint. Use Claude Opus 5.5, GPT 5.6 Sol or a stronger model; weaker models have not been evaluated yet. If you want to read a file that the slim clone left out, such as the preprint's PDF, ask the agent to check it out. The agent asks a few questions first, shows you the report before anything is published, and asks before opening a pull request against this repository.
 
-A 27-page preprint took about 350M tokens (97% cache reads) and 4 hours.
+A 27-page preprint took about 350M tokens (97% cache reads) and 4 hours. Expect a 50-page preprint to take 50–100% of the weekly usage limit of a basic paid subscription.
 
-To report an error in a report, open an issue that names the preprint and the finding's ID.
+To request a review of a preprint, open an issue that names it. To report an error in a report, open an issue that names the preprint and the finding's ID.
+
+Findings, corrections and vetting from experts are planned too, alongside the machine-sourced findings, but their format is not settled yet. Suggestions are welcome on the [discussions page](https://github.com/jnshi/math-lineage/discussions). For now, they can go in an issue.
 
 ## About the skill
 
@@ -37,14 +43,7 @@ The [precedence-review skill](.agents/skills/precedence-review/SKILL.md) reads a
 
 Pull requests that improve the skill are welcome; please include a before-and-after of two preprint reviews in the PR, with the [SK model spectral gap](preprints/A-spectral-gap-throughout-the-high-temperature-Sherrington-Kirkpatrick-phase-September-24-2026/) as one of them.
 
-**License.** Most of the precedence-review skill is licensed under the [PolyForm Noncommercial License 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0). See the LICENSE files in the [skill folder](.agents/skills/precedence-review/) for details.
-
-## Stats
-
-*Sketch, to be generated from each published report's `precedence-stats.json` and updated with every new report:*
-- preprints reviewed, out of 719 (optionally by field, using the field headings in [`overview.pdf`](overview.pdf));
-- findings in the reports, by relationship and by centrality;
-- attribution gaps, and findings with overstated novelty.
+**License.** The precedence-review skill is licensed under a mix of the [PolyForm Noncommercial License 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0) and the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0). See the LICENSE files in the [skill folder](.agents/skills/precedence-review/) for details.
 
 ## Reviewed preprints
 
