@@ -41,7 +41,7 @@ The plan is also to collect findings, corrections and vetting from experts, alon
 
 ## About the skill
 
-The [precedence-review skill](.agents/skills/precedence-review/SKILL.md) reads a preprint section by section and searches for earlier papers that already contain the techniques, constructions and results it uses. Each candidate is checked against the earlier paper itself. A separate agent then reviews each finding from the preprint author's point of view, and decides whether citing the earlier work would help an expert reader or is owed as credit.
+The [precedence-review skill](.agents/skills/precedence-review/SKILL.md) reads a preprint section by section and searches for earlier papers that already contain the techniques, constructions and results it uses. Each candidate is checked against the earlier paper itself. A separate agent then reviews each finding [from the preprint author's point of view](.agents/skills/precedence-review/references/skeptic.md), and decides whether citing the earlier work would help an expert reader or is owed as credit.
 
 Pull requests that improve the skill are welcome; please include a before-and-after of two preprint reviews in the PR, with the [SK model spectral gap](preprints/A-spectral-gap-throughout-the-high-temperature-Sherrington-Kirkpatrick-phase-September-24-2026/) as one of them.
 
