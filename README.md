@@ -49,7 +49,7 @@ Pull requests that improve the skill are welcome; please include a before-and-af
 
 ## Reviewed preprints
 
-*One row per reviewed preprint, in the numbered order of [`overview.pdf`](overview.pdf) (by result number, then in the order the result lists its manuscripts), under the overview's field headings. Fields with no reviewed preprint are left out.*
+*Result numbers and field headings from OpenAI's [`overview.pdf`](overview.pdf)*
 
 <table>
 <thead><tr><th>Result</th><th>Preprint</th><th>Report date</th><th>Findings</th><th>Attribution gaps</th></tr></thead>
