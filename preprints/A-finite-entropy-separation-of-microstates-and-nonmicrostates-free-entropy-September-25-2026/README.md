@@ -1,18 +1,30 @@
-# [A finite-entropy separation of microstates and nonmicrostates free entropy](paper.pdf)
+# Precedence review: A finite-entropy separation of microstates and nonmicrostates free entropy
 
-**Author:** OpenAI
+**Preprint:** [A finite-entropy separation of microstates and nonmicrostates free entropy](paper.pdf) (OpenAI, September 25, 2026)
 
-**Date:** September 25, 2026
+**Write-up:** [Missing citations in “A finite-entropy separation of microstates and nonmicrostates free entropy”](precedence-findings.pdf) (October 12, 2026)
 
-## Citation
+The write-up lists 7 missing citations: 6 places where earlier work already contains part of the preprint and the preprint doesn't cite it there, and 1 where the preprint cites the earlier work but its framing presents the content as new. 5 of the 7 are attribution gaps. Of the 20 earlier works involved, 15 are absent from the preprint's bibliography.
 
-```bibtex
-@misc{OAI:A-finite-entropy-separation-of-microstates-and-nonmicrostates-free-entropy-September-25-2026,
-  author = {{OpenAI}},
-  title = {{A finite-entropy separation of microstates and nonmicrostates free entropy}},
-  howpublished = {OpenAI Math Release preprint
-                  \href{https://github.com/openai/math/blob/main/preprints/A-finite-entropy-separation-of-microstates-and-nonmicrostates-free-entropy-September-25-2026/paper.pdf}{OAI:A-finite-entropy-separation-of-microstates-and-nonmicrostates-free-entropy-September-25-2026}},
-  year = {2026}
-}
-```
+| ID | Relationship | Centrality | Technique or result | Earlier work | Cited? |
+|---|---|---|---|---|---|
+| F1 | same result | central | Finite microstates entropy of a tuple with matrix models (here embeddable in L(F₂)) plus small free semicircular noise | [Voiculescu 1994](https://doi.org/10.1007/BF01231539); Voiculescu 1990; [Jung 2002](https://arxiv.org/abs/math/0207149); [Jekel 2025](https://arxiv.org/abs/2501.00703) | Voiculescu 1994 for other content (definition of χ); the others no; **attribution gap** |
+| F2 | same result | central | Microstates entropy bounded by the entropy of GUE-evolved microstate models minus the integrated free Fisher information, with the terminal entropies kept | [Jekel–Pi 2023](https://arxiv.org/abs/2305.02574); [Shlyakhtenko–Tao 2020](https://arxiv.org/abs/2009.01882) | Jekel–Pi in part (Prop. 6.1; the elementary proof); Shlyakhtenko–Tao through Jekel–Pi; **overstated novelty** |
+| F3 | same technique | central | Fisher-deficit bound by lifting higher-order Stein kernels (here free cumulants) into semicircular chaos | [Diez 2023](https://arxiv.org/abs/2306.00967); [Fathi–Nelson 2016](https://arxiv.org/abs/1605.05828); [Cébron 2018](https://arxiv.org/abs/1803.09669) | no; **attribution gap** |
+| F4 | adapted | central | Free semicirculars plus a tensor-independent coordinate and small free noise: finite χ, but matrix models that inherit the commutation lose entropy | [Jekel 2025](https://arxiv.org/abs/2501.00703) | no; **attribution gap** |
+| F5 | adapted | central | Unitary-net covering of matrix tuples with a common block structure | [Voiculescu 1996](https://doi.org/10.1007/BF02246772); Biane 2001; Mingo–Speicher 2017; [Dykema 1996](https://arxiv.org/abs/funct-an/9605005); [Ge 1996](https://doi.org/10.1073/pnas.93.23.12762) | Voiculescu, Biane, Mingo–Speicher, Dykema no; Ge in part (as an antecedent); **attribution gap** |
+| F6 | same result | supporting | Orthonormal semicircular Wick polynomials (free Wick products) by signed deletion of disjoint adjacent pairs | [Effros–Popa 2003](https://arxiv.org/abs/math/0303045); [Kemp–Nourdin–Peccati–Speicher 2010](https://arxiv.org/abs/1009.3949) | no; **attribution gap** |
+| F7 | same result | peripheral | Conjugate variables of a free semicircular perturbation as the projected rescaled noise | [Voiculescu 1998](https://doi.org/10.1007/s002220050222) | for other content (definitions) |
 
+**Terms:**
+- **Relationship** (between the preprint and the first earlier work listed, the one that holds the finding's most severe relationship): same result (one or more earlier papers prove essentially the same statement); same technique (reused essentially intact); adapted (structure followed, core changed); proof shortcut (a published result would replace much of the argument); same route (an earlier paper proposed the strategy); fragment (one piece reused); weaker result (weaker, special-case or partial-range version of a main result or of a statement presented as a significant contribution).
+- **Centrality** (best-effort judgment): how much of the main argument depends on the finding: main result (the earlier work covers the main result itself, or most of it), central, supporting or peripheral.
+- **Attribution gap:** relationship same technique, adapted or same result; centrality supporting or higher; and the principal earlier work not cited for this content anywhere in the preprint.
+- **Overstated novelty:** the earlier work is credited for this content, directly or through a cited location that credits it, but the abstract or framing presents it as new.
+
+**Other files:**
+- LaTeX source: [precedence-findings.tex](precedence-findings.tex)
+- Machine-readable findings: [precedence-findings.json](precedence-findings.json)
+- Statistics: [precedence-stats.json](precedence-stats.json)
+
+**Provenance:** generated by LLM agents (Claude Opus 5.5) running the [precedence-review](https://github.com/jnshi/math-lineage/tree/13ccc19/.agents/skills/precedence-review) skill (commit [e025345](https://github.com/jnshi/math-lineage/tree/e025345/.agents/skills/precedence-review) for the section passes, 13ccc19 for the later passes); makes no claim of completeness, and has not been vetted by a human. Run by Jonathan Shi, who also supplied the leads behind findings F1–F7, harvested from a run of an earlier version (v1) of the skill on this preprint, including his own lead behind F4. This run was also used to test updates to the skill.
