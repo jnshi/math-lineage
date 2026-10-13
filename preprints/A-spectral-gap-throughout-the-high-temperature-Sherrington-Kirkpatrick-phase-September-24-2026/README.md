@@ -2,33 +2,38 @@
 
 **Preprint:** [A spectral gap throughout the high-temperature Sherrington–Kirkpatrick phase](main.pdf) (OpenAI, September 24, 2026)
 
-**Write-up:** [precedence-findings.pdf](precedence-findings.pdf) (October 8, 2026)
+**Write-up:** [Missing citations in “A spectral gap throughout the high-temperature Sherrington–Kirkpatrick phase”](precedence-findings.pdf) (October 13, 2026)
 
-The write-up reports three kinds of finding:
-- **(A)** techniques and theory from earlier papers that the preprint reuses without attribution;
-- **(B)** earlier, uncited partial progress on the same problem;
-- **(C)** a published result that would replace a large part of the argument.
+The write-up lists 16 missing citations: 16 places where earlier work already contains part of the preprint and the preprint doesn't cite it there. 10 of the 16 are attribution gaps. Of the 24 earlier works involved, 16 are absent from the preprint's bibliography. One further earlier result, judged not worth a pointer in the preprint, is recorded only in [precedence-findings.json](precedence-findings.json).
 
-There are 8 findings: 2 Strong and 5 Partial in (A), and 1 Partial in (B). There are none in (C). Of the 10 earlier works involved, 7 are absent from the preprint's bibliography.
+| ID | Relationship | Centrality | Technique or result | Earlier work | Cited? |
+|---|---|---|---|---|---|
+| F1 | same technique | central | Planted law of disorder and observation path, likelihood ratio Z/EZ, and transfer back to the original disorder | [El Alaoui–Montanari–Sellke 2022](https://arxiv.org/abs/2203.05093); [Aizenman–Lebowitz–Ruelle 1987](https://doi.org/10.1007/BF01217677) | credited elsewhere |
+| F2 | adapted | central | Stopping the localization before its path estimates can fail, with early stops and terminal failures as one exceptional event | [Huang–Mohanty–Rajaraman–Wu 2024](https://arxiv.org/abs/2411.09075); [Chen–Eldan 2022](https://arxiv.org/abs/2203.04163); [Eldan 2012](https://arxiv.org/abs/1203.0893); [El Alaoui–Eldan–Gheissari–Piana 2023](https://arxiv.org/abs/2311.06171); [Davies–Lee–Sandhu–Shi 2026 (weak Poincaré)](https://arxiv.org/abs/2607.08160) | Huang–Mohanty–Rajaraman–Wu: not cited; Chen–Eldan: credited in part; Eldan: cited for other content; El Alaoui–Eldan–Gheissari–Piana: not cited; Davies–Lee–Sandhu–Shi 2026 (weak Poincaré): not cited; **attribution gap** |
+| F3 | adapted | central | Deterministic equivalents for the diagonal of words with an Onsager-shifted inverse, uniform over diagonal parameters chosen after the matrix | [Jekel–Sandhu–Shi 2024](https://arxiv.org/abs/2408.02360); [Davies–Lee–Sandhu–Shi 2026 (PHA III)](https://arxiv.org/abs/2605.03718); [Fan–Mei–Montanari 2018](https://arxiv.org/abs/1808.07890); [Speicher 1998](https://doi.org/10.1090/memo/0627) | Jekel–Sandhu–Shi: not cited; Davies–Lee–Sandhu–Shi 2026 (PHA III): not cited; Fan–Mei–Montanari: not cited; Speicher: credited in part; **attribution gap** |
+| F4 | adapted | central | Planted Kac–Rice first moment for TAP critical points: determinant rate, Gaussian density of the TAP map, complexity functional and its sign | [Fan–Mei–Montanari 2018](https://arxiv.org/abs/1808.07890); [Celentano–Fan–Mei 2021](https://arxiv.org/abs/2106.11428); [Belius–Concetti–Genovese 2024](https://arxiv.org/abs/2401.08529); [Boursier 2026](https://arxiv.org/abs/2604.20660) | not cited; **attribution gap** |
+| F5 | adapted | central | Control of approximate critical points from an annealed first moment: smoothed integral, local-volume lower bound, determinant cancellation | [Huang–Sellke 2023](https://arxiv.org/abs/2308.09677); [Huang–Montanari–Pham 2024](https://arxiv.org/abs/2404.15651) | not cited; **attribution gap** |
+| F6 | adapted | central | Well-posedness of the TAP equation along the localization path: planted law, first-moment exclusion with a conditional Hessian, approximate critical points, transfer | [Huang–Montanari–Pham 2024](https://arxiv.org/abs/2404.15651) | not cited; **attribution gap** |
+| F7 | adapted | central | TAP Hessian conditioned on a vanishing gradient, positive near the Bayes law, inside a Kac–Rice first moment | [Celentano–Fan–Mei 2021](https://arxiv.org/abs/2106.11428); [Huang–Montanari–Pham 2024](https://arxiv.org/abs/2404.15651) | not cited; **attribution gap** |
+| F8 | adapted | central | A memory correction for every input of a multi-input recursion, and its cancellation of one-step reversals at every depth | [Bayati–Lelarge–Montanari 2012](https://arxiv.org/abs/1207.7321); [Montanari 2018](https://arxiv.org/abs/1812.10897) | not cited; **attribution gap** |
+| F9 | adapted | central | Gap at a large observation time from few weak-field coordinates and uniformly small principal submatrices | [Davies–Lee–Sandhu–Shi 2026 (PHA III)](https://arxiv.org/abs/2605.03718); [Davies–Lee–Sandhu–Shi 2026 (weak Poincaré)](https://arxiv.org/abs/2607.08160); [Bandeira–El Alaoui–Rödder 2026](https://arxiv.org/abs/2607.06813) | Davies–Lee–Sandhu–Shi 2026 (PHA III): not cited; Davies–Lee–Sandhu–Shi 2026 (weak Poincaré): not cited; Bandeira–El Alaoui–Rödder: credited in part; **attribution gap** |
+| F10 | same route | central | Poincaré inequality for all β < 1 from operator-norm covariance bounds at the localization fields, via a uniformly positive TAP Hessian | [El Alaoui–Gaitonde 2022](https://arxiv.org/abs/2212.02445); [Brennecke–Xu–Yau 2023](https://arxiv.org/abs/2307.12535) | El Alaoui–Gaitonde: cited for other content; Brennecke–Xu–Yau: not cited |
+| F11 | weaker result | central | Weak Poincaré inequality for zero-field SK heat-bath dynamics at β < 1/2 | [Davies–Lee–Sandhu–Shi 2026 (weak Poincaré)](https://arxiv.org/abs/2607.08160) | not cited |
+| F12 | same technique | supporting | Margin for the Onsager-shifted TAP Hessian by comparing vᵀWv with a norm-weighted linear process under a common shift | [Celentano–Fan–Mei 2021](https://arxiv.org/abs/2106.11428); [Celentano 2022](https://arxiv.org/abs/2208.09550); [Brennecke–Xu–Yau 2023](https://arxiv.org/abs/2307.12535) | Celentano–Fan–Mei: not cited; Celentano: cited for other content; Brennecke–Xu–Yau: not cited; **attribution gap** |
+| F13 | same technique | supporting | Consistent Gaussian law: mean equals variance on the Nishimori line, then a one-variable fixed point with uniqueness, size and Lipschitz bounds | [El Alaoui–Montanari–Sellke 2022](https://arxiv.org/abs/2203.05093); [Deshpande–Abbe–Montanari 2015](https://arxiv.org/abs/1507.08685); [Davies–Lee–Sandhu–Shi 2026 (PHA III)](https://arxiv.org/abs/2605.03718) | El Alaoui–Montanari–Sellke: cited for other content; Deshpande–Abbe–Montanari: not cited; Davies–Lee–Sandhu–Shi 2026 (PHA III): not cited; **attribution gap** |
+| F14 | fragment | supporting | Path-law entropy of the reweighted observations as the entropy lost along the localization | [Chen–Eldan 2022](https://arxiv.org/abs/2203.04163) | cited for other content |
+| F15 | fragment | supporting | Stein operator of the cosh-tilted Gaussian mixture and its bounded solution for tanh | [Chatterjee 2007](https://arxiv.org/abs/0706.3500) | not cited |
+| F16 | fragment | supporting | Comparing a posterior mean with the TAP root through a late Onsager-corrected iterate | [El Alaoui–Montanari–Sellke 2022](https://arxiv.org/abs/2203.05093); [Celentano–Fan–Mei 2021](https://arxiv.org/abs/2106.11428) | El Alaoui–Montanari–Sellke: credited elsewhere; Celentano–Fan–Mei: not cited |
 
-| ID | Grade | Technique or result | Earlier work |
-|---|---|---|---|
-| S1 | Strong | Kac–Rice complexity method for TAP critical points in planted SK, with the count restricted to Hessian failures | [Fan–Mei–Montanari 2018](https://arxiv.org/abs/1808.07890); [Celentano–Fan–Mei 2021](https://arxiv.org/abs/2106.11428) |
-| S2 | Strong | Approximate-critical-point control from annealed Kac–Rice bounds | [Huang–Sellke 2023](https://arxiv.org/abs/2308.09677) |
-| P1 | Partial | Stein equation for tanh under a cosh-tilted Gaussian, used to compare a field with an Onsager-corrected field | [Chatterjee 2007](https://arxiv.org/abs/0706.3500) |
-| P2 | Partial | Planted SK law under Gaussian observation and its likelihood transfer; state-evolution fixed point | [El Alaoui–Montanari–Sellke 2022](https://arxiv.org/abs/2203.05093) |
-| P3 | Partial | Route to a Poincaré inequality through covariance bounds at stochastic-localization fields, via the inverse TAP Hessian | [El Alaoui–Gaitonde 2022](https://arxiv.org/abs/2212.02445) |
-| P4 | Partial | Stopped stochastic localization with exceptional paths | [Huang–Mohanty–Rajaraman–Wu 2024](https://arxiv.org/abs/2411.09075) |
-| P5 | Partial | Resolvent estimates uniform over adaptive diagonals by metric projection, concentration and chaining | [Davies–Lee–Sandhu–Shi 2026](https://arxiv.org/abs/2605.03718) |
-| P6 | Partial (B) | Weak Poincaré inequality for SK heat-bath Glauber dynamics at β < 1/2 via approximate stochastic localization | [Davies–Lee–Sandhu–Shi 2026](https://arxiv.org/abs/2607.08160) |
-
-**Grades:**
-- **Strong:** the earlier technique is reused essentially intact without credit.
-- **Partial:** only a fragment is reused, or the credit is only indirect. For (B), a weaker, special-case or partial-range version of the preprint's result.
+**Terms:**
+- **Relationship** (between the preprint and the first earlier work listed, the one that holds the finding's most severe relationship): same result (one or more earlier papers prove essentially the same statement); same technique (reused essentially intact); adapted (structure followed, core changed); proof shortcut (a published result would replace much of the argument); same route (an earlier paper proposed the strategy); fragment (one piece reused); weaker result (weaker, special-case or partial-range version of a main result or of a statement presented as a significant contribution).
+- **Centrality** (best-effort judgment): how much of the main argument depends on the finding: main result (the earlier work covers the main result itself, or most of it), central, supporting or peripheral.
+- **Attribution gap:** relationship same technique, adapted or same result; centrality supporting or higher; and the principal earlier work not cited for this content anywhere in the preprint.
+- **Overstated novelty:** the earlier work is credited for this content, directly or through a cited location that credits it, but the abstract or framing presents it as new.
 
 **Other files:**
 - LaTeX source: [precedence-findings.tex](precedence-findings.tex)
 - Machine-readable findings: [precedence-findings.json](precedence-findings.json)
 - Statistics: [precedence-stats.json](precedence-stats.json)
 
-**Provenance:** generated by LLM agents (Claude Opus 5.5) running the [precedence-review](https://github.com/jnshi/math-lineage/tree/d1ea740/.claude/skills/precedence-review) skill (commit d1ea740); makes no claim of completeness and has not been vetted by a human. Run by Jonathan Shi, who in part designed the skill around this preprint and makes no claim of impartiality.
+**Provenance:** generated by LLM agents (Claude Opus 5.5) running the [precedence-review](https://github.com/jnshi/math-lineage/tree/e025345ea/.agents/skills/precedence-review) skill (commit e025345ea), in a run used to develop the skill, whose later stages ran revisions made during the run, the last of them commit [e1e8ffbf7](https://github.com/jnshi/math-lineage/tree/e1e8ffbf7/.agents/skills/precedence-review); makes no claim of completeness, and has not been vetted by a human. Run by Jonathan Shi. The leads came from the findings of an earlier run with version 1 of the skill, in which Jonathan Shi supplied the lead that became F3. Jonathan Shi makes no claim of impartiality.
