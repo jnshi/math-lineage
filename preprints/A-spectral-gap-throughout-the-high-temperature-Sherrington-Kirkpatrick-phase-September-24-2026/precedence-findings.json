@@ -1,6 +1,6 @@
 {
   "format": "math-lineage/precedence-findings",
-  "format_version": 1,
+  "format_version": 2,
   "preprint": {
     "id": "OAI:A-spectral-gap-throughout-the-high-temperature-Sherrington-Kirkpatrick-phase-September-24-2026",
     "title": "A spectral gap throughout the high-temperature Sherrington–Kirkpatrick phase",
@@ -9,94 +9,47 @@
     "companions": []
   },
   "review": {
-    "date": "2026-10-08",
+    "date": "2026-10-13",
     "report_pdf": "precedence-findings.pdf",
     "report_tex": "precedence-findings.tex",
-    "locator_convention": "Preprint locations use the compiled numbering and page numbers of main.pdf. Source locators refer to the version identified by the source's arXiv id or DOI."
+    "locator_convention": "Preprint locations use the compiled numbering and printed page numbers of main.pdf, which equal its PDF page numbers. Source locators give printed page numbers of the version identified by the source's arXiv id (the arXiv version current at the time of the review) or, when there is no arXiv id, by its DOI."
   },
   "definitions": {
-    "category": {
-      "A": "Unattributed reuse: a technique, construction, identity, estimate or body of theory from an identifiable earlier paper is reused without credit for that content.",
-      "B": "Same-problem precedence: earlier, uncited partial progress on the same problem, such as a weaker or special-case version of a statement the preprint proves.",
-      "C": "Structural: a published result would replace or substantially shorten a large part of the argument."
+    "relationship": {
+      "same technique": "The earlier technique, construction or theory is reused essentially intact, possibly in a new setting or with new ingredients around it.",
+      "adapted": "The earlier technique's structure is followed, with a change at its core: a different object, or a key step replaced.",
+      "fragment": "One identifiable piece of the earlier technique is reused.",
+      "same route": "An earlier paper proposed the proof strategy, even heuristically, and the preprint carries it out.",
+      "same result": "An earlier paper, or several earlier papers together, prove essentially the same statement.",
+      "weaker result": "An earlier paper proves a weaker, special-case or partial-range version of one of the preprint's main results, or of a statement it presents as a significant contribution.",
+      "proof shortcut": "A published result would replace or substantially shorten a large part of the argument."
     },
-    "grade": {
-      "Strong": "(A/B) The earlier technique is reused essentially intact without credit for that content.",
-      "Partial": "(A/B) Only a fragment is reused, or the credit is present but only indirect.",
-      "Major": "(C) A route, a section, or a component of the main theorem becomes a citation.",
-      "Moderate": "(C) A multi-page chain of lemmas becomes a citation."
+    "centrality": {
+      "main result": "Best-effort judgment: the earlier work covers the main result itself, or most of it. Never a weaker result.",
+      "central": "Best-effort judgment: much of the main argument depends on it.",
+      "supporting": "Best-effort judgment: the main argument depends on it, but less.",
+      "peripheral": "Best-effort judgment: little of the main argument depends on it."
     },
-    "source_status": {
-      "not_cited": "The work is not in the preprint's bibliography.",
+    "form_of_inclusion": {
+      "none": "As judged by the author-persona check: not worth a pointer, or for overstated novelty no change to the abstract or framing. Recorded here only, not in the report.",
+      "citation": "As judged by the author-persona check: a citation at the point of use.",
+      "sentence": "As judged by the author-persona check: a clause or a sentence; for overstated novelty, a clause or sentence changed in the abstract, statements of significant contributions or framing.",
+      "paragraph": "As judged by the author-persona check: a short paragraph; for overstated novelty, a larger revision of the abstract or framing."
+    },
+    "credit_status": {
+      "not_cited": "The work is not in the preprint's bibliography, and no location the preprint cites credits it for this content.",
       "cited_for_other_content": "The work is in the preprint's bibliography but is not cited for this content.",
-      "credited_in_part": "The preprint cites the work for part of this content only.",
-      "credited_elsewhere": "The preprint cites the work for this content at other locations, but not where the content is used.",
-      "credited_indirectly": "The preprint cites a location (e.g. a companion lemma) that itself credits the work for this content."
+      "credited_elsewhere": "The preprint credits the work for this content at other locations, directly or through a cited location that credits it, but not where the content is used, in a way that an expert reader who doesn't know the earlier work might not connect with it.",
+      "credited_in_part": "The preprint credits the work for part of this content only, directly or through a cited location that credits it.",
+      "credited": "The preprint credits the work for this content, directly or through a cited location that credits it. Allowed only in a finding with overstated novelty."
+    },
+    "flags": {
+      "attribution_gap": "True when the relationship is same technique, adapted or same result; the centrality is main result, central or supporting; and the principal earlier work (listed first among the sources) is not cited for this content anywhere (not_cited or cited_for_other_content).",
+      "overstated_novelty": "True when the preprint cites the earlier work for this content, but its abstract, a statement of its significant contributions, or the framing of a main result presents that content as new, explicitly or in the way a reader would reasonably take it. It is the one case in which content the preprint credits is reported. novelty_claim says where the claim is made."
     }
   },
   "sources": {
-    "FanMeiMontanari2018": {
-      "authors": [
-        "Z. Fan",
-        "S. Mei",
-        "A. Montanari"
-      ],
-      "title": "TAP free energy, spin glasses, and variational inference",
-      "year": 2018,
-      "venue": "Ann. Probab. 49 (2021)",
-      "arxiv": "1808.07890",
-      "doi": null,
-      "in_preprint_bibliography": false
-    },
-    "CelentanoFanMei2021": {
-      "authors": [
-        "M. Celentano",
-        "Z. Fan",
-        "S. Mei"
-      ],
-      "title": "Local convexity of the TAP free energy and AMP convergence for Z2-synchronization",
-      "year": 2021,
-      "venue": "Ann. Statist. 51 (2023)",
-      "arxiv": "2106.11428",
-      "doi": null,
-      "in_preprint_bibliography": false
-    },
-    "Celentano2022": {
-      "authors": [
-        "M. Celentano"
-      ],
-      "title": "Sudakov–Fernique post-AMP, and a new proof of the local convexity of the TAP free energy",
-      "year": 2022,
-      "venue": "Ann. Probab. 52 (2024) 923–954",
-      "arxiv": "2208.09550",
-      "doi": "10.1214/23-AOP1675",
-      "in_preprint_bibliography": true,
-      "preprint_bib_key": "Celentano2024"
-    },
-    "HuangSellke2023": {
-      "authors": [
-        "B. Huang",
-        "M. Sellke"
-      ],
-      "title": "Strong topological trivialization of multi-species spherical spin glasses",
-      "year": 2023,
-      "venue": "preprint",
-      "arxiv": "2308.09677",
-      "doi": null,
-      "in_preprint_bibliography": false
-    },
-    "Chatterjee2007": {
-      "authors": [
-        "S. Chatterjee"
-      ],
-      "title": "Spin glasses and Stein's method",
-      "year": 2007,
-      "venue": "Probab. Theory Related Fields 148 (2010)",
-      "arxiv": "0706.3500",
-      "doi": null,
-      "in_preprint_bibliography": false
-    },
-    "ElAlaouiMontanariSellke2022": {
+    "ElAlaouiMontanariSellke2022-SamplingSKAlgorithmicSL": {
       "authors": [
         "A. El Alaoui",
         "A. Montanari",
@@ -110,20 +63,21 @@
       "in_preprint_bibliography": true,
       "preprint_bib_key": "EAMS2022"
     },
-    "ElAlaouiGaitonde2022": {
+    "NL-AizenmanLebowitzRuelle1987": {
       "authors": [
-        "A. El Alaoui",
-        "J. Gaitonde"
+        "M. Aizenman",
+        "J. L. Lebowitz",
+        "D. Ruelle"
       ],
-      "title": "Bounds on the covariance matrix of the Sherrington–Kirkpatrick model",
-      "year": 2022,
-      "venue": "preprint",
-      "arxiv": "2212.02445",
-      "doi": null,
+      "title": "Some rigorous results on the Sherrington–Kirkpatrick spin glass model",
+      "year": 1987,
+      "venue": "Comm. Math. Phys. 112 (1987) 3–20",
+      "arxiv": null,
+      "doi": "10.1007/BF01217677",
       "in_preprint_bibliography": true,
-      "preprint_bib_key": "EAG2024"
+      "preprint_bib_key": "ALR1987"
     },
-    "HuangMohantyRajaramanWu2024": {
+    "HuangEtAl2024-WeakPoincareSimulatedAnnealing": {
       "authors": [
         "B. Huang",
         "S. Mohanty",
@@ -137,7 +91,73 @@
       "doi": null,
       "in_preprint_bibliography": false
     },
-    "DaviesLeeSandhuShi2026-Sampling": {
+    "ChenEldan2022-LocalizationSchemes": {
+      "authors": [
+        "Y. Chen",
+        "R. Eldan"
+      ],
+      "title": "Localization schemes: A framework for proving mixing bounds for Markov chains",
+      "year": 2022,
+      "venue": "Duke Math. J. 174 (2025)",
+      "arxiv": "2203.04163",
+      "doi": null,
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "CE2025"
+    },
+    "Eldan2012-ThinShellSpectralGapStochLoc": {
+      "authors": [
+        "R. Eldan"
+      ],
+      "title": "Thin shell implies spectral gap up to polylog via a stochastic localization scheme",
+      "year": 2012,
+      "venue": "Geom. Funct. Anal. 23 (2013)",
+      "arxiv": "1203.0893",
+      "doi": null,
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "Eldan2013"
+    },
+    "ElAlaouiEtAl2023-FastRelaxationRFIM": {
+      "authors": [
+        "A. El Alaoui",
+        "R. Eldan",
+        "R. Gheissari",
+        "A. Piana"
+      ],
+      "title": "Fast relaxation of the random field Ising dynamics",
+      "year": 2023,
+      "venue": "preprint",
+      "arxiv": "2311.06171",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "DaviesEtAl2026-WeakPoincareApproxSL": {
+      "authors": [
+        "E. Davies",
+        "H. Lee",
+        "J. S. Sandhu",
+        "J. Shi"
+      ],
+      "title": "Weak Poincaré inequalities via approximate stochastic localization: application to sampling the Sherrington–Kirkpatrick model",
+      "year": 2026,
+      "venue": "preprint",
+      "arxiv": "2607.08160",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "JekelSandhuShi2024-PotentialHessianAscentSK": {
+      "authors": [
+        "D. Jekel",
+        "J. S. Sandhu",
+        "J. Shi"
+      ],
+      "title": "Potential Hessian Ascent: The Sherrington–Kirkpatrick Model",
+      "year": 2024,
+      "venue": "preprint",
+      "arxiv": "2408.02360",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "DaviesEtAl2026-PotentialHessianAscentIIISampling": {
       "authors": [
         "E. Davies",
         "H. Lee",
@@ -151,201 +171,793 @@
       "doi": null,
       "in_preprint_bibliography": false
     },
-    "DaviesLeeSandhuShi2026-WPI": {
+    "FanMeiMontanari2018-TAPFreeEnergyVariationalInference": {
       "authors": [
-        "E. Davies",
-        "H. Lee",
-        "J. S. Sandhu",
-        "J. Shi"
+        "Z. Fan",
+        "S. Mei",
+        "A. Montanari"
       ],
-      "title": "Weak Poincaré inequalities via approximate stochastic localization: application to sampling the Sherrington–Kirkpatrick model",
-      "year": 2026,
-      "venue": "preprint",
-      "arxiv": "2607.08160",
+      "title": "TAP free energy, spin glasses, and variational inference",
+      "year": 2018,
+      "venue": "Ann. Probab. 49 (2021)",
+      "arxiv": "1808.07890",
       "doi": null,
       "in_preprint_bibliography": false
+    },
+    "Speicher1998-OperatorValuedFreeProbability": {
+      "authors": [
+        "R. Speicher"
+      ],
+      "title": "Combinatorial theory of the free product with amalgamation and operator-valued free probability theory",
+      "year": 1998,
+      "venue": "Mem. Amer. Math. Soc. 132 (1998), no. 627",
+      "arxiv": null,
+      "doi": "10.1090/memo/0627",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "Speicher1998"
+    },
+    "CelentanoFanMei2021-LocalConvexityTAPZ2Sync": {
+      "authors": [
+        "M. Celentano",
+        "Z. Fan",
+        "S. Mei"
+      ],
+      "title": "Local convexity of the TAP free energy and AMP convergence for Z2-synchronization",
+      "year": 2021,
+      "venue": "Ann. Statist. 51 (2023)",
+      "arxiv": "2106.11428",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "BeliusConcettiGenovese2024-DeterminantBrayMooreTAP": {
+      "authors": [
+        "D. Belius",
+        "F. Concetti",
+        "G. Genovese"
+      ],
+      "title": "On the determinant in Bray–Moore's TAP complexity formula",
+      "year": 2024,
+      "venue": "preprint",
+      "arxiv": "2401.08529",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "Boursier2026-LegendreStructureTAPComplexity": {
+      "authors": [
+        "J. Boursier"
+      ],
+      "title": "The Legendre structure of the TAP complexity for the Ising spin glass",
+      "year": 2026,
+      "venue": "preprint",
+      "arxiv": "2604.20660",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "HuangSellke2023-StrongTopologicalTrivialization": {
+      "authors": [
+        "B. Huang",
+        "M. Sellke"
+      ],
+      "title": "Strong topological trivialization of multi-species spherical spin glasses",
+      "year": 2023,
+      "venue": "preprint",
+      "arxiv": "2308.09677",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "HuangMontanariPham2024-SphericalSpinGlassSamplingSL": {
+      "authors": [
+        "B. Huang",
+        "A. Montanari",
+        "H. T. Pham"
+      ],
+      "title": "Sampling from spherical spin glasses in total variation via algorithmic stochastic localization",
+      "year": 2024,
+      "venue": "preprint",
+      "arxiv": "2404.15651",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "BayatiLelargeMontanari2012-UniversalityMessagePassing": {
+      "authors": [
+        "M. Bayati",
+        "M. Lelarge",
+        "A. Montanari"
+      ],
+      "title": "Universality in polytope phase transitions and message passing algorithms",
+      "year": 2012,
+      "venue": "Ann. Appl. Probab. 25 (2015) 753–822",
+      "arxiv": "1207.7321",
+      "doi": "10.1214/14-AAP1010",
+      "in_preprint_bibliography": false
+    },
+    "Montanari2018-OptimizationSKHamiltonian": {
+      "authors": [
+        "A. Montanari"
+      ],
+      "title": "Optimization of the Sherrington–Kirkpatrick Hamiltonian",
+      "year": 2018,
+      "venue": "preprint",
+      "arxiv": "1812.10897",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "BandeiraElAlaouiRodder2026-GlauberHighOverlapGibbs": {
+      "authors": [
+        "A. S. Bandeira",
+        "A. El Alaoui",
+        "A. Rödder"
+      ],
+      "title": "Mixing of Glauber dynamics on high overlap Gibbs measures",
+      "year": 2026,
+      "venue": "preprint",
+      "arxiv": "2607.06813",
+      "doi": null,
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "BER2026"
+    },
+    "ElAlaouiGaitonde2022-CovarianceMatrixSK": {
+      "authors": [
+        "A. El Alaoui",
+        "J. Gaitonde"
+      ],
+      "title": "Bounds on the covariance matrix of the Sherrington–Kirkpatrick model",
+      "year": 2022,
+      "venue": "preprint",
+      "arxiv": "2212.02445",
+      "doi": null,
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "EAG2024"
+    },
+    "BrenneckeXuYau2023-OperatorNormCorrelationSK": {
+      "authors": [
+        "C. Brennecke",
+        "C. Xu",
+        "H.-T. Yau"
+      ],
+      "title": "Operator norm bounds on the correlation matrix of the SK model at high temperature",
+      "year": 2023,
+      "venue": "preprint",
+      "arxiv": "2307.12535",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "Celentano2022-SudakovFerniquePostAMPTAPConvexity": {
+      "authors": [
+        "M. Celentano"
+      ],
+      "title": "Sudakov–Fernique post-AMP, and a new proof of the local convexity of the TAP free energy",
+      "year": 2022,
+      "venue": "Ann. Probab. 52 (2024)",
+      "arxiv": "2208.09550",
+      "doi": null,
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "Celentano2024"
+    },
+    "DeshpandeAbbeMontanari2015-AsymptoticMutualInfoTwoGroupsSBM": {
+      "authors": [
+        "Y. Deshpande",
+        "E. Abbe",
+        "A. Montanari"
+      ],
+      "title": "Asymptotic mutual information for the two-groups stochastic block model",
+      "year": 2015,
+      "venue": "Information and Inference 6 (2017) 125–170, as Asymptotic mutual information for the balanced binary stochastic block model",
+      "arxiv": "1507.08685",
+      "doi": "10.1093/imaiai/iaw017",
+      "in_preprint_bibliography": false
+    },
+    "Chatterjee2007-SpinGlassesSteinsMethod": {
+      "authors": [
+        "S. Chatterjee"
+      ],
+      "title": "Spin glasses and Stein's method",
+      "year": 2007,
+      "venue": "preprint (journal version: Probab. Theory Related Fields, 2010)",
+      "arxiv": "0706.3500",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "AnariEtAl2023-UniversalitySpectralIndependence": {
+      "authors": [
+        "N. Anari",
+        "V. Jain",
+        "F. Koehler",
+        "H. T. Pham",
+        "T.-D. Vuong"
+      ],
+      "title": "Universality of spectral independence with applications to fast mixing in spin glasses",
+      "year": 2023,
+      "venue": "preprint",
+      "arxiv": "2307.10466",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "AdhikariEtAl2022-SpectralGapMixedPSpin": {
+      "authors": [
+        "A. Adhikari",
+        "C. Brennecke",
+        "C. Xu",
+        "H.-T. Yau"
+      ],
+      "title": "Spectral gap estimates for mixed p-spin models at high temperature",
+      "year": 2022,
+      "venue": "Probab. Theory Related Fields 189 (2024)",
+      "arxiv": "2208.07844",
+      "doi": "10.1007/s00440-024-01261-9",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "ABXY2024"
     }
   },
   "findings": [
     {
-      "id": "S1",
-      "category": "A",
-      "grade": "Strong",
-      "technique": "Kac–Rice complexity method for TAP critical points in planted SK, with the count restricted to Hessian failures",
-      "summary": "The stability proposition is proved with Fan–Mei–Montanari's Kac–Rice computation for TAP critical points in planted SK (gauge, gradient density from Cov(Wm), determinant rate, relative-entropy rate vanishing at the Bayes point), restricted as in Celentano–Fan–Mei to Hessian failures near the Bayes law with their Sudakov–Fernique comparison as bulk input; at t = σ = 0 the preprint's scalar rate is Fan–Mei–Montanari's complexity functional term by term.",
-      "preprint_locations": [
-        "§§5.1–5.4, (5.4)–(5.9), Lemmas 5.3–5.5, (5.25) (pp. 28–38)",
-        "Lemmas 3.2–3.5 (pp. 12–21)",
-        "Lemmas 4.1–4.2 (pp. 22–26)",
-        "claimed as the paper's own route in §1.1 (p. 4) and §1.3 (p. 5)"
-      ],
-      "credit_in_preprint": "Neither Fan–Mei–Montanari nor Celentano–Fan–Mei is cited; the only citation on TAP-Hessian positivity is Celentano, for local convexity near late AMP iterates, proved without Kac–Rice.",
-      "sources": [
-        {
-          "key": "FanMeiMontanari2018",
-          "locators": "§3 (p. 8); Prop. 3.1, Lemma 3.3, Prop. 3.2 and (3.5) (p. 9); Prop. 3.5 and §3.4 (pp. 10–11); (4.18), Lemma 4.9 (p. 19); Prop. 5.2 (p. 22)",
-          "role": "Kac–Rice complexity computation: gauge, gradient density, determinant rate, relative-entropy rate, zero at the Bayes point",
-          "status": "not_cited"
-        },
-        {
-          "key": "CelentanoFanMei2021",
-          "locators": "Lemma 4.1 (p. 15; App. A.4, p. 33); Lemmas 4.7–4.9 and Cor. 4.10 (pp. 17–18; proof p. 50); Lemma B.2 (p. 43)",
-          "role": "Kac–Rice count restricted to Hessian failures near the Bayes law; Sudakov–Fernique bound on the smallest TAP-Hessian eigenvalue",
-          "status": "not_cited"
-        },
-        {
-          "key": "Celentano2022",
-          "locators": "Prop. 1 (p. 6); §4 (p. 11)",
-          "role": "the same Sudakov–Fernique comparison applied to the TAP Hessian",
-          "status": "cited_for_other_content"
-        }
-      ]
-    },
-    {
-      "id": "S2",
-      "category": "A",
-      "grade": "Strong",
-      "technique": "Approximate-critical-point control from annealed Kac–Rice bounds",
-      "summary": "To exclude unstable approximate solutions of the TAP field equation, the preprint uses Huang–Sellke's device turning an exponentially small annealed Kac–Rice bound into high-probability non-existence of approximate bad critical points: Gaussian rerandomization (smoothing), a local lower bound in which the inverse-Jacobian volume cancels the determinant, inheritance of the bad property, and Markov's inequality.",
-      "preprint_locations": [
-        "(5.5) and the proof of Lemma 5.3 (p. 28)",
-        "Lemma 5.6 (pp. 35–37)",
-        "exclusion step in the proof of Proposition 5.1 (pp. 37–38)",
-        "presented as the paper's own in §1.1 (p. 4) and §1.3 (p. 5)"
-      ],
-      "credit_in_preprint": "Not cited; the preprint presents the local-volume step as its own.",
-      "sources": [
-        {
-          "key": "HuangSellke2023",
-          "locators": "§5: Theorem 5.2 (p. 28); Lemmas 5.9–5.11 (pp. 32–35); proof of Theorem 5.2 (p. 36)",
-          "role": "approximate-critical-point control from an annealed Kac–Rice bound",
-          "status": "not_cited"
-        }
-      ]
-    },
-    {
-      "id": "P1",
-      "category": "A",
-      "grade": "Partial",
-      "technique": "Stein equation for tanh under a cosh-tilted Gaussian, used to compare a field with an Onsager-corrected field",
-      "summary": "The preprint's scalar identity (6.9) is Chatterjee's Stein equation for tanh under a cosh-tilted Gaussian, with its bounded solution in closed form, used as he does at the Gibbs-sample local field centred at the Onsager-corrected field; Chatterjee's L² estimate of ⟨Tf⟩, the main work of his method, is not reused.",
-      "preprint_locations": [
-        "(6.8)–(6.9) (p. 45)",
-        "proof of Lemma 6.5 (pp. 53–54)",
-        "(6.12)–(6.13) (pp. 45–46)",
-        "proof of Proposition 7.2, (7.3) (p. 57)"
-      ],
-      "credit_in_preprint": "Not cited; (6.9) is introduced as a scalar identity valid for arbitrary real fields, and Bolthausen is cited only for the Onsager-corrected recursion.",
-      "sources": [
-        {
-          "key": "Chatterjee2007",
-          "locators": "§1.8, (12)–(15) (p. 7); Lemma 1.3 (p. 8; §3.6, p. 25); §3.4 (pp. 20–23); Corollary 1.2 (p. 5)",
-          "role": "Stein operator and equation for tanh under a cosh-tilted Gaussian, its bounded solution, and its use at a Gibbs sample with the Onsager-corrected centre",
-          "status": "not_cited"
-        }
-      ]
-    },
-    {
-      "id": "P2",
-      "category": "A",
-      "grade": "Partial",
-      "technique": "Planted stochastic-localization framework for SK at its points of use: planted law with likelihood transfer, and the state-evolution fixed point",
-      "summary": "Proposition 5.1 is proved under the El Alaoui–Montanari–Sellke planted law for the SK observation process and transferred to the SK disorder by their likelihood identity; the equality law locating the zero set of the Kac–Rice rate is their state-evolution fixed point.",
+      "id": "F1",
+      "slug": "planted-law-transfer",
+      "in_report": true,
+      "relationship": "same technique",
+      "centrality": "central",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": false,
+      "overstated_novelty": false,
+      "technique": "A planted law for the disorder and the observation path, transferred back through the normalized partition function",
+      "summary": "El Alaoui, Montanari and Sellke analyse their Sherrington–Kirkpatrick sampler under a planted law of disorder and observation path, prove that its likelihood ratio against the original law is the normalized partition function, and transfer back by contiguity. The preprint's planted law (5.4) is theirs conjugated by diag(x₀), its size bias on p. 39 is their Proposition 4.2 with the GOE diagonal split off, and its Markov-inequality transfer is a quantitative form of their contiguity step; it names the paper only in §1.1, for combining Gaussian observations, planted laws and AMP, and cites nothing in §5. The lower tail (5.27), proved anew, follows from the Aizenman–Lebowitz–Ruelle limit quoted on p. 3.",
       "preprint_locations": [
         "(5.4) (p. 28)",
-        "§5.4 (pp. 39–40)",
-        "Lemma 4.2 (pp. 25–26)"
+        "size bias, (5.27) and transfer back (pp. 39–40)"
       ],
-      "credit_in_preprint": "Cited once, in §1.1 (p. 4), as a parallel combination of Gaussian observations, planted laws and AMP; nothing is cited where these ingredients are used.",
+      "credit_in_preprint": "El Alaoui–Montanari–Sellke are named only in §1.1 (p. 4), for combining Gaussian observations, planted laws and AMP, and §5 cites nothing; Aizenman–Lebowitz–Ruelle are cited on p. 3 for the free-energy limit, not at (5.27).",
       "sources": [
         {
-          "key": "ElAlaouiMontanariSellke2022",
-          "locators": "§4.1, (4.1)–(4.9), Proposition 4.2, (4.14) (pp. 10–12); (2.5), (4.16), Proposition 4.4, Lemma 4.5(c) (pp. 5, 12–14)",
-          "role": "planted model and likelihood identity for the SK observation process; state-evolution fixed point",
-          "status": "credited_elsewhere"
+          "key": "ElAlaouiMontanariSellke2022-SamplingSKAlgorithmicSL",
+          "locators": "§4.1, Prop. 4.2 (pp. 10–12)",
+          "role": "planted law of disorder and observation path, likelihood ratio Z/EZ, and transfer back by contiguity",
+          "credit_status": "credited_elsewhere"
+        },
+        {
+          "key": "NL-AizenmanLebowitzRuelle1987",
+          "locators": null,
+          "role": "the free-energy limit from which the lower tail (5.27) follows",
+          "credit_status": "credited_elsewhere"
         }
       ]
     },
     {
-      "id": "P3",
-      "category": "A",
-      "grade": "Partial",
-      "technique": "Route to a Poincaré inequality from covariance bounds at stochastic-localization fields, via the inverse TAP Hessian",
-      "summary": "El Alaoui and Gaitonde set out, without proofs, the route the preprint carries out: covariance at stochastic-localization fields ≈ inverse negative TAP Hessian, bounded under uniform positivity, then a Poincaré inequality via Eldan–Shamir / Chen–Eldan; their one concrete step (a Frobenius resolvent bound with TAP-Hessian concavity at probability 1 − O(1/n)) is not reused.",
+      "id": "F2",
+      "slug": "stopped-localization",
+      "in_report": true,
+      "relationship": "adapted",
+      "centrality": "central",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": true,
+      "overstated_novelty": false,
+      "technique": "Stopping the localization before its path estimates can fail, with early stops and terminal failures as one exceptional event",
+      "summary": "Huang, Mohanty, Rajaraman and Wu introduce stopped localization schemes: when the estimate driving variance retention and the terminal inequality hold only on typical paths, stop where the estimate may fail, so that retention holds by construction, and treat early stops and terminal failures as one exceptional event (their Lemmas 6.6 and 6.8). The preprint's §2.2 and §2.4 follow this, stopping where the stability of Corollary 5.2 may fail, but charge the exceptional event by its probability under the path law started from f²μ₀ rather than by osc(f)² times its probability, which gives a Poincaré inequality instead of a weak one. The preprint does not cite their paper and credits Chen and Eldan only for the variance-retention and Dirichlet-form framework; older fragments of the moves are in Eldan (2012) and El Alaoui–Eldan–Gheissari–Piana, and Davies–Lee–Sandhu–Shi restate Lemma 6.8 on the hypercube.",
       "preprint_locations": [
-        "Proposition 5.1 (p. 27)",
-        "§6.4 (pp. 45–48)",
-        "Proposition 7.2 (p. 56)",
-        "§2 (pp. 7–10)"
-      ],
-      "credit_in_preprint": "Cited only for its zero-field Theorem 1.1 (§1.1, p. 4); the preprint does not say that El Alaoui–Gaitonde proposed the route.",
-      "sources": [
-        {
-          "key": "ElAlaouiGaitonde2022",
-          "locators": "§2, (2.1)–(2.7) (pp. 3–4)",
-          "role": "proposed route from covariance bounds at stochastic-localization fields, via the inverse TAP Hessian, to a Poincaré inequality",
-          "status": "cited_for_other_content"
-        }
-      ]
-    },
-    {
-      "id": "P4",
-      "category": "A",
-      "grade": "Partial",
-      "technique": "Stopped stochastic localization with exceptional paths",
-      "summary": "The preprint's transfer to Theorem 1.1 has the skeleton of Huang–Mohanty–Rajaraman–Wu's stopped localization: a test-function-independent stopping time at the first failure of a path estimate, early-stopped and terminal-failure paths counted as bad, and a good/bad split of the retained variance; their osc(f)² charge of the bad part is replaced by an f²-tilted entropy bound.",
-      "preprint_locations": [
-        "§2.2 (pp. 7–8), (2.3)–(2.4)",
+        "§2.2, (2.3)–(2.4) (pp. 7–8)",
         "§2.4 (p. 10)",
         "Corollary 5.2 (p. 27)"
       ],
-      "credit_in_preprint": "Not cited; Chen–Eldan is cited for the variance/Dirichlet-form framework, which covers stopping only with an almost-sure terminal gap.",
+      "credit_in_preprint": "Huang–Mohanty–Rajaraman–Wu are not cited; Chen and Eldan are credited in §1.1 (p. 4) and §2 (p. 7) for the variance-retention and Dirichlet-form framework, and Eldan for introducing stochastic localization.",
       "sources": [
         {
-          "key": "HuangMohantyRajaramanWu2024",
-          "locators": "§2 (p. 15); §6.2, Lemmas 6.6 and 6.8 (pp. 26–27); Lemma 4.11 (p. 20) and its Glauber form Lemma A.6 (p. 74)",
-          "role": "stopped localization with exceptional paths",
-          "status": "not_cited"
+          "key": "HuangEtAl2024-WeakPoincareSimulatedAnnealing",
+          "locators": "§6, Lemmas 6.6 and 6.8 (pp. 25–27)",
+          "role": "stopped localization schemes: stopping before the estimate can fail, with early stops and terminal failures as one exceptional event",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "ChenEldan2022-LocalizationSchemes",
+          "locators": "Thm 46 (p. 32)",
+          "role": "the variance-retention and Dirichlet-form framework, whose annealing theorem needs the terminal gap almost surely",
+          "credit_status": "credited_in_part"
+        },
+        {
+          "key": "Eldan2012-ThinShellSpectralGapStochLoc",
+          "locators": "§5 (p. 26)",
+          "role": "stopping stochastic localization when good events fail (a fragment)",
+          "credit_status": "cited_for_other_content"
+        },
+        {
+          "key": "ElAlaouiEtAl2023-FastRelaxationRFIM",
+          "locators": "p. 15",
+          "role": "splitting the terminal variance into good and bad paths (a fragment)",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "DaviesEtAl2026-WeakPoincareApproxSL",
+          "locators": "Thm 5.5 (p. 22)",
+          "role": "restatement of Lemma 6.8 on the hypercube",
+          "credit_status": "not_cited"
         }
       ]
     },
     {
-      "id": "P5",
-      "category": "A",
-      "grade": "Partial",
-      "technique": "Resolvent estimates uniform over adaptive diagonals by metric projection, concentration and chaining",
-      "summary": "The proof of Lemma 3.1 (§3.3) follows the assembly Davies et al. uses in Theorem B.9 for uniformity over all diagonal deformations: metric projection onto an operator-norm ball, increments regular in the diagonal parameters, Gaussian concentration and chaining at the natural scale. The objects controlled differ (Davies et al. bounds the diagonal of DQ̄²D, with two inverse factors; Lemma 3.1 concerns words with one), and the mean computation is the preprint's own.",
+      "id": "F3",
+      "slug": "uniform-diagonal-equivalents",
+      "in_report": true,
+      "relationship": "adapted",
+      "centrality": "central",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": true,
+      "overstated_novelty": false,
+      "technique": "Uniform diagonal equivalents for Onsager-shifted GOE inverses",
+      "summary": "Jekel, Sandhu and Shi estimate the diagonal of the Onsager-shifted resolvent of a GOE matrix plus a diagonal for all diagonals at once: they predict it by freeness, prove it in expectation by integration by parts and a Poincaré bound, and extend it to all diagonals by concentration over a net. Davies, Lee, Sandhu and Shi build on this for the squared resolvent, truncating and chaining as the preprint does. The preprint's Lemmas 3.1 and 3.3 have the same three-part structure but predict by Speicher's operator-valued moment rule, which it cites, and compute expectations from finite-n loop equations; it cites neither paper, nor Fan, Mei and Montanari's trace form of the Onsager-point identity P(K_A) = I, which it proves without citation.",
       "preprint_locations": [
-        "Lemma 3.1 (p. 12)",
-        "§3.3, proof of Lemma 3.1 (pp. 17–19)"
+        "Lemmas 3.1 and 3.3, (3.18) (pp. 12–19)"
       ],
-      "credit_in_preprint": "Not cited; in §3 the preprint cites only Speicher and Vitale, for other points.",
+      "credit_in_preprint": "Speicher is cited on p. 11 for the operator-valued moment rule; Jekel–Sandhu–Shi, Davies–Lee–Sandhu–Shi and Fan–Mei–Montanari are not cited, and the identity P(K_A) = I on p. 16 is proved without citation.",
       "sources": [
         {
-          "key": "DaviesLeeSandhuShi2026-Sampling",
-          "locators": "App. B: Lemma B.8 (p. 159); Theorem B.9 (pp. 160–162); Corollary B.35 (p. 179)",
-          "role": "uniform control of resolvent diagonals over all diagonal deformations by metric projection, regular increments, concentration and chaining",
-          "status": "not_cited"
+          "key": "JekelSandhuShi2024-PotentialHessianAscentSK",
+          "locators": "Thm 4.1(3) (pp. 30–31); Lemmas 4.18–4.19 (pp. 40–43); Prop. 4.20, Lemma 4.24 (pp. 43–47)",
+          "role": "diagonal equivalents uniform over all diagonals: prediction by freeness, expectation by integration by parts, extension over a net",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "DaviesEtAl2026-PotentialHessianAscentIIISampling",
+          "locators": "Cor. B.35 (p. 179); Thm B.9 (pp. 160–162); Lemma B.18(b) (p. 164)",
+          "role": "the squared-resolvent version with truncation and chaining, and the free-model form of P(K_A) = I",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "FanMeiMontanari2018-TAPFreeEnergyVariationalInference",
+          "locators": "Lemma 4.9 (pp. 19–20)",
+          "role": "trace form of the Onsager-point identity (a fragment)",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "Speicher1998-OperatorValuedFreeProbability",
+          "locators": "Thm 4.1.12 (pp. 52–53)",
+          "role": "the operator-valued moment rule used for the prediction, and the functional equation behind P(K_A) = I",
+          "credit_status": "credited_in_part"
         }
       ]
     },
     {
-      "id": "P6",
-      "category": "B",
-      "grade": "Partial",
-      "technique": "Weak Poincaré inequality for SK heat-bath Glauber dynamics at β < 1/2 via approximate stochastic localization",
-      "summary": "DLSS proved, by approximate stochastic localization, a weak Poincaré inequality for SK heat-bath Glauber at every β < 1/2: a weaker version, on half the range, of Theorem 1.1, and the first functional inequality for this chain past β ≈ 0.295. It was posted before the two works the preprint cites for β < 1/2 (Wang; Boban–Li–Oveis Gharan), whose results imply it on its range; no proof is reused.",
+      "id": "F4",
+      "slug": "planted-tap-kac-rice",
+      "in_report": true,
+      "relationship": "adapted",
+      "centrality": "central",
+      "form_of_inclusion": "paragraph",
+      "attribution_gap": true,
+      "overstated_novelty": false,
+      "technique": "A planted Kac–Rice first moment for TAP zeros: determinant rate, Gaussian residual density, and the sign of the complexity functional",
+      "summary": "Fan, Mei and Montanari bound the expected number of TAP critical points of the planted Sherrington–Kirkpatrick model by a Kac–Rice integral, evaluate its rate as a squared discrepancy minus the relative entropy of the empirical field law to a Gaussian, and show that on the Nishimori line this rate vanishes at the Bayes-consistent law and, for large signal, is negative near it. The preprint's smoothed integral (5.5) with Lemma 5.3, the determinant rate of Lemma 3.5 and Lemma 4.1 applied in (5.9) carry out this planted first moment; at t = σ = 0 its rate functional is theirs exactly, but the preprint proves a global inequality with its equality case, smooths the residual, and uses the determinant rate as a weight backed by a high-probability bound. The preprint does not cite the paper and never uses the words Kac–Rice or complexity; Celentano–Fan–Mei use one step of the approach, and Belius–Concetti–Genovese and Boursier reprove the determinant rate, none of them cited.",
       "preprint_locations": [
+        "Lemma 3.5 (p. 20)",
+        "Lemma 4.1 (pp. 22–24)",
+        "(5.5), Lemma 5.3, (5.9), Lemma 5.4 (pp. 28–31)"
+      ],
+      "credit_in_preprint": "Not cited; §1.1 (p. 4) describes the argument only through the preprint's own ingredients, a scalar entropy inequality and a local-volume estimate, and §1.3 (p. 5) calls the integral a Gaussian integral.",
+      "sources": [
+        {
+          "key": "FanMeiMontanari2018-TAPFreeEnergyVariationalInference",
+          "locators": "§3 (pp. 8–12); Prop. 5.2 (p. 22)",
+          "role": "planted Kac–Rice first moment for TAP critical points, its rate functional, and its sign on the Nishimori line",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "CelentanoFanMei2021-LocalConvexityTAPZ2Sync",
+          "locators": "Lemma 4.7 (p. 17); App. B.2 (pp. 41–43)",
+          "role": "one step of the approach",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "BeliusConcettiGenovese2024-DeterminantBrayMooreTAP",
+          "locators": "Thms 1.1–1.2 (pp. 2–3)",
+          "role": "the determinant rate, reproved",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "Boursier2026-LegendreStructureTAPComplexity",
+          "locators": "Lemma 2.7 (p. 20)",
+          "role": "the determinant rate, reproved",
+          "credit_status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "F5",
+      "slug": "approximate-zero-local-volume",
+      "in_report": true,
+      "relationship": "adapted",
+      "centrality": "central",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": true,
+      "overstated_novelty": false,
+      "technique": "Excluding approximate zeros by a smoothed first moment and local volume",
+      "summary": "Huang and Sellke show how an annealed bound on exact critical points with a bad property rules out approximate ones with probability 1 − e^(−cN): integrate a narrow Gaussian in the residual, weighted by the Jacobian determinant, over the bad set and bound its mean; near an approximate zero the Gaussian volume from the linearization is |det|⁻¹, cancelling the weight, so the integral is at least e^(−o(n)), and Markov's inequality concludes. The preprint follows this in (5.5), Lemma 5.6 and the proof of Proposition 5.1, with Lemma 3.5 as the uniform determinant bound, rerandomizing only the external field, with a deterministic weight in place of the determinant and a regularized Jacobian in place of their spectral split. It cites Huang and Sellke nowhere and calls the step a local-volume estimate; Huang, Montanari and Pham, also not cited, use a consequence of their Theorem 5.2.",
+      "preprint_locations": [
+        "(5.5) (p. 28)",
+        "Lemma 5.6 (pp. 35–37)",
+        "exclusion of approximate zeros in the proof of Proposition 5.1 (pp. 37–38)",
+        "Lemma 3.5 (pp. 20–21)"
+      ],
+      "credit_in_preprint": "Not cited; §1.1 (p. 4) and §1.3 (p. 5) call the step a local-volume estimate and a local-volume lower bound without citation.",
+      "sources": [
+        {
+          "key": "HuangSellke2023-StrongTopologicalTrivialization",
+          "locators": "§5, Thm 5.2, Lemma 5.11 (pp. 28–36)",
+          "role": "excluding approximate critical points from an annealed first moment by a residual-smoothed integral and local volume",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "HuangMontanariPham2024-SphericalSpinGlassSamplingSL",
+          "locators": "p. 29",
+          "role": "uses a consequence of Huang–Sellke's Theorem 5.2 for TAP stability along stochastic localization",
+          "credit_status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "F6",
+      "slug": "tap-stability-route",
+      "in_report": true,
+      "relationship": "adapted",
+      "centrality": "central",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": true,
+      "overstated_novelty": false,
+      "technique": "TAP stability along a localization path by a planted first moment",
+      "summary": "Huang, Montanari and Pham prove, for spherical spin glasses at a fixed time of the stochastic-localization path, that with probability 1 − e^(−cN) the TAP free energy has a unique well-conditioned critical point in a band, near which every approximate critical point lies; their route is a first moment under the El Alaoui–Montanari–Sellke planted law with a conditional bad-Hessian factor, passage to approximate critical points, and transfer back through the normalized partition function. The preprint follows this route for the field equation at the fields its observation path visits, in Proposition 5.1 with Lemma 5.7, with the total from its entropy inequality, uniformity in t ≤ T, global uniqueness, a quenched transfer and its own device for approximate roots. It does not cite the paper, and its introduction names no earlier instance of the route.",
+      "preprint_locations": [
+        "Proposition 5.1 (p. 27)",
+        "§5.4 (pp. 37–40)",
+        "Lemma 5.7 (pp. 40–41)"
+      ],
+      "credit_in_preprint": "Not cited; §1.1 (p. 4) attributes this uniformity to the preprint's scalar entropy inequality and local-volume estimate.",
+      "sources": [
+        {
+          "key": "HuangMontanariPham2024-SphericalSpinGlassSamplingSL",
+          "locators": "Prop. 6.1 (pp. 26–27)",
+          "role": "well-posedness of the TAP equation along the localization path by a planted first moment, approximate critical points and transfer",
+          "credit_status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "F7",
+      "slug": "conditional-hessian-first-moment",
+      "in_report": true,
+      "relationship": "adapted",
+      "centrality": "central",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": true,
+      "overstated_novelty": false,
+      "technique": "Conditioning the TAP Hessian on the residual near the Bayes law to exclude unstable zeros",
+      "summary": "Celentano, Fan and Mei prove local strong convexity of the TAP free energy for Z2 synchronization by combining a marked Kac–Rice bound with the TAP equation and the Bayes law: the event that the Hessian's least eigenvalue is small enters as a probability conditional on a vanishing gradient, conditioning leaves a fresh projected GOE plus low-rank terms, and near the Nishimori law the probability is exponentially small by a finite-dimensional Schur complement. The preprint follows that combination in (5.8) and Lemma 5.5, conditioning on a noisy residual, with whitening plus an exact Schur complement in place of their Sudakov–Fernique bound, and positivity simultaneous over nearby diagonal weights. It cites no work for this step; Huang, Montanari and Pham later take the same step for spherical TAP along stochastic localization.",
+      "preprint_locations": [
+        "(5.8) (pp. 28–29)",
+        "Lemma 5.5 (pp. 31–35)",
+        "(5.25) (p. 37)"
+      ],
+      "credit_in_preprint": "Not cited; the preprint cites no work for this step.",
+      "sources": [
+        {
+          "key": "CelentanoFanMei2021-LocalConvexityTAPZ2Sync",
+          "locators": "§4.1 (p. 14); Lemma 4.8 (pp. 17–18); Lemma 4.9, Cor. 4.10 (p. 18); Lemma B.2 (pp. 43–44)",
+          "role": "TAP Hessian conditioned on a vanishing gradient, positive near the Bayes law, inside a Kac–Rice bound",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "HuangMontanariPham2024-SphericalSpinGlassSamplingSL",
+          "locators": "Lemma 6.8, Prop. 6.9 (pp. 30–31)",
+          "role": "the same step for spherical TAP along stochastic localization",
+          "credit_status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "F8",
+      "slug": "amp-memory-onsager-rule",
+      "in_report": true,
+      "relationship": "adapted",
+      "centrality": "central",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": true,
+      "overstated_novelty": false,
+      "technique": "A memory correction for every input of a multi-input recursion, and its cancellation of one-step reversals at every depth",
+      "summary": "Bayati, Lelarge and Montanari correct each input of a multi-input nonlinearity in approximate message passing by its averaged partial derivative times that input's own source, and prove that these memory terms cancel, at every depth, the one-step reversing contributions to the expansion of the iterates over labelled trees; Montanari writes the rule for every earlier iterate. The preprint's rule (6.7) in Definition 6.2 is Montanari's (2.1) term for term after rescaling, and the cancellation runs through the proofs of Lemmas 6.1, 6.4 and 3.3, where it cancels the diagonal noncrossing-pairing predictions of formal spin-flip Jacobians by a signed inclusion–exclusion over adjacent pairs. The preprint cites neither paper: it credits the Onsager correction to Thouless, Anderson and Palmer and (6.1) to Bolthausen, whose recursion has a single memory term.",
+      "preprint_locations": [
+        "Definition 6.2, (6.7) (p. 44)",
+        "(6.14) (p. 46)",
+        "proof of Lemma 6.5, (6.33) (p. 54)",
+        "proofs of Lemmas 6.1, 6.4 and 3.3 (pp. 43, 51–52, 16)"
+      ],
+      "credit_in_preprint": "Neither paper is cited; Thouless–Anderson–Palmer are cited for the Onsager correction (§1.1, p. 4), Bolthausen for (6.1) (§6.1, p. 42), and AMP is named only in §1.1, with other works cited for other content.",
+      "sources": [
+        {
+          "key": "BayatiLelargeMontanari2012-UniversalityMessagePassing",
+          "locators": "(1.4)–(1.6) (p. 7); §2, §4",
+          "role": "a memory correction for every input, and its cancellation of one-step reversals at every depth",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "Montanari2018-OptimizationSKHamiltonian",
+          "locators": "(2.1) (p. 6)",
+          "role": "the rule written for every earlier iterate",
+          "credit_status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "F9",
+      "slug": "terminal-gap-sparse-submatrices",
+      "in_report": true,
+      "relationship": "adapted",
+      "centrality": "central",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": true,
+      "overstated_novelty": false,
+      "technique": "A gap at a large observation time from few weak-field coordinates and uniformly small principal submatrices",
+      "summary": "Davies, Lee, Sandhu and Shi's Potential Hessian Ascent III studies the SK posterior at a large constant localization time and states the insight that only O(εn) coordinates can still fluctuate, for any prior, so only small principal submatrices of the disorder matter, and a Gaussian norm tail with a union bound over supports makes them all small at once (Lemmas 7.43 and 7.23); their weak Poincaré paper uses the same two lemmas. The preprint's Lemma 8.2 and Proposition 8.3 carry out the mechanism at Y(T) and obtain a gap for any law of the spins, replacing PHA III's functional-inequality step on a Hamming ball, which forces β < 1/2, by a split of the signed curvature form over a configuration-dependent weak set. The preprint cites neither paper; at Lemma 8.2 it cites only Bandeira, El Alaoui and Rödder's later Theorem 1.1, for combining small-submatrix bounds with a large constant field.",
+      "preprint_locations": [
+        "Lemma 8.2, Proposition 8.3 (pp. 61–64)"
+      ],
+      "credit_in_preprint": "Neither Davies–Lee–Sandhu–Shi paper is cited; the lead-in to Lemma 8.2 (p. 61) cites Bandeira–El Alaoui–Rödder, Theorem 1.1, for combining small-submatrix bounds with a large constant field.",
+      "sources": [
+        {
+          "key": "DaviesEtAl2026-PotentialHessianAscentIIISampling",
+          "locators": "p. 19; Lemmas 7.23 and 7.43",
+          "role": "few weak-field coordinates and uniformly small principal submatrices at a large localization time",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "DaviesEtAl2026-WeakPoincareApproxSL",
+          "locators": "Thm 5.1 (p. 21)",
+          "role": "the same two lemmas, used for a weak Poincaré inequality at the posterior for β < 1/2",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "BandeiraElAlaouiRodder2026-GlauberHighOverlapGibbs",
+          "locators": "Thm 1.1",
+          "role": "small-submatrix bounds combined with a large constant field",
+          "credit_status": "credited_in_part"
+        }
+      ]
+    },
+    {
+      "id": "F10",
+      "slug": "tap-hessian-covariance-route",
+      "in_report": true,
+      "relationship": "same route",
+      "centrality": "central",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": false,
+      "overstated_novelty": false,
+      "technique": "A Poincaré inequality from covariance bounds at the localization fields, obtained from a uniformly positive TAP Hessian",
+      "summary": "El Alaoui and Gaitonde proposed a route to Poincaré and log-Sobolev inequalities at every β < 1: bound the covariance of the tilted measure in operator norm at the fields of stochastic localization, through its approximation by the inverse negative TAP Hessian and a bound on that Hessian at the mean, then transfer the bound along the localization following Chen–Eldan. The preprint carries out this route and proves each step by its own means: Proposition 5.1 bounds the TAP Hessian, (1.5), proved as Proposition 7.2, is equivalent up to constants to an operator-norm covariance bound at every good field, and §2 is the transfer. It cites El Alaoui and Gaitonde only for their zero-field Theorem 1.1 and presents its posterior estimates as additional to covariance results; Brennecke, Xu and Yau, also not cited, had carried out the covariance step at homogeneous fields.",
+      "preprint_locations": [
+        "§1.4 (p. 6)",
+        "Proposition 5.1 (p. 27)",
+        "Proposition 7.2 (p. 56)",
+        "§2 (pp. 7–10)"
+      ],
+      "credit_in_preprint": "El Alaoui–Gaitonde are cited in §1.1 (p. 4) only for their zero-field covariance bound (Theorem 1.1); no work is credited for the route, and Brennecke–Xu–Yau are not cited.",
+      "sources": [
+        {
+          "key": "ElAlaouiGaitonde2022-CovarianceMatrixSK",
+          "locators": "p. 2 and §2 (pp. 3–4)",
+          "role": "the route: operator-norm covariance bounds at the localization fields via the TAP Hessian, transferred along the localization",
+          "credit_status": "cited_for_other_content"
+        },
+        {
+          "key": "BrenneckeXuYau2023-OperatorNormCorrelationSK",
+          "locators": "Thm 1.4 (p. 6)",
+          "role": "the covariance step carried out at homogeneous fields",
+          "credit_status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "F11",
+      "slug": "weak-poincare-beta-half",
+      "in_report": true,
+      "relationship": "weaker result",
+      "centrality": "central",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": false,
+      "overstated_novelty": false,
+      "technique": "A weak Poincaré inequality for the zero-field SK heat-bath chain at β < 1/2",
+      "summary": "Davies, Lee, Sandhu and Shi's weak Poincaré paper, posted on July 9, 2026, proves that for every β < 1/2, with high probability over the disorder, the zero-field SK Gibbs measure satisfies a weak Poincaré inequality for the single-site heat-bath (Glauber) chain, with additive error ε·osc(f)² for every ε in (0, 1). This is the inequality of the preprint's main result, Theorem 1.1, with an added error term and only for β < 1/2; both proofs prove an inequality for posterior laws at a large fixed observation time and transfer it back. The preprint does not cite this paper: its account of earlier results in §1.1 omits it, although two later works cited there describe it.",
+      "preprint_locations": [
+        "Abstract",
+        "Theorem 1.1 (p. 3)"
+      ],
+      "credit_in_preprint": "Not cited; §1.1 (pp. 3–4) omits it, although Wang and Boban–Li–Oveis Gharan, both cited there, describe it.",
+      "sources": [
+        {
+          "key": "DaviesEtAl2026-WeakPoincareApproxSL",
+          "locators": "Cor. 1.5 (p. 2)",
+          "role": "weak Poincaré inequality for the zero-field SK heat-bath chain at β < 1/2",
+          "credit_status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "F12",
+      "slug": "sudakov-fernique-tap-margin",
+      "in_report": true,
+      "relationship": "same technique",
+      "centrality": "supporting",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": true,
+      "overstated_novelty": false,
+      "technique": "A positive margin for the Onsager-shifted TAP Hessian by comparison with a norm-weighted Gaussian process",
+      "summary": "Celentano, Fan and Mei's Lemma 4.1 compares the GOE quadratic form vᵀWv with the norm-weighted linear process (2/√n)‖v‖⟨g, v⟩ under a common deterministic shift, and they use it to bound a TAP Hessian below through a low-dimensional variational problem. The proof of Lemma 3.2 makes this comparison with the Onsager term as the shift, for each fixed diagonal, and obtains a margin on the whole range j·a₊² < 1, where the norm bound alone gives one only when 2√j·a₊ < 1; it names the Sudakov–Fernique inequality and cites Vitale, but not this paper. Celentano, who restates the comparison, is cited only for local convexity near AMP iterates; Brennecke, Xu and Yau, not cited, build on the same use.",
+      "preprint_locations": [
+        "Lemma 3.2, (3.8)–(3.9) (pp. 12–13)"
+      ],
+      "credit_in_preprint": "Not cited; the proof of Lemma 3.2 (p. 12) names the Sudakov–Fernique inequality and cites Vitale, and Celentano is cited in §1.1 (p. 4) only for local convexity near AMP iterates.",
+      "sources": [
+        {
+          "key": "CelentanoFanMei2021-LocalConvexityTAPZ2Sync",
+          "locators": "Lemma 4.1 (p. 15); Lemma 4.9 (p. 18); Lemma 4.12",
+          "role": "comparison of vᵀWv with a norm-weighted linear process under a common shift, used to bound a TAP Hessian below",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "Celentano2022-SudakovFerniquePostAMPTAPConvexity",
+          "locators": "Prop. 1 (p. 6)",
+          "role": "restatement of the comparison",
+          "credit_status": "cited_for_other_content"
+        },
+        {
+          "key": "BrenneckeXuYau2023-OperatorNormCorrelationSK",
+          "locators": "Prop. 4.5 and Step 1 of its proof (pp. 24–28)",
+          "role": "builds on the same use of the comparison",
+          "credit_status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "F13",
+      "slug": "nishimori-consistent-gaussian",
+      "in_report": true,
+      "relationship": "same technique",
+      "centrality": "supporting",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": true,
+      "overstated_novelty": false,
+      "technique": "The consistent Gaussian field law: mean equals variance, then a one-variable fixed point",
+      "summary": "El Alaoui, Montanari and Sellke reduce the state evolution of AMP in the planted SK model with Gaussian side observation to the fixed point γ* = β²(1 − mmse(γ* + t)), and prove its existence, its uniqueness for t > 0, its size of order t and its Lipschitz dependence on t; for β² < 1/3, Davies, Lee, Sandhu and Shi's PHA III prove that every solution of the two-parameter system behind it has equal mean and variance. The preprint's Lemma 4.2 forces d = s by the same Lipschitz comparison as PHA III, with constant 1 on [0, ∞), so for every j < 1, and its remaining equation (4.8) is their (4.21) with the same existence, uniqueness, size and Lipschitz statements; it proves uniqueness by a contraction and includes t = 0. The preprint cites El Alaoui, Montanari and Sellke only for their sampling method and does not cite PHA III; they credit the one-variable reduction and the properties of mmse to Deshpande, Abbe and Montanari.",
+      "preprint_locations": [
+        "Lemma 4.2, (4.7)–(4.11) (pp. 25–26)"
+      ],
+      "credit_in_preprint": "El Alaoui–Montanari–Sellke are cited only in §1.1 (p. 4), for their sampling method; §4 cites nothing, and PHA III and Deshpande–Abbe–Montanari are not cited.",
+      "sources": [
+        {
+          "key": "ElAlaouiMontanariSellke2022-SamplingSKAlgorithmicSL",
+          "locators": "Prop. 4.4, (4.20)–(4.24) (pp. 13–15)",
+          "role": "the one-variable fixed point with existence, uniqueness, size and Lipschitz bounds",
+          "credit_status": "cited_for_other_content"
+        },
+        {
+          "key": "DeshpandeAbbeMontanari2015-AsymptoticMutualInfoTwoGroupsSBM",
+          "locators": "(69)–(70) (p. 15); Lemma 6.1 (p. 22)",
+          "role": "the one-variable reduction and the properties of mmse, with erasure side information",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "DaviesEtAl2026-PotentialHessianAscentIIISampling",
+          "locators": "Lemma 5.32 (pp. 98–99)",
+          "role": "mean equals variance for every solution of the two-parameter system, for β² < 1/3",
+          "credit_status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "F14",
+      "slug": "tilted-path-entropy",
+      "in_report": true,
+      "relationship": "fragment",
+      "centrality": "supporting",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": false,
+      "overstated_novelty": false,
+      "technique": "The entropy of the reweighted observation law as the entropy lost along the localization",
+      "summary": "The preprint credits Lehec, and Föllmer through Lehec, for the drift-energy identity (2.5), which writes the relative entropy of the stopped observation path laws under f²μ₀ and under μ₀ as half the expected drift energy. It does not cite Chen and Eldan for what this quantity is along the localization: the entropy of f² lost, at the rate given by their entropy-decay formula (27); (2.5) is equivalent to the expectation of (27) integrated up to a stopping time, and (2.7) bounds this entropy so as to make the bad paths rare under the reweighted law. The relationship is a fragment: the preprint proves (2.5) by Itô's formula as in Lehec, bounds the mean gap through (1.6) instead of by entropic stability, and has no counterpart of Chen and Eldan's Grönwall step and entropy conservation.",
+      "preprint_locations": [
+        "§2.3, (2.5) and (2.7) (pp. 8–9)"
+      ],
+      "credit_in_preprint": "Lehec is cited for the identity (2.5) in §1.1 (p. 4) and at the point of use (§2.3, p. 8); Chen and Eldan are cited (§1.1, p. 4; §2, p. 7) only for their variance-retention and Dirichlet-form framework.",
+      "sources": [
+        {
+          "key": "ChenEldan2022-LocalizationSchemes",
+          "locators": "§3.2.3, eq. (27) (p. 29)",
+          "role": "the entropy-decay formula along the localization",
+          "credit_status": "cited_for_other_content"
+        }
+      ]
+    },
+    {
+      "id": "F15",
+      "slug": "mixture-gaussian-stein-kernel",
+      "in_report": true,
+      "relationship": "fragment",
+      "centrality": "supporting",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": false,
+      "overstated_novelty": false,
+      "technique": "Comparing tanh at two fields through the Stein operator of a two-Gaussian mixture",
+      "summary": "Chatterjee develops Stein's method for mixture Gaussians: for the law with density proportional to cosh(ax + b)·exp(−(x − μ)²/2σ²), the paper gives a characterizing operator and bounded solutions of its Stein equation, and uses them, centred at the TAP field, to explain and prove the TAP equations. For a > 0 the preprint's identity (6.9) is −a times Chatterjee's Stein equation with u = tanh, and its kernel Φ in (6.8) is −1/a times the bounded solution; the preprint uses it to write tanh at a field minus tanh at a centre in each induction step of Lemma 6.5, in (6.12)–(6.13) and in (7.3). The preprint does not cite the paper or mention Stein's method, and uses only the operator and its tanh solution, as an exact identity.",
+      "preprint_locations": [
+        "(6.8)–(6.9) (p. 45)",
+        "Lemma 6.5 (pp. 53–54)",
+        "(6.12)–(6.13) (pp. 45–46)",
+        "(7.3) (p. 57)"
+      ],
+      "credit_in_preprint": "Not cited; the compiled text does not mention Stein's method.",
+      "sources": [
+        {
+          "key": "Chatterjee2007-SpinGlassesSteinsMethod",
+          "locators": "§1.4 (p. 4); §1.8 and Lemma 1.3 (pp. 7–8)",
+          "role": "the Stein operator of the cosh-tilted Gaussian mixture and its bounded solution for tanh",
+          "credit_status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "F16",
+      "slug": "posterior-mean-tap-root",
+      "in_report": true,
+      "relationship": "fragment",
+      "centrality": "supporting",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": false,
+      "overstated_novelty": false,
+      "technique": "Comparing a posterior mean with the TAP root via a late iterate",
+      "summary": "El Alaoui, Montanari and Sellke, for β < 1/2, place the mean of the SK Gibbs measure at a stochastic-localization field near a stationary point of the TAP free energy through a late AMP iterate: the mean is close to the iterate, its small increments make it an approximate TAP solution, and local strong convexity puts the stationary point near it. The preprint's §6.4 and Proposition 7.3 share this outline, comparing the mean of the f²-reweighted measure with the TAP root through a late iterate of its recursion, but replace both substantive links: the mean–iterate link by an O(1) bound built on exact conditional-spin identities, and the root link by the global bound of Lemma 5.7. It cites that paper only in §1.1, for its sampling method, and nothing at the point of use; the outline appears earlier in Celentano, Fan and Mei for Z2 synchronization, not cited.",
+      "preprint_locations": [
+        "(6.10)–(6.11) (p. 45)",
+        "Proposition 7.3 (p. 58)"
+      ],
+      "credit_in_preprint": "El Alaoui–Montanari–Sellke are cited only in §1.1 (p. 4), for their sampling method; nothing is cited in §6.4 or Proposition 7.3, and Celentano–Fan–Mei are not cited.",
+      "sources": [
+        {
+          "key": "ElAlaouiMontanariSellke2022-SamplingSKAlgorithmicSL",
+          "locators": "Lemma 4.10(2) (p. 20; proof, p. 40); Lemma 4.14 (p. 23)",
+          "role": "the posterior mean placed near a TAP stationary point through a late AMP iterate",
+          "credit_status": "credited_elsewhere"
+        },
+        {
+          "key": "CelentanoFanMei2021-LocalConvexityTAPZ2Sync",
+          "locators": "Thm 2.1(a) (p. 8; p. 18)",
+          "role": "the same outline for Z2 synchronization, from a late AMP iterate to a TAP local minimizer",
+          "credit_status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": null,
+      "slug": "mlsi-small-beta",
+      "in_report": false,
+      "relationship": "weaker result",
+      "centrality": "peripheral",
+      "form_of_inclusion": "none",
+      "attribution_gap": false,
+      "overstated_novelty": false,
+      "technique": "At sufficiently high temperature, heat-bath dynamics of the Sherrington–Kirkpatrick model satisfies a dimension-free modified log-Sobolev inequality",
+      "summary": "Anari, Jain, Koehler, Pham and Vuong (July 2023) prove that for mixed p-spin models, the Sherrington–Kirkpatrick model included, the heat-bath (Glauber) chain satisfies a modified log-Sobolev inequality with constant Ω(1/n), with probability 1 − e^(−Θ(n)), whenever a weighted inverse temperature lies below an unspecified absolute constant; linearized, this gives the inequality of Theorem 1.1 for SK at small β, a partial-range version. The preprint does not cite this paper, but for SK its relevant content is already credited there: the gap at small β to Adhikari, Brennecke, Xu and Yau, on whose recursion the 2023 paper builds, and the MLSI at β < 1/4 to the cited AJKPV2022, whose full Ising proof (arXiv:2106.04105, Thm 12(a), p. 10) gives it; what the 2023 paper adds for SK is approximate tensorization of entropy. The author-persona check judged that no pointer is needed, so the finding is recorded here only.",
+      "preprint_locations": [
+        "Abstract",
         "Theorem 1.1 (p. 3)",
-        "§1.1 (p. 4)"
+        "§1.1 (pp. 3–4)"
       ],
-      "credit_in_preprint": "Not cited; the later cited Wang and Boban–Li–Oveis Gharan both discuss and imply it.",
+      "credit_in_preprint": "Not cited; §1.1 (pp. 3–4) cites Adhikari–Brennecke–Xu–Yau for constant unscaled gaps under the same weighted smallness condition, and the same five authors' entropic-independence paper (AJKPV2022, whose full Ising proof gives the MLSI for SK at β < 1/4) for O(n log n) mixing at β < 1/4.",
       "sources": [
         {
-          "key": "DaviesLeeSandhuShi2026-WPI",
-          "locators": "Corollary 1.5 (p. 2); Theorem 1.4 (p. 2); Definition 2.3; Theorem 5.1 (p. 21)",
-          "role": "weak Poincaré inequality for SK Glauber at β < 1/2; terminal weak inequality at a large fixed time",
-          "status": "not_cited"
+          "key": "AnariEtAl2023-UniversalitySpectralIndependence",
+          "locators": "Thm 6 (p. 5)",
+          "role": "an MLSI, hence a spectral gap, for mixed p-spin models including SK below an absolute constant",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "AdhikariEtAl2022-SpectralGapMixedPSpin",
+          "locators": "Thm 1.1 (p. 2)",
+          "role": "the gap at small weighted inverse temperature on which the 2023 paper builds",
+          "credit_status": "credited_in_part"
         }
       ]
     }
