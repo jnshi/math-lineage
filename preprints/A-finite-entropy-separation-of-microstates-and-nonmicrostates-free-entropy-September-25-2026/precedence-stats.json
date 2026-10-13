@@ -1,0 +1,71 @@
+{
+  "format": "math-lineage/precedence-stats",
+  "format_version": 2,
+  "preprint": "OAI:A-finite-entropy-separation-of-microstates-and-nonmicrostates-free-entropy-September-25-2026",
+  "generated_from": "precedence-findings.json",
+  "review_date": "2026-10-12",
+  "findings": {
+    "in_report": 7,
+    "json_only": [
+      "semicircular-perturbation-fisher-bounds"
+    ],
+    "by_relationship": {
+      "same technique": 1,
+      "adapted": 2,
+      "fragment": 0,
+      "same route": 0,
+      "same result": 4,
+      "weaker result": 0,
+      "proof shortcut": 0
+    },
+    "by_centrality": {
+      "main result": 0,
+      "central": 5,
+      "supporting": 1,
+      "peripheral": 1
+    },
+    "by_form_of_inclusion": {
+      "none": 1,
+      "citation": 1,
+      "sentence": 6,
+      "paragraph": 0
+    },
+    "attribution_gaps": [
+      "F1",
+      "F3",
+      "F4",
+      "F5",
+      "F6"
+    ],
+    "overstated_novelty": [
+      "F2"
+    ],
+    "ids_by_relationship": {
+      "same technique": [
+        "F3"
+      ],
+      "adapted": [
+        "F4",
+        "F5"
+      ],
+      "same result": [
+        "F1",
+        "F2",
+        "F6",
+        "F7"
+      ]
+    }
+  },
+  "earlier_works": {
+    "distinct": 20,
+    "not_in_preprint_bibliography": 15,
+    "in_preprint_bibliography": 5,
+    "finding_source_pairs_by_credit_status": {
+      "not_cited": 16,
+      "cited_for_other_content": 2,
+      "credited_elsewhere": 1,
+      "credited_in_part": 3,
+      "credited": 0
+    }
+  }
+}

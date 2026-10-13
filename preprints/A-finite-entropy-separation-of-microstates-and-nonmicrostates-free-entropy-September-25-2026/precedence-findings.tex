@@ -1,0 +1,898 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,tabularx,longtable,array}
+\usepackage{xltabular}% tabularx-style tables that can break across pages
+\usepackage{enumitem}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{cite}% sorts and compresses numeric citations
+\usepackage[colorlinks=true,linkcolor=Blue,citecolor=Blue,urlcolor=Blue]{hyperref}
+
+% ---------------------------------------------------------------------
+% Shared notation
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\Lgen}{\mathcal{L}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Ent}{Ent}
+\DeclareMathOperator{\KL}{KL}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\ran}{ran}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\ip}[2]{\langle #1,#2\rangle}
+% Locators.  \ploc{compiled locator}{TeX file:line} cites the preprint (or a
+% companion).  Only the compiled locator (section, equation, result, page of the
+% PDF) is printed.  The TeX file:line stays in the source to help checkers find
+% the passage and never appears in the PDF.  \sloc{key}{locator} cites a source.
+\newcommand{\ploc}[2]{#1}
+\newcommand{\sloc}[2]{\cite[#2]{#1}}
+% Relationship types and flags, as used in the summary table and the Summary
+% paragraphs: \rel{same technique}; \attrgap and \overstated tag a Cited?
+% cell (precedence_stats.py checks them against the JSON).
+\newcommand{\rel}[1]{\textit{#1}}
+\newcommand{\attrgap}{\textbf{attribution gap}}
+\newcommand{\overstated}{\textbf{overstated novelty}}
+% Uniform list and table styling across all findings.
+\setlist{itemsep=2pt,topsep=3pt,parsep=0pt,leftmargin=1.6em}
+\setlist[enumerate]{label=\arabic*.}
+\setlist[itemize]{label=\textbullet}
+\renewcommand{\arraystretch}{1.15}
+% Findings are numbered by LaTeX, so nobody types an ID.  In the main file,
+% \findinggroup{F} after the Findings \section sets the ID prefix and restarts
+% the count; IDs follow the order of the \input lines (by magnitude).  Each
+% fragment opens with
+%   \finding{<title>}{<slug>}   or   \finding[<short title>]{<title>}{<slug>}
+% which prints an unnumbered subsection "F3. <title>", adds "F3. <title>" (or
+% the short title) to the table of contents and PDF bookmarks, and does
+% \label{f:<slug>}, so \ref{f:<slug>} prints the ID "F3" as a link.  The
+% heading carries no LaTeX section number, so a finding never shows two
+% numbers (no "3.2 F2").  Refer to another finding as finding~\ref{f:<slug>}.
+% Before any \findinggroup the IDs print as ?1, ?2, ... (as in a standalone
+% test of one fragment).
+\makeatletter
+\newcounter{finding}
+\newcommand{\finding@prefix}{?}
+\renewcommand{\thefinding}{\finding@prefix\arabic{finding}}
+\newcommand{\findinggroup}[1]{\gdef\finding@prefix{#1}\setcounter{finding}{0}}
+\newcommand{\finding}[3][]{%
+  \stepcounter{finding}%
+  \protected@edef\finding@id{\thefinding}% fix the ID now: "F3", not a counter reference
+  \edef\finding@next{\noexpand\finding@sect{\finding@id}}%
+  \finding@next{#1}{#2}{#3}}
+% #1 ID (already expanded), #2 short title (may be empty), #3 title, #4 slug.
+\newcommand{\finding@sect}[4]{%
+  \subsection*{#1. #3}% hyperref anchors \subsection* itself, just above the heading
+  \if\relax\detokenize{#2}\relax
+    \addcontentsline{toc}{subsection}{#1. #3}%
+  \else
+    \addcontentsline{toc}{subsection}{#1. #2}%
+  \fi
+  \def\@currentlabel{#1}% \ref prints the ID; hyperref links it to this heading
+  \label{f:#4}}
+\makeatother
+% ---------------------------------------------------------------------
+\space%
+
+\title{Missing citations in\\ ``A finite-entropy separation of microstates and nonmicrostates free entropy''}
+\date{October 12, 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Summary of findings}
+
+Each row is a citation the preprint is missing: earlier work that already
+contains part of the preprint, which the preprint does not cite where that
+part appears. ``Cited?'' names the earlier work and says what, if anything, the
+preprint cites it for. The exception is a row flagged \emph{overstated
+novelty}: there the preprint cites the work, but its abstract or framing
+presents the content as new. Terms are defined in Section~\ref{sec:about};
+centrality is a best-effort judgment. Locations use the preprint's own
+numbering and printed pages.
+
+% Each row starts "\ref{f:<finding>} & \rel{<relationship>} & <centrality> &",
+% in that order: \ref prints the finding's ID (F1, F2, ...) as a link, and
+% precedence_stats.py reads those three cells. Put \attrgap and \overstated in
+% the Cited? cell of a row exactly when the JSON sets the flag. Never type an
+% ID: LaTeX assigns them from the main file's order (by magnitude).
+% The Technique or result cell, like a title, names the approach or result,
+% with no author names or citations.
+\begin{center}\footnotesize
+\begin{xltabular}{\linewidth}{@{}l >{\raggedright\arraybackslash}p{0.11\linewidth} >{\raggedright\arraybackslash}p{0.10\linewidth} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{0.17\linewidth} >{\raggedright\arraybackslash}p{0.24\linewidth}@{}}
+\toprule
+ID & Relationship & Centrality & Technique or result & In the preprint & Cited?\\
+\midrule
+\endhead
+\ref{f:noised-models-finite-entropy} & \rel{same result} & central &
+Finite microstates entropy of a tuple with matrix models (here embeddable in $L(\mathbb F_2)$) plus small free semicircular noise &
+Lemma~4.2 (p.~9); models (p.~8) &
+Voiculescu 1994 \cite{Voiculescu1994-AnaloguesEntropyFisherII}: cited for other content (definition of $\chi$); Voiculescu 1990 \cite{NL-Voiculescu1990}, Jung 2002 \cite{Jung2002-FreeEntropyDimensionLemma}, Jekel 2025 \cite{Jekel2025CMP-InformationGeometryTypesLargeN}: not cited; \attrgap\\
+\addlinespace
+\ref{f:elementary-heat-flow-transfer} & \rel{same result} & central &
+Microstates entropy bounded by the entropy of GUE-evolved microstate models minus the integrated free Fisher information, with the terminal entropies kept &
+Lemma~5.1, (13) (p.~10), proof (pp.~10--11); overview (p.~2) &
+Jekel--Pi 2023 \cite{JekelPi2023-ElementaryProofChiLeqChiStar}: credited in part (Prop.~6.1, pp.~2, 10; the elementary proof, p.~1); Shlyakhtenko--Tao 2020 \cite{ShlyakhtenkoTao2020-FractionalFreeConvolutionPowers}: credited elsewhere (through Jekel--Pi, p.~1); \overstated\\
+\addlinespace
+\ref{f:stein-kernel-chaos-lift} & \rel{same technique} & central &
+Fisher-deficit bound by lifting higher-order Stein kernels (here free cumulants) into semicircular chaos &
+Lemma~3.1, (5) for $r\ge2$ (p.~5); Prop.~3.2 (pp.~6--7) &
+Diez 2023 \cite{Diez2023-FreeSteinKernelsHigherOrderDerivatives}, Fathi--Nelson 2016 \cite{FathiNelson2016-FreeSteinKernelsFreeLSI}, Cébron 2018 \cite{Cebron2018-QuantitativeFourthMomentFree}: not cited; \attrgap\\
+\addlinespace
+\ref{f:commuting-coordinate-entropy-deficit} & \rel{adapted} & central &
+Free semicirculars plus a tensor-independent coordinate and small free noise: finite $\chi$, but matrix models that inherit the commutation lose entropy &
+\S4 (p.~7); (12) (p.~9); (19), Lemma~6.1, proof of Theorem~1.1 (pp.~12--14) &
+Jekel 2025 \cite{Jekel2025CMP-InformationGeometryTypesLargeN}: not cited; \attrgap\\
+\addlinespace
+\ref{f:block-covering-unitary-net} & \rel{adapted} & central &
+Unitary-net covering of matrix tuples with a common block structure &
+Lemma~6.1, Gaussian bound (p.~12; proof p.~13) &
+Voiculescu 1996 \cite{NL-Voiculescu1996} (as expounded by Biane 2001 \cite{Biane2001-EntropieLibreAlgebresOperateurs} and Mingo--Speicher 2017 \cite{MingoSpeicher2017-FreeProbabilityRandomMatrices}), Dykema 1996 \cite{Dykema1996-TwoApplicationsFreeEntropy}: not cited; Ge 1996 \cite{NL-Ge1996}: credited in part (``antecedents'', p.~2); \attrgap\\
+\addlinespace
+\ref{f:semicircular-wick-polynomials} & \rel{same result} & supporting &
+Orthonormal semicircular Wick polynomials (free Wick products) by signed deletion of disjoint adjacent pairs &
+Lemma~3.1 (p.~5) and its proof (p.~6); proof of Prop.~3.2 (p.~7); \S1 (p.~2) &
+Effros--Popa 2003 \cite{EffrosPopa2003-FeynmanDiagramsWickProducts}, Kemp--Nourdin--Peccati--Speicher 2010 \cite{KempEtAl2010-WignerChaosFourthMoment}: not cited; \attrgap\\
+\addlinespace
+\ref{f:semicircular-perturbation-fisher-facts} & \rel{same result} & peripheral &
+Conjugate variables of a free semicircular perturbation as the projected rescaled noise &
+Lemma~3.1 (pp.~5--6); used on pp.~6, 8--9 and~11 &
+Voiculescu 1998 \cite{NL-Voiculescu1998}: cited for other content (definitions)\\
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\clearpage
+\space%
+
+\tableofcontents
+
+\section{About this document}\label{sec:about}
+
+\paragraph{The preprint.}
+The preprint is \emph{A finite-entropy separation of microstates and
+nonmicrostates free entropy}, dated September~25, 2026, with author line
+``OpenAI'' \cite{OAI-FiniteEntropySeparation}. It is one of the manuscripts in
+the \texttt{openai/math} release, produced by an internal OpenAI model. It
+constructs a bounded self-adjoint tuple $X$ in a tracial von Neumann algebra
+with $-\infty<\chi(X)\le\chi^*(X)-\tfrac12<\infty$, where $\chi$ is
+Voiculescu's microstates free entropy and $\chi^*$ his nonmicrostates free
+entropy. Section~\ref{sec:overview} summarizes the paper and fixes the notation
+used throughout this document. The preprint cites one companion preprint from
+the same release, \cite{OAI-FreeGroupFactors}, as
+\texttt{FreeGroupFactors}, for a result that it contrasts with its own and does
+not use. It belongs to the same release, so it is not treated as earlier work
+here.
+
+\paragraph{What this document reports.}
+Each finding is a citation the preprint is missing: part of the preprint's
+mathematics (a technique, construction, estimate, proof route or result) that
+an identifiable earlier paper already contains, where the preprint does not
+cite that paper for it where it is used. ``Earlier'' means publicly available
+before the preprint's date. The one exception, overstated novelty, is
+described below. Not reported: textbook material in its textbook form; weaker versions of
+intermediate statements; and, for content the preprint uses, cases where it
+cites a later source that covers that content rather than the original. An
+earlier result on the same problem is reported even when later work that the
+preprint cites implies it. Findings are ordered by centrality, then by relationship in
+the order listed below, then by position in the preprint.
+
+\paragraph{Relationships.}
+A finding's relationship is the one between the preprint and the first
+earlier work listed for it (the principal), the work with the highest relationship in the
+order below; when several hold that relationship, however closely each matches,
+the one the others credit or build on, otherwise the earliest. Any other works listed relate to the same content more weakly or
+in part; the finding says how, including which work originated the idea when
+that is not the first.
+\begin{description}[leftmargin=1.5em,font=\normalfont\itshape]
+\item[same result.] An earlier paper, or several earlier papers together, prove essentially the same statement.
+\item[same technique.] The earlier technique, construction or theory is
+reused essentially intact, possibly in a new setting or with new ingredients
+around it.
+\item[adapted.] The earlier technique's structure is followed, with a change
+at its core: a different object, or a key step replaced.
+\item[proof shortcut.] A published result would replace or substantially
+shorten a large part of the argument.
+\item[same route.] An earlier paper proposed the proof strategy, even
+heuristically, and the preprint carries it out.
+\item[fragment.] One identifiable piece of the earlier technique is reused.
+\item[weaker result.] An earlier paper proves a weaker, special-case or
+partial-range version of one of the preprint's main results, or of a
+statement it presents as a significant contribution.
+\end{description}
+
+\paragraph{Centrality.}
+Each finding also gets a best-effort judgment of how much of the preprint's
+main argument depends on it: \emph{main result} (reserved for earlier work that
+covers the main result itself, or most of it), \emph{central},
+\emph{supporting} or \emph{peripheral}. An earlier weaker result is never
+labelled main result. Each finding states the chain of results it feeds, so
+the basis for the judgment is visible.
+
+\paragraph{Citations.}
+The ``Cited?'' column of the summary names the earlier work and says what the
+preprint cites for the content in question: \emph{not cited} (the work is not
+in the bibliography, and nothing the preprint cites credits it for this
+content), \emph{cited for other content}, \emph{credited elsewhere} (credited
+for this content, directly or through a cited location that credits it, but
+not where it is used, in a way that an expert reader who doesn't know the earlier work might not connect with it), or \emph{credited in part}. A citation counts only when it is \emph{for that specific content};
+citing the same paper nearby for a different result does not count. Content
+the preprint credits where it is used, directly or through a cited location
+that itself credits the earlier work, is not reported, except when its novelty is overstated (below). For
+overstated novelty, the column says where the preprint does cite the work.
+
+\paragraph{Flags.}
+\begin{description}[leftmargin=1.5em,font=\normalfont\bfseries]
+\item[Attribution gap.] Marks the most serious missing citations: the
+relationship is same technique, adapted or same result; the centrality is main
+result, central or supporting; and the preprint cites the principal earlier
+work for this content nowhere.
+\item[Overstated novelty.] The preprint does cite the earlier work for this
+content, but its abstract, a statement of its significant contributions, or the framing of
+a main result presents that content as new, explicitly or in the way a reader
+would reasonably take it. This is the one case in which content the preprint
+credits is reported.
+\end{description}
+
+\paragraph{How to check a claim.}
+Locations in the preprint use its section,
+equation and theorem numbers and the page numbers printed in its PDF.
+Locations in other sources give the theorem, equation and printed page of the
+version listed in the bibliography. Each finding ends with a short checklist
+of the passages to put side by side.
+
+\paragraph{Provenance.}
+This document was generated by LLM agents (Claude Opus 5.5) running the
+precedence-review skill of jnshi/math-lineage (commit
+\href{https://github.com/jnshi/math-lineage/tree/e025345/.agents/skills/precedence-review}{\texttt{e025345}}
+for the section passes and commit
+\href{https://github.com/jnshi/math-lineage/tree/13ccc19/.agents/skills/precedence-review}{\texttt{13ccc19}}
+for the later passes), makes no claim of completeness, and has not been
+vetted by a human. It was run by Jonathan Shi, who also supplied the leads
+behind findings~\ref{f:noised-models-finite-entropy}--\ref{f:semicircular-perturbation-fisher-facts},
+harvested from a run of an earlier version (v1) of the skill on this
+preprint, including his own lead behind
+finding~\ref{f:commuting-coordinate-entropy-deficit}. This run was also used to
+test updates to the skill.
+\space%
+\section{The preprint in brief, and notation}\label{sec:overview}
+
+\paragraph{Main result.}
+\ploc{Theorem~1.1 (p.~2)}{01-introduction.tex:42--51}: there exist $n\ge2$
+and a bounded self-adjoint tuple $X=(X_1,\dots,X_n)$ in a von Neumann algebra
+with faithful normal tracial state $\tau$ such that
+\[
+ -\infty<\chi(X)\le\chi^*(X)-\tfrac12<\infty,
+\]
+where $\chi$ is Voiculescu's microstates entropy with an operator-norm cutoff
+and a limsup over matrix sizes. The preprint presents this as a negative answer
+to the finite-entropy form of the equality question
+$\chi(X)>-\infty\Rightarrow\chi(X)=\chi^*(X)$
+\ploc{(\S1, p.~1)}{01-introduction.tex:17--26}.
+
+\paragraph{Entropies \ploc{(\S2, p.~3)}{02-conventions.tex:12--90}.}
+$\Gamma_R(X;m,d,\varepsilon)$ is the set of self-adjoint $d\times d$ matrix
+tuples with coordinate norms at most $R$ whose normalized traces of words of
+length at most $m$ are within $\varepsilon$ of those of $X$;
+$\chi_R(X)=\inf_{m,\varepsilon}\limsup_{d}[d^{-2}\log\operatorname{Vol}\Gamma_R(X;m,d,\varepsilon)+\frac n2\log d]$
+and $\chi(X)=\sup_R\chi_R(X)$. For a tuple $Z$, the conjugate variables $\xi_i$
+satisfy $\tau(\xi_iP(Z))=(\tau\otimes\tau)((\partial_iP)(Z))$ for
+noncommutative polynomials $P$, with $\partial_i$ the free difference quotient;
+$\Phi^*(Z)=\sum_i\norm{\xi_i}_2^2$, and, with $S$ a free standard semicircular
+family,
+\[
+ \chi^*(Z)=\tfrac n2\log(2\pi e)+\tfrac12\int_0^\infty\Big[\frac n{1+s}-\Phi^*(Z+\sqrt s\,S)\Big]\,ds
+ \qquad\ploc{(2), p.~3}{02-conventions.tex:73--78}.
+\]
+On the matrix side, $\operatorname{tr}_d=d^{-1}\Tr$, a standard GUE tuple
+$G^{(d)}$ has independent coordinates whose real Hilbert--Schmidt entries have
+variance $1/d$, and the normalized classical entropy of a random tuple with
+density $f$ is $H_d=-d^{-2}\int f\log f+\frac n2\log d$.
+
+\paragraph{The signal \ploc{(\S4, p.~7)}{04-signal.tex:8--21}.}
+Fix $p\ge2$ and $n=p+1$. $B_1,\dots,B_p$ are free variance-one semicirculars,
+and $Y$, in a separate tensor factor, is uniform on the $p$ equally spaced
+points $y_l=-1+2(l-1)/(p-1)$ of $[-1,1]$, so $Y$ commutes with every $B_i$.
+$C=(B_1,\dots,B_p,Y)$, $c_i=\tau(C_i^2)$, $V_a=C+\sqrt a\,S$,
+$v_i(u)=u+c_i$, and $L(a)=\frac12\sum_i\log(2\pi e(a+c_i))$ is the entropy of
+the semicircular family (or of the independent GUE law) with the same
+coordinate variances. $\kappa_m(C)$ is the order-$m$ free-cumulant array of
+$C$. The tuple of Theorem~1.1 is $X=V_h$ for a small $h>0$; the second noise
+scale is $t=p^{3/4}$, with $p$ fixed large, as in
+\ploc{(11), p.~9}{04-signal.tex:110--125}. The spectral projections of
+$X_n=Y+\sqrt h\,S_n$ for the intervals between the midpoints of the $y_l$ are
+denoted $e_l$; see \ploc{(12), p.~9}{04-signal.tex:127--147}.
+
+\paragraph{The proof routes, as the preprint names them.}
+The introduction says that the proof ``compares two noise scales''
+\ploc{(\S1, p.~2)}{01-introduction.tex:58--93}.
+\begin{itemize}
+\item \emph{The analytic estimate} (\S\S3--4): a squared-cumulant bound on the
+Fisher deficit $\Phi^*(V_u)-\sum_i v_i(u)^{-1}$
+\ploc{(Proposition~3.2, (6), p.~6)}{03-fisher.tex:100--113}, proved through
+the ``Wick testing'' identity of
+\ploc{Lemma~3.1 (p.~5)}{03-fisher.tex:28--49}, together with the sparse
+cumulants of $C$ \ploc{(Lemma~4.1, p.~8)}{04-signal.tex:45--75}, gives
+$\chi^*(V_a)>L(a)-\frac12$ for large $a$, which is
+\ploc{(9), p.~9}{04-signal.tex:102--104}. Finiteness,
+$\chi(X)>-\infty$, is \ploc{Lemma~4.2 (p.~9)}{04-signal.tex:149--170}.
+\item \emph{The transfer between the scales}: an entropy-production lemma for
+GUE heat flow started from uniform laws $A^{(d)}$ on near-optimal microstate
+sets, \ploc{Lemma~5.1 (p.~10)}{05-flow.tex:10--21}:
+the inequality \ploc{(13)}{05-flow.tex:16--19},
+$\limsup_d H_d(A^{(d)}+\sqrt t\,G^{(d)})\ge\chi_R(X)+\frac12\int_0^t\Phi^*(V_{h+s})\,ds$,
+which the preprint describes as using
+``the classical-to-free Fisher comparison of Jekel and Pi''.
+\item \emph{The matrix estimate} (\S6): the evolved laws $\mu_d$ of
+$A^{(d)}+\sqrt t\,G^{(d)}$ retain a block structure, defined by projection
+decompositions $P=(P_l)$ of small rank and the compressions
+$\D_PD=(\sum_lP_lD_iP_l)_i$, with probability at least $\frac12$, while the
+Gaussian reference law $\gamma_d$ with variances $v_i(h+t)$ has it with
+probability at most $e^{-4d^2}$
+\ploc{(Lemma~6.1, p.~12)}{06-blocks.tex:79--87}. Relative-entropy data
+processing turns this into a classical entropy deficit, and the proof of
+Theorem~1.1 combines it with Lemma~5.1 and (9)--(10)
+\ploc{(pp.~13--14)}{06-blocks.tex:154--209}.
+\end{itemize}
+\space%
+
+% IDs are assigned by LaTeX in the order of the \input lines (F1, F2, ...).
+% Order by magnitude: centrality (main result, central, supporting,
+% peripheral), then the relationship (same result, same technique, adapted,
+% proof shortcut, same route, fragment, weaker result), then reading order.
+% precedence_stats.py checks this order.
+% Withdrawing or reordering a finding is just deleting or moving its \input line.
+\section{Findings}\label{sec:findings}
+\findinggroup{F}
+\finding[Finite entropy of a small free semicircular perturbation]{Finite microstates entropy of a tuple perturbed by small free semicircular noise}{noised-models-finite-entropy}
+
+\paragraph{Summary.}
+Voiculescu proved that $\chi(X_1+Y_1,\dots,X_m+Y_m)\ge\chi(Y_1,\dots,Y_m)$
+when $Y_1,Y_2,\dots$ are free and of finite entropy and the $X_j$ lie in
+$W^*(Y_{m+1},Y_{m+2},\dots)$
+\sloc{Voiculescu1994-AnaloguesEntropyFisherII}{Prop.~5.5, p.~431}, and applied
+it to a tuple in a free group factor plus free semicircular noise (proof of Prop.~6.5,
+p.~435); the preprint cites this paper only for the definition of $\chi$ in
+\ploc{\S1 (p.~1)}{01-introduction.tex:5--8}.
+\ploc{Lemma~4.2 (p.~9)}{04-signal.tex:149--170}, the finiteness half of
+Theorem~1.1, proves $\chi(X)\ge\frac n2\log(2\pi h)$ for $X=C+\sqrt h\,S$,
+citing only the preprint's own convergence facts.
+\rel{Same result}: as $Y$ is atomic,
+$W^*(C)\cong L(\mathbb F_p)\mathbin{\bar\otimes}\ell^\infty_p$ embeds
+trace-preservingly in $L(\mathbb F_2)$ by Voiculescu's compression theorem
+\cite{NL-Voiculescu1990}, not cited, and Prop.~5.5 then gives
+$\chi(X)\ge\frac n2\log(2\pi eh)$, larger by $n/2$. Jung's inequality
+$\chi(a+\varepsilon Z:Z)\ge\mathbb P_{2c\varepsilon\sqrt n}(a)+n\log\varepsilon+\underline\chi(Z)$,
+for $Z$ free from $a$ and $c=\max_i\norm{Z_i}$
+\sloc{Jung2002-FreeEntropyDimensionLemma}{proof of Lemma~2.2, p.~4}, not
+cited, gives this bound directly for any $a$ with matrix models, whose packing
+term $\mathbb P$ is then nonnegative (\rel{same result}, later than
+Voiculescu's). Its proof is the lemma's argument, with noise uniform on
+microstate sets where the preprint takes GUE noise: microstates of the
+unperturbed tuple plus noise asymptotically free from them lie in the sum's
+microstate sets, so the noise alone bounds their volume and the tuple's own
+entropy, $-\infty$ here, plays no role; cf.\ Jekel's proof of
+\sloc{Jekel2025CMP-InformationGeometryTypesLargeN}{Claim~4.15, pp.~46--47},
+not cited, with the same structure for free semicirculars and a
+tensor-independent coordinate.
+
+\paragraph{Correspondence.}
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.07\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+ & Preprint & Voiculescu \cite{Voiculescu1994-AnaloguesEntropyFisherII} & Jung \cite{Jung2002-FreeEntropyDimensionLemma}\\
+\midrule
+\endfirsthead
+\toprule
+ & Preprint & Voiculescu \cite{Voiculescu1994-AnaloguesEntropyFisherII} & Jung \cite{Jung2002-FreeEntropyDimensionLemma}\\
+\midrule
+\endhead
+Tuple & $C$; models in dimensions $pq_k$ \ploc{(p.~8)}{04-signal.tex:23--31} & $X_j\in W^*(Y_{m+1},\dots)$; here $C$, via $x\otimes\delta_l\mapsto E_{ll}\otimes x$ into $M_p(\mathbb C)\otimes L(\mathbb F_{1+p^2})\cong L(\mathbb F_2)$ \sloc{MingoSpeicher2017-FreeProbabilityRandomMatrices}{(6.3), p.~172} & $a$ with matrix models, so $\mathbb P_{2c\varepsilon\sqrt n}(a)\ge0$\\
+\addlinespace
+Noise & $\sqrt h\,S$, free from $C$, $0<h<1$ & $Y_j=\varepsilon S_j$, free from the free group factor; $\varepsilon=\sqrt h$ & $\varepsilon Z$, $Z$ free from $a$, $\varepsilon<1/(2c+2)$; here $Z=S$, $c=2$, $\varepsilon=\sqrt h<\frac16$\\
+\addlinespace
+Step & noised models in $\Gamma_{R_0}(X;m,d,\varepsilon)$ with probability $q_d\to1$, density at most $(d/2\pi h)^{nd^2/2}$ \ploc{(p.~9)}{04-signal.tex:153--165} & Props.~2.3, 3.8, 5.4 (pp.~414--430); no matrices & packing centres of $\Gamma_R(a)$ translated by noise microstates $(m,\gamma)$-free from them: disjoint sets in $\Gamma(a+\varepsilon Z:\varepsilon Z)$ (pp.~3--4)\\
+\addlinespace
+Bound & $\chi(X)\ge\frac n2\log(2\pi h)$ \ploc{(p.~9)}{04-signal.tex:166--169} & $\chi(X)\ge\chi(\sqrt h\,S)=\frac n2\log(2\pi eh)$ & $\chi(X)\ge\chi(X:S)\ge\frac n2\log h+\underline\chi(S)=\frac n2\log(2\pi eh)$\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item \ploc{Lemma~4.2 (p.~9)}{04-signal.tex:149--170} against
+\sloc{Voiculescu1994-AnaloguesEntropyFisherII}{Prop.~5.5, p.~431}, whose
+printed conclusion has $n$ where $m$ is meant, and the display in the proof of
+Prop.~6.5 (p.~435) with $\varepsilon=\sqrt h$; the tensor description of $C$
+\ploc{(\S4, p.~7)}{04-signal.tex:8--18} against
+\sloc{MingoSpeicher2017-FreeProbabilityRandomMatrices}{(6.3), p.~172}.
+\item The proof of \ploc{Lemma~4.2}{04-signal.tex:153--169}, with the models of
+\ploc{p.~8}{04-signal.tex:23--31}, against the chain of inequalities in Jung's
+proof of \sloc{Jung2002-FreeEntropyDimensionLemma}{Lemma~2.2, pp.~3--4} and
+Jekel's proof of
+\sloc{Jekel2025CMP-InformationGeometryTypesLargeN}{Claim~4.15, p.~47}.
+\end{enumerate}
+
+\space%
+\finding[Heat-flow transfer from evolved matrix models to microstates entropy]{Microstates entropy bounded by the entropy of GUE-evolved microstate models minus the integrated free Fisher information}{elementary-heat-flow-transfer}
+
+\paragraph{Summary.}
+Jekel and Pi's proof of $\chi\le\chi^*$
+\sloc{JekelPi2023-ElementaryProofChiLeqChiStar}{proof of Thm~6.4} obtains,
+at the foot of p.~27 and for $\mathcal B=\mathbb C$,
+the inequality \ploc{(13)}{05-flow.tex:16--19} of
+\ploc{Lemma~5.1 (p.~10)}{05-flow.tex:10--21}, keeping the entropies of the
+GUE-evolved models and bounding them by the Gaussian maximum only on p.~28. The preprint cites Jekel--Pi for an elementary proof of
+$\chi\le\chi^*$ \ploc{(p.~1)}{01-introduction.tex:30--32} and, at the
+transfer, only for their Proposition~6.1, the classical-to-free Fisher
+comparison \ploc{(pp.~2, 10)}{01-introduction.tex:95--96; 05-flow.tex:3--4};
+its overview of the proof of Theorem~1.1
+\ploc{(p.~2)}{01-introduction.tex:95--98} presents the finite-time inequality
+that retains the terminal entropies as what Lemma~5.1 adds to that comparison.
+\rel{same result}: Jekel--Pi prove (13) for the same ensembles, uniform laws
+on cutoff microstate sets, along an ultrafilter where the preprint selects one
+dimension per accuracy level, and the proof of Lemma~5.1
+\ploc{(pp.~10--11)}{05-flow.tex:23--130} follows theirs step by step, proving
+two inputs itself \ploc{(Lemmas~2.1--2.2, pp.~3--5)}{02-conventions.tex:36--177}.
+Their approach compares $\chi$ with the integrated free Fisher information
+without large deviations: realize $\chi_R$ by uniform laws on near-optimal
+microstate sets (the realization of $\chi$ by random matrix models formulated
+in Jekel's appendix to Shlyakhtenko--Tao
+\sloc{ShlyakhtenkoTao2020-FractionalFreeConvolutionPowers}{Prop.~B.7}, which
+Jekel--Pi credit), add GUE noise, integrate the classical Fisher information by
+de Bruijn's identity, and bound it below in the limit by $\Phi^*$, since matrix
+integration by parts turns the classical score tested against polynomials into
+the conjugate-variable functional. The preprint's own step comes next: its
+\S6 bounds the retained entropies by a relative-entropy deficit
+\ploc{(p.~2)}{01-introduction.tex:99--101}.
+
+\paragraph{Correspondence.}
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.11\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Step & Preprint & Jekel--Pi \cite{JekelPi2023-ElementaryProofChiLeqChiStar}, $\mathcal B=\mathbb C$\\
+\midrule
+\endfirsthead
+\toprule
+Step & Preprint & Jekel--Pi \cite{JekelPi2023-ElementaryProofChiLeqChiStar}, $\mathcal B=\mathbb C$\\
+\midrule
+\endhead
+Models & Uniform on $\Gamma_R(X;k,d_k,1/k)$, log-volume $\ge\chi_R(X)-1/k$, one $d_k$ per $k$; \ploc{(14), p.~10}{05-flow.tex:28--39} & Uniform on $\Gamma_{\mathbf R}^{(n)}(\mathcal O_k)$, $h^{(n)}\ge\chi^{\mathcal U}_{\mathbf R}-1/k$ on $A_k$; proof of Thm~4.10, pp.~18--19; Rem.~4.14, p.~19\\
+\addlinespace
+Entropy gain & \ploc{(15)--(16), p.~10}{05-flow.tex:41--70}: $\frac{d}{ds}H_d(A^{(d)}+\sqrt s\,G^{(d)})=\frac12I_d(s)$, $I_d$ the normalized Fisher information & (3.2), p.~11: $h^{(n)}(\mathbf X+t^{1/2}\mathbf S)-h^{(n)}(\mathbf X)=\frac12\int_0^t\mathcal I^{(n)}(\mathbf X+u^{1/2}\mathbf S)\,du$\\
+\addlinespace
+Fisher bound & $\liminf_dI_d(s)\ge\Phi^*(V_{h+s})$ via matrix integration by parts and Lemma~2.1; \ploc{(17)--(18), p.~11}{05-flow.tex:72--115} & Prop.~6.1, p.~24: $\Phi^*(\mathbf X+u^{1/2}\mathbf S)\le\lim_{n\to\mathcal U}\mathcal I^{(n)}(\mathbf X^{(n)}+u^{1/2}\mathbf S^{(n)})$; via Cor.~5.5 and Lemma~5.8, pp.~22--23\\
+\addlinespace
+Result & \ploc{(13)}{05-flow.tex:16--19}: $\limsup_dH_d(A^{(d)}+\sqrt t\,G^{(d)})\ge\chi_R(X)+\frac12\int_0^t\Phi^*(V_{h+s})\,ds$ & p.~27: $\lim_{n\to\mathcal U}h^{(n)}(\mathbf X^{(n)}+t^{1/2}\mathbf S^{(n)})\ge\chi^{\mathcal U}(\mathbf X)+\frac12\int_0^t\Phi^*(\mathbf X+u^{1/2}\mathbf S)\,du$\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item \ploc{(13), p.~10}{05-flow.tex:16--19} against the foot of
+\sloc{JekelPi2023-ElementaryProofChiLeqChiStar}{p.~27} with
+$\mathcal B=\mathbb C$ and the normalizations of p.~11; then p.~28 and the
+overview \ploc{(p.~2)}{01-introduction.tex:95--98}. Lemma~4.9's proof
+(pp.~15--16) gives $\mathcal U$ with
+$\chi^{\mathcal U}_{\mathbf R}=\chi_{\mathbf R}$ at a cutoff above $\norm{X}$;
+indices $n_k$ in the sets $A_k$ of Theorem~4.10's proof (p.~18), approaching
+the ultralimit, give (13) as stated.
+\item The proof of Lemma~5.1 \ploc{(pp.~10--11)}{05-flow.tex:23--130} step by
+step against those of Theorem~6.4 (p.~27) and Proposition~6.1 (pp.~25--26);
+Fatou replaces Corollary~3.9 (p.~9) and Lemma~6.3 (p.~26).
+\end{enumerate}
+
+\space%
+\finding[Higher-order Stein kernels lifted to semicircular chaos]{A Fisher-deficit bound from higher-order Stein kernels lifted to semicircular chaos}{stein-kernel-chaos-lift}
+
+\paragraph{Summary.}
+Diez \sloc{Diez2023-FreeSteinKernelsHigherOrderDerivatives}{Lemma~4, p.~29}
+bounds the free Fisher information of a semicircular smoothing, relative to a
+semicircular law, by the free Stein discrepancy of any order~$k$, carrying to
+higher order the lemma of Fathi and Nelson
+\sloc{FathiNelson2016-FreeSteinKernelsFreeLSI}{Lemma~2.4, p.~9}, who introduced
+free Stein kernels and on whom he builds (p.~29); Cébron
+\sloc{Cebron2018-QuantitativeFourthMomentFree}{Lemma~2.6, p.~5} extends their
+lemma, for one variable, to signals without regularity.
+The preprint cites none of these works, and its citations for the cumulant
+calculus and for conjugate variables do not cover this argument.
+Its proof of the squared-cumulant bound on the Fisher deficit,
+\ploc{Proposition~3.2, (6) (pp.~6--7)}{03-fisher.tex:100--167}, with the lift
+\ploc{(5) (p.~5)}{03-fisher.tex:28--44} for $r\ge2$, follows this argument;
+through \ploc{(7)--(9) (pp.~8--9)}{04-signal.tex:77--104} it gives
+$\chi^*(V_{h+t})>L(h+t)-\frac12$ in the
+\ploc{proof of Theorem~1.1 (p.~14)}{06-blocks.tex:194--206}.
+The shared approach, the free Stein-kernel argument (Fathi--Nelson; at higher
+order, Diez), writes the relative score as the conditional expectation of the
+signal's Stein kernel lifted into the semicircular chaos of the noise, an
+order-$r$ kernel becoming an order-$r$ Wick polynomial with weight $u^{-r/2}$,
+and bounds it by the chaos isometry.
+\rel{same technique}: the kernels are the constant cumulant arrays
+$\kappa_{r+1}(C)$ of all orders $r\ge2$ at once, and the lift is proved
+combinatorially, so, as for Cébron, no regularity of $C$ is needed
+($\Phi^*(C)=\infty$, as $Y$ is atomic).
+
+\paragraph{Correspondence.}
+Preprint: $Z=V_u$, $\xi_i$ its conjugate variables, $D_{\mathbf j}(P)$ the
+trace $\tau^{\otimes(r+1)}$ of the $r$-th iterated free difference quotient of
+$P$ at $Z$. Diez: $X$ is the preprint's $C$,
+$X(t)=e^{-t}X+\sqrt{1-e^{-2t}}\,\rho^{-1/2}S$ ((100), p.~28), $E_t$ the
+conditional expectation onto $W^*(X(t))$, $\Xi(t)$ its conjugate variables,
+$A_k$ an order-$k$ Stein kernel; $Z=e^tX(t)$ for $\rho=1$, $u=e^{2t}-1$.
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.1\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+ & Preprint & Diez \cite{Diez2023-FreeSteinKernelsHigherOrderDerivatives}\\
+\midrule
+\endfirsthead
+\toprule
+ & Preprint & Diez \cite{Diez2023-FreeSteinKernelsHigherOrderDerivatives}\\
+\midrule
+\endhead
+Stein identity & $\tau(Z_iP(Z))-v_iD_i(P)=\sum_{r\ge2,\mathbf j}\kappa_{r+1}(C_i,C_{j_1},\dots,C_{j_r})D_{\mathbf j}(P)$ \ploc{(pp.~6--7)}{03-fisher.tex:123--133} & $\ip{\rho X}{P(X)}-(\tau\otimes\tau)\circ\Tr([\mathcal JP](X)^*)=\ip{A_k}{[\mathcal J^kP](X)}_2$ (Def.~17, p.~18)\\
+\addlinespace
+Lift & $D_{\mathbf j}(P)=u^{-r/2}\tau(U_{\mathbf j}(S)^*P(Z))$ \ploc{(5), p.~5}{03-fisher.tex:42--44} & order-$k$ conjugate variables of $X(t)$: $\rho^{k/2}(1-e^{-2t})^{-k/2}E_t(U_k^{\mathbf j}(S))$ ((103), p.~28)\\
+\addlinespace
+Residual & $Z_i-v_i\xi_i=E[R_i\mid W^*(Z)]$, $R_i=\sum_{r\ge2,\mathbf j}u^{-r/2}\kappa_{r+1}(C_i,C_{j_1},\dots,C_{j_r})U_{\mathbf j}(S)^*$ \ploc{(p.~7)}{03-fisher.tex:135--157} & $\Phi^*(X(t)\mid V_\rho)=c_t\ip{\partial_S^{k,*}(-A_k)}{\Xi(t)-\rho X(t)}_2$, $c_t=e^{-(k+1)t}\rho^{k/2}(1-e^{-2t})^{-k/2}$ ((123), p.~34)\\
+\addlinespace
+Norm & $\sum_i\norm{R_i}_2^2=\sum_{r\ge2}u^{-r}\norm{\kappa_{r+1}(C)}_2^2$; contraction and $v_i\ge u$ give (6) \ploc{(p.~7)}{03-fisher.tex:140--166} & $\norm{\partial_S^{k,*}(A_k)}_2=\norm{A_k}_2$ ((118), p.~31; (122), p.~34); Cauchy--Schwarz gives (106)\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item $Z_i-v_i\xi_i=E[R_i\mid W^*(Z)]$ \ploc{(p.~7)}{03-fisher.tex:135--157}
+against \sloc{Diez2023-FreeSteinKernelsHigherOrderDerivatives}{(107)--(110),
+pp.~29--30, and (123), p.~34}, and against Cébron's first-order
+$\sqrt{1-e^{-2t}}\,\tau(F\mid F_t)=e^{-t}\tau(\partial_S^*A\mid F_t)$
+\sloc{Cebron2018-QuantitativeFourthMomentFree}{p.~6}.
+\item \ploc{(5)}{03-fisher.tex:42--44} against
+\sloc{Diez2023-FreeSteinKernelsHigherOrderDerivatives}{(103), p.~28} under
+$Z=e^tX(t)$, which scales order-$k$ conjugate variables by $e^{-kt}$; at $C=0$,
+$u=1$, \ploc{(5)}{03-fisher.tex:42--44} is Diez's definition
+$U_k^{\mathbf j}(S)=\partial_S^{k,*}(1^{\otimes(k+1)})$ (Def.~15, p.~17).
+\item The \ploc{proof of (6), p.~7}{03-fisher.tex:159--166}, before $v_i\ge u$, against
+\sloc{Diez2023-FreeSteinKernelsHigherOrderDerivatives}{(106), p.~29}, applied
+formally ($C$ meets neither Lemma~4's hypotheses nor $c_n=1$): for $c_i=1$
+both bound $\Phi^*(V_u)-n/(1+u)=(1+u)^{-1}\Phi^*(X(t)\mid V_1)$, by
+$(1+u)^{-2}$ times $u^{-k}\Sigma_k^*(C\mid V_1)^2$ and
+$\sum_{r\ge2}u^{-r}\norm{\kappa_{r+1}(C)}_2^2$.
+\end{enumerate}
+
+\space%
+\finding[Commuting coordinate kept through free noise forces an entropy deficit]{A coordinate commuting with free semicirculars, kept through small free noise, forces an entropy deficit on matrix models}{commuting-coordinate-entropy-deficit}
+
+\paragraph{Summary.}
+Jekel's counterexample in the setting of laws
+\sloc{Jekel2025CMP-InformationGeometryTypesLargeN}{\S4.4, pp.~45--51} perturbs
+two free semicirculars and a semicircular tensor-independent of them by small
+free semicircular noise, obtaining a law $\mu$ with finite
+$\chi^{\mathcal U}$; bounded matrix models of a second, free law $\nu$ that
+are $L^2$-close to models of $\mu$ inherit the near-commutation and fall short
+of $\chi^{\mathcal U}(\nu)$ by an amount bounded away from zero.
+The preprint builds the tuple of its
+\ploc{Theorem~1.1}{01-introduction.tex:42--51} on the same construction, in
+\ploc{\S4 (p.~7)}{04-signal.tex:3--21}, and proves the same kind of deficit
+in \ploc{Lemma~6.1 and the proof of Theorem~1.1 (pp.~12--14)}{06-blocks.tex:79--193},
+but does not cite Jekel's paper anywhere; its one nearby citation bearing on
+this design is to Ge's argument for prime factors \cite{NL-Ge1996}, given on
+\ploc{p.~2}{01-introduction.tex:83--85} only as an antecedent for commutation
+constraints on microstate volumes in general.
+The shared approach follows Jekel's construction: small free noise makes
+$\chi$ finite, while the tensor coordinate's near-commutation survives and
+costs entropy to the matrix models that inherit it.
+\rel{adapted}: the preprint makes the coordinate atomic, so that
+near-commutation becomes block structure, and puts the loss on the law's own
+evolved microstate ensembles $\mu_d$, via a block event, a unitary-net
+covering and data processing rather than Jekel's conditioning and change of
+variables.
+
+\paragraph{Correspondence.}
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.13\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+ & Preprint & Jekel \cite{Jekel2025CMP-InformationGeometryTypesLargeN}\\
+\midrule
+\endfirsthead
+\toprule
+ & Preprint & Jekel \cite{Jekel2025CMP-InformationGeometryTypesLargeN}\\
+\midrule
+\endhead
+Construction & $X=C+\sqrt h\,S$, $h$ small, $Y$ atomic in a separate tensor factor \ploc{(\S4, p.~7)}{04-signal.tex:8--18}; $\chi(X)>-\infty$ \ploc{(Lemma~4.2, p.~9)}{04-signal.tex:149--170} & $\mathbf X=(1-\varepsilon)^{1/2}(S_1,S_2,S_3)+\varepsilon^{1/2}(S_1',S_2',S_3')$: $S_1,S_2$ free, $S_3$ tensor independent of them (pp.~45--46); $\chi^{\mathcal U}(\mu)>-\infty$ (Claim~4.15, pp.~46--47)\\
+\addlinespace
+Kept after noise & \ploc{(12), p.~9}{04-signal.tex:127--147}: spectral projections $e_l$ of $X_n$ near the $e_l(0)$, which commute with all $B_i$: $\tau(e_l)<3/(2p)$, $\sum_{i,l}\norm{e_lX_ie_l}_2^2>3p/4$ & $\norm{[X_j,X_3]}\le24\varepsilon^{1/2}$, $j=1,2$ (p.~46)\\
+\addlinespace
+In matrix models & \ploc{(19), p.~12}{06-blocks.tex:12--57}: the midpoint spectral partition $P$ of $A^{(d)}_n$ has $\operatorname{rank}P_l\le2d/p$, $\sum_{i\le p,\,l}\norm{P_lA^{(d)}_iP_l}_{2,d}^2>p/2$ & $\lim_{n\to\mathcal U}\norm{[X_1^{(n)},X_3^{(n)}]}_{L^2}\le24\varepsilon^{1/2}$, passed to $Y_j^{(n)}$ at cost $2R\norm{Y_j^{(n)}-X_j^{(n)}}_{L^2}$ (p.~48)\\
+\addlinespace
+Entropy deficit & $\limsup_dH_d(A^{(d)}+\sqrt t\,G^{(d)})\le L(h+t)-1$ \ploc{(p.~14)}{06-blocks.tex:189--190}, via a block event, $\mu_d$-probability $\ge1/2$, $\gamma_d$-probability $\le e^{-4d^2}$ \ploc{(Lemma~6.1, p.~12)}{06-blocks.tex:79--87} & for $R$-bounded models $\mathbf Y^{(n)}$ of $\nu$ and $\mathbf X^{(n)}$ of $\mu$: $e^{a/2}[(25+6R)\varepsilon^{1/2}+2Rb^{1/2}]\ge\varepsilon^{1/4}$, $a=\chi^{\mathcal U}(\nu)-\lim_{n\to\mathcal U}h^{(n)}(\mathbf Y^{(n)})$, $b=\lim_{n\to\mathcal U}\norm{\mathbf X^{(n)}-\mathbf Y^{(n)}}_{L^2}^2-d_{W,\mathrm{CEP}}(\mu,\nu)^2$ (Claim~4.16, (4.5), p.~47)\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item \ploc{\S4, p.~7}{04-signal.tex:8--21} and
+\ploc{(12), p.~9}{04-signal.tex:127--147} against Jekel's construction and
+commutator bound \sloc{Jekel2025CMP-InformationGeometryTypesLargeN}{pp.~45--46}.
+\item \ploc{(19), p.~12}{06-blocks.tex:12--57} against the passage of the
+commutator bound to $\mathbf X^{(n)}$ and $\mathbf Y^{(n)}$
+\sloc{Jekel2025CMP-InformationGeometryTypesLargeN}{p.~48}.
+\item \ploc{Lemma~6.1 and p.~14}{06-blocks.tex:79--190} against Claim~4.16
+\sloc{Jekel2025CMP-InformationGeometryTypesLargeN}{pp.~47--51}: the
+preprint's deficit falls on the law's own ensembles, Jekel's on models of
+$\nu$ (p.~45), by different estimates.
+\end{enumerate}
+
+\space%
+\finding[Unitary-net covering of block-structured tuples]{Bounding the measure of matrix tuples with a common block structure by a unitary net over fixed blocks}{block-covering-unitary-net}
+
+\paragraph{Summary.}
+Voiculescu proved in the third paper of his free-entropy series
+\cite{NL-Voiculescu1996} (FE~III below) that finite free entropy excludes
+property~$\Gamma$ and Cartan subalgebras, by a covering argument expounded by
+Biane \sloc{Biane2001-EntropieLibreAlgebresOperateurs}{Lemme~6.3,
+pp.~289--290} and by Mingo and Speicher
+\sloc{MingoSpeicher2017-FreeProbabilityRandomMatrices}{\S7.7.1, Lemma~9,
+pp.~196--198}; Dykema's many-block version
+\sloc{Dykema1996-TwoApplicationsFreeEntropy}{Lemma~2.2, pp.~3--7} is the
+closest in form.
+The preprint cites none of these works: its \S6 cites nothing, and its
+introduction \ploc{(\S1, p.~2)}{01-introduction.tex:83--87} says only that
+controlling microstate volumes by commutation and projection geometry has
+``antecedents'' in Ge's argument for prime factors \cite{NL-Ge1996}, and cites
+Szarek \cite{Szarek1997-MetricEntropyHomogeneousSpaces} for the net bound.
+The Gaussian half of \ploc{Lemma~6.1 (p.~12)}{06-blocks.tex:79--87}, proved
+on \ploc{p.~13}{06-blocks.tex:112--151}, adapts FE~III's approach to show that
+under $\gamma_d$ the first $p$ coordinates rarely put a fixed fraction of
+their energy into the blocks of some decomposition into $p$ projections of
+rank at most $2d/p$: conjugate the decomposition to fixed blocks, replace the
+unitary by a point of an operator-norm net paid for once, and bound the
+measure at each net point, where the gain accumulates over the coordinates.
+The insight, that one common unitary makes the constraint strong (Mingo and
+Speicher, p.~198), is Voiculescu's; his theorem
+\sloc{MingoSpeicher2017-FreeProbabilityRandomMatrices}{Theorem~7(i), p.~195}
+already gives $\chi(C)=-\infty$, as $Y$ is central in $W^*(C)$.
+\rel{adapted}: the reduction is followed step by step, but the estimate at
+each net point becomes a chi-square tail under $\gamma_d$, not a volume of
+balls with a thin off-diagonal factor as $\omega\to0$, and the event ranges
+over all rank lists.
+
+\paragraph{Correspondence.}
+Preprint: $D_{[p]}=(D_1,\dots,D_p)$,
+$\norm{D}_{2,d}^2=\sum_i\operatorname{tr}_d(D_i^*D_i)$, $v=v_i(h+t)$ for
+$i\le p$, and $P^0$ the standard coordinate blocks of a rank list. Biane: $d$
+variables, a microstate $(M_1,\dots,M_d)$ of size $N$, and a projection $\Pi$
+of rank $q=[N\tau(P)]$ with $\norm{[M_i,\Pi]}_2<2\omega$.
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.10\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+ & Preprint, proof of Lemma~6.1 & FE~III, after Biane\\
+\midrule
+\endfirsthead
+\toprule
+ & Preprint, proof of Lemma~6.1 & FE~III, after Biane\\
+\midrule
+\endhead
+Fixed blocks & each decomposition is a conjugate $UP^0U^*$; compression
+$\D_{P^0}$ \ploc{(p.~13)}{06-blocks.tex:119--120} &
+$\Pi=U\operatorname{diag}(I_q,0)U^*$; off-diagonal blocks $C_i$ of
+$U^*M_iU$ with $\frac2N\Tr(C_iC_i^*)\le4\omega^2$ (p.~289)\\
+\addlinespace
+Net & operator-norm $\delta$-net of $U(d)$, $(1+2/\delta)^{2d^2}$ points,
+$\delta=1/(64\sqrt v)$ \ploc{(p.~13)}{06-blocks.tex:112--118} &
+$(C\delta^{-1})^{N^2-q^2-(N-q)^2}$ points $U_s$ of a Szarek net of
+$U(N)/(U(q)\times U(N-q))$ (p.~290)\\
+\addlinespace
+Conjuga\-tion loss &
+$\norm{U^*D_{[p]}U-V^*D_{[p]}V}_{2,d}\le2\delta\norm{D_{[p]}}_{2,d}$, at most
+$\sqrt p/8$ on the event \ploc{(p.~13)}{06-blocks.tex:121--133} & commutator
+at most $2\omega+8\delta$ at the net point (p.~290)\\
+\addlinespace
+Per net point &
+$\gamma_d(\norm{\D_{P^0}(U^*D_{[p]}U)}_{2,d}^2\ge p/64)\le
+e^{d^2(\log2-p/(256v))}$ by chi-square on $p\sum_l\operatorname{rank}(P^0_l)^2\le2d^2$
+of $pd^2$ dimensions; union over $(d+1)^p$ rank lists
+\ploc{(p.~13)}{06-blocks.tex:134--151} & volume of
+$\bigl(U_s^*(B(\sqrt{4N})\times B((2\omega+8\delta)\sqrt N)\times
+B(\sqrt{4N}))U_s\bigr)^d$ over $s\in S$, with $\delta=\omega$, giving
+$\chi\le C_1+C_2\log\omega$ (p.~290)\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item The Gaussian bound's proof \ploc{(p.~13)}{06-blocks.tex:112--151}
+against the proof of Lemme~6.3
+\sloc{Biane2001-EntropieLibreAlgebresOperateurs}{pp.~289--290} and
+\sloc{MingoSpeicher2017-FreeProbabilityRandomMatrices}{pp.~196--198}: in both,
+the net is paid for once, against a gain from all $p$, respectively $d\ge2$,
+coordinates.
+\item The introduction's citations of Ge and Szarek
+\ploc{(\S1, p.~2)}{01-introduction.tex:83--87} against
+\sloc{MingoSpeicher2017-FreeProbabilityRandomMatrices}{p.~195}, which credits
+Theorem~7(i)--(ii) to Voiculescu and (iii), primeness, to Ge.
+\end{enumerate}
+
+\space%
+\finding{Orthonormal semicircular Wick polynomials given by deleting adjacent pairs}{semicircular-wick-polynomials}
+
+\paragraph{Summary.}
+Effros and Popa gave an explicit formula for the $q$-Wick product; at $q=0$ it
+is a sum over gap-free diagrams, that is, sets of disjoint adjacent pairs
+\sloc{EffrosPopa2003-FeynmanDiagramsWickProducts}{(12), p.~12}. Kemp, Nourdin,
+Peccati and Speicher (KNPS), following Biane and Speicher \cite{NL-BianeSpeicher1998},
+state that $Y\mapsto Y\Omega$ is an isometry into the full Fock space sending
+products of Chebyshev polynomials over runs of equal indices to orthonormal
+elementary tensors
+\sloc{KempEtAl2010-WignerChaosFourthMoment}{Prop.~3.1 and (3.2), p.~29}. The
+preprint cites neither: it names ``orthogonality of semicircular Wick
+polynomials'' as a tool \ploc{(\S1, p.~2)}{01-introduction.tex:68--69}, citing
+Speicher and Nica--Speicher there only for the cumulant calculus, defines
+$U_{\mathbf j}(S)$ by deleting disjoint adjacent pairs
+\ploc{(proof of Lemma~3.1, p.~6)}{03-fisher.tex:52--56}, proves its
+orthonormality \ploc{(Lemma~3.1, p.~5)}{03-fisher.tex:40--41} by a cumulant
+cancellation, and uses it in the
+\ploc{proof of Proposition~3.2 (p.~7)}{03-fisher.tex:135--144}.
+\rel{same result}: the definition is Effros and Popa's formula at $q=0$ term by
+term; orthonormality, which they do not state, follows at once from their
+characterization $u\Omega=f_1\otimes\cdots\otimes f_n$ of the Wick product
+(p.~7), defined following Bo\.zejko, K\"ummerer and Speicher
+\cite{NL-BozejkoKummererSpeicher1997}; and since pairs that straddle two runs
+carry $\delta=0$, $U_{\mathbf j}$ is the KNPS product over runs, which on a
+single run is the classical expansion of $U_m$.
+
+\paragraph{Correspondence.}
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.15\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+ & Preprint & Effros--Popa (EP) \cite{EffrosPopa2003-FeynmanDiagramsWickProducts}; KNPS \cite{KempEtAl2010-WignerChaosFourthMoment}\\
+\midrule
+\endfirsthead
+\toprule
+ & Preprint & Effros--Popa (EP) \cite{EffrosPopa2003-FeynmanDiagramsWickProducts}; KNPS \cite{KempEtAl2010-WignerChaosFourthMoment}\\
+\midrule
+\endhead
+Family & $U_{\mathbf j}(S)$, $\mathbf j=(j_1,\dots,j_r)$: sum over sets $F$ of disjoint adjacent pairs of the word $S_{j_1}\cdots S_{j_r}$ with the pairs in $F$ deleted, each with factor $-\delta_{j_aj_{a+1}}$ \ploc{(proof of Lemma~3.1, p.~6)}{03-fisher.tex:52--56} & ${:}\xi_1\cdots\xi_r{:}=\sum_{\gamma\in\mathsf{GF}(r)}(-1)^{\#(\gamma)}v(\gamma)$, $v(\gamma)$ the covariances of the pairs times the word of the singletons (EP (12), p.~12; $v$, p.~5); $\xi_a=\varphi(e_{j_a})$ gives $\E(\xi_a\xi_{a+1})=\delta_{j_aj_{a+1}}$\\
+\addlinespace
+Runs & runs $k_1^{m_1},\dots,k_\ell^{m_\ell}$: $U_{\mathbf j}(S)=U_{m_1}(S_{k_1})\cdots U_{m_\ell}(S_{k_\ell})$ (not stated); e.g.\ $U_{(1,1,2)}=S_1^2S_2-S_2=U_2(S_1)U_1(S_2)$ & $U_{n_1}(X(h_{k_1}))\cdots U_{n_r}(X(h_{k_r}))$, $k_i\ne k_{i+1}$ (their $r$ counts runs; KNPS (3.2), p.~29), $U_n$ as in (2.11), p.~28\\
+\addlinespace
+Orthonormality & $\tau(U_{\mathbf j}^*U_{\mathbf k})=\delta_{\mathbf j\mathbf k}$ \ploc{(Lemma~3.1, p.~5; proof at $C=0$, $u=1$, p.~6)}{03-fisher.tex:40--41, 90--95} & $u\Omega=f_1\otimes\cdots\otimes f_r$ (EP p.~7), so $\E(u^*v)=\ip{v\Omega}{u\Omega}$; $Y\mapsto Y\Omega$ isometric (KNPS Prop.~3.1, p.~29)\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item The first paragraph of the \ploc{proof of Lemma~3.1 (p.~6)}{03-fisher.tex:52--56}
+against \sloc{EffrosPopa2003-FeynmanDiagramsWickProducts}{(12) and (13),
+p.~12} with $\xi_a=S_{j_a}$: a diagram is gap free when every pair is
+$\{a,a+1\}$ (gap $g$, p.~4; $\mathsf{GF}$, p.~11).
+\item Orthonormality in \ploc{Lemma~3.1 (p.~5)}{03-fisher.tex:40--41} and
+\ploc{its proof (p.~6)}{03-fisher.tex:90--95} against
+$u\Omega=f_1\otimes\cdots\otimes f_n$
+\sloc{EffrosPopa2003-FeynmanDiagramsWickProducts}{p.~7} at $q=0$ with
+orthonormal $f_a$.
+\item Factor $U_{\mathbf j}$ over runs and compare with
+\sloc{KempEtAl2010-WignerChaosFourthMoment}{Prop.~3.1 and (3.2), p.~29}. On one run of length $m$ the deletion rule gives
+$\sum_i(-1)^i\binom{m-i}{i}x^{m-2i}$, the classical expansion of $U_m(x)$.
+\end{enumerate}
+
+\space%
+\finding[Conjugate variables under free semicircular noise]{Conjugate variables of a free semicircular perturbation as the projected rescaled noise}{semicircular-perturbation-fisher-facts}
+
+\paragraph{Summary.}
+Voiculescu's fifth paper on free entropy and Fisher information (FE~V) shows
+that, for a free semicircular family $S$ free from $X$, the conjugate
+variables of $X+\sqrt\varepsilon\,S$ always exist and equal
+$\varepsilon^{-1/2}E[s_i\mid W^*(X+\sqrt\varepsilon\,S)]$
+\sloc{NL-Voiculescu1998}{Cor.~3.9}; Major and Shlyakhtenko
+\sloc{MajorShlyakhtenko2025-StrongOneBoundedNonMicrostates}{\S2.1, p.~4} and
+C\'ebron \sloc{Cebron2018-QuantitativeFourthMomentFree}{p.~6} cite it under
+that number, and Fathi and Nelson cite its Ornstein--Uhlenbeck form as FE~V
+Prop.~3.7 \sloc{FathiNelson2016-FreeSteinKernelsFreeLSI}{p.~7}. The preprint
+cites FE~V only in its introduction, for the definitions of conjugate
+variables, free Fisher information and $\chi^*$, and states the formula
+without citation as the last statement of
+\ploc{Lemma~3.1 (p.~5)}{03-fisher.tex:45--48}, proved as the $r=1$ case of
+its Wick-testing identity \ploc{(p.~6)}{03-fisher.tex:95--97}.
+\rel{same result}: in the preprint's notation ($X=C$, $\varepsilon=u$,
+$Z=C+\sqrt u\,S$) the statement is Voiculescu's formula, whose content is that
+the rescaled noise $u^{-1/2}S_i$ already satisfies the conjugate relations of
+$Z$, so that its projection onto $L^2(W^*(Z))$ is the conjugate variable for
+every $C$; the preprint checks these relations with noncrossing cumulants.
+The formula supplies the conjugate variables in the proof of
+\ploc{Proposition~3.2 (p.~6)}{03-fisher.tex:117--118}, where it yields
+$\Phi^*(V_u)\le n/u$, which makes the integrals in
+\ploc{(8)}{04-signal.tex:86--97} and \ploc{(13)}{05-flow.tex:16--19} finite
+\ploc{(pp.~8--9 and~11)}{04-signal.tex:90--97, 05-flow.tex:126--127}; its
+existence statement lets Lemma~2.1 give \ploc{(18)}{05-flow.tex:110--114} in
+the proof of \ploc{Lemma~5.1 (p.~11)}{05-flow.tex:104--114}. Both uses lead to
+Theorem~1.1.
+
+\paragraph{Correspondence.}
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.13\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+ & Preprint & FE~V, as quoted\\
+\midrule
+\endfirsthead
+\toprule
+ & Preprint & FE~V, as quoted\\
+\midrule
+\endhead
+Setting & $C$ a centered bounded self-adjoint $n$-tuple, $S$ a standard semicircular family free from $C$, $Z=C+\sqrt u\,S$, $u>0$ \ploc{(Lemma~3.1, p.~5)}{03-fisher.tex:29--31} & $X=(x_1,\dots,x_d)$, $N\subseteq M$ a unital $*$-subalgebra, $S=(s_1,\dots,s_d)$ a free $(0,1)$-semicircular family, free from $N\cup X$; $\varepsilon>0$ \sloc{MajorShlyakhtenko2025-StrongOneBoundedNonMicrostates}{p.~4}\\
+\addlinespace
+Formula & $\xi_i=u^{-1/2}E[S_i\mid W^*(Z)]$ \ploc{(p.~5)}{03-fisher.tex:45--48} & $\mathcal J(x_i+\sqrt\varepsilon\,s_i:N)=\varepsilon^{-1/2}E_\varepsilon(s_i)$, with $E_\varepsilon$ the conditional expectation onto $W^*(N,X+\sqrt\varepsilon\,S)$ \sloc{MajorShlyakhtenko2025-StrongOneBoundedNonMicrostates}{p.~4}\\
+\addlinespace
+Existence & the conjugate variables of $Z$ exist, for every such $C$ \ploc{(p.~5)}{03-fisher.tex:45--48} & for any self-adjoint $x_1,\dots,x_n$ and $x_j(t)=e^{-t}x_j+\sqrt{1-e^{-2t}}\,\rho^{-1/2}s_j$, the conjugate variables of $X(t)$ always exist and $\xi_j(t)=\sqrt\rho\,(1-e^{-2t})^{-1/2}\mathcal E_t(s_j)$ \sloc{FathiNelson2016-FreeSteinKernelsFreeLSI}{p.~7}\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item The last display of \ploc{Lemma~3.1 (p.~5)}{03-fisher.tex:45--48}
+against \sloc{MajorShlyakhtenko2025-StrongOneBoundedNonMicrostates}{\S2.1, p.~4}
+with $N=\mathbb C$, $X=C$ and $\varepsilon=u$: then
+$\mathcal J(x_i+\sqrt\varepsilon\,s_i:\mathbb C)$ is the $i$-th conjugate
+variable $\xi_i$ of the tuple $Z$, and $E_\varepsilon=E[\,\cdot\mid W^*(Z)]$.
+\item The same display against
+\sloc{FathiNelson2016-FreeSteinKernelsFreeLSI}{p.~7}: $x_j(t)=e^{-t}(x_j+\sqrt\varepsilon\,s_j)$
+with $\varepsilon=(e^{2t}-1)/\rho$, and conjugate variables scale as
+$\xi_j(\lambda Z)=\lambda^{-1}\xi_j(Z)$; with $\lambda=e^{-t}$ their formula
+becomes $\xi_j(X+\sqrt\varepsilon\,S)=\varepsilon^{-1/2}E[s_j\mid W^*(X+\sqrt\varepsilon\,S)]$.
+\item The last sentence of the proof of Lemma~3.1
+\ploc{(p.~6)}{03-fisher.tex:95--97}: for $r=1$, $U_i(S)=S_i$ and
+$D_i(P)=(\tau\otimes\tau)(\partial_iP(Z))$, so \ploc{(5)}{03-fisher.tex:42--44} says
+$\tau(u^{-1/2}S_i\,P(Z))=(\tau\otimes\tau)(\partial_iP(Z))$, that is, the
+rescaled noise satisfies the conjugate relations of $Z$; projecting it onto
+$L^2(W^*(Z))$ gives the right-hand side in item~1.
+\end{enumerate}
+
+\space%
+
+\begin{thebibliography}{99}
+\small
+\bibitem{Voiculescu1994-AnaloguesEntropyFisherII} D. Voiculescu, The analogues of entropy and of Fisher's information measure in free probability theory, II, Invent. Math. 118 (1994) 411--440. doi:10.1007/BF01231539.
+\bibitem{NL-Voiculescu1990} D. Voiculescu, Circular and semicircular systems and free product factors, in: Operator Algebras, Unitary Representations, Enveloping Algebras, and Invariant Theory (Paris, 1989), Progr. Math. 92, Birkh\"auser, Boston (1990), 45--60.
+\bibitem{Jung2002-FreeEntropyDimensionLemma} K. Jung, A free entropy dimension lemma, Pacific J. Math. 211 (2003), no. 2 (page numbers refer to the arXiv version). arXiv:math/0207149v2.
+\bibitem{Jekel2025CMP-InformationGeometryTypesLargeN} D. Jekel, Information geometry for types in the large-n limit of random matrices, Comm. Math. Phys. 406 (2025), no. 11, Art. 272. arXiv:2501.00703v2; doi:10.1007/s00220-025-05451-x.
+\bibitem{JekelPi2023-ElementaryProofChiLeqChiStar} D. Jekel, J. Pi, An elementary proof of the inequality chi <= chi* for conditional free entropy, Doc. Math. 29 (2024) 1085--1124 (page numbers refer to the arXiv version). arXiv:2305.02574v4; doi:10.4171/DM/969.
+\bibitem{ShlyakhtenkoTao2020-FractionalFreeConvolutionPowers} D. Shlyakhtenko, T. Tao, Fractional free convolution powers, with an appendix by D. Jekel, preprint (2020). arXiv:2009.01882v3.
+\bibitem{Diez2023-FreeSteinKernelsHigherOrderDerivatives} C.-P. Diez, Free Stein kernels, free moment maps, and higher order derivatives, preprint 2023. arXiv:2306.00967v1.
+\bibitem{FathiNelson2016-FreeSteinKernelsFreeLSI} M. Fathi, B. Nelson, Free Stein kernels and an improvement of the free logarithmic Sobolev inequality, Adv. Math. 317 (2017) 193--223 (page numbers refer to the arXiv version). arXiv:1605.05828v1.
+\bibitem{Cebron2018-QuantitativeFourthMomentFree} G. Cébron, A quantitative fourth moment theorem in free probability theory, Adv. Math. 380 (2021) 107579 (page numbers refer to the arXiv version). arXiv:1803.09669v2.
+\bibitem{NL-Voiculescu1996} D. Voiculescu, The analogues of entropy and of Fisher's information measure in free probability theory III: The absence of Cartan subalgebras, Geom. Funct. Anal. 6 (1996) 172--199, doi:10.1007/BF02246772
+\bibitem{Biane2001-EntropieLibreAlgebresOperateurs} P. Biane, Entropie libre et algèbres d'opérateurs, Séminaire Bourbaki 2000/2001, exp. 889, Astérisque 282 (2002) 279--300.
+\bibitem{MingoSpeicher2017-FreeProbabilityRandomMatrices} J. A. Mingo, R. Speicher, Free Probability and Random Matrices, Fields Institute Monographs 35, Springer, 2017.
+\bibitem{Dykema1996-TwoApplicationsFreeEntropy} K. Dykema, Two applications of free entropy, Math. Ann. 308 (1997) 547-558 (page numbers refer to the arXiv version). arXiv:funct-an/9605005v2.
+\bibitem{NL-Ge1996} L. Ge, Prime factors, Proc. Natl. Acad. Sci. USA 93 (1996), no. 23, 12762--12763, doi:10.1073/pnas.93.23.12762
+\bibitem{EffrosPopa2003-FeynmanDiagramsWickProducts} E. G. Effros, M. Popa, Feynman diagrams and Wick products associated with q-Fock space, Proc. Natl. Acad. Sci. USA 100 (2003), no. 15, 8629--8633 (page numbers refer to the arXiv version). arXiv:math/0303045v1; doi:10.1073/pnas.1531460100.
+\bibitem{KempEtAl2010-WignerChaosFourthMoment} T. Kemp, I. Nourdin, G. Peccati, R. Speicher, Wigner chaos and the fourth moment, Ann. Probab. 40 (2012), no. 4, 1577--1635 (page numbers refer to the arXiv version). arXiv:1009.3949v2.
+\bibitem{NL-Voiculescu1998} D. Voiculescu, The analogues of entropy and of Fisher's information measure in free probability theory. V. Noncommutative Hilbert transforms, Invent. Math. 132 (1998), 189--227, doi:10.1007/s002220050222
+\bibitem{OAI-FiniteEntropySeparation} OpenAI, \emph{A finite-entropy separation of microstates and nonmicrostates free entropy}, OpenAI Math Release preprint, September 25, 2026, \url{https://github.com/openai/math}.
+\bibitem{OAI-FreeGroupFactors} OpenAI, \emph{An isomorphism of the free group factors}, OpenAI Math Release preprint, September 23, 2026 (cited by the preprint as \texttt{FreeGroupFactors}).
+\bibitem{Szarek1997-MetricEntropyHomogeneousSpaces} S. J. Szarek, Metric entropy of homogeneous spaces, Banach Center Publ. 43 (1998) 395--410 (page numbers refer to the arXiv version). arXiv:math/9701213v1.
+\bibitem{NL-BianeSpeicher1998} P. Biane, R. Speicher, Stochastic calculus with respect to free Brownian motion and analysis on Wigner space, Probab. Theory Related Fields 112 (1998) 373--409, doi:10.1007/s004400050194
+\bibitem{NL-BozejkoKummererSpeicher1997} M. Bo\.zejko, B. K\"ummerer, R. Speicher, q-Gaussian processes: non-commutative and classical aspects, Comm. Math. Phys. 185 (1997) 129--154, doi:10.1007/s002200050084
+\bibitem{MajorShlyakhtenko2025-StrongOneBoundedNonMicrostates} B. Major, D. Shlyakhtenko, Establishing strong 1-boundedness via non-microstates free entropy techniques, preprint 2025. arXiv:2510.07558v2.
+\end{thebibliography}
+\space%
+
+\end{document}

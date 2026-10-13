@@ -1,0 +1,623 @@
+{
+  "format": "math-lineage/precedence-findings",
+  "format_version": 2,
+  "preprint": {
+    "id": "OAI:A-finite-entropy-separation-of-microstates-and-nonmicrostates-free-entropy-September-25-2026",
+    "title": "A finite-entropy separation of microstates and nonmicrostates free entropy",
+    "date": "2026-09-25",
+    "path": "preprints/A-finite-entropy-separation-of-microstates-and-nonmicrostates-free-entropy-September-25-2026",
+    "companions": [
+      {
+        "id": "OAI:An-isomorphism-of-the-free-group-factors-September-23-2026",
+        "cited_as": "FreeGroupFactors"
+      }
+    ]
+  },
+  "review": {
+    "date": "2026-10-12",
+    "report_pdf": "precedence-findings.pdf",
+    "report_tex": "precedence-findings.tex",
+    "locator_convention": "Preprint locations use the compiled numbering and page numbers of paper.pdf. Source locators give printed page numbers of the version identified by the source's arXiv id or DOI; for Jekel (2025) they refer to the Comm. Math. Phys. version, for Voiculescu (1994) to the Invent. Math. version, and for the other papers with an arXiv id to the arXiv version."
+  },
+  "definitions": {
+    "relationship": {
+      "same technique": "The earlier technique, construction or theory is reused essentially intact, possibly in a new setting or with new ingredients around it.",
+      "adapted": "The earlier technique's structure is followed, with a change at its core: a different object, or a key step replaced.",
+      "fragment": "One identifiable piece of the earlier technique is reused.",
+      "same route": "An earlier paper proposed the proof strategy, even heuristically, and the preprint carries it out.",
+      "same result": "An earlier paper, or several earlier papers together, prove essentially the same statement.",
+      "weaker result": "An earlier paper proves a weaker, special-case or partial-range version of one of the preprint's main results, or of a statement it presents as a significant contribution.",
+      "proof shortcut": "A published result would replace or substantially shorten a large part of the argument."
+    },
+    "centrality": {
+      "main result": "Best-effort judgment: the earlier work covers the main result itself, or most of it. Never a weaker result.",
+      "central": "Best-effort judgment: much of the main argument depends on it.",
+      "supporting": "Best-effort judgment: the main argument depends on it, but less.",
+      "peripheral": "Best-effort judgment: little of the main argument depends on it."
+    },
+    "form_of_inclusion": {
+      "none": "As judged by the author-persona check: not worth a pointer, or for overstated novelty no change to the abstract or framing. Recorded here only, not in the report.",
+      "citation": "As judged by the author-persona check: a citation at the point of use.",
+      "sentence": "As judged by the author-persona check: a clause or a sentence; for overstated novelty, a clause or sentence changed in the abstract, statements of significant contributions or framing.",
+      "paragraph": "As judged by the author-persona check: a short paragraph; for overstated novelty, a larger revision of the abstract or framing."
+    },
+    "credit_status": {
+      "not_cited": "The work is not in the preprint's bibliography, and no location the preprint cites credits it for this content.",
+      "cited_for_other_content": "The work is in the preprint's bibliography but is not cited for this content.",
+      "credited_elsewhere": "The preprint credits the work for this content at other locations, directly or through a cited location that credits it, but not where the content is used, in a way that an expert reader who doesn't know the earlier work might not connect with it.",
+      "credited_in_part": "The preprint credits the work for part of this content only, directly or through a cited location that credits it.",
+      "credited": "The preprint credits the work for this content, directly or through a cited location that credits it. Allowed only in a finding with overstated novelty."
+    },
+    "flags": {
+      "attribution_gap": "True when the relationship is same technique, adapted or same result; the centrality is main result, central or supporting; and the principal earlier work (listed first among the sources) is not cited for this content anywhere (not_cited or cited_for_other_content).",
+      "overstated_novelty": "True when the preprint cites the earlier work for this content, but its abstract, a statement of its significant contributions, or the framing of a main result presents that content as new, explicitly or in the way a reader would reasonably take it. It is the one case in which content the preprint credits is reported. novelty_claim says where the claim is made."
+    }
+  },
+  "sources": {
+    "Voiculescu1994-AnaloguesEntropyFisherII": {
+      "authors": [
+        "D. Voiculescu"
+      ],
+      "title": "The analogues of entropy and of Fisher's information measure in free probability theory, II",
+      "year": 1994,
+      "venue": "Invent. Math. 118 (1994) 411–440",
+      "arxiv": null,
+      "doi": "10.1007/BF01231539",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "Vchi"
+    },
+    "NL-Voiculescu1990": {
+      "authors": [
+        "D. Voiculescu"
+      ],
+      "title": "Circular and semicircular systems and free product factors",
+      "year": 1990,
+      "venue": "Operator Algebras, Unitary Representations, Enveloping Algebras, and Invariant Theory (Paris, 1989), Progr. Math. 92, Birkhäuser (1990) 45–60",
+      "arxiv": null,
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "Jung2002-FreeEntropyDimensionLemma": {
+      "authors": [
+        "K. Jung"
+      ],
+      "title": "A free entropy dimension lemma",
+      "year": 2002,
+      "venue": "Pacific J. Math. 211 (2003)",
+      "arxiv": "math/0207149",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "Jekel2025CMP-InformationGeometryTypesLargeN": {
+      "authors": [
+        "D. Jekel"
+      ],
+      "title": "Information geometry for types in the large-n limit of random matrices",
+      "year": 2025,
+      "venue": "Comm. Math. Phys. 406 (2025), no. 11, Art. 272",
+      "arxiv": "2501.00703",
+      "doi": "10.1007/s00220-025-05451-x",
+      "in_preprint_bibliography": false
+    },
+    "MingoSpeicher2017-FreeProbabilityRandomMatrices": {
+      "authors": [
+        "J. A. Mingo",
+        "R. Speicher"
+      ],
+      "title": "Free Probability and Random Matrices",
+      "year": 2017,
+      "venue": "Fields Institute Monographs 35, Springer",
+      "arxiv": null,
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "JekelPi2023-ElementaryProofChiLeqChiStar": {
+      "authors": [
+        "D. Jekel",
+        "J. Pi"
+      ],
+      "title": "An elementary proof of the inequality chi <= chi* for conditional free entropy",
+      "year": 2023,
+      "venue": "Doc. Math. 29 (2024) 1085–1124",
+      "arxiv": "2305.02574",
+      "doi": "10.4171/DM/969",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "JP"
+    },
+    "ShlyakhtenkoTao2020-FractionalFreeConvolutionPowers": {
+      "authors": [
+        "D. Shlyakhtenko",
+        "T. Tao"
+      ],
+      "title": "Fractional free convolution powers (with an appendix by D. Jekel)",
+      "year": 2020,
+      "venue": "Indiana Univ. Math. J.",
+      "arxiv": "2009.01882",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "Diez2023-FreeSteinKernelsHigherOrderDerivatives": {
+      "authors": [
+        "C.-P. Diez"
+      ],
+      "title": "Free Stein kernels, free moment maps, and higher order derivatives",
+      "year": 2023,
+      "venue": "preprint",
+      "arxiv": "2306.00967",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "FathiNelson2016-FreeSteinKernelsFreeLSI": {
+      "authors": [
+        "M. Fathi",
+        "B. Nelson"
+      ],
+      "title": "Free Stein kernels and an improvement of the free logarithmic Sobolev inequality",
+      "year": 2016,
+      "venue": "Adv. Math. 317 (2017) 193–223",
+      "arxiv": "1605.05828",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "Cebron2018-QuantitativeFourthMomentFree": {
+      "authors": [
+        "G. Cébron"
+      ],
+      "title": "A quantitative fourth moment theorem in free probability theory",
+      "year": 2018,
+      "venue": "Adv. Math. 380 (2021) 107579",
+      "arxiv": "1803.09669",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "NL-Voiculescu1996": {
+      "authors": [
+        "D. Voiculescu"
+      ],
+      "title": "The analogues of entropy and of Fisher's information measure in free probability theory III: The absence of Cartan subalgebras",
+      "year": 1996,
+      "venue": "Geom. Funct. Anal. 6 (1996) 172–199",
+      "arxiv": null,
+      "doi": "10.1007/BF02246772",
+      "in_preprint_bibliography": false
+    },
+    "Biane2001-EntropieLibreAlgebresOperateurs": {
+      "authors": [
+        "P. Biane"
+      ],
+      "title": "Entropie libre et algèbres d'opérateurs",
+      "year": 2001,
+      "venue": "Séminaire Bourbaki, exp. 889, Astérisque 282 (2002) 279–300",
+      "arxiv": null,
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "Dykema1996-TwoApplicationsFreeEntropy": {
+      "authors": [
+        "K. Dykema"
+      ],
+      "title": "Two applications of free entropy",
+      "year": 1996,
+      "venue": "Math. Ann. 308 (1997) 547–558",
+      "arxiv": "funct-an/9605005",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "NL-Ge1996": {
+      "authors": [
+        "L. Ge"
+      ],
+      "title": "Prime factors",
+      "year": 1996,
+      "venue": "Proc. Natl. Acad. Sci. USA 93 (1996) 12762–12763",
+      "arxiv": null,
+      "doi": "10.1073/pnas.93.23.12762",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "Ge"
+    },
+    "Szarek1997-MetricEntropyHomogeneousSpaces": {
+      "authors": [
+        "S. J. Szarek"
+      ],
+      "title": "Metric entropy of homogeneous spaces",
+      "year": 1997,
+      "venue": "Banach Center Publ. 43 (1998) 395–410",
+      "arxiv": "math/9701213",
+      "doi": null,
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "Szarek"
+    },
+    "EffrosPopa2003-FeynmanDiagramsWickProducts": {
+      "authors": [
+        "E. G. Effros",
+        "M. Popa"
+      ],
+      "title": "Feynman diagrams and Wick products associated with q-Fock space",
+      "year": 2003,
+      "venue": "Proc. Natl. Acad. Sci. USA 100 (2003) 8629–8633",
+      "arxiv": "math/0303045",
+      "doi": "10.1073/pnas.1531460100",
+      "in_preprint_bibliography": false
+    },
+    "KempEtAl2010-WignerChaosFourthMoment": {
+      "authors": [
+        "T. Kemp",
+        "I. Nourdin",
+        "G. Peccati",
+        "R. Speicher"
+      ],
+      "title": "Wigner chaos and the fourth moment",
+      "year": 2010,
+      "venue": "Ann. Probab. 40 (2012) 1577–1635",
+      "arxiv": "1009.3949",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "NL-BianeSpeicher1998": {
+      "authors": [
+        "P. Biane",
+        "R. Speicher"
+      ],
+      "title": "Stochastic calculus with respect to free Brownian motion and analysis on Wigner space",
+      "year": 1998,
+      "venue": "Probab. Theory Related Fields 112 (1998) 373–409",
+      "arxiv": null,
+      "doi": "10.1007/s004400050194",
+      "in_preprint_bibliography": false
+    },
+    "NL-BozejkoKummererSpeicher1997": {
+      "authors": [
+        "M. Bożejko",
+        "B. Kümmerer",
+        "R. Speicher"
+      ],
+      "title": "q-Gaussian processes: non-commutative and classical aspects",
+      "year": 1997,
+      "venue": "Comm. Math. Phys. 185 (1997) 129–154",
+      "arxiv": null,
+      "doi": "10.1007/s002200050084",
+      "in_preprint_bibliography": false
+    },
+    "NL-Voiculescu1998": {
+      "authors": [
+        "D. Voiculescu"
+      ],
+      "title": "The analogues of entropy and of Fisher's information measure in free probability theory. V. Noncommutative Hilbert transforms",
+      "year": 1998,
+      "venue": "Invent. Math. 132 (1998) 189–227",
+      "arxiv": null,
+      "doi": "10.1007/s002220050222",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "Vstar"
+    },
+    "Voiculescu2001-FreeEntropySurvey": {
+      "authors": [
+        "D. Voiculescu"
+      ],
+      "title": "Free entropy",
+      "year": 2001,
+      "venue": "Bull. London Math. Soc. 34 (2002) 257–278",
+      "arxiv": "math/0103168",
+      "doi": "10.1112/S0024609301008992",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "Vsurvey"
+    },
+    "Shlyakhtenko2005-NotesFreeProbabilityTheory": {
+      "authors": [
+        "D. Shlyakhtenko"
+      ],
+      "title": "Notes on free probability theory",
+      "year": 2005,
+      "venue": "lecture notes (CIRM mini-course)",
+      "arxiv": "math/0504063",
+      "doi": null,
+      "in_preprint_bibliography": false
+    }
+  },
+  "findings": [
+    {
+      "id": "F1",
+      "slug": "noised-models-finite-entropy",
+      "in_report": true,
+      "relationship": "same result",
+      "centrality": "central",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": true,
+      "overstated_novelty": false,
+      "technique": "Finite microstates entropy of a tuple perturbed by small free semicircular noise",
+      "summary": "Lemma 4.2, the finiteness half of Theorem 1.1, is a case of Voiculescu's inequality chi(X_1+Y_1, ...) >= chi(Y_1, ...) for X_j in the von Neumann algebra of further free variables of finite entropy: since Y is atomic, W*(C) embeds trace-preservingly in L(F_2) by Voiculescu's compression theorem, giving chi(X) >= (n/2) log(2 pi e h). Jung's inequality gives the same bound for any tuple with matrix models. The preprint cites Voiculescu's paper only for the definition of chi.",
+      "preprint_locations": [
+        "Lemma 4.2 (p. 9)",
+        "§4, models (p. 8)"
+      ],
+      "credit_in_preprint": "Voiculescu's paper is cited only for the definition of chi in §1 (p. 1); the proof of Lemma 4.2 cites only the preprint's own convergence facts.",
+      "sources": [
+        {
+          "key": "Voiculescu1994-AnaloguesEntropyFisherII",
+          "locators": "Prop. 5.5 (p. 431); proof of Prop. 6.5 (p. 435)",
+          "role": "the entropy inequality that gives the lemma",
+          "credit_status": "cited_for_other_content"
+        },
+        {
+          "key": "NL-Voiculescu1990",
+          "locators": null,
+          "role": "compression theorem embedding W*(C) in L(F_2)",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "MingoSpeicher2017-FreeProbabilityRandomMatrices",
+          "locators": "(6.3) (p. 172)",
+          "role": "statement of the compression theorem",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "Jung2002-FreeEntropyDimensionLemma",
+          "locators": "proof of Lemma 2.2 (pp. 3–4)",
+          "role": "the same bound for any tuple with matrix models, by translation",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "Jekel2025CMP-InformationGeometryTypesLargeN",
+          "locators": "proof of Claim 4.15 (pp. 46–47)",
+          "role": "the same proof structure for a tensor-coordinate tuple",
+          "credit_status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "F2",
+      "slug": "elementary-heat-flow-transfer",
+      "in_report": true,
+      "relationship": "same result",
+      "centrality": "central",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": false,
+      "overstated_novelty": true,
+      "novelty_claim": "Overview of the proof of Theorem 1.1 in §1 (p. 2)",
+      "technique": "Microstates entropy bounded by the entropy of GUE-evolved microstate models minus the integrated free Fisher information",
+      "summary": "The inequality (13) of Lemma 5.1 is, for trivial conditioning, the display at the foot of p. 27 in Jekel and Pi's proof of chi <= chi*, for the same ensembles, and the proof of Lemma 5.1 follows theirs step by step. The preprint cites Jekel and Pi there only for their Proposition 6.1, and its overview of the proof of Theorem 1.1 presents the retention of the terminal entropies as what Lemma 5.1 adds.",
+      "preprint_locations": [
+        "Lemma 5.1, (13) (p. 10) and its proof (pp. 10–11)",
+        "Lemmas 2.1–2.2 (pp. 3–5)",
+        "§1, overview of the proof of Theorem 1.1 (p. 2)"
+      ],
+      "credit_in_preprint": "Jekel–Pi is cited for its elementary proof of chi <= chi* in §1 (p. 1) and, at the transfer, only for Proposition 6.1 (pp. 2, 10); the proof of their Theorem 6.4, which contains (13), is not cited.",
+      "sources": [
+        {
+          "key": "JekelPi2023-ElementaryProofChiLeqChiStar",
+          "locators": "proof of Thm 6.4, display at the foot of p. 27; Thm 4.10 (pp. 16–19); (3.2) (p. 11); Prop. 6.1 (p. 24)",
+          "role": "the inequality (13) and its proof",
+          "credit_status": "credited_in_part"
+        },
+        {
+          "key": "ShlyakhtenkoTao2020-FractionalFreeConvolutionPowers",
+          "locators": "Appendix B, Prop. B.7 (p. 29)",
+          "role": "realization of chi by uniform laws on microstate sets",
+          "credit_status": "credited_elsewhere"
+        }
+      ]
+    },
+    {
+      "id": "F3",
+      "slug": "stein-kernel-chaos-lift",
+      "in_report": true,
+      "relationship": "same technique",
+      "centrality": "central",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": true,
+      "overstated_novelty": false,
+      "technique": "A Fisher-deficit bound from higher-order Stein kernels lifted to semicircular chaos",
+      "summary": "The proof of Proposition 3.2, with the lift (5) for r >= 2, follows the free Stein-kernel argument of Fathi and Nelson in Diez's higher-order form: the relative score of the smoothed tuple is the conditional expectation of the signal's Stein kernel lifted into the semicircular chaos of the noise, and the chaos isometry and projection give the bound. Here the free cumulants of the signal serve as constant kernels of every order. The preprint cites none of these works.",
+      "preprint_locations": [
+        "Lemma 3.1, (5) for r >= 2 (p. 5)",
+        "Proposition 3.2 and its proof (pp. 6–7)"
+      ],
+      "credit_in_preprint": "Not cited; the preprint cites Speicher and Nica–Speicher only for the noncrossing cumulant calculus (pp. 2, 5) and Voiculescu's FE V only for definitions (p. 1).",
+      "sources": [
+        {
+          "key": "Diez2023-FreeSteinKernelsHigherOrderDerivatives",
+          "locators": "Lemma 4, (106) (p. 29), proof pp. 29–34; (103) (p. 28)",
+          "role": "higher-order free Stein-kernel bound via semicircular chaos",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "FathiNelson2016-FreeSteinKernelsFreeLSI",
+          "locators": "Lemma 2.4 (p. 9)",
+          "role": "introduced the first-order free device that Diez extends",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "Cebron2018-QuantitativeFourthMomentFree",
+          "locators": "Lemma 2.6 (p. 5)",
+          "role": "first-order version without regularity of the signal",
+          "credit_status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "F4",
+      "slug": "commuting-coordinate-entropy-deficit",
+      "in_report": true,
+      "relationship": "adapted",
+      "centrality": "central",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": true,
+      "overstated_novelty": false,
+      "technique": "A coordinate commuting with free semicirculars, kept through small free noise, forces an entropy deficit on matrix models",
+      "summary": "Jekel's counterexample in the setting of laws perturbs free semicirculars and a tensor-independent semicircular by small free semicircular noise, obtaining finite microstates entropy while matrix models that inherit the near-commutation lose entropy. The preprint builds the tuple of Theorem 1.1 on the same construction, with an atomic coordinate, and proves the deficit for the law's own evolved ensembles by a different estimate. It does not cite Jekel's paper.",
+      "preprint_locations": [
+        "§4 (p. 7)",
+        "(12) (p. 9)",
+        "(19), Lemma 6.1 (p. 12)",
+        "proof of Theorem 1.1 (pp. 13–14)"
+      ],
+      "credit_in_preprint": "Not cited; the introduction (p. 2) cites Ge's argument for prime factors only as an antecedent for commutation constraints on microstate volumes in general.",
+      "sources": [
+        {
+          "key": "Jekel2025CMP-InformationGeometryTypesLargeN",
+          "locators": "§4.4: construction (pp. 45–46), Claim 4.15 (pp. 46–47), Claim 4.16 (p. 47, proof pp. 47–51)",
+          "role": "the construction and the inherited-commutation entropy deficit",
+          "credit_status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "F5",
+      "slug": "block-covering-unitary-net",
+      "in_report": true,
+      "relationship": "adapted",
+      "centrality": "central",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": true,
+      "overstated_novelty": false,
+      "technique": "Bounding the measure of matrix tuples with a common block structure by a unitary net over fixed blocks",
+      "summary": "The Gaussian half of Lemma 6.1 adapts the covering argument of Voiculescu's FE III (finite free entropy excludes property Gamma and Cartan subalgebras): conjugate a block decomposition to fixed blocks, pay once for an operator-norm unitary net, and bound each net point. The estimate at each net point becomes a Gaussian chi-square tail over all rank lists. The preprint cites none of FE III, its expositions or Dykema's many-block version; it names Ge's later argument as an antecedent and cites Szarek for the net.",
+      "preprint_locations": [
+        "Lemma 6.1 (p. 12), Gaussian bound proved on p. 13"
+      ],
+      "credit_in_preprint": "Not cited where used (§6 cites nothing); the introduction (p. 2) names Ge's argument for prime factors as an antecedent and cites Szarek for the net bound.",
+      "sources": [
+        {
+          "key": "NL-Voiculescu1996",
+          "locators": "property Gamma argument, as expounded by Biane (Lemme 6.3, pp. 289–290) and Mingo–Speicher (§7.7.1, Lemma 9, pp. 196–198)",
+          "role": "originated the covering argument",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "Biane2001-EntropieLibreAlgebresOperateurs",
+          "locators": "Lemme 6.3 (pp. 289–290)",
+          "role": "exposition of the FE III covering",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "MingoSpeicher2017-FreeProbabilityRandomMatrices",
+          "locators": "§7.7.1, Lemma 9 (pp. 196–198)",
+          "role": "textbook exposition of the FE III covering",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "Dykema1996-TwoApplicationsFreeEntropy",
+          "locators": "Lemma 2.2 (pp. 3–7)",
+          "role": "many-block version closest in form",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "NL-Ge1996",
+          "locators": "Lemma 2 and its proof outline",
+          "role": "later commutation-constraint argument named as an antecedent",
+          "credit_status": "credited_in_part"
+        },
+        {
+          "key": "Szarek1997-MetricEntropyHomogeneousSpaces",
+          "locators": "(1) (p. 1)",
+          "role": "volumetric bound for the net",
+          "credit_status": "credited_in_part"
+        }
+      ]
+    },
+    {
+      "id": "F6",
+      "slug": "semicircular-wick-polynomials",
+      "in_report": true,
+      "relationship": "same result",
+      "centrality": "supporting",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": true,
+      "overstated_novelty": false,
+      "technique": "Orthonormal semicircular Wick polynomials given by deleting adjacent pairs",
+      "summary": "The preprint's semicircular Wick polynomials, defined by signed deletion of disjoint adjacent pairs and shown orthonormal, are Effros and Popa's free (q = 0) Wick products, whose orthonormality follows from their vacuum characterization; Kemp, Nourdin, Peccati and Speicher give the orthonormality of the equal products of Chebyshev polynomials over runs. The preprint cites neither and gives no source for the family.",
+      "preprint_locations": [
+        "Lemma 3.1 (p. 5) and its proof (p. 6)",
+        "proof of Proposition 3.2 (p. 7)",
+        "§1 (p. 2)"
+      ],
+      "credit_in_preprint": "Not cited; the §1 sentence naming the polynomials cites Speicher and Nica–Speicher only for the noncrossing cumulant calculus (p. 2).",
+      "sources": [
+        {
+          "key": "EffrosPopa2003-FeynmanDiagramsWickProducts",
+          "locators": "(12) (p. 12); p. 7",
+          "role": "the explicit formula and the vacuum characterization",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "KempEtAl2010-WignerChaosFourthMoment",
+          "locators": "Prop. 3.1 and (3.2) (p. 29)",
+          "role": "orthonormality of Chebyshev products over runs",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "NL-BianeSpeicher1998",
+          "locators": null,
+          "role": "Wigner-chaos framework that Kemp et al. follow",
+          "credit_status": "not_cited"
+        },
+        {
+          "key": "NL-BozejkoKummererSpeicher1997",
+          "locators": null,
+          "role": "q-Wick products as defined by Effros and Popa",
+          "credit_status": "not_cited"
+        }
+      ]
+    },
+    {
+      "id": "F7",
+      "slug": "semicircular-perturbation-fisher-facts",
+      "in_report": true,
+      "relationship": "same result",
+      "centrality": "peripheral",
+      "form_of_inclusion": "citation",
+      "attribution_gap": false,
+      "overstated_novelty": false,
+      "technique": "Conjugate variables of a free semicircular perturbation as the projected rescaled noise",
+      "summary": "The last statement of Lemma 3.1, that the conjugate variables of C + sqrt(u) S exist and equal u^{-1/2} E[S_i | W*(Z)], is Voiculescu's formula from FE V (Cor. 3.9). The preprint cites FE V only for definitions and proves the formula as the r = 1 case of its own identity.",
+      "preprint_locations": [
+        "Lemma 3.1 (p. 5) and the r = 1 step of its proof (p. 6)"
+      ],
+      "credit_in_preprint": "FE V is cited only in the introduction (p. 1), for the definitions of conjugate variables, free Fisher information and chi*.",
+      "sources": [
+        {
+          "key": "NL-Voiculescu1998",
+          "locators": "Cor. 3.9 (as quoted by Major–Shlyakhtenko, p. 4, and Cébron, p. 6)",
+          "role": "the conjugate-variable formula for a semicircular perturbation",
+          "credit_status": "cited_for_other_content"
+        }
+      ]
+    },
+    {
+      "id": null,
+      "slug": "semicircular-perturbation-fisher-bounds",
+      "in_report": false,
+      "relationship": "same result",
+      "centrality": "peripheral",
+      "form_of_inclusion": "none",
+      "attribution_gap": false,
+      "overstated_novelty": false,
+      "technique": "The two-sided bound on the free Fisher information of a free semicircular perturbation",
+      "summary": "The bound sum_i 1/v_i(u) <= Phi*(V_u) <= n/u of Proposition 3.2 is the free Cramer–Rao inequality (FE V, Prop. 6.9) in per-coordinate form together with the contraction bound that follows from Voiculescu's formula (FE V, Cor. 3.9). The preprint proves both in two lines and cites FE V only for definitions.",
+      "preprint_locations": [
+        "Proposition 3.2 and the first lines of its proof (p. 6)"
+      ],
+      "credit_in_preprint": "FE V and Voiculescu's survey are cited only for definitions and for §§3.5, 3.8 of the survey (p. 1); the bound is stated without citation.",
+      "sources": [
+        {
+          "key": "NL-Voiculescu1998",
+          "locators": "Prop. 6.9 and Cor. 3.9 (as quoted by Nica–Shlyakhtenko–Speicher, p. 1, and Voiculescu's survey, p. 17)",
+          "role": "the free Cramer–Rao inequality and the formula behind the upper bound",
+          "credit_status": "cited_for_other_content"
+        },
+        {
+          "key": "Voiculescu2001-FreeEntropySurvey",
+          "locators": "J.3 (p. 16); Phi*.3 (p. 17)",
+          "role": "restates both facts",
+          "credit_status": "cited_for_other_content"
+        },
+        {
+          "key": "Shlyakhtenko2005-NotesFreeProbabilityTheory",
+          "locators": "p. 35",
+          "role": "states n/(1+t) <= Phi* <= n/t in total-variance form",
+          "credit_status": "not_cited"
+        }
+      ]
+    }
+  ]
+}
