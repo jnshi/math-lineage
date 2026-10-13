@@ -52,7 +52,7 @@ See `<skill>/assets/precedence-findings.example.json` for a complete example. It
 - `findings[]`: `{id, slug, in_report, relationship, centrality, form_of_inclusion, attribution_gap, overstated_novelty, novelty_claim?, technique, summary, preprint_locations[], credit_in_preprint, sources: [{key, locators, role, credit_status}]}`.
   - `id` is the printed ID (`F1`, `F2`, …, without gaps, in magnitude order) for a finding in the report, and `null` for one kept in the JSON only.
   - `slug` is the fragment's slug, which also identifies a JSON-only finding.
-  - `in_report` is false exactly when the persona's `form_of_inclusion` is `none`: an in-scope finding, or a component of a merged finding, that the persona judged not worth a pointer. Such records stay here so the record of the missing citation survives. Findings withdrawn on a fact, findings whose claims were rejected, and anything out of scope (including what the persona places under an exclusion) are not in the JSON.
+  - `in_report` is false exactly when the persona's `form_of_inclusion` is `none`: an in-scope finding, or a component of a merged finding, that the persona judged not worth a pointer, or placed under an exclusion on its judgment alone, with no passage named. Such records stay here so the record of the missing citation survives. Findings withdrawn on a fact, findings whose claims were rejected, and anything out of scope on a stated fact (including what the persona places under an exclusion on a textbook passage it names, or a date) are not in the JSON.
   - `relationship`: `same result`, `same technique`, `adapted`, `proof shortcut`, `same route`, `fragment` or `weaker result` (in sort order).
   - `centrality`: `main result`, `central`, `supporting` or `peripheral` (best-effort judgment). A weaker result is never `main result`.
   - `form_of_inclusion`: `citation`, `sentence`, `paragraph` or `none`, from the author-persona check. With overstated novelty, it describes the change to the abstract or framing, and is never `citation`.
@@ -61,7 +61,7 @@ See `<skill>/assets/precedence-findings.example.json` for a complete example. It
   - `technique` is the finding's title as printed (a gloss without citations). Keep it in sync when titles change.
   - `preprint_locations` uses compiled numbering and printed pages, for example `"§3 (p. 7)"` or `"Lemma 8.2 (pp. 31–32)"`.
   - `credit_in_preprint` is one sentence: what the preprint cites for this content, and where.
-  - `sources` lists the **principal** earlier work first: the one that holds the finding's relationship, judged against its whole content (if several hold it equally, the one the others credit or build on, otherwise the earliest). The others are satellites; if the idea's originator is among them, it comes next. Each source has:
+  - `sources` lists the **principal** earlier work first: the one that holds the finding's relationship, judged against its whole content (works holding the same relationship type are tied, however closely each matches; among them, the one the others credit or build on, otherwise the earliest). The others are satellites; if the idea's originator is among them, it comes next. Each source has:
     - `locators`: where in that work, with printed pages, or null;
     - `role`: what that work contributes to the finding, in a few words;
     - `credit_status`, one of:

@@ -22,10 +22,9 @@ Usage: python3 -I -X utf8 merge_library.py <source prior-work dir> <target prior
    .bib .sty .cls files) when the target has no papers/<key>.pdf or this run
    copied it, so a PDF and its text always come from the same library.
    Symbolic links (and, on Python 3.12 or later, junctions) are skipped.
-4. Merges the rows into the target INDEX.md. The "Cited by the preprint?" and
-   "Added by" cells get a "<tag>: " prefix, because the source's "Cited by"
-   refers to another preprint. A dated note above the table explains the tag;
-   it is added once per tag.
+4. Merges the rows into the target INDEX.md. The "Added by" cells get a
+   "<tag>: " prefix. A dated note above the table explains the tag; it is added
+   once per tag.
 5. Reports imported keys without papers/<key>.pdf in the target. A file that
    could not be copied is reported and makes the exit status 1.
 
@@ -44,7 +43,7 @@ TAG_RE = re.compile(r"[A-Za-z0-9._-]+")
 KEY_RE = re.compile(r"[A-Za-z0-9._-]{1,60}")
 SRC_EXT = (".tex", ".bbl", ".bib", ".sty", ".cls")
 DOWN, CHECKED = "## Downloaded papers", "## Checked but not downloaded"
-DOWN_COLS, CHECKED_COLS = 6, 5
+DOWN_COLS, CHECKED_COLS = 5, 4
 isjunction = getattr(os.path, "isjunction", lambda p: False)
 
 if len(sys.argv) != 4:
@@ -105,7 +104,7 @@ def key_of(cells):
 def checked_id(cells):
     """A checked row's identity: cells with spaces collapsed, tag prefixes off "Added by"."""
     cells = [" ".join(c.split()) for c in cells]
-    cells[4] = re.sub(r"^(?:[A-Za-z0-9._-]+: )+", "", cells[4])
+    cells[3] = re.sub(r"^(?:[A-Za-z0-9._-]+: )+", "", cells[3])
     return tuple(cells)
 
 
@@ -130,6 +129,13 @@ for heading, t in ((DOWN, src_down), (CHECKED, src_chk)):
         print(f"note: {src_index} has no {heading!r} table; nothing imported from it")
 down = src_down[1] if src_down else []
 chk = src_chk[1] if src_chk else []
+for lines, path in ((dst, dst_index), (src, src_index)):
+    for heading, want in ((DOWN, DOWN_COLS), (CHECKED, CHECKED_COLS)):
+        t = table(lines, heading)
+        if t is not None:
+            n = len(split_row(lines[t[0] - 1]))
+            if n != want:
+                sys.exit(f"{path}: the {heading!r} table has {n} columns, expected {want}. Nothing was copied.")
 
 # ---------------------------------------------------------------- 2. rows to import
 bad = []
@@ -150,7 +156,7 @@ for r in down:
         continue
     have_keys.add(key)
     keys.append(key)
-    down_new.append(retag(cells, [3, 4]))
+    down_new.append(retag(cells, [3]))
 chk_new, chk_present = [], 0
 for r in chk:
     cells = split_row(r)
@@ -161,7 +167,7 @@ for r in chk:
         chk_present += 1
         continue
     have_chk.add(checked_id(cells))
-    chk_new.append(retag(cells, [4]))
+    chk_new.append(retag(cells, [3]))
 
 # ---------------------------------------------------------------- 3. files of the imported rows
 stats = {sub: {"copied": 0, "kept": 0, "link": 0} for sub in ("papers", "text", "src")}
@@ -225,10 +231,7 @@ for key in keys:
 # ---------------------------------------------------------------- 4. the target INDEX.md
 note_start = f"- **Imported rows.** Rows whose \"Added by\" starts with `{tag}:`"
 note = (f"{note_start} were copied on "
-        f"{datetime.date.today().isoformat()}, with their files, from the library of the `{tag}` review. "
-        f"In those rows the \"Cited by the preprint?\" cell refers to that review's preprint, not to this one, "
-        f"and the Relevance notes were written for that review: read them for what a paper contains, never as a "
-        f"ruling on this preprint.")
+        f"{datetime.date.today().isoformat()}, with their files, from the library of the `{tag}` review.")
 if down_new or chk_new:
     if not any(l.startswith(note_start) for l in dst):
         k = next(k for k, l in enumerate(dst) if l.strip() == DOWN)

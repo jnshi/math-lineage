@@ -1,40 +1,22 @@
 # Findings digest: {review}
 
-The coordinator maintains this file after every section. Section subagents read it instead of all the earlier reports; the full reports are `NN-*.md`. Consolidation and the drafters read it too; author-persona checks never do. The rules (scope, relationships, credit, what may be ruled out) are in the briefs and in the skill's `references/scope-and-relationships.md`. They are not repeated here, so they cannot go out of date.
+Each section agent writes the digest of its section, for the agents that come after it; the coordinator copies it here verbatim after the hand-back, and adds only its own check results. Section subagents read this file instead of all the earlier reports; the full reports are `NN-*.md`. Consolidation and the drafters read it too; author-persona checks never do. The rules (scope, relationships, credit, what may be ruled out) are in the briefs and in the skill's `references/scope-and-relationships.md`. They are not repeated here, so they cannot go out of date.
 
 Here a finding is any candidate a section pass reported (`§N-k`). The write-up's findings (F1, F2, …) are those that survive consolidation, drafting and the author-persona check, possibly merged or split, so the two numberings don't correspond one to one.
 
-**Author-name check:** {for each finding: the source's author names, its bib key, and the names the source and the preprint give the approach; each sentence where they appear in the preprint, its abstract or its bibliography, and what that sentence cites}
+## Section digests
 
-## Findings
+### §N digest
 
-Describe each finding by the section report's own statement of the shared approach, quoted rather than summarized, since later agents read this table instead of the reports. List its earlier works unranked: consolidation names the principal.
+{the `## Digest` section of `NN-<section-slug>.md`, verbatim}
 
-| ID | Shared approach (the report's statement, quoted) | Earlier works (each with locator, relationship to this section's content, and credit status) | Where in the paper (dependency chain) | Differences | Hand-back check (locators read) |
-|---|---|---|---|---|---|
+- **Hand-back check (coordinator):** {for each finding: the locators read, and whether each claimed match was present}.
+- **Author-name check (coordinator):** {for each finding: the source's author names, its bib key, and the names the source and the preprint give the approach; each sentence where they appear in the preprint, its abstract or its bibliography, and what that sentence cites}.
+- {any "Note (coordinator)" line under the entry it concerns, if a check changed a ruling}
 
-## Overstated novelty
+## Credit-map items (for consolidation)
 
-- **{ID}:** {the claim, quoted, and its location: the abstract, a statement of significant contributions, or the framing of a main result}; {the cited earlier work that covers it, and where the preprint cites it}.
-
-## Earlier-result one-liners (for consolidation)
-
-- §N: {earlier result, locator, date}; {the main result, or statement presented as a significant contribution, that it precedes}.
-
-## Ruled out (don't re-check)
-
-- **{item}:** {the fact that rules it out} (§N).
-
-## Recurrences, proposed works, corrections, and merge or split candidates (for consolidation)
-
-- §N: {finding} also at {locations}.
-- §N: earlier work proposed for {finding}: {work, locator, its relationship to that section's part of the content, and its credit status; the evidence is in the §N report}.
-- Merge and split candidates (decided at consolidation, by the coordinator unless the user asked at the start to decide them): {IDs, reason}.
-- Corrections reported by agents: {what and where}.
-
-## Proof shortcuts (noted)
-
-- {paper span}. {published result and locator}. {what becomes a citation}. {status of the coordinator's check}.
+- {each (c) item of `COMPANION-CREDIT-MAP.md`, by its ID and locators, as the credit map gives it}
 
 ## User decisions
 
@@ -42,9 +24,9 @@ Describe each finding by the section report's own statement of the shared approa
 
 ## Write-up: slugs, order and changes during drafting
 
-| Slug | ID | Relationship | Principal (named at consolidation) | Centrality (dependency chain) | Flags | Drafting outcome (pages; proposed changes; dropped components; withdrawal and its fact) |
+| Slug | ID | Relationship | Principal | Centrality (dependency chain) | Flags | Drafting outcome (pages; departures from consolidation's proposal; dropped components; withdrawal and its fact) |
 |---|---|---|---|---|---|---|
 
 ## Final verdicts
 
-Filled in after the author-persona check: form of inclusion, claims verdict, the relationship and centrality you settled, errata count, the length applied, and which findings stay in the JSON only.
+Filled in after the author-persona check: form of inclusion, claims verdict, the relationship and centrality settled, errata count, the length applied, and which findings stay in the JSON only.

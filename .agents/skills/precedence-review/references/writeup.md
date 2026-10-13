@@ -36,16 +36,20 @@ This can overlap with the last section pass.
    - Keep it tight; it is not the review's own account of the paper.
    - Don't include a section/page map; the preprint has its own table of contents.
 3. **Test-compile** it with `bash <skill>/scripts/fragment_test.sh parts/preamble.tex parts/overview.tex <scratch>/overview-test`.
-4. **List the findings** from `FINDINGS.md`, with the relationships, centralities and magnitude order you settled at consolidation.
+4. **List the findings** from `FINDINGS.md`, with consolidation's proposed relationships, centralities and magnitude order.
    - Give each one a short slug, such as `kac-rice-complexity`, which becomes its file name.
    - Put their `\input` lines in the main file in magnitude order.
-   - Merges and splits are your decision, unless the user asked at the start to decide them; then recommend one and ask, and launch the drafters the decision doesn't affect in the meantime.
+   - Merges and splits are the consolidation agent's decisions, unless the user asked at the start to decide them; then put its recommendation to them, and launch the drafters the decision doesn't affect in the meantime.
 
 ## Drafting brief
 Write the shared part to `<scratch>/writeup-brief.md`. Each agent's prompt is a pointer to that file ("read it completely first and follow it") followed by a `## YOUR FINDING` block. Launch all drafting agents **in parallel**, in the background.
 
 ````text
 You are drafting ONE finding for a LaTeX report about a mathematics preprint, titled "Missing citations in “{TITLE}”". The readers are **human experts in the field who have not read the preprint and will only read the PDF**. Each finding points them to earlier work that already contains part of the preprint, and says plainly that the preprint doesn't cite it there. Readers must be able to check each claim against the two papers: precise statements, exact compiled locators, and correspondences laid out side by side. The document must be **concise**. Today is {TODAY}.
+
+**What the review is for.** Each finding is a missing citation: earlier work that already contains part of the preprint, which a reader can't reach from the preprint itself. The one exception is overstated novelty: earlier work the preprint does cite, but whose content its abstract or framing presents as new. Recording a finding serves two purposes, in this order.
+1. **Understanding.** It gives an expert the pointer the preprint doesn't: where an idea comes from, what familiar machinery is in play, and where to find its origins. This purpose decides which findings go into the write-up, how much space each gets, and that the relationship is described precisely.
+2. **Accountability.** It records that the citation is missing, or that cited content is presented as new. The write-up says so plainly in every entry, the summary table and the JSON keep the credit status, and the flags mark the most serious cases.
 
 ## Context
 - **The preprint:** "{TITLE}" ({DATE}). TeX: `{PREPRINT_DIR}/build/sections/*.tex`; bibliography: `{BIBLIOGRAPHY FILE}`; compiled PDF: `{PREPRINT_DIR}/{PDF NAME}`.
@@ -59,14 +63,17 @@ You are drafting ONE finding for a LaTeX report about a mathematics preprint, ti
 ## Definitions (About has them in full)
 - **Relationship:** same technique (reused essentially intact; new ingredients around it don't change that); adapted (structure followed, core changed); fragment (one piece of the technique); same route (an earlier paper proposed the strategy); same result; weaker result (weaker, special-case or partial-range version of a main result, or of a statement presented as a significant contribution); proof shortcut (a published result would replace a large part of the argument).
 - **Centrality** (best-effort judgment): main result (the earlier work covers the main result itself, or most of it), central, supporting, peripheral.
+- **Principal:** the earlier work listed first, which holds the finding's relationship. Works holding the same relationship type are tied, however closely each matches; the tie goes to the one the others credit or build on, otherwise the earliest.
 - **Credit status:** not cited; cited for other content; credited elsewhere (not where it is used, in a way that an expert reader who doesn't know the earlier work might not connect with it); credited in part. A citation counts only if it is for that specific content.
 - **Canonical origin:** for a classical named device (the Onsager correction, Kac–Rice, and the like), establish its origin first, and read what the origin contains. If the preprint cites that origin, or names the device by its standard name where it uses it, a later work is a missing citation only for content specific to it that the origin lacks; write the finding about that content.
 - **The one exception, overstated novelty:** the earlier work is cited, but the abstract or framing presents the content as new.
 
 ## Approaches
-**Compare approaches, not only steps.** A technique is an approach to a problem: what the authors needed, the insight that a particular way of getting it would work, and the steps that carry it out. The approach and its insight are what an expert recognizes, and what earlier authors are owed credit for. Compare the two papers at that level as well as step by step: what each needed, how each chose to get it, and why that works. Standard tools put together in a specific way, for a specific need, in the same setting, are not standard. If a source gives its approach a name, take that as a strong sign that the approach is one unit, and look for it in the preprint under any name. If the preprint follows the approach but does a key step differently, the relationship is adapted; that is not a reason to drop it.
+**Compare approaches, not only steps.** A technique is an approach to a problem: what the authors needed, the insight that a particular way of getting it would work, and the selection of ingredients needed to carry it out. The approach and its insight are what an expert recognizes, and what earlier authors are owed credit for. Compare the two papers at that level as well as step by step: what each needed, how each chose to get it, and why that works. Standard tools put together in a specific way, for a specific need, in the same setting, are not standard. If a source gives its approach a name, take that as a strong sign that the approach is one unit, and look for it in the preprint under any name. If the preprint follows the approach but does a key step differently, the relationship is adapted; that is not a reason to drop it.
 
 In the Summary, state in a sentence or two the approach the two papers share, the insight behind it and whose insight it is, and keep that statement through any shortening. Where the steps differ, say which part of the approach each one serves.
+
+**Your own understanding.** Read the section report's entry for your finding, including any notes under it, the preprint and the earlier works, and synthesize your own understanding of the finding, according to the aims of this review and the definitions above. Do your best to capture what is true. The user's rulings quoted in your finding block are decisions already made; follow them.
 
 ## Structure
 ```
@@ -105,8 +112,8 @@ Length: **at most 3 pages**, usually 2–2.5 (a merged finding may use up to abo
 - numbered table captions ("Table 3"). Say "the table below".
 
 ## If the finding doesn't hold
-Re-verify every claim against the actual passages. The reports may be wrong; use the correct version and list corrections in your final message.
-- **Write the finding with the assigned relationship and centrality.** If you think another fits better, propose it with reasons in your final message, not in the fragment. The coordinator settles it after the persona check.
+Re-verify every claim against the actual passages. The reports may be wrong; use the correct version and list corrections in your final message. Check in particular whether each citation the preprint makes near the content covers it. For a proof shortcut, check the normalizations and hypotheses, and that the claimed independent route really is independent: grep its sections for references into the other route.
+- **Choose the relationship, principal and centrality yourself.** Consolidation's are proposals. Where you depart from them, give your reasons in your final message. Your choice stands unless the persona check overrides it.
 - **Drop a component** whose correspondence fails, or that the preprint credits where it is used after all, and say so in your final message.
 - **Withdraw only on facts:**
   - the correspondence fails at a specific step;
@@ -146,7 +153,7 @@ The precise correspondences you write also feed that check, so precision about w
 - Write exactly one file: `{WRITEUP_DIR}/findings/<SLUG>.tex`. Modify nothing else; don't download anything or edit INDEX.md.
 - Final message, under 150 words:
   - the file path and page count;
-  - any proposed change of relationship or centrality, with reasons (or [Withdrawn] with the fact);
+  - your relationship, principal and centrality, with your reasons where they depart from consolidation's proposal (or [Withdrawn] with the fact);
   - dropped components;
   - corrections to the reports;
   - `NL-` entries;
@@ -154,22 +161,23 @@ The precise correspondences you write also feed that check, so precision about w
 ````
 
 **The `## YOUR FINDING` block** gives, for one finding:
-- **Header line:** the slug, which is also the file name; the relationship and centrality; and "overstated novelty" with the claim's location where it applies. Add the slugs of any findings it should cross-reference.
-- **Pointers.** The earlier source(s) with library keys and main locators, principal source first; each source's own name for its approach, if it has one, and its motivation passage; where the preprint uses the content (file:line, so the agent can find it fast); what the preprint does and doesn't cite; and the dependency chain from consolidation. Don't describe what is shared: the drafter reads the section report and the two papers.
-- **Materials.** Which section reports and which findings in them; recurrence locations to mention in one sentence; relevant credit-map entries; consolidation corrections, written as explicit don'ts ("do not describe X as applying this device").
-- **Specific checks.** Anything the agent must verify. For example: does a cited source cover it? For a proof shortcut, check normalizations, hypotheses, and that the claimed independent route really is independent; grep its sections for references into the other route.
+- **Header line:** the slug, which is also the file name; "Consolidation's proposal:" with its relationship, principal and centrality, and the narrowed content where it proposed one; and "overstated novelty" with the claim's location where it applies.
+- **Cross-references:** consolidation's cross-reference list for the finding, as it wrote it.
+- **Pointers.** The earlier source(s) with library keys and main locators, in consolidation's proposed order; each source's own name for its approach, if it has one, and the locator of its motivation passage; where the preprint uses the content (file:line, so the agent can find it fast); what the preprint does and doesn't cite; and the dependency chain from consolidation. Names and locators only: the drafter reads the section report and the two papers.
+- **Materials.** Which section reports and which entries in them (consolidation's corrections are notes under those entries); recurrence locations; relevant credit-map entries; consolidation's open questions for the finding, as it wrote them.
+- **The user's rulings and checks** that bear on the finding, quoted verbatim.
 
 ## Processing drafting hand-backs
-- **Log each one in a short line:** the page count, any proposed change of relationship or centrality, dropped components. Proposals go into `FINDINGS.md`; after the persona check, they settle a choice the check leaves open (`skeptic.md`, step 5).
+- **Log each one in a short line:** the page count, the drafter's relationship, principal and centrality where they depart from consolidation's proposal, dropped components. Record them in `FINDINGS.md`, and move the `\input` line if the order changes. The drafter's choice stands unless the persona check overrides it (`skeptic.md`, step 5).
 - **A withdrawn finding:** delete its `\input` line, move the fragment to `findings/retired/`, and grep `f:<finding>` in every other fragment and in `summary.tex`, removing the references. Tell the user the fact behind it.
   - If the user asks, or you can't confirm the fact yourself, run a blind persona check on the original claim (`skeptic.md`).
   - If that check affirms inclusion, ask the user whether to reinstate it as a late finding.
 - **Report corrections the drafter found:** fold them into `FINDINGS.md`.
-- **Two findings overlapping, or "is X just Y twice?":** decide between merging, keeping them separate, or dropping one as a component of the other, by whether they are the same idea, and tell the user. If the user asked at the start to decide merges, give these as numbered options with your recommendation instead. For a merge, one agent rewrites the surviving fragment, integrating each paragraph rather than appending. The cap is about 4 pages. The other fragment goes to `retired/`.
-- **A late finding** (from a resumed section agent or a user lead): give it a new slug, put its `\input` line where its magnitude puts it, tell the user that IDs after it shift, add it to the slug list, and launch a drafter.
+- **Two findings overlapping, or "is X just Y twice?":** resume the consolidation agent (or, if it can't be resumed, start a new one with `CONSOLIDATION.md`, the relevant section reports and the overlap) to decide between merging, keeping them separate, or dropping one as a component of the other, by whether they are the same idea, and to update the cross-reference lists. Tell the user its decision. If the user asked at the start to decide merges, put its recommendation to them as numbered options instead. For a merge, one agent rewrites the surviving fragment, integrating each paragraph rather than appending. The cap is about 4 pages. The other fragment goes to `retired/`.
+- **A late finding** (from a resumed section agent or a user lead): give it a new slug, add it to the slug list, and launch a drafter, which classifies it as for any finding. Put its `\input` line where that classification puts it, and tell the user that IDs after it shift.
 
 ## Assembly
-1. **Check the main file's `\input` order** against magnitude: the relationships and centralities you set at consolidation, or, after the apply-verdicts pass, as you settled them. This order fixes the IDs.
+1. **Check the main file's `\input` order** against magnitude: the drafters' relationships and centralities, or, after the apply-verdicts pass, as settled there. This order fixes the IDs.
 2. **Build once,** so that the `.aux` file holds the IDs.
 3. **Write `parts/summary.tex`.** Collect each finding's ID, slug, title and Summary with `python3 -I -X utf8 <skill>/scripts/print_summaries.py <writeup dir>`, which reads the IDs from the last build. Drafters' proposed cells are a good start; the "Technique or result" cell names the approach or result, not its tools. Like a title, it carries no author names or citations. See `assets/summary.tex`.
    - It is an unnumbered "Summary of findings" section with a short lead-in that says each row is a missing citation.
