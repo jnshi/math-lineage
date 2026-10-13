@@ -31,7 +31,7 @@ To review a preprint that doesn't have a review yet (see [Reviewed preprints](#r
    !*.pdf
    EOF
    ```
-2. Start an agent that reads [`AGENTS.md`](AGENTS.md) in the `math-lineage` folder, and ask it for a precedence review of the preprint. Use Claude Opus 5.5, GPT 5.6 Sol or a stronger model; weaker models have not been evaluated yet. If you want to read a file that the slim clone left out, such as the preprint's PDF, ask the agent to check it out. The agent asks a few questions first, shows you the report before anything is published, and asks before opening a pull request against this repository.
+2. Start an agent that reads [`AGENTS.md`](AGENTS.md) in the `math-lineage` folder, and ask it for a precedence review of the preprint. Recommended models are Claude Opus 5.5, GPT 5.6 Sol or a stronger; weaker models have not been evaluated yet. If you want to read a file that the slim clone left out, such as the preprint's PDF, ask the agent to check it out. The agent asks a few questions first, shows you the report before anything is published, and asks before opening a pull request against this repository.
 
 A 27-page preprint took about 350M tokens (97% cache reads) and 4 hours. Expect a 50-page preprint to take 50–100% of the weekly usage limit of a basic paid subscription.
 
