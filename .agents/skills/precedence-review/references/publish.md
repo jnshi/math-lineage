@@ -135,7 +135,7 @@ Write it last, right before the pull request, so that it covers the whole run, a
   - Note in `TIMING.md` how you reached each estimate; only the sums are published.
 - Outside Claude Code, pass `--usage-unavailable "<harness and version>"` in place of `--session`. Tokens and time are then null; don't fill them in from `TIMING.md` or from estimates.
 
-The file carries its own definitions. It gives the tokens by kind (uncached input, cache writes, cache reads, output) and the active hours, in total, by model and reasoning effort, by pass and by subagent, with the deviation flag and estimates. Active hours leave out waiting for the user, usage-limit pauses and gaps over 10 minutes, but count shorter pauses. The token counts are much larger than the totals in `TIMING.md`, which come from the task notifications and are close to each agent's final context size.
+The file carries its own definitions. It gives the tokens by kind (uncached input, cache writes, cache reads, output) and the active hours, in total, by model and reasoning effort, by pass and by subagent, with the deviation flag and estimates. Active hours leave out waiting for the user, usage-limit pauses and gaps over 10 minutes, but count shorter pauses.
 
 Show the user the file and get their yes before committing it, since it discloses the models and reasoning efforts they used, the agents' labels and your deviation estimates. Point out any unusual model names the script reports. If they don't want it published, leave it out, along with its line in the README.
 
