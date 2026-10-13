@@ -1,4 +1,4 @@
-&emsp;*Quick links: [To read](#to-read) · [To contribute](#to-contribute) · [About the skill](#about-the-skill) · [Reviewed preprints](#reviewed-preprints) · [List of missing attributions](#list-of-missing-attributions)*
+&emsp;*Quick links: [To read](#to-read) · [To contribute](#to-contribute) · [About the skill](#about-the-skill) · **[Reviewed preprints](#reviewed-preprints)** · [List of missing attributions](#list-of-missing-attributions)*
 
 On October 6, 2026, OpenAI released a [repository](https://github.com/openai/math) of 722 machine-generated manuscripts presenting solutions to major open problems across many fields of mathematics. A week earlier, the [Advisory Group on Mathematics and Artificial Intelligence](https://agmai.org) (AGMAI), a group of mathematicians that advises AI companies, had [recommended](https://agmai.org/general-sep29/) that a lab releasing such results first search the literature for related ideas and "cite the papers in which the ideas were first introduced". On the day of the release, AGMAI [left it to the mathematical community](https://agmai.org/#openai-release) to assess how far its recommendations had been followed.
 
