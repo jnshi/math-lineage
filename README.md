@@ -6,11 +6,11 @@ When a manuscript uses ideas and techniques from earlier papers without citing t
 
 The goal of this repository is to search for and document some of this missing attribution, and so to help the community with its assessment and aid in understanding the new solutions. The approach uses LLM agents to handle this task at scale. Each report lists earlier works used by a preprint without citation, with locators in both papers so that readers can check each finding.
 
-So far, 3 of the 719 preprints [have reports](#reviewed-preprints) in the current format. They list 30 findings, of which 19 are attribution gaps and 2 show overstated novelty:
-- by relationship: 10 same result, 5 same technique, 10 adapted, 1 same route, 3 fragment and 1 weaker result;
-- by centrality: 1 main result, 17 central, 10 supporting and 2 peripheral.
+So far, 4 of the 719 preprints [have reports](#reviewed-preprints) in the current format. They list 37 findings, of which 21 are attribution gaps and 2 show overstated novelty:
+- by relationship: 11 same result, 6 same technique, 11 adapted, 2 same route, 4 fragment and 3 weaker result;
+- by centrality: 1 main result, 20 central, 10 supporting and 6 peripheral.
 
-Across all 4 reports, the findings involve 74 earlier works; for 69 of them, a preprint [uses their content without fully crediting it](#list-of-missing-attributions).
+Across all 5 reports, the findings involve 87 earlier works; for 82 of them, a preprint [uses their content without fully crediting it](#list-of-missing-attributions).
 
 ## To read
 
@@ -54,6 +54,8 @@ Pull requests that improve the skill are welcome; if it can substantially affect
 <table>
 <thead><tr><th>Result</th><th>Preprint</th><th>Report date</th><th>Findings</th><th>Attribution gaps</th></tr></thead>
 <tbody>
+<tr><th colspan="5">Theoretical computer science</th></tr>
+<tr><td>102</td><td><a href="preprints/The-Unique-Games-Theorem-September-23-2026/">The Unique Games Theorem</a></td><td>October 16, 2026</td><td>7</td><td>2</td></tr>
 <tr><th colspan="5">Probability and statistical mechanics</th></tr>
 <tr><td>227</td><td><a href="preprints/A-spectral-gap-throughout-the-high-temperature-Sherrington-Kirkpatrick-phase-September-24-2026/">A spectral gap throughout the high-temperature Sherrington–Kirkpatrick phase</a></td><td>October 13, 2026</td><td>16</td><td>10</td></tr>
 <tr><td>227</td><td><a href="preprints/Critical-mixing-in-the-Sherrington-Kirkpatrick-model-September-25-2026/">Critical mixing in the Sherrington–Kirkpatrick model</a></td><td>October 8, 2026</td><td>12†</td><td>—†</td></tr>
@@ -82,6 +84,7 @@ Pull requests that improve the skill are welcome; if it can substantially affect
 - R. Bauerschmidt and B. Dagallier. Log-Sobolev inequality for near critical Ising models. Comm. Pure Appl. Math. (2024). [arXiv:2202.02301](https://arxiv.org/abs/2202.02301)
 - M. Bayati, M. Lelarge and A. Montanari. Universality in polytope phase transitions and message passing algorithms. Ann. Appl. Probab. 25 (2015) 753–822. [arXiv:1207.7321](https://arxiv.org/abs/1207.7321) · [doi:10.1214/14-AAP1010](https://doi.org/10.1214/14-AAP1010)
 - D. Belius, F. Concetti and G. Genovese. On the determinant in Bray–Moore's TAP complexity formula. Preprint, 2024. [arXiv:2401.08529](https://arxiv.org/abs/2401.08529)
+- Amey Bhangale and Subhash Khot. UG-hardness to NP-hardness by Losing Half. CCC 2019; Theory of Computing 18(5) (2022) 1-28. [doi:10.4086/toc.2022.v018a005](https://doi.org/10.4086/toc.2022.v018a005)
 - B. B. Bhattacharya and S. Sen. High temperature asymptotics of orthogonal mean-field spin glasses. J. Stat. Phys. (2016). [arXiv:1507.05067](https://arxiv.org/abs/1507.05067)
 - P. Biane. Entropie libre et algèbres d'opérateurs. Séminaire Bourbaki, exp. 889, Astérisque 282 (2002) 279–300.
 - P. Biane and R. Speicher. Stochastic calculus with respect to free Brownian motion and analysis on Wigner space. Probab. Theory Related Fields 112 (1998) 373–409. [doi:10.1007/s004400050194](https://doi.org/10.1007/s004400050194)
@@ -95,6 +98,7 @@ Pull requests that improve the skill are welcome; if it can substantially affect
 - M. Celentano, Z. Fan and S. Mei. Local convexity of the TAP free energy and AMP convergence for Z2-synchronization. Ann. Statist. 51 (2023). [arXiv:2106.11428](https://arxiv.org/abs/2106.11428)
 - ChatGPT. FRSB in the SK spin glass: convergence to full-interval support at zero temperature. aiXiv preprint aixiv.260716.000001 (earlier version of Chen 2026, arXiv 2607.18032).
 - S. Chatterjee. Spin glasses and Stein's method. Preprint (journal version: Probab. Theory Related Fields, 2010). [arXiv:0706.3500](https://arxiv.org/abs/0706.3500)
+- Shuchi Chawla, Robert Krauthgamer, Ravi Kumar, Yuval Rabani and D. Sivakumar. On the Hardness of Approximating Multicut and Sparsest-Cut. CCC 2005; Computational Complexity 15(2) (2006) 94-114. [doi:10.1007/s00037-006-0210-9](https://doi.org/10.1007/s00037-006-0210-9)
 - Hong-Bin Chen. FRSB in the SK spin glass: convergence to full-interval support at zero temperature. arXiv preprint, 2026. [arXiv:2607.18032](https://arxiv.org/abs/2607.18032)
 - Y. Chen and R. Eldan. Localization schemes: A framework for proving mixing bounds for Markov chains. Duke Math. J. 174 (2025). [arXiv:2203.04163](https://arxiv.org/abs/2203.04163)
 - Wei-Kuo Chen, Madeline Handschy and Gilad Lerman. On the energy landscape of the mixed even p-spin model. Probab. Theory Related Fields (2018). [arXiv:1609.04368](https://arxiv.org/abs/1609.04368) · [doi:10.1007/s00440-017-0773-1](https://doi.org/10.1007/s00440-017-0773-1)
@@ -103,6 +107,7 @@ Pull requests that improve the skill are welcome; if it can substantially affect
 - Y. Deshpande, E. Abbe and A. Montanari. Asymptotic mutual information for the two-groups stochastic block model. Information and Inference 6 (2017) 125–170, as Asymptotic mutual information for the balanced binary stochastic block model. [arXiv:1507.08685](https://arxiv.org/abs/1507.08685) · [doi:10.1093/imaiai/iaw017](https://doi.org/10.1093/imaiai/iaw017)
 - P. Diaconis and L. Saloff-Coste. Logarithmic Sobolev inequalities for finite Markov chains. Ann. Appl. Probab. 6(3) (1996) 695–750. [doi:10.1214/aoap/1034968224](https://doi.org/10.1214/aoap/1034968224)
 - C.-P. Diez. Free Stein kernels, free moment maps, and higher order derivatives. Preprint, 2023. [arXiv:2306.00967](https://arxiv.org/abs/2306.00967)
+- Irit Dinur, Subhash Khot, Guy Kindler, Dor Minzer and Muli Safra. Towards a Proof of the 2-to-1 Games Conjecture? ECCC TR16-198 (December 2016); STOC 2018; Theory of Computing 21(11) (2025) 1-50. [doi:10.4086/toc.2025.v021a011](https://doi.org/10.4086/toc.2025.v021a011)
 - H. Du and B. Huang. Fluctuations of the Sherrington–Kirkpatrick free energy at critical temperature. Preprint, 2026. [arXiv:2607.02172](https://arxiv.org/abs/2607.02172)
 - K. Dykema. Two applications of free entropy. Math. Ann. 308 (1997) 547–558. [arXiv:funct-an/9605005](https://arxiv.org/abs/funct-an/9605005)
 - E. G. Effros and M. Popa. Feynman diagrams and Wick products associated with q-Fock space. Proc. Natl. Acad. Sci. USA 100 (2003) 8629–8633. [arXiv:math/0303045](https://arxiv.org/abs/math/0303045) · [doi:10.1073/pnas.1531460100](https://doi.org/10.1073/pnas.1531460100)
@@ -111,11 +116,15 @@ Pull requests that improve the skill are welcome; if it can substantially affect
 - Ahmed El Alaoui, Andrea Montanari and Mark Sellke. Optimization of mean-field spin glasses. Ann. Probab. 49(6) (2021). [arXiv:2001.00904](https://arxiv.org/abs/2001.00904) · [doi:10.1214/21-AOP1519](https://doi.org/10.1214/21-AOP1519)
 - A. El Alaoui, A. Montanari and M. Sellke. Sampling from the Sherrington–Kirkpatrick Gibbs measure via algorithmic stochastic localization. FOCS 2022. [arXiv:2203.05093](https://arxiv.org/abs/2203.05093)
 - R. Eldan. Thin shell implies spectral gap up to polylog via a stochastic localization scheme. Geom. Funct. Anal. 23 (2013). [arXiv:1203.0893](https://arxiv.org/abs/1203.0893)
+- Ronen Eldan and Dana Moshkovitz. Reduction From Non-Unique Games To Boolean Unique Games. arXiv preprint, 2020. [arXiv:2006.13073](https://arxiv.org/abs/2006.13073)
 - Z. Fan, S. Mei and A. Montanari. TAP free energy, spin glasses, and variational inference. Ann. Probab. 49 (2021). [arXiv:1808.07890](https://arxiv.org/abs/1808.07890)
 - M. Fathi and B. Nelson. Free Stein kernels and an improvement of the free logarithmic Sobolev inequality. Adv. Math. 317 (2017) 193–223. [arXiv:1605.05828](https://arxiv.org/abs/1605.05828)
+- Uriel Feige and Daniel Reichman. On Systems of Linear Equations with Two Variables per Equation. APPROX-RANDOM 2004, LNCS 3122, 117-127. [doi:10.1007/978-3-540-27821-4_11](https://doi.org/10.1007/978-3-540-27821-4_11)
 - L. Ge. Prime factors. Proc. Natl. Acad. Sci. USA 93 (1996) 12762–12763. [doi:10.1073/pnas.93.23.12762](https://doi.org/10.1073/pnas.93.23.12762)
 - S. Goel, R. Montenegro and P. Tetali. Mixing time bounds via the spectral profile. Electron. J. Probab. 11 (2006) 1–26. [arXiv:math/0505690](https://arxiv.org/abs/math/0505690) · [doi:10.1214/EJP.v11-300](https://doi.org/10.1214/EJP.v11-300)
 - F. Götze, A. Naumov, V. Spokoiny and V. Ulyanov. Large ball probabilities, Gaussian comparison and anti-concentration. Bernoulli 25(4A) (2019) 2538–2563. [arXiv:1708.08663](https://arxiv.org/abs/1708.08663)
+- Johan Håstad. Some optimal inapproximability results. Journal of the ACM 48 (2001) 798-859. [doi:10.1145/502090.502098](https://doi.org/10.1145/502090.502098)
+- Johan Håstad, Sangxia Huang, Rajsekar Manokaran, Ryan O'Donnell and John Wright. Improved NP-Inapproximability for 2-Variable Linear Equations. APPROX 2015; Theory of Computing 13 (2017) 1-51. [doi:10.4086/toc.2017.v013a019](https://doi.org/10.4086/toc.2017.v013a019)
 - J. Hermon and Y. Peres. A characterization of L2 mixing and hypercontractivity via hitting times and maximal inequalities. Probab. Theory Related Fields 170 (2018) 769–800. [arXiv:1609.07557](https://arxiv.org/abs/1609.07557)
 - B. Huang, S. Mohanty, A. Rajaraman and D. X. Wu. Weak Poincaré inequalities, simulated annealing, and sampling from spherical spin glasses. Preprint, 2024. [arXiv:2411.09075](https://arxiv.org/abs/2411.09075)
 - B. Huang, A. Montanari and H. T. Pham. Sampling from spherical spin glasses in total variation via algorithmic stochastic localization. Preprint, 2024. [arXiv:2404.15651](https://arxiv.org/abs/2404.15651)
@@ -124,16 +133,22 @@ Pull requests that improve the skill are welcome; if it can substantially affect
 - D. Jekel, J. S. Sandhu and J. Shi. Potential Hessian Ascent: The Sherrington–Kirkpatrick Model. Preprint, 2024. [arXiv:2408.02360](https://arxiv.org/abs/2408.02360)
 - K. Jung. A free entropy dimension lemma. Pacific J. Math. 211 (2003). [arXiv:math/0207149](https://arxiv.org/abs/math/0207149)
 - T. Kemp, I. Nourdin, G. Peccati and R. Speicher. Wigner chaos and the fourth moment. Ann. Probab. 40 (2012) 1577–1635. [arXiv:1009.3949](https://arxiv.org/abs/1009.3949)
+- Subhash Khot, Dor Minzer and Muli Safra. On Independent Sets, 2-to-2 Games and Grassmann Graphs. ECCC TR16-124; STOC 2017; Theory of Computing 21(10) (2025) 1-55. [doi:10.4086/toc.2025.v021a010](https://doi.org/10.4086/toc.2025.v021a010)
+- Subhash Khot and Assaf Naor. Approximate kernel clustering. FOCS 2008; Mathematika 55 (2009) 129-165. [arXiv:0807.4626](https://arxiv.org/abs/0807.4626) · [doi:10.1112/S002557930000098X](https://doi.org/10.1112/S002557930000098X)
 - J. M. Kosterlitz, D. J. Thouless and R. C. Jones. Spherical model of a spin-glass. Phys. Rev. Lett. 36 (1976) 1217–1220. [doi:10.1103/PhysRevLett.36.1217](https://doi.org/10.1103/PhysRevLett.36.1217)
 - B. Landon. Free energy fluctuations of the two-spin spherical SK model at critical temperature. J. Math. Phys. 63 (2022) 033301. [arXiv:2010.06691](https://arxiv.org/abs/2010.06691) · [doi:10.1063/5.0054298](https://doi.org/10.1063/5.0054298)
+- Björn Martinsson. On the NP-Hardness Approximation Curve for Max-2Lin(2). arXiv preprint, 2024. [arXiv:2408.04832](https://arxiv.org/abs/2408.04832)
 - J. A. Mingo and R. Speicher. Free Probability and Random Matrices. Fields Institute Monographs 35, Springer, 2017.
 - A. Montanari. Optimization of the Sherrington–Kirkpatrick Hamiltonian. Preprint, 2018. [arXiv:1812.10897](https://arxiv.org/abs/1812.10897)
 - V. L. Nguyen and P. Sosoe. Central limit theorem near the critical temperature for the overlap in the 2-spin spherical SK model. J. Math. Phys. 60 (2019). [arXiv:1809.03675](https://arxiv.org/abs/1809.03675) · [doi:10.1063/1.5065525](https://doi.org/10.1063/1.5065525)
+- Ryan O'Donnell and John Wright. A new point of NP-hardness for Unique Games. STOC 2012.
+- Prasad Raghavendra and David Steurer. Graph Expansion and the Unique Games Conjecture. STOC 2010.
 - R. Speicher. Combinatorial theory of the free product with amalgamation and operator-valued free probability theory. Mem. Amer. Math. Soc. 132 (1998), no. 627. [doi:10.1090/memo/0627](https://doi.org/10.1090/memo/0627)
 - S. J. Szarek. Metric entropy of homogeneous spaces. Banach Center Publ. 43 (1998) 395–410. [arXiv:math/9701213](https://arxiv.org/abs/math/9701213)
 - D. Voiculescu. Circular and semicircular systems and free product factors. Operator Algebras, Unitary Representations, Enveloping Algebras, and Invariant Theory (Paris, 1989), Progr. Math. 92, Birkhäuser (1990) 45–60.
 - D. Voiculescu. The analogues of entropy and of Fisher's information measure in free probability theory, II. Invent. Math. 118 (1994) 411–440. [doi:10.1007/BF01231539](https://doi.org/10.1007/BF01231539)
 - D. Voiculescu. The analogues of entropy and of Fisher's information measure in free probability theory III: The absence of Cartan subalgebras. Geom. Funct. Anal. 6 (1996) 172–199. [doi:10.1007/BF02246772](https://doi.org/10.1007/BF02246772)
 - D. Voiculescu. The analogues of entropy and of Fisher's information measure in free probability theory. V. Noncommutative Hilbert transforms. Invent. Math. 132 (1998) 189–227. [doi:10.1007/s002220050222](https://doi.org/10.1007/s002220050222)
+- Mårten Wiman. Improved Inapproximability of Max-Cut through Min-Cut. Master's thesis, KTH Royal Institute of Technology (DiVA record diva2:1229467), 2018.
 - Yuxin Zhou. Existence of full replica symmetry breaking for the Sherrington-Kirkpatrick model at low temperature. Comm. Pure Appl. Math. 79(7) (2026). [arXiv:2504.00269](https://arxiv.org/abs/2504.00269) · [doi:10.1002/cpa.70038](https://doi.org/10.1002/cpa.70038)
 - Yuxin Zhou. On the Gardner transition in the Ising pure p-spin glass II. arXiv preprint, 2026. [arXiv:2608.06523](https://arxiv.org/abs/2608.06523)
