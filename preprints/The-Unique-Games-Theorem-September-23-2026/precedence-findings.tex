@@ -1,0 +1,931 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,tabularx,longtable,array}
+\usepackage{xltabular}% tabularx-style tables that can break across pages
+\usepackage{enumitem}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[noadjust]{cite}% sorts and compresses numeric citations; noadjust: no automatic space before \cite (it misfires after "(")
+\usepackage[colorlinks=true,linkcolor=Blue,citecolor=Blue,urlcolor=Blue]{hyperref}
+
+% ---------------------------------------------------------------------
+% Shared notation
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\Lgen}{\mathcal{L}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Ent}{Ent}
+\DeclareMathOperator{\KL}{KL}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\ran}{ran}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\ip}[2]{\langle #1,#2\rangle}
+% Locators.  \ploc{compiled locator}{TeX file:line} cites the preprint (or a
+% companion).  Only the compiled locator (section, equation, result, page of the
+% PDF) is printed.  The TeX file:line stays in the source to help checkers find
+% the passage and never appears in the PDF.  \sloc{key}{locator} cites a source.
+\newcommand{\ploc}[2]{#1}
+\newcommand{\sloc}[2]{\cite[#2]{#1}}
+% Relationship types and flags, as used in the summary table and the Summary
+% paragraphs: \rel{same technique}; \attrgap and \overstated tag a Cited?
+% cell (precedence_stats.py checks them against the JSON).
+\newcommand{\rel}[1]{\textit{#1}}
+\newcommand{\attrgap}{\textbf{attribution gap}}
+\newcommand{\overstated}{\textbf{overstated novelty}}
+% Uniform list and table styling across all findings.
+\setlist{itemsep=2pt,topsep=3pt,parsep=0pt,leftmargin=1.6em}
+\setlist[enumerate]{label=\arabic*.}
+\setlist[itemize]{label=\textbullet}
+\renewcommand{\arraystretch}{1.15}
+% Findings are numbered by LaTeX, so nobody types an ID.  In the main file,
+% \findinggroup{F} after the Findings \section sets the ID prefix and restarts
+% the count; IDs follow the order of the \input lines (by magnitude).  Each
+% fragment opens with
+%   \finding{<title>}{<slug>}   or   \finding[<short title>]{<title>}{<slug>}
+% which prints an unnumbered subsection "F3. <title>", adds "F3. <title>" (or
+% the short title) to the table of contents and PDF bookmarks, and does
+% \label{f:<slug>}, so \ref{f:<slug>} prints the ID "F3" as a link.  The
+% heading carries no LaTeX section number, so a finding never shows two
+% numbers (no "3.2 F2").  Refer to another finding as finding~\ref{f:<slug>}.
+% Before any \findinggroup the IDs print as ?1, ?2, ... (as in a standalone
+% test of one fragment).
+\makeatletter
+\newcounter{finding}
+\newcommand{\finding@prefix}{?}
+\renewcommand{\thefinding}{\finding@prefix\arabic{finding}}
+\newcommand{\findinggroup}[1]{\gdef\finding@prefix{#1}\setcounter{finding}{0}}
+\newcommand{\finding}[3][]{%
+  \stepcounter{finding}%
+  \protected@edef\finding@id{\thefinding}% fix the ID now: "F3", not a counter reference
+  \edef\finding@next{\noexpand\finding@sect{\finding@id}}%
+  \finding@next{#1}{#2}{#3}}
+% #1 ID (already expanded), #2 short title (may be empty), #3 title, #4 slug.
+\newcommand{\finding@sect}[4]{%
+  \subsection*{#1. #3}% hyperref anchors \subsection* itself, just above the heading
+  \if\relax\detokenize{#2}\relax
+    \addcontentsline{toc}{subsection}{#1. #3}%
+  \else
+    \addcontentsline{toc}{subsection}{#1. #2}%
+  \fi
+  \def\@currentlabel{#1}% \ref prints the ID; hyperref links it to this heading
+  \label{f:#4}}
+\makeatother
+% ---------------------------------------------------------------------
+\space%
+
+\title{Missing citations in\\ ``The Unique Games Theorem''}
+\date{October 16, 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Summary of findings}
+
+Each row is a citation the preprint is missing: earlier work that already
+contains part of the preprint, which the preprint does not cite where that
+part appears. ``Cited?'' names the earlier work and says what, if anything, the
+preprint cites it for. The exception is a row flagged \emph{overstated
+novelty}: there the preprint cites the work, but its abstract or framing
+presents the content as new. Terms are defined in Section~\ref{sec:about};
+centrality is a best-effort judgment. Locations use the preprint's own
+numbering and printed pages.
+
+% Each row starts "\ref{f:<finding>} & \rel{<relationship>} & <centrality> &",
+% in that order: \ref prints the finding's ID (F1, F2, ...) as a link, and
+% precedence_stats.py reads those three cells. Put \attrgap and \overstated in
+% the Cited? cell of a row exactly when the JSON sets the flag. Never type an
+% ID: LaTeX assigns them from the main file's order (by magnitude).
+\begin{center}\footnotesize
+\begin{xltabular}{\linewidth}{@{}l >{\raggedright\arraybackslash}p{0.11\linewidth} >{\raggedright\arraybackslash}p{0.10\linewidth} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{0.17\linewidth} >{\raggedright\arraybackslash}p{0.24\linewidth}@{}}
+\toprule
+ID & Relationship & Centrality & Technique or result & In the preprint & Cited?\\
+\midrule
+\endhead
+\ref{f:erasure-covering-argument} & \rel{same technique} & central &
+Erasure argument: re-randomize the function on the structured pieces already found, so that concentration, a union bound and the inverse theorem give a covering fraction &
+Lemma~5.5 (pp.~26--27) &
+Dinur, Khot, Kindler, Minzer, Safra 2016 \cite{DinurEtAl2016-Towards2to1-ECCC} (journal version \cite{DinurEtAl2018-Towards2to1}): cited for other content; \attrgap\\
+\addlinespace
+\ref{f:zoom-in-advice-zoom-out-extension} & \rel{adapted} & central &
+Decoding with a shared zoom-in sent as advice, a zoom-out each prover finds in its own table, and a uniformly random extension as the answer &
+Definition~5.2 (p.~24); Lemma~5.5 (p.~26); \S5.6 (p.~30) &
+Dinur, Khot, Kindler, Minzer, Safra 2016 \cite{DinurEtAl2016-Towards2to1-ECCC} (journal version \cite{DinurEtAl2018-Towards2to1}): cited for other content; Khot, Minzer, Safra 2017 \cite{KhotMinzerSafra2017-IndependentSets2to2Grassmann}: credited in part; \attrgap\\
+\addlinespace
+\ref{f:folded-vertex-classes} & \rel{fragment} & central &
+A folded constraint graph written out explicitly: question--table pairs identified across outer questions and intercept translates, one representative per class, an unfolding rule, aggregated weighted constraints &
+\S\S4.3--4.4 (pp.~20--21) &
+Dinur, Khot, Kindler, Minzer, Safra 2016 \cite{DinurEtAl2016-Towards2to1-ECCC} (journal version \cite{DinurEtAl2018-Towards2to1}): cited for other content; Khot, Safra 2013 \cite{KhotSafra2013-TwoProverStrongSoundness} and Bellare, Goldreich, Sudan 1998 \cite{BellareGoldreichSudan1998-FreeBitsPCPs}: credited for the two underlying principles\\
+\addlinespace
+\ref{f:kernel-clustering-khot-naor} & \rel{same result} & peripheral &
+The identity-target kernel clustering problem and its rounding constant $(8\pi/9)(1-1/k)$ &
+\S8.3, ``Kernel clustering'' (p.~43) &
+Khot, Naor 2008 \cite{KhotNaor2008-ApproximateKernelClustering}: not cited (credited only through the same-release companion)\\
+\addlinespace
+\ref{f:correlation-clustering-via-multicut} & \rel{same route} & peripheral &
+Correlation Clustering hardness drawn from Multicut hardness through their known equivalence &
+Corollary~8.3, fourth conclusion (pp.~42--43) &
+Chawla, Krauthgamer, Kumar, Rabani, Sivakumar 2006 \cite{ChawlaEtAl2006-HardnessMulticutSparsestCut}: cited for other content; Demaine, Emanuel, Fiat, Immorlica 2006 \cite{DemaineEtAl2006-CorrelationClusteringGeneralWeightedGraphs}: credited for the transformation\\
+\addlinespace
+\ref{f:earlier-unique-games-hardness-points} & \rel{weaker result} & peripheral &
+Earlier NP-hardness of Unique Games at other parameter points, and conditional proofs under other hypotheses &
+Theorem~1.1, \S\S1.2--1.3 (pp.~2--3) &
+O'Donnell, Wright 2012 \cite{ODonnellWright2012-NewPointNPHardnessUniqueGames}: not cited; H{\aa}stad, Huang, Manokaran, O'Donnell, Wright 2017 \cite{HastadEtAl2015-ImprovedNPInapprox2LinearEquations}: not cited; Bhangale, Khot 2019 \cite{BhangaleKhot2019-UGHardnessToNPHardnessByLosingHalf}: not cited; Martinsson 2024 \cite{Martinsson2024-NPHardnessApproximationCurveMax2Lin2}: not cited; Raghavendra, Steurer 2010 \cite{RaghavendraSteurer2010-GraphExpansionUGC}: not cited; Eldan, Moshkovitz 2020 \cite{EldanMoshkovitz2020-NonUniqueToBooleanUniqueGames}: not cited; Wiman 2018 \cite{NL-Wiman2018}: not cited; Feige, Reichman 2004 \cite{NL-FeigeReichman2004}: not cited; H{\aa}stad 2001 \cite{Hastad2001-SomeOptimalInapproximability}: cited for other content\\
+\addlinespace
+\ref{f:strong-left-ordering-composition} & \rel{weaker result} & peripheral &
+Unconditional Maximum Acyclic Subgraph hardness within $2/3+\epsilon$ from a strong-left Unique Games theorem, a weaker earlier version of the ordering threshold &
+Lemma~A.1, Proposition~A.2, Corollary~8.2 (pp.~41--54); \S8.2 (p.~42) &
+Bhangale, Khot 2019 \cite{BhangaleKhot2019-UGHardnessToNPHardnessByLosingHalf}: not cited\\
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\clearpage
+\space%
+
+\tableofcontents
+
+\section{About this document}\label{sec:about}
+
+\paragraph{The preprint.}
+The preprint is \emph{The Unique Games Theorem}, dated September 23, 2026, with author line
+``OpenAI'' \cite{OAI-Preprint}. It belongs to the OpenAI Math Release of
+September and October 2026, a collection of machine-generated mathematics
+manuscripts published on GitHub. It proves the Unique Games Conjecture: for every
+fixed $\varepsilon,\delta\in(0,1/2)$ it gives a deterministic polynomial-time
+reduction from 3SAT to explicit unweighted bipartite Unique Games instances over
+a fixed binary alphabet with translation constraints, with completeness at least
+$1-\varepsilon$ and soundness at most $\delta$.
+Section~\ref{sec:overview} summarizes the paper and fixes the notation used
+throughout this document. The preprint cites three companion
+preprints from the same release, \cite{OAI-Companion1}, \cite{OAI-Companion2} and
+\cite{OAI-Companion3}, which it cites as \texttt{OpenAIPerfectTwoToOne2026},
+\texttt{OpenAIUniformSparsest2026} and \texttt{OpenAIGaussianPropeller2026}; the
+first is named as ``not an input to this proof'', and the other two only for
+results recorded in its final section. They belong to the same release, so they
+are not treated as earlier work here.
+
+\paragraph{What this document reports.}
+Each finding is a citation the preprint is missing: part of the preprint's
+mathematics (a technique, construction, estimate, proof route or result) that
+an identifiable earlier paper already contains, where the preprint does not
+cite that paper for it where it is used. ``Earlier'' means publicly available
+before the preprint's date. The one exception, overstated novelty, is
+described below. Not reported: textbook material in its textbook form; weaker versions of
+intermediate statements; and, for content the preprint uses, cases where it
+cites a later source that covers that content rather than the original. An
+earlier result on the same problem is reported even when later work that the
+preprint cites implies it. Findings are ordered by centrality, then by relationship in
+the order listed below, then by position in the preprint.
+
+\paragraph{Relationships.}
+A finding's relationship is the one between the preprint and the first
+earlier work listed for it (the principal), the work with the highest relationship in the
+order below; when several hold that relationship, however closely each matches,
+the one the others credit or build on, otherwise the earliest. Any other works listed relate to the same content more weakly or
+in part; the finding says how, including which work originated the idea when
+that is not the first.
+\begin{description}[leftmargin=1.5em,font=\normalfont\itshape]
+\item[same result.] An earlier paper, or several earlier papers together, prove essentially the same statement.
+\item[same technique.] The earlier technique, construction or theory is
+reused essentially intact, possibly in a new setting or with new ingredients
+around it.
+\item[adapted.] The earlier technique's structure is followed, with a change
+at its core: a different object, or a key step replaced.
+\item[proof shortcut.] A published result would replace or substantially
+shorten a large part of the argument.
+\item[same route.] An earlier paper proposed the proof strategy, even
+heuristically, and the preprint carries it out.
+\item[fragment.] One identifiable piece of the earlier technique is reused.
+\item[weaker result.] An earlier paper proves a weaker, special-case or
+partial-range version of one of the preprint's main results, or of a
+statement it presents as a significant contribution.
+\end{description}
+
+\paragraph{Centrality.}
+Each finding also gets a best-effort judgment of how much of the preprint's
+main argument depends on it: \emph{main result} (reserved for earlier work that
+covers the main result itself, or most of it), \emph{central},
+\emph{supporting} or \emph{peripheral}. An earlier weaker result is never
+labelled main result. Each finding states the chain of results it feeds, so
+the basis for the judgment is visible.
+
+\paragraph{Citations.}
+The ``Cited?'' column of the summary names the earlier work and says what the
+preprint cites for the content in question: \emph{not cited} (the work is not
+in the bibliography, and nothing the preprint cites credits it for this
+content), \emph{cited for other content}, \emph{credited elsewhere} (credited
+for this content, directly or through a cited location that credits it, but
+not where it is used, in a way that an expert reader who doesn't know the earlier work might not connect with it), or \emph{credited in part}. A citation counts only when it is \emph{for that specific content};
+citing the same paper nearby for a different result does not count. Content
+the preprint credits where it is used, directly or through a cited location
+that itself credits the earlier work (such as a companion
+lemma), is not reported, except when its novelty is overstated (below). For
+overstated novelty, the column says where the preprint does cite the work.
+
+\paragraph{Flags.}
+\begin{description}[leftmargin=1.5em,font=\normalfont\bfseries]
+\item[Attribution gap.] Marks the most serious missing citations: the
+relationship is same technique, adapted or same result; the centrality is main
+result, central or supporting; and the preprint cites the principal earlier
+work for this content nowhere.
+\item[Overstated novelty.] The preprint does cite the earlier work for this
+content, but its abstract, a statement of its significant contributions, or the framing of
+a main result presents that content as new, explicitly or in the way a reader
+would reasonably take it. This is the one case in which content the preprint
+credits is reported.
+\end{description}
+
+\paragraph{How to check a claim.}
+Locations in the preprint and its companions use its section,
+equation and theorem numbers and the page numbers printed in its PDF.
+Locations in other sources give the theorem, equation and printed page of the
+version listed in the bibliography. Each finding ends with a short checklist
+of the passages to put side by side.
+
+\paragraph{Provenance.}
+This document was generated by LLM agents (Claude Fable 5.1) running the
+precedence-review skill
+(\href{https://github.com/jnshi/math-lineage/tree/3499d47/.agents/skills/precedence-review}{jnshi/math-lineage},
+commit \texttt{3499d47}), makes no claim of completeness, and has not been
+vetted by a human. It was run by JSS.
+\space%
+\section{The preprint in brief, and notation}\label{sec:overview}
+
+\paragraph{Main result.}
+A Unique Games instance has a finite vertex set, a finite alphabet $K$ and a
+list of oriented constraints $e=(u_e,v_e,\pi_e)$ with $\pi_e$ a permutation of
+$K$; a labeling $a$ satisfies $e$ when $a(v_e)=\pi_e(a(u_e))$, and $\operatorname{val}(G)$ is
+the largest fraction (or weight) of satisfied constraints. The preprint's
+\ploc{Theorem~1.1 (p.~2)}{00-introduction.tex:22--39} states that for every
+fixed $\varepsilon,\delta\in(0,1/2)$ there are an integer $s$ and a
+deterministic polynomial-time reduction from 3SAT to explicit unweighted simple
+bipartite instances over $K=\mathbb F_2^{s}$ whose constraints are translations
+$a(v_e)=a(u_e)+c_e$, with $\operatorname{val}\ge1-\varepsilon$ on satisfiable formulas and
+$\operatorname{val}\le\delta$ on unsatisfiable ones. The alphabet and the degree of the
+running-time polynomial depend only on $\varepsilon,\delta$.
+
+\paragraph{The route, as the preprint names it.}
+The starting hardness input is H\aa stad's nearly satisfiable gap for systems of
+3-variable parity equations over $\mathbb F_2$, in weighted form
+(\ploc{Theorem~4.1, p.~18}{03-game.tex:25--37}). The construction has five
+stages.
+\begin{enumerate}
+\item \emph{The latent alphabet gadget} (\ploc{\S3, pp.~7--16}{02-latent.tex:1--760}).
+  \ploc{Lemma~3.1 (p.~7)}{02-latent.tex:8--31} gives, for every $p_*>0$, a rank
+  threshold $r_*$ and, for every large $\ell$, a binary space $\mathcal V\supseteq
+  K=\mathbb F_2^{\ell}$, a map $C:\mathcal V\to K$ with $C(x+k)=C(x)+k$, and a noise law
+  $\mu$ on $\mathcal V$ with $\Pr[C(x+a)\ne C(x)]\le p_*$ for $a\sim\mu$ and
+  uniform $x$, while every linear family $G\le\mathcal V^*$ of restriction rank
+  $\dim(G|_K)\ge r_*$ detects $a$ with probability at least $1/8$. The gadget is
+  built from quadratic blocks over a finite field of characteristic two,
+  concatenated recursively.
+\item \emph{The outer questions and the permutation test}
+  (\ploc{\S4, pp.~17--21}{03-game.tex:1--361}). An equation question
+  $U=(e_1,\dots,e_k)$ is a $k$-tuple of parity equations sampled with
+  replacement; a projected question $O$ keeps each equation with probability
+  $1-\beta$ and otherwise one of its variables. A \emph{table} on a question $Q$
+  is an affine map from its answer space to $\mathcal V$, written as a linear map
+  $P\in\operatorname{Hom}(L_Q,\mathcal V)$ with a homogeneous coordinate. Tables are identified
+  by an exact \emph{key} (their retained coordinates and induced affine map),
+  and the $K$-translates of a key form one vertex (folding); $F_U(P)$ denotes the
+  restored answer of a vertex labeling at the table $P$. The instance
+  $\mathcal G$ samples $U$, a uniform table $P$, $a\sim\mu$ and a uniform
+  $l\in\mathbb F_2^{m}$ and checks $F_U(P)=F_U(P+al^{\top})$
+  (\ploc{(4.6), p.~21}{03-game.tex:302--305}); each sample is a translation
+  constraint between two vertices.
+\item \emph{Matrix extraction and Fourier decoding} (\ploc{\S5, pp.~22--32}{04-matrix.tex:1--767}).
+  The structural input is \ploc{Theorem~5.1 (p.~22)}{04-matrix.tex:33--60}, an
+  inverse theorem for the degree-two matrix shortcode: a function on
+  $\ell\times m$ binary matrices that often keeps its value under a uniform
+  rank-one perturbation agrees with an affine evaluation $M\mapsto Mz+u$ on a
+  \emph{slice} cut out by at most $r_{\rm s}$ row and $r_{\rm s}$ column
+  equations. A spectral comparison (\ploc{Lemma~5.4, p.~25}{04-matrix.tex:244--252})
+  turns acceptance of the latent test into acceptance of the uniform rank-one
+  test in $K$. The \emph{advice experiment}
+  (\ploc{Definition~5.2, p.~23}{04-matrix.tex:168--187}) sends both provers a
+  uniform map $A:K\to\mathbb F_2^{r_{\rm s}}$ and the rows $AM$ of the $K$-component of
+  a table on $O$, pulled back to $U$; an erasure argument and a comparison of
+  the pulled-back table law with the unrestricted law (with $\beta=k^{-2/3}$)
+  transfer the slice from $U$ to $O$, and a Fourier decoder on the $O$-prover's
+  row fiber yields answer agreement with probability at least a fixed
+  $\gamma>0$, independently of $k$.
+\item \emph{Clean coordinates and the soundness gap} (\ploc{\S6, pp.~33--35}{05-clean.tex:1--282}).
+  On a NO instance the same advice experiment has agreement at most
+  $\exp(-ck^{1/3})$: singleton coordinates on which every advice row has zero
+  coefficient are \emph{clean}, and after conditioning on the remaining data
+  the clean coordinates form an ordinary product of equation-versus-variable
+  games, bounded by the projection-game repetition theorem of Dinur and
+  Steurer (\ploc{Theorem~6.1, p.~33}{05-clean.tex:26--42}). Together with
+  stage~3 this gives a matrix game with value $\le 99/100$ on NO instances and
+  completeness $1-k\xi-p_*/2$ on YES instances
+  (\ploc{Proposition~6.3, p.~36}{05-clean.tex:243--256}).
+\item \emph{Completion} (\ploc{\S7, pp.~36--38}{06-finish.tex:1--241}).
+  Weights are rounded and every edge subdivided into four
+  (\ploc{Lemma~7.1, p.~36}{06-finish.tex:17--30}), giving an unweighted simple
+  bipartite game with a fixed, alphabet-independent gap, and one alphabet-independent
+  parallel repetition brings the soundness below $\delta$.
+\end{enumerate}
+\ploc{\S8 (pp.~39--42)}{07-consequences.tex:1--331} and
+\ploc{Appendix~A (pp.~43--53)}{finite-consequences.tex:1--988} derive
+approximation consequences from Theorem~1.1 through earlier conditional
+reductions, which the preprint attributes to their authors.
+
+\paragraph{Notation used in this document.}
+$\mathbb F_2$ is the binary field; $\operatorname{Hom}(E,F)$ the linear maps $E\to F$, and
+$E^*=\operatorname{Hom}(E,\mathbb F_2)$. $K=\mathbb F_2^{\ell}$ is the Unique Games alphabet,
+$\mathcal V=K\oplus W$ the latent space with the fixed complement $W$, $C$ and
+$\mu$ the latent map and noise law, $p_*$ the change probability and $r_*$ the
+rank threshold of Lemma~3.1. $k$ is the tuple length, $\beta$ the thinning
+probability, $U$ an equation question and $O$ its projection, with
+$\pi$ (answers) and $\bar\pi$ (linear extensions) the projections from $U$ to
+$O$. $P=(M,T)$ splits a table into its $K$- and $W$-valued components;
+$r_{\rm s}$ is the slice parameter of Theorem~5.1; $A$ is the advice map and
+$\{M':AM'=AM\}$ a row fiber. Fourier coefficients are normalized,
+$\widehat f(g)=\E_x f(x)(-1)^{g(x)}$. Companions are cited as the preprint
+cites them; their locators use their own numbering.
+\space%
+
+% IDs are assigned by LaTeX in the order of the \input lines (F1, F2, ...).
+% Order by magnitude: centrality (main result, central, supporting,
+% peripheral), then the relationship (same result, same technique, adapted,
+% proof shortcut, same route, fragment, weaker result), then reading order.
+% precedence_stats.py checks this order.
+% Withdrawing or reordering a finding is just deleting or moving its \input line.
+\section{Findings}\label{sec:findings}
+\findinggroup{F}
+\finding[Erasure argument for the covering fraction]{Re-randomizing a function on its structured pieces to show that random advice hits one}{erasure-covering-argument}
+
+\paragraph{Summary.}
+The covering half of \ploc{Lemma~5.5 (pp.~26--27)}{04-matrix.tex:325--415} follows the ``erasure'' argument of Dinur, Khot, Kindler, Minzer and Safra, \sloc{DinurEtAl2018-Towards2to1}{Lemma~3.7 with Claims~3.8--3.9, pp.~23--24}, already in their December 2016 ECCC version \sloc{DinurEtAl2016-Towards2to1-ECCC}{Lemma~3.7, pp.~14--16}. The preprint cites that paper only in the survey of \ploc{\S1.3 (p.~3)}{00-introduction.tex:119--122}, for its conditional 2-to-1 reduction, and nowhere in \ploc{\S5.4}{04-matrix.tex:299--443}, although it calls the step an ``erasure argument'' (\ploc{\S5.4, p.~26}{04-matrix.tex:305}: ``The erasure argument below''; \ploc{\S1.4, p.~5}{00-introduction.tex:248--249}: ``An erasure argument''), the earlier paper's own word for its device. In both, an inverse statement (Hypothesis~3.6 there, \ploc{Theorem~5.1, p.~22}{04-matrix.tex:33--54} here) yields one structured piece, while decoding with shared advice needs \emph{random} advice to hit one with positive probability, the mass \ploc{(5.8)}{04-matrix.tex:329--335} behind \ploc{Proposition~5.3}{04-matrix.tex:197}. The insight, due to Dinur et al., is to re-randomize the function on the structured pieces: random values cannot create agreement with any structured target (concentration plus a union bound), a small erased set barely moves the test acceptance, so the inverse statement forces the pieces to cover a constant fraction of the domain. \rel{same technique}: every ingredient recurs, down to the expectation $2^{-\ell}$ of a random match; the preprint erases all good pieces at once and argues by contradiction where the earlier proof erases one piece at a time.
+
+\paragraph{Correspondence.}
+$f=F_U(\cdot,T)$; a row fiber is \emph{good} when it contains a slice $\mathcal S$, of size $n_{\mathcal S}$, on which $f$ agrees with some $Mz+u$ with probability at least $\alpha/2$ (\ploc{p.~26}{04-matrix.tex:308--316}); $B$ is the union of the good fibers; $\eta=2^{-r_*}/16$. In the earlier paper $F[\cdot]$ assigns a linear function to each $\ell$-dimensional $L\subseteq\mathbb F_2^{n}$, and Hypothesis~3.6 \sloc{DinurEtAl2018-Towards2to1}{(3.1), p.~22} turns $\operatorname{agreement}(F)\ge\delta$ into a zoom pair $Q\subseteq W$ and a linear $g_{Q,W}$ on $W$ with $\Pr_L[g_{Q,W}|_L=F[L]\mid Q\subseteq L\subseteq W]\ge C$.
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.12\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+ & Preprint & Dinur et al.\ \cite{DinurEtAl2018-Towards2to1}\\
+\midrule
+\endfirsthead
+\toprule
+ & Preprint & Dinur et al.\ \cite{DinurEtAl2018-Towards2to1}\\
+\midrule
+\endhead
+Erasure & replace $f$ at the entries of $B$ by independent uniform elements of $K$ \ploc{p.~26}{04-matrix.tex:358--362} & a random linear $F[L]$ on every $L\supseteq Q$ for each $Q$ found (Lemma~3.7, p.~23)\\
+\addlinespace
+Acceptance barely moves & acceptance moves by at most $2\Pr[B]<2\eta$, from $\ge4\eta$ to $\ge2\eta$ \ploc{p.~26}{04-matrix.tex:360--365} & after $N$ pieces a test pair meets an erased $L$ with probability $\le2N\cdot2^{\ell^{2}-qn}$, so agreement stays $\ge\delta/2$ while $N$ is small (Claim~3.8, pp.~23--24)\\
+\addlinespace
+Random values create no structure & matches at randomized entries: mean $\le2^{-\ell}n_{\mathcal S}$, Hoeffding $\exp(-\alpha^{2}n_{\mathcal S}/32)$, union bound over $2^{(2r+1)(\ell+m)}$ descriptions \ploc{p.~27}{04-matrix.tex:367--394} & a match on an erased $L$ has $\E Z_L=2^{-\ell}$; Chernoff; union bound over $2^{qn}2^{rn}2^{n-r}$ triples $(Q,W,g_{Q,W})$ (Claim~3.9, p.~24)\\
+\addlinespace
+Covering conclusion & agreement $<\alpha$ contradicts Theorem~5.1, so $\Pr[B]\ge\eta$; a uniform $A$ hits a good fiber with probability $2^{-\ell r_{\rm s}}$, whence (5.8) \ploc{p.~27}{04-matrix.tex:396--414} & each piece keeps $C-2^{1-\ell}\ge C/2$; at the end at least an $\alpha(\ell)=\delta2^{-\ell^{2}-2}$ fraction of the $Q$ are covered (pp.~23--24)\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item The proof opening of \sloc{DinurEtAl2018-Towards2to1}{Lemma~3.7, p.~23} (random reassignment on every $L\supseteq Q$) against \ploc{p.~26}{04-matrix.tex:358--362} (uniform replacement on $B$).
+\item \sloc{DinurEtAl2018-Towards2to1}{Claim~3.8, pp.~23--24} (reassigned pairs: probability $\le2N\cdot2^{\ell^{2}-qn}$) against \ploc{p.~26}{04-matrix.tex:363--365} (acceptance moves by $\le2\Pr[B]$).
+\item \sloc{DinurEtAl2018-Towards2to1}{Claim~3.9, p.~24} (expectation $2^{-\ell}$, Chernoff, union bound) against \ploc{p.~27}{04-matrix.tex:380--394} (mean $2^{-\ell}n_{\mathcal S}$, Hoeffding, union bound).
+\end{enumerate}
+
+\space%
+\finding[Shared zoom-in, private zoom-out, random extension]{Decoding with a shared zoom-in sent as advice, a zoom-out each prover finds in its own table, and a uniformly random extension as the answer}{zoom-in-advice-zoom-out-extension}
+
+\paragraph{Summary.}
+Dinur, Khot, Kindler, Minzer and Safra (DKKMS)
+\sloc{DinurEtAl2018-Towards2to1}{\S1.4, p.~13; \S5, p.~41} decode with a prover
+rule of this shape: the verifier sends the zoom-in part of the structure as
+shared advice chosen independently of the tables, each prover finds the zoom-out
+part in its own table, and the answer is a uniformly random linear extension
+over the zoom-out, valid by invariance and costing a factor $2^{-r}$ (the
+shared-advice sentence and the list paragraph are already in their December 2016
+version \sloc{DinurEtAl2016-Towards2to1-ECCC}{p.~8}).
+The preprint cites DKKMS only for their conditional 2-to-1 reduction
+(\ploc{\S1.3, p.~3}{00-introduction.tex:119--122}) and credits the advice to
+Khot, Minzer and Safra (2017)
+\sloc{KhotMinzerSafra2017-IndependentSets2to2Grassmann}{\S\S3.3--3.4, pp.~20--21}
+at \ploc{\S1.4, p.~5}{00-introduction.tex:279--282}, \ploc{\S5.5, p.~27}{04-matrix.tex:445--449}
+and \ploc{\S6, p.~33}{05-clean.tex:8--9}; the 2017 game has a zoom-in only, and
+its provers answer with a global function
+(\sloc{KhotMinzerSafra2017-IndependentSets2to2Grassmann}{Hypothesis~2.12, p.~19; \S5.1, p.~29}).
+The preprint's $U$-prover (\ploc{\S5.4--\S5.6, pp.~26--32}{04-matrix.tex:299--749})
+has the DKKMS shape: the advice $(A,AM)$ fixes the row equations $AM=S_0$, the
+zoom-in by the proof of \ploc{Theorem~5.1, p.~22}{04-matrix.tex:114--118}; the
+prover chooses the column equations $Mq_j=t_j$, the zoom-out, from its own table;
+and it answers with a uniform element of the coset (5.9), of size at most
+$2^{r_{\rm s}}$ and valid by folding. \rel{adapted}: the shape is DKKMS's, but the
+preprint drops what DKKMS call their main technical contribution, lists of
+maximal zoom-outs with a size bound and a common-element argument
+(\sloc{DinurEtAl2018-Towards2to1}{p.~13; Lemma~3.17, pp.~30--31}): the $U$-prover
+picks one witness by a fixed order, and the $O$-prover forms no list but samples
+squared Fourier mass on its own row fiber after H{\aa}stad and Khot--Safra. Credit
+status: credited in part (the shared zoom-in advice, to the 2017 paper); DKKMS
+cited for other content.
+
+\paragraph{Correspondence.}
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.13\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+ & Preprint & DKKMS \cite{DinurEtAl2018-Towards2to1}\\
+\midrule
+\endfirsthead
+\toprule
+ & Preprint & DKKMS \cite{DinurEtAl2018-Towards2to1}\\
+\midrule
+\endhead
+Shared zoom-in & uniform $A$ and rows $S_O=AM_O$, sent to both provers independently of the tables (\ploc{Definition~5.2, (5.5), p.~24}{04-matrix.tex:168--187}) & $Q$ chosen by the verifier and sent to both provers as ``shared advice'' (p.~13; \S5, p.~41)\\
+\addlinespace
+Private zoom-out & column equations $Mq_j=t_j$ and target chosen ``using a fixed order'' from the row advice alone (\ploc{Lemma~5.5, pp.~26--27}{04-matrix.tex:339--354,438--440}) & $(f,W)$, $W\supseteq Q$ of codimension $\le r$, chosen from $\operatorname{LIST}_Q(F_U)$ ``from her/his own viewpoint'' (pp.~13, 41)\\
+\addlinespace
+Answer and loss & uniform $a_U\in\mathcal A=(z+Z)\cap\{e_0^\top v=1\}$, $|\mathcal A|\le2^{r_{\rm s}}$; success probability $\ge1/|\mathcal A|\ge2^{-r_{\rm s}}$ (\ploc{Equation~(5.9), p.~26; \S5.6, p.~30; Lemma~5.8, p.~32}{04-matrix.tex:345--350,632--636,745--747}) & ``chooses $r$ bits to randomly extend $f$ to a linear function on all of $X_U$'' (p.~41); win ``with probability at least $2^{-i}\ge2^{-r}$'' (p.~43)\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item The paragraph ``To handle the zoom-outs'' at \sloc{DinurEtAl2018-Towards2to1}{p.~13}
+and ``Strategies of the players'' at \sloc{DinurEtAl2018-Towards2to1}{\S5, p.~41}
+against the $U$-prover's rule at \ploc{\S5.6, p.~30}{04-matrix.tex:632--636} and
+\ploc{Equation~(5.9), p.~26}{04-matrix.tex:345--350}.
+\item \sloc{DinurEtAl2018-Towards2to1}{pp.~42--43} (``regardless of the $i\le r$ coin
+tosses''; ``$2^{-i}\ge2^{-r}$'') against the coset step at \ploc{p.~27}{04-matrix.tex:416--442}
+and the factor $1/|\mathcal A|\ge2^{-r_{\rm s}}$ at \ploc{Lemma~5.8, p.~32}{04-matrix.tex:745--747}.
+\item The credits at \ploc{p.~5}{00-introduction.tex:279--282}, \ploc{p.~27}{04-matrix.tex:445--449}
+and \ploc{p.~33}{05-clean.tex:8--9} against
+\sloc{KhotMinzerSafra2017-IndependentSets2to2Grassmann}{\S\S3.3--3.4, pp.~20--21; \S5.1, p.~29}:
+an advice game whose prover outputs $g_Q$, with no zoom-out.
+\end{enumerate}
+
+\space%
+\finding[Folded vertex classes with a representative and an unfolding rule]{A folding written out as a constraint graph: vertex classes, one representative per class, an unfolding rule and aggregated weighted constraints}{folded-vertex-classes}
+
+\paragraph{Summary.}
+The nearest written-out precedent for the vertex set of the preprint's permutation
+instance (\ploc{\S\S4.3--4.4, pp.~20--21}{03-game.tex:165--317}) is the folded
+constraint graph $G_{\rm folded}$ of Dinur, Khot, Kindler, Minzer and Safra
+(DKKMS) \sloc{DinurEtAl2018-Towards2to1}{\S1.3.3, pp.~9--10, and \S4.2, pp.~33--35},
+first circulated in December 2016
+\sloc{DinurEtAl2016-Towards2to1-ECCC}{\S1.3.3, p.~6, and \S4.2, p.~24}, for the
+same $\beta$-thinned $k$-tuple outer game. The preprint cites DKKMS once, for
+their reduction ``conditional on an agreement hypothesis''
+(\ploc{\S1.3, p.~3}{00-introduction.tex:119--122}), and not there; at
+\S\S4.3--4.4 it credits Khot and Safra
+\sloc{KhotSafra2013-TwoProverStrongSoundness}{\S1.1, pp.~867--868} for
+identifying table positions across questions and Bellare, Goldreich and Sudan
+\sloc{BellareGoldreichSudan1998-FreeBitsPCPs}{\S3.3, pp.~31--32} for folding a
+table over translations with a canonical representative, which supply its
+skeleton: two tables are one vertex exactly when their exact keys are equal,
+and a $K$-orbit is represented by its key with zero $K$-component of the
+intercept. Shared with DKKMS beyond those principles is the packaging of a
+folding as a constraint graph: classes of question--table pairs whose honest
+answers determine one another, a label read at one representative and unfolded
+to every member, and the unfolded test's constraints pushed forward to the
+classes with their weights summed. \rel{fragment}: only this
+generic packaging is shared; DKKMS's own machinery (their subspace relation,
+Lemma~4.2's arbitrary representative $R$, Claim~4.4) has no counterpart in the
+preprint.
+
+\paragraph{Correspondence.}
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.14\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+ & Preprint & DKKMS \cite{DinurEtAl2018-Towards2to1}\\
+\midrule
+\endfirsthead
+\toprule
+ & Preprint & DKKMS \cite{DinurEtAl2018-Towards2to1}\\
+\midrule
+\endhead
+Class and representative & the tables $(Q,P)$ with one exact key, with their $K$-translates $P+he_0^{\top}$; represented by the unique key in the orbit with zero $K$-component of the intercept \ploc{pp.~20--21}{03-game.tex:233--267} & $\mathcal C(U_0,L_0)=\{(U,L)\in A:\ L+H_U+H_{U_0}=L_0+H_U+H_{U_0}\}$, $H_U$ the span of the equations of $U$; represented by an $\ell$-dimensional $R$ with $L+H_U=R+H_U$ for all members, fixed arbitrarily (\S4.2 and Lemma~4.2, p.~34)\\
+\addlinespace
+Unfolding & $F_Q(P)=\lambda(v(Q,P))+c(Q,P)$, $\lambda$ a labeling of the orbit vertices and $c(Q,P)$ the $K$-component of the intercept; hence $F_Q(P+he_0^{\top})=F_Q(P)+h$ \ploc{(4.4), p.~21}{03-game.tex:273--282} & $\mathcal A(U,L)=\tilde\sigma_U|_L$, $\tilde\sigma_U(x+y)=\sigma(x)+h_U(y)$ for $x\in R$, $y\in H_U$, with $h_U(x_e)=b_e$ the right-hand sides (Definition~4.3, p.~35)\\
+\addlinespace
+Aggregated constraints & a sample $(U,P,a,l)$ is an edge between the orbit vertices of $P$ and $P+al^{\top}$ with constraint $\lambda(v_1)=\lambda(v_0)+c_0+c_1$, weighted by its sampling probability \ploc{\S4.4, p.~21}{03-game.tex:307--314} & $\tilde E$: sample $((U,L),(V,L'))\in E$, output $(\mathcal C(U,L),(V,L'))$; constraints ``the aggregate of the constraints in $G_{\rm unfolded}$ \dots\ The weights are summed up as well'' (pp.~34--35)\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item The key, ``two tables have the same key exactly when \dots''
+\ploc{\S4.3, p.~20}{03-game.tex:233--237}, and the orbit representative
+\ploc{p.~21}{03-game.tex:261--267} against $\mathcal C(U_0,L_0)$ and
+\sloc{DinurEtAl2018-Towards2to1}{Lemma~4.2, p.~34}.
+\item \ploc{(4.4), p.~21}{03-game.tex:273--282} against
+\sloc{DinurEtAl2018-Towards2to1}{Definition~4.3, p.~35}.
+\item The edges and weights of $\mathcal G$, \ploc{\S4.4, p.~21}{03-game.tex:307--314},
+against the ``aggregate'' paragraph (p.~35).
+\end{enumerate}
+
+\space%
+\finding[Identity-target kernel clustering and its rounding constant]{The identity-target kernel clustering problem and the Gaussian rounding constant \texorpdfstring{$(8\pi/9)(1-1/k)$}{(8 pi/9)(1 - 1/k)}}{kernel-clustering-khot-naor}
+
+\paragraph{Summary.}
+The maximization problem defined in the preprint's ``Kernel clustering''
+paragraph \ploc{\S8.3, p.~43}{07-consequences.tex:306--331} and the constant
+$\alpha_k=\frac{8\pi}{9}(1-\frac1k)$ it calls ``the propeller rounding factor''
+are Khot and Naor's \cite{KhotNaor2008-ApproximateKernelClustering}, whom the
+preprint cites nowhere: the paragraph's only citation is the companion's
+\ploc{Theorem~6.1 (p.~18)}{kernel-application.tex:53--64}, and the sentence
+opening the preprint's \S8, ``The underlying conditional reductions and
+approximation thresholds are due to the cited authors''
+\ploc{\S8, p.~39}{07-consequences.tex:3--6}, names for this paragraph only that
+companion. The problem is the kernel clustering problem of Song, Smola, Gretton
+and Borgwardt with the identity target matrix, as Khot and Naor set it up
+\sloc{KhotNaor2008-ApproximateKernelClustering}{pp.~1--2, eq.~(2)}; $\alpha_k$
+is the loss factor of their Gaussian rounding of the semidefinite relaxation
+\sloc{KhotNaor2008-ApproximateKernelClustering}{Theorem~2.1, p.~8}, which they
+conjectured to be the sharp Unique Games threshold for every $k\ge3$
+\sloc{KhotNaor2008-ApproximateKernelClustering}{p.~2}, having shown that this
+threshold is at least $(1-1/k)/C(k)$ for a Gaussian partition constant $C(k)$
+\sloc{KhotNaor2008-ApproximateKernelClustering}{pp.~5 and~7; \S3.3, pp.~26--28},
+so that $\alpha_k$ is sharp exactly when $C(k)=9/(8\pi)$, as they proved for
+$k=3$. The companion credits Khot and Naor for the problem, the constant and the
+reduction (\ploc{\S1.3, p.~3}{main.tex:151--167};
+\ploc{\S6.1, pp.~17--18}{kernel-application.tex:5--51}), but it belongs to the
+same release, so a reader of the preprint is not pointed to their 2008 paper
+(journal version 2009). \rel{same result}: the preprint states Khot and Naor's
+problem and their rounding constant; the hardness statement it records is the
+companion's and is cited.
+
+\paragraph{Correspondence.}
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.13\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+ & Preprint & Khot--Naor \cite{KhotNaor2008-ApproximateKernelClustering}\\
+\midrule
+\endfirsthead
+\toprule
+ & Preprint & Khot--Naor \cite{KhotNaor2008-ApproximateKernelClustering}\\
+\midrule
+\endhead
+Problem & rational symmetric $A\succeq0$ with $A\one=0$; $\operatorname{OPT}_k(A)=\max_\sigma\sum_{p,q}a_{pq}\one_{\{\sigma(p)=\sigma(q)\}}$ over $\sigma:\{1,\dots,N\}\to\{1,\dots,k\}$, $k\ge3$ fixed \ploc{(p.~43)}{07-consequences.tex:308--320} & centered kernel $A\succeq0$, $\sum_{i,j}a_{ij}=0$, target $B=I_k$: $\operatorname{Clust}(A|I_k)=\max_\sigma\sum_{i,j=1}^n a_{ij}\one_{\{\sigma(i)=\sigma(j)\}}$ (eq.~(2), p.~2; \S2, p.~7)\\
+\addlinespace
+Loss factor & $\alpha\ge1$: returned value $\ge\operatorname{OPT}_k(A)/\alpha$ \ploc{(p.~43)}{07-consequences.tex:320--321} & $\operatorname{Clust}(A|B)\le\frac{8\pi}{9}(1-\frac1k)\,\E\bigl[\sum_{i,j}a_{ij}b_{\lambda(i)\lambda(j)}\bigr]$ for the rounding $\lambda$; ``The same bound in (12) holds true if $B$ is the identity matrix'' (Theorem~2.1, eq.~(12), p.~8)\\
+\addlinespace
+Constant & $\alpha_k=\frac{8\pi}{9}(1-\frac1k)$, ``the propeller rounding factor'' \ploc{(p.~43)}{07-consequences.tex:324--331} & $\frac{8\pi}{9}(1-\frac1k)$: approximation factor for $\operatorname{Clust}(A|I_k)$, conjectured sharp UGC threshold for $k\ge3$ (p.~2; Theorem~1.1, p.~4)\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item The problem definition \ploc{(p.~43)}{07-consequences.tex:306--321} against
+\sloc{KhotNaor2008-ApproximateKernelClustering}{p.~1 (centered kernel) and eq.~(2), p.~2}
+with $B=I_k$.
+\item The constant $\alpha_k$ \ploc{(p.~43)}{07-consequences.tex:324--331} against
+\sloc{KhotNaor2008-ApproximateKernelClustering}{eq.~(12) and the sentence after it, p.~8}
+and the approximation-factor and conjecture sentences on
+\sloc{KhotNaor2008-ApproximateKernelClustering}{p.~2}.
+\item The citation list of the paragraph (\ploc{p.~43}{07-consequences.tex:329}: the
+companion's Theorem~6.1 only) against the opening sentence
+\ploc{\S8, p.~39}{07-consequences.tex:3--6} and
+the companion's credits \ploc{\S1.3, p.~3}{main.tex:163--167} and
+\ploc{\S6.1, pp.~17--18}{kernel-application.tex:5--6, 40--51}.
+\end{enumerate}
+
+\space%
+\finding[Correlation Clustering from Multicut hardness]{Hardness of weighted Correlation Clustering inherited from Multicut hardness through the known equivalence of the two problems}{correlation-clustering-via-multicut}
+
+\paragraph{Summary.}
+Chawla, Krauthgamer, Kumar, Rabani and Sivakumar, whose Multicut hardness the
+preprint's \ploc{Corollary~8.3 (p.~42)}{07-consequences.tex:261--296} rests on,
+already state that their results ``immediately extend also to the Correlation
+Clustering problem \ldots\ of minimizing disagreements in a weighted graph,
+since the approximability of this problem is known to be equivalent to within
+constant factors to that of Multicut in weighted graphs''
+\sloc{ChawlaEtAl2006-HardnessMulticutSparsestCut}{p.~2}, crediting the
+equivalence to Charikar, Guruswami and Wirth and to Emanuel and Fiat. The
+preprint cites or points to that paper five times in
+\ploc{\S8.3}{07-consequences.tex:234--296} (once before the corollary, four
+times in the proof), but never for this extension: it writes that
+Corollary~1.3 of that paper ``gives the first three conclusions'' and derives
+the fourth, Correlation Clustering, as its own further step
+(\ploc{proof of Corollary~8.3, pp.~42--43}{07-consequences.tex:272--296}),
+crediting only the transformation it uses, to Demaine, Emanuel, Fiat and
+Immorlica \sloc{DemaineEtAl2006-CorrelationClusteringGeneralWeightedGraphs}{Thm~4.7
+and Cor.~4.8, p.~14}, the journal version of the Emanuel--Fiat paper
+(\sloc{DemaineEtAl2006-CorrelationClusteringGeneralWeightedGraphs}{p.~1}).
+The shared approach is to prove nothing new for Correlation Clustering: a
+Multicut instance becomes a Correlation Clustering instance once its edges are
+labelled $+$ and each demand pair gets a $-$ edge heavier than all $+$ edges
+together, so constant-factor hardness transfers; the equivalence is
+Charikar--Guruswami--Wirth's and Emanuel--Fiat's, and applying it to the Unique
+Games Multicut instances is the Multicut source's. \rel{same route}: the
+source proposed this step for these very instances, and the preprint carries
+it out with the credited transformation plus one check of its own, that the
+demand pairs are nonedges of the Multicut graph
+(\ploc{p.~42}{07-consequences.tex:285--290}), which neither earlier paper states.
+
+\paragraph{Correspondence.}
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.17\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+ & Preprint & Chawla et al.\ \cite{ChawlaEtAl2006-HardnessMulticutSparsestCut}; Demaine et al.\ \cite{DemaineEtAl2006-CorrelationClusteringGeneralWeightedGraphs}\\
+\midrule
+\endfirsthead
+\toprule
+ & Preprint & Chawla et al.\ \cite{ChawlaEtAl2006-HardnessMulticutSparsestCut}; Demaine et al.\ \cite{DemaineEtAl2006-CorrelationClusteringGeneralWeightedGraphs}\\
+\midrule
+\endhead
+Cut hardness used & ``Corollary~1.3 of [the source] gives the first three conclusions'' \ploc{(p.~42)}{07-consequences.tex:272--273} & Cor.~1.3, p.~4: Multicut, Sparsest-Cut, Min-$2\mathrm{CNF}^{\equiv}$ Deletion within every constant $L$ under the conjecture\\
+\addlinespace
+Passage to Correlation Clustering & by the Demaine et al.\ transformation, ``so the same fixed-factor hardness transfers'' \ploc{(pp.~42--43)}{07-consequences.tex:285--296} & ``Our results immediately extend also to the Correlation Clustering problem \ldots\ equivalent to within constant factors to that of Multicut'' (Chawla et al.\ p.~2)\\
+\addlinespace
+The transformation & ``preserves the optimum and converts every clustering into a multicut of no greater cost'' \ploc{(p.~43)}{07-consequences.tex:293--295} & $G_H=H$ with $+$ labels plus a $-$ edge $(s_i,t_i)$ of weight $\sum_{e\in H}w(e)+1$ per pair $\langle s_i,t_i\rangle$ (Demaine et al.\ \S4.2.1, p.~13); Thm~4.7 and Cor.~4.8 (p.~14)\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item The sentence ``Our results immediately extend also to the Correlation
+Clustering problem\ldots'' at
+\sloc{ChawlaEtAl2006-HardnessMulticutSparsestCut}{p.~2} against ``gives the
+first three conclusions'' and the Correlation Clustering paragraph of the
+\ploc{proof of Corollary~8.3, pp.~42--43}{07-consequences.tex:272--296}.
+\item The construction and Theorem~4.7 at
+\sloc{DemaineEtAl2006-CorrelationClusteringGeneralWeightedGraphs}{\S4.2.1,
+pp.~13--14} against ``preserves the optimum and converts every clustering
+into a multicut of no greater cost'' (\ploc{p.~43}{07-consequences.tex:293--295}).
+\end{enumerate}
+
+\space%
+\finding[Earlier Unique Games hardness points]{Earlier NP-hardness points, and conditional proofs, for the Unique Games problem}{earlier-unique-games-hardness-points}
+
+\paragraph{Summary.}
+Before the preprint, NP-hardness of the Unique Games problem that
+\ploc{Theorem~1.1 (p.~2)}{00-introduction.tex:22--39} settles had been
+proved unconditionally at several weaker completeness--soundness points,
+and the Unique Games Conjecture had been derived from other hypotheses:
+O'Donnell and Wright prove hardness of $1/2$-satisfiable versus
+$(3/8+\epsilon)$-satisfiable instances
+\sloc{ODonnellWright2012-NewPointNPHardnessUniqueGames}{abstract, p.~1};
+H\aa stad, Huang, Manokaran, O'Donnell and Wright
+\cite{HastadEtAl2015-ImprovedNPInapprox2LinearEquations}, Wiman
+\cite{NL-Wiman2018} and Martinsson
+\cite{Martinsson2024-NPHardnessApproximationCurveMax2Lin2} prove
+$1-\epsilon$ versus $1-C\epsilon$ over the binary alphabet; Feige and
+Reichman \cite{NL-FeigeReichman2004} prove hardness by a factor
+$q^{\beta}$ at low completeness; Bhangale and Khot
+\cite{BhangaleKhot2019-UGHardnessToNPHardnessByLosingHalf} prove the
+completeness-$1/2$ point in the strong-left, left-regular form the preprint
+uses in its \S8 and Appendix~A; and Raghavendra and Steurer
+\cite{RaghavendraSteurer2010-GraphExpansionUGC} and Eldan and Moshkovitz
+\cite{EldanMoshkovitz2020-NonUniqueToBooleanUniqueGames} derive the
+conjecture, or a Boolean form of it, from the Small-Set Expansion and the
+Subspaces Near-Intersection hypotheses. The preprint cites none of these
+eight works. Its survey of earlier work
+(\ploc{\S\S1.2--1.3, pp.~2--3}{00-introduction.tex:57--131}) names a single
+earlier hardness point, the completeness-$1/2$ consequence of the 2-to-2
+line (\ploc{\S1.3, p.~3}{00-introduction.tex:129--131}); and H\aa stad's
+paper, cited for the 3-variable parity gap and its Fourier decoding
+(\ploc{\S1.2, p.~2}{00-introduction.tex:72};
+\ploc{Theorem~4.1, p.~18}{03-game.tex:25--40};
+\ploc{\S5.6, p.~30}{04-matrix.tex:621--623}), contains the long-standing
+best earlier binary point, factor $12/11$ for two-variable equations
+\sloc{Hastad2001-SomeOptimalInapproximability}{Thm~5.14, p.~35}, which
+O'Donnell and Wright call ``the best previous result''
+\sloc{ODonnellWright2012-NewPointNPHardnessUniqueGames}{p.~3}.
+\rel{weaker result}: each statement is a partial-range, fixed-alphabet or
+conditional version of Theorem~1.1, which gives completeness $1-\epsilon$
+and soundness $\delta$ for every pair $\epsilon,\delta$. O'Donnell and
+Wright are listed first because the later points are measured against
+theirs: Dinur, Khot, Kindler, Minzer and Safra present their $1/2$ versus
+$1/4+\epsilon$ corollary as improving its soundness
+\sloc{DinurEtAl2018-Towards2to1}{Cor.~1.19, p.~15}.
+
+\paragraph{Setup.}
+A \emph{point of NP-hardness} $(c,s)$ for a constraint problem means that
+distinguishing instances of value at least $c$ from instances of value at
+most $s+\epsilon$ is NP-hard for every fixed $\epsilon>0$
+\sloc{ODonnellWright2012-NewPointNPHardnessUniqueGames}{Def.~2.3, p.~5}.
+Max-2Lin(2), the problem of satisfying equations $x_i+x_j=b$ over
+$\mathbb F_2$, is the case $s=1$ of the preprint's translation games
+(Section~\ref{sec:overview}); Max-Cut is its subcase $b=1$. The preprint
+records that binary translation constraints are an equivalent formulation
+of the conjecture (\ploc{\S1.1, p.~2}{00-introduction.tex:44--46}), citing
+Khot, Kindler, Mossel and O'Donnell's Corollary~13 and \S11.1; the
+equivalence itself is their Corollary~15
+\sloc{KhotEtAl2005-OptimalInapproxMaxCut}{Cor.~13 and Cor.~15, p.~15; \S11.1, p.~26}.
+The conjecture's point is $(1-\epsilon,\epsilon)$ for every $\epsilon$ with
+the alphabet chosen afterwards. None of the results below enters the proof;
+they are the earlier state of the problem and belong beside the survey at
+\ploc{\S\S1.2--1.3, pp.~2--3}{00-introduction.tex:57--131}. One recurs in
+form: Bhangale and Khot's statement is the preprint's ``strengthened
+bipartite formulation'' (\ploc{\S8.1, p.~40}{07-consequences.tex:49--54};
+\ploc{Lemma~A.1, p.~43}{finite-consequences.tex:22--34}), whose composition
+with the ordering reduction is finding~\ref{f:strong-left-ordering-composition}.
+
+\paragraph{The earlier results.}
+The table lists each statement in its source's terms and the point it gives
+for Theorem~1.1's problem; the first six rows are unconditional, the last
+two conditional. In the near-satisfiable rows the gap is $1-\epsilon$
+versus $1-C\epsilon$ with a fixed $C$; Khot, Minzer and Safra note that a
+gap $(1-\epsilon,\,1-K(\epsilon)\sqrt{\epsilon})$ with $K(\epsilon)$ growing
+would already be boosted by parallel repetition to the full conjecture
+\sloc{KhotMinzerSafra2018-PseudorandomGrassmannExpansion}{p.~5}.
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.2\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{0.27\linewidth}@{}}
+\toprule
+Work & Statement, in the source's terms & Point for Theorem~1.1's problem\\
+\midrule
+\endfirsthead
+\toprule
+Work & Statement, in the source's terms & Point for Theorem~1.1's problem\\
+\midrule
+\endhead
+H\aa stad, 2001 \cite{Hastad2001-SomeOptimalInapproximability} &
+``For any $\epsilon>0$ it is NP-hard to approximate Max-E2-Lin-2 within a factor $12/11-\epsilon$'' (Thm~5.14, p.~35), by a gadget reduction from Max-E3-Lin-2 (pp.~35--36); recorded as the point $(\tfrac34,\tfrac{11}{16})$ in \sloc{ODonnellWright2012-NewPointNPHardnessUniqueGames}{Thm~2.4, p.~5}. &
+Binary alphabet, $(3/4,\,11/16)$. Cited for the 3-variable parity gap and its Fourier decoding (\ploc{Theorem~4.1, p.~18}{03-game.tex:25--40}; \ploc{\S5.6, p.~30}{04-matrix.tex:621--623}).\\
+\addlinespace
+Feige and Reichman, 2004 \cite{NL-FeigeReichman2004}, as described in \sloc{KhotEtAl2005-OptimalInapproxMaxCut}{\S11.1, p.~27} &
+``NP-hard to approximate MAX-2LIN($q$) to within a factor of $1/q^{\beta}$ for some universal constant $\beta>0$; however this hardness is located at a gap of $\epsilon$ vs.\ $\epsilon/q^{\beta}$''; near satisfiability, $1-\eta$ versus $1-C\eta$ ``for some relatively small constant $C>1$''. &
+Low completeness, soundness smaller by the factor $q^{\beta}$. Not cited.\\
+\addlinespace
+O'Donnell and Wright, 2012 \cite{ODonnellWright2012-NewPointNPHardnessUniqueGames} &
+``distinguishing $\tfrac12$-satisfiable Unique-Games instances from $(\tfrac38+\epsilon)$-satisfiable instances is NP-hard (for all $\epsilon>0$)''; ``the first hardness result showing that it helps to take the alphabet size larger than~2'' (abstract, p.~1); soundness $\tfrac38+q^{-\Theta(1)}$ for label size $q$ (Main Theorem, p.~3). &
+$(1/2,\,3/8)$, alphabet growing with the soundness error. Not cited.\\
+\addlinespace
+H\aa stad, Huang, Manokaran, O'Donnell and Wright, 2015/2017 \cite{HastadEtAl2015-ImprovedNPInapprox2LinearEquations} &
+``Fix any $C<11/8$. Then it is NP-hard to $(\epsilon,C\epsilon)$-approximate 2-Lin(2) (for any $0<\epsilon\le\epsilon_0=1/8$)'' (Thm~1.7, p.~4; Cor.~3.3, p.~18, also for Max-Cut); ``the best known NP-hardness even for the Unique-Games problem'' (abstract, p.~1). &
+Binary alphabet, $1-\epsilon$ versus $1-C\epsilon$ for $C<11/8$. Not cited.\\
+\addlinespace
+Wiman, 2018 \cite{NL-Wiman2018} &
+For $\epsilon<1/32$, given a Max-Cut instance $I$ it is NP-hard to distinguish $\operatorname{val}(I)\ge1-\epsilon$ from $\operatorname{val}(I)\le1-1.45685\,\epsilon$ (Thm~3.18, p.~36); for Max-2-Lin(2) with the constant $1.4568$ (Thm~1.5, p.~3). &
+Binary alphabet, $1-\epsilon$ versus $1-1.45685\,\epsilon$. Not cited.\\
+\addlinespace
+Bhangale and Khot, 2019/2022 \cite{BhangaleKhot2019-UGHardnessToNPHardnessByLosingHalf} &
+For every $\delta>0$ there is $L$ such that, given a Unique Games instance $G=(A,B,E,[L],\{\pi_e\})$ ``regular on the $A$ side, it is NP-hard to distinguish'' the YES case, a set $A'\subseteq A$ of size $(\tfrac12-\delta)|A|$ and an assignment satisfying all edges incident on $A'$, from the NO case, every assignment satisfies at most a $\delta$ fraction of the edges (Thm~1.2, p.~3). &
+Completeness $1/2$ in the strong-left form of \ploc{\S8.1, p.~40}{07-consequences.tex:49--54} and \ploc{Lemma~A.1, p.~43}{finite-consequences.tex:22--34}, where the preprint has $1-\zeta$ for $\tfrac12-\delta$. Not cited.\\
+\addlinespace
+Martinsson, 2024 \cite{Martinsson2024-NPHardnessApproximationCurveMax2Lin2} &
+For the curve $s(c):[0.5,1]\to[0.5,1]$ of Definition~40 and every small $\epsilon>0$, ``it is NP-hard to distinguish between instances of Max-2Lin(2)'' of value at least $c-\epsilon$ and of value at most $s(c)+\epsilon$ (Thm~1, p.~5); the curve ``either matches or improves all of the previously known inapproximability NP-hardness results for Max-2Lin(2)'' (abstract). &
+Binary alphabet; a curve of points, with $(1-s(c))/(1-c)>1.48969$ for $c\ge0.9232$ (Cor.~2, p.~5). Not cited.\\
+\addlinespace
+Raghavendra and Steurer, 2010 \cite{RaghavendraSteurer2010-GraphExpansionUGC} &
+Conjecture~1.3: for every $\eta>0$ there is $\delta$ such that distinguishing $\Phi_G(\delta)\ge1-\eta$ from $\Phi_G(\delta)\le\eta$ (Problem~1, PDF p.~2) is NP-hard; ``Theorem~1.4. The Gap-Small-Set Expansion conjecture implies the Unique Games Conjecture'' (PDF p.~3). Recorded in Khot's survey, which the preprint cites for the conjecture's formulation (\ploc{\S1.1, p.~2}{00-introduction.tex:41--42}), as \sloc{Khot2010-OnTheUGC}{Thm~5.2, p.~19}. &
+The full conjecture, under the Small-Set Expansion hypothesis. Not cited; the preprint does not mention small-set expansion, its nearest passage being the sentence on Bafna et al.'s hypercontractivity certificates (\ploc{\S1.2, p.~3}{00-introduction.tex:103--108}).\\
+\addlinespace
+Eldan and Moshkovitz, 2020 \cite{EldanMoshkovitz2020-NonUniqueToBooleanUniqueGames} &
+``Assume the Subspaces Near-Intersection Conjecture (Conjecture~1.7 in the sequel). For any $C\ge1$, for any sufficiently small $\delta>0$, distinguishing $1-\delta$ vs.\ $1-C\delta$ Boolean unique games is NP-hard'' (Thm~1.4, p.~2), the ``Boolean Unique Games Conjecture'' of Conj.~1.3, p.~2. &
+Binary alphabet, $1-\delta$ versus $1-C\delta$ for every fixed $C$, under the Subspaces Near-Intersection hypothesis. Not cited.\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+The one earlier point the preprint does name is credited:
+\ploc{\S1.3, p.~3}{00-introduction.tex:129--131} attributes ``a Unique Games
+gap with completeness close to one half and arbitrarily small soundness'' to
+the 2-to-2 line it cites, which is Khot, Minzer and Safra's statement that
+Gap UG$[\mathbb F_2^{\ell}](\tfrac12,\epsilon)$ is NP-hard for every
+$\epsilon>0$ and large enough $\ell=\ell(\epsilon)$
+\sloc{KhotMinzerSafra2018-PseudorandomGrassmannExpansion}{Thm~1.5, p.~6},
+preceded by the $1/2$ versus $1/4+\epsilon$ point of Dinur, Khot, Kindler,
+Minzer and Safra \sloc{DinurEtAl2018-Towards2to1}{Cor.~1.19, p.~15}.
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item \ploc{Theorem~1.1 (p.~2)}{00-introduction.tex:22--39} and the survey
+  at \ploc{\S\S1.2--1.3, pp.~2--3}{00-introduction.tex:57--131} against
+  \sloc{ODonnellWright2012-NewPointNPHardnessUniqueGames}{Main Theorem, p.~3}
+  and \sloc{HastadEtAl2015-ImprovedNPInapprox2LinearEquations}{Thm~1.7, p.~4}:
+  neither work, nor any other in the table, appears in the preprint's
+  reference list, and the citations of H\aa stad's paper concern the
+  3-variable parity gap and its Fourier decoding
+  (\ploc{\S1.2, p.~2}{00-introduction.tex:72};
+  \ploc{Theorem~4.1, p.~18}{03-game.tex:25--40};
+  \ploc{\S5.6, p.~30}{04-matrix.tex:621--623}).
+\item \ploc{\S8.1, p.~40}{07-consequences.tex:49--54} and
+  \ploc{Lemma~A.1, p.~43}{finite-consequences.tex:22--34} against
+  \sloc{BhangaleKhot2019-UGHardnessToNPHardnessByLosingHalf}{Thm~1.2, p.~3}:
+  the same left-regular, strongly-satisfied-left-vertices form, at
+  completeness $1-\zeta$ and $\tfrac12-\delta$ respectively.
+\item \ploc{\S1.1, p.~2}{00-introduction.tex:41--42} and
+  \ploc{\S1.2, p.~3}{00-introduction.tex:103--108} against
+  \sloc{RaghavendraSteurer2010-GraphExpansionUGC}{Thm~1.4, PDF p.~3} and
+  \sloc{Khot2010-OnTheUGC}{Thm~5.2, p.~19}: the preprint cites Khot's
+  survey only for Conjecture~2.5 and does not mention small-set expansion.
+\end{enumerate}
+
+\space%
+\finding[Earlier unconditional ordering bound]{Earlier unconditional ordering hardness from strong-left Unique Games}{strong-left-ordering-composition}
+
+\paragraph{Summary.}
+Bhangale and Khot \cite{BhangaleKhot2019-UGHardnessToNPHardnessByLosingHalf}
+(CCC~2019; Theory of Computing 2022) prove that Maximum Acyclic Subgraph is
+NP-hard to approximate within $2/3+\varepsilon$
+(\sloc{BhangaleKhot2019-UGHardnessToNPHardnessByLosingHalf}{Thm~1.4, p.~5}),
+by running the ordering reduction of Guruswami, Manokaran and Raghavendra
+\cite{GuruswamiManokaranRaghavendra2008-BeatingRandomOrderingMAS} on a
+left-regular Unique Games theorem in \emph{strong-left} form, where one
+labeling satisfies every edge at a $1/2-\delta$ fraction of the left vertices
+(\sloc{BhangaleKhot2019-UGHardnessToNPHardnessByLosingHalf}{Thm~1.2, p.~3};
+\sloc{BhangaleKhot2019-UGHardnessToNPHardnessByLosingHalf}{\S5, pp.~21--23}).
+The preprint does not cite Bhangale and Khot anywhere: the paragraph stating
+the unconditional Maximum Acyclic Subgraph threshold $1/2$
+(\ploc{\S8.2, p.~42}{07-consequences.tex:220--224}) does not record the
+earlier unconditional bound, and
+\ploc{Lemma~A.1, p.~43}{finite-consequences.tex:22--34} states Theorem~1.2's
+strong-left form with $1-\zeta$ in place of $1/2-\delta$ (as a hardness point
+for Unique Games, Theorem~1.2 is in finding~\ref{f:earlier-unique-games-hardness-points}).
+The preprint derives its thresholds in
+\ploc{\S8.2 (pp.~41--42)}{07-consequences.tex:160--230} and
+\ploc{Appendix~A (pp.~43--54)}{finite-consequences.tex:1--988}: Lemma~A.1,
+whose proof uses Khot and Regev's rounding device, credited there
+(\ploc{p.~44}{finite-consequences.tex:36--39}), is fed into the reduction of
+Guruswami, H\aa stad, Manokaran, Raghavendra and Charikar
+\sloc{GuruswamiEtAl2011-BeatingRandomOrderingIsHard}{Conj.~3.8, p.~14; Thm~7.1, p.~20},
+credited at \ploc{Proposition~A.2, p.~46}{finite-consequences.tex:242--265},
+giving $1-\varepsilon$ versus $\rho_\Pi+\varepsilon$ for every ordering
+predicate $\Pi$ (\ploc{Corollary~8.2, pp.~41--42}{07-consequences.tex:190--218}).
+\rel{weaker result}: Theorem~1.4 is the earlier unconditional version of that
+threshold, for Maximum Acyclic Subgraph only and at $2/3+\varepsilon$ instead
+of $1/2+\varepsilon$, by the same composition, which both papers owe to
+Guruswami et al.
+
+\paragraph{Correspondence.}
+\begin{center}\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.15\linewidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+ & Preprint & Bhangale--Khot \cite{BhangaleKhot2019-UGHardnessToNPHardnessByLosingHalf}\\
+\midrule
+\endfirsthead
+\toprule
+ & Preprint & Bhangale--Khot \cite{BhangaleKhot2019-UGHardnessToNPHardnessByLosingHalf}\\
+\midrule
+\endhead
+Input & \ploc{Lemma~A.1, p.~43}{finite-consequences.tex:22--34}: simple bipartite $\Phi_\varphi=(A,B,E)$ over $[R]$, left degree $h$; YES: one labeling strongly satisfies $\ge(1-\zeta)|A|$; NO: $\operatorname{val}<\nu$ & Thm~1.2 (p.~3): $G$ regular on the $A$ side; YES: $A'\subseteq A$, $|A'|=(1/2-\delta)|A|$, all incident edges satisfied; NO: $\operatorname{val}(G)\le\delta$\\
+\addlinespace
+Composition & $a$ uniform in $A$, neighbors $b_i$, positions $(b_i,\pi_{a\to b_i}\widetilde Z_i)$; order $f(b,z)=z_{L(b)}$, with $f(b,\pi_{a\to b}z)=z_{L(a)}$ at strongly satisfied $a$ (\ploc{(A.14)--(A.15), p.~51}{finite-consequences.tex:669--705}) & Figure~4 (p.~22): $u$ uniform in $A$, neighbors $v_1,v_2$, edge $(v_1,\tilde x\circ\pi_1)\to(v_2,\tilde y\circ\pi_2)$; order $O(v,x)=x_{\ell(v)}$, ``if $u\in A'$ then $\pi_1(\ell(v_1))=\pi_2(\ell(v_2))=\ell(u)$'' (Lemma~5.3, pp.~21--22)\\
+\addlinespace
+Result & \ploc{Corollary~8.2, pp.~41--42}{07-consequences.tex:190--218}: $1-\varepsilon$ vs.\ $\rho_\Pi+\varepsilon$ for every $\Pi$; Maximum Acyclic Subgraph threshold $1/2$ (\ploc{p.~42}{07-consequences.tex:220--224}) & Thm~1.4 (p.~5): Maximum Acyclic Subgraph NP-hard within $2/3+\varepsilon$; proof (p.~23) with $c=1/2-\delta$, completeness about $3/4$ against soundness $1/2+\varepsilon'$\\
+\addlinespace
+\bottomrule
+\end{xltabular}
+\end{center}
+
+\paragraph{How to check.}
+\begin{enumerate}
+\item \sloc{BhangaleKhot2019-UGHardnessToNPHardnessByLosingHalf}{Thm~1.4, p.~5, and its proof, p.~23}
+against \ploc{Corollary~8.2, pp.~41--42}{07-consequences.tex:190--218} and
+\ploc{p.~42}{07-consequences.tex:220--224}: $2/3+\varepsilon$ and
+$1/2+\varepsilon$ for the same problem; the earlier bound is not mentioned.
+\item \sloc{BhangaleKhot2019-UGHardnessToNPHardnessByLosingHalf}{Thm~1.2, p.~3}
+against \ploc{\S8.1, p.~40}{07-consequences.tex:49--54} and
+\ploc{Lemma~A.1, p.~43}{finite-consequences.tex:22--34}: the same
+left-regular strong-left form at completeness $1/2-\delta$ and $1-\zeta$.
+\item \sloc{BhangaleKhot2019-UGHardnessToNPHardnessByLosingHalf}{Figure~4, p.~22, and Lemma~5.3, pp.~21--22}
+against \ploc{(A.14)--(A.15), p.~51}{finite-consequences.tex:669--705}, both
+against
+\sloc{GuruswamiEtAl2011-BeatingRandomOrderingIsHard}{Conj.~3.8, p.~14; \S7.1, pp.~20--21}:
+both run the composition proposed there.
+\end{enumerate}
+
+\space%
+
+\begin{thebibliography}{99}
+\small
+\bibitem{DinurEtAl2016-Towards2to1-ECCC} Irit Dinur, Subhash Khot, Guy Kindler, Dor Minzer, Muli Safra, Towards a Proof of the 2-to-1 Games Conjecture?, ECCC TR16-198, December 14, 2016. ECCC TR16-198.
+\bibitem{DinurEtAl2018-Towards2to1} Irit Dinur, Subhash Khot, Guy Kindler, Dor Minzer, Muli Safra, Towards a Proof of the 2-to-1 Games Conjecture?, Theory of Computing 21 (2025) 1--50; STOC 2018. doi:10.4086/toc.2025.v021a011.
+\bibitem{KhotMinzerSafra2017-IndependentSets2to2Grassmann} Subhash Khot, Dor Minzer, Muli Safra, On Independent Sets, 2-to-2 Games and Grassmann Graphs, Theory of Computing 21 (2025) 1--55; STOC 2017. doi:10.4086/toc.2025.v021a010.
+\bibitem{KhotSafra2013-TwoProverStrongSoundness} Subhash Khot, Muli Safra, A Two-Prover One-Round Game with Strong Soundness, Theory of Computing 9 (2013) 863--887; FOCS 2011. doi:10.4086/toc.2013.v009a028.
+\bibitem{BellareGoldreichSudan1998-FreeBitsPCPs} Mihir Bellare, Oded Goldreich, Madhu Sudan, Free Bits, PCPs and Non-Approximability -- Towards Tight Results, SIAM Journal on Computing 27 (1998) 804--915. doi:10.1137/S0097539796302531.
+\bibitem{KhotNaor2008-ApproximateKernelClustering} Subhash Khot, Assaf Naor, Approximate kernel clustering, Mathematika 55 (2009) 129--165; FOCS 2008; arXiv v1 July 29, 2008, v2 December 9, 2008. arXiv:0807.4626v2; doi:10.1112/S002557930000098X.
+\bibitem{ChawlaEtAl2006-HardnessMulticutSparsestCut} Shuchi Chawla, Robert Krauthgamer, Ravi Kumar, Yuval Rabani, D. Sivakumar, On the Hardness of Approximating Multicut and Sparsest-Cut, Computational Complexity 15(2) (2006) 94--114; CCC 2005. doi:10.1007/s00037-006-0210-9.
+\bibitem{DemaineEtAl2006-CorrelationClusteringGeneralWeightedGraphs} Erik D. Demaine, Dotan Emanuel, Amos Fiat, Nicole Immorlica, Correlation Clustering in General Weighted Graphs, Theoretical Computer Science 361(2--3) (2006) 172--187. doi:10.1016/j.tcs.2006.05.008.
+\bibitem{ODonnellWright2012-NewPointNPHardnessUniqueGames} Ryan O'Donnell, John Wright, A new point of NP-hardness for Unique Games, STOC 2012; author manuscript dated September 30, 2012.
+\bibitem{HastadEtAl2015-ImprovedNPInapprox2LinearEquations} Johan Håstad, Sangxia Huang, Rajsekar Manokaran, Ryan O'Donnell, John Wright, Improved NP-Inapproximability for 2-Variable Linear Equations, Theory of Computing 13 (2017) 1--51; APPROX 2015. doi:10.4086/toc.2017.v013a019.
+\bibitem{BhangaleKhot2019-UGHardnessToNPHardnessByLosingHalf} Amey Bhangale, Subhash Khot, UG-hardness to NP-hardness by Losing Half, Theory of Computing 18(5) (2022) 1--28; CCC 2019. doi:10.4086/toc.2022.v018a005.
+\bibitem{Martinsson2024-NPHardnessApproximationCurveMax2Lin2} Björn Martinsson, On the NP-Hardness Approximation Curve for Max-2Lin(2), arXiv v1 August 9, 2024, v2 August 12, 2024 (manuscript dated August 13, 2024). arXiv:2408.04832v2.
+\bibitem{RaghavendraSteurer2010-GraphExpansionUGC} Prasad Raghavendra, David Steurer, Graph Expansion and the Unique Games Conjecture, STOC 2010.
+\bibitem{EldanMoshkovitz2020-NonUniqueToBooleanUniqueGames} Ronen Eldan, Dana Moshkovitz, Reduction From Non-Unique Games To Boolean Unique Games, arXiv v1 June 23, 2020, v2 July 8, 2021. arXiv:2006.13073v2.
+\bibitem{NL-Wiman2018} M{\aa}rten Wiman, Improved Inapproximability of Max-Cut through Min-Cut, Master's thesis, KTH Royal Institute of Technology, School of Electrical Engineering and Computer Science, Stockholm (June 15, 2018), DiVA record diva2:1229467
+\bibitem{NL-FeigeReichman2004} Uriel Feige, Daniel Reichman, On Systems of Linear Equations with Two Variables per Equation, APPROX-RANDOM 2004, Lecture Notes in Computer Science 3122, Springer (2004), 117--127, doi:10.1007/978-3-540-27821-4\_11
+\bibitem{Hastad2001-SomeOptimalInapproximability} Johan Håstad, Some optimal inapproximability results, Journal of the ACM 48 (2001) 798--859; author manuscript dated February 18, 2002. doi:10.1145/502090.502098.
+\bibitem{OAI-Preprint} OpenAI, \emph{The Unique Games Theorem}, OpenAI Math Release preprint, September 23, 2026, \url{https://github.com/openai/math}.
+\bibitem{OAI-Companion1} OpenAI, \emph{Perfect completeness for 2-to-1 games}, OpenAI Math Release preprint, September 23, 2026 (cited by the preprint as \texttt{OpenAIPerfectTwoToOne2026}).
+\bibitem{OAI-Companion2} OpenAI, \emph{Constant-factor hardness of uniform sparsest cut}, OpenAI Math Release preprint, September 24, 2026 (cited by the preprint as \texttt{OpenAIUniformSparsest2026}).
+\bibitem{OAI-Companion3} OpenAI, \emph{The Gaussian propeller bound in every dimension}, OpenAI Math Release preprint, September 24, 2026 (cited by the preprint as \texttt{OpenAIGaussianPropeller2026}).
+\bibitem{KhotEtAl2005-OptimalInapproxMaxCut} Subhash Khot, Guy Kindler, Elchanan Mossel, Ryan O'Donnell, Optimal Inapproximability Results for MAX-CUT and Other 2-Variable CSPs?, FOCS 2004; SIAM Journal on Computing 37 (2007) 319--357; author manuscript ECCC TR05-101 (September 2005). doi:10.1137/S0097539705447372; ECCC TR05-101.
+\bibitem{KhotMinzerSafra2018-PseudorandomGrassmannExpansion} Subhash Khot, Dor Minzer, Muli Safra, Pseudorandom Sets in Grassmann Graph have Near-Perfect Expansion, ECCC TR18-006 (January 2018), revision 2 dated May 19, 2018; FOCS 2018; Annals of Mathematics 198 (2023) 1--92. ECCC TR18-006 rev. 2; doi:10.4007/annals.2023.198.1.1.
+\bibitem{Khot2010-OnTheUGC} Subhash Khot, On the Unique Games Conjecture, CCC 2010 (invited survey), 99--121. doi:10.1109/CCC.2010.19.
+\bibitem{GuruswamiManokaranRaghavendra2008-BeatingRandomOrderingMAS} Venkatesan Guruswami, Rajsekar Manokaran, Prasad Raghavendra, Beating the Random Ordering is Hard: Inapproximability of Maximum Acyclic Subgraph, FOCS 2008, 573--582.
+\bibitem{GuruswamiEtAl2011-BeatingRandomOrderingIsHard} Venkatesan Guruswami, Johan Håstad, Rajsekar Manokaran, Prasad Raghavendra, Moses Charikar, Beating the Random Ordering is Hard: Every ordering CSP is approximation resistant, SIAM Journal on Computing 40(3) (2011) 878--914; ECCC TR11-027 (2011); preliminary versions FOCS 2008 and CCC 2009. ECCC TR11-027; doi:10.1137/090756144.
+\end{thebibliography}
+\space%
+
+\end{document}

@@ -1,18 +1,33 @@
-# [The Unique Games Theorem](paper.pdf)
+# Precedence review: The Unique Games Theorem
 
-**Author:** OpenAI
+**Preprint:** [The Unique Games Theorem](paper.pdf) (OpenAI, September 23, 2026)
 
-**Date:** September 23, 2026
+**Write-up:** [Missing citations in “The Unique Games Theorem”](precedence-findings.pdf) (October 16, 2026)
 
-## Citation
+The write-up lists 7 missing citations: 7 places where earlier work already contains part of the preprint and the preprint doesn't cite it there. 2 of the 7 are attribution gaps. Of the 13 earlier works involved, 9 are absent from the preprint's bibliography.
 
-```bibtex
-@misc{OAI:The-Unique-Games-Theorem-September-23-2026,
-  author = {{OpenAI}},
-  title = {{The Unique Games Theorem}},
-  howpublished = {OpenAI Math Release preprint
-                  \href{https://github.com/openai/math/blob/main/preprints/The-Unique-Games-Theorem-September-23-2026/paper.pdf}{OAI:The-Unique-Games-Theorem-September-23-2026}},
-  year = {2026}
-}
-```
+| ID | Relationship | Centrality | Technique or result | Earlier work | Cited? |
+|---|---|---|---|---|---|
+| F1 | same technique | central | Erasure argument: re-randomize the function on the structured pieces already found, so that concentration, a union bound and the inverse theorem give a covering fraction | [Dinur, Khot, Kindler, Minzer, Safra 2016](https://doi.org/10.4086/toc.2025.v021a011) | for other content; **attribution gap** |
+| F2 | adapted | central | Decoding with a shared zoom-in sent as advice, a zoom-out each prover finds in its own table, and a uniformly random extension as the answer | [Dinur, Khot, Kindler, Minzer, Safra 2016](https://doi.org/10.4086/toc.2025.v021a011); [Khot, Minzer, Safra 2016](https://doi.org/10.4086/toc.2025.v021a010) | for other content; Khot–Minzer–Safra credited in part; **attribution gap** |
+| F3 | fragment | central | A folding written out as a constraint graph: vertex classes, one representative per class, an unfolding rule and aggregated weighted constraints | [Dinur, Khot, Kindler, Minzer, Safra 2016](https://doi.org/10.4086/toc.2025.v021a011) | for other content |
+| F4 | same result | peripheral | The identity-target kernel clustering problem and the Gaussian rounding constant (8π/9)(1 − 1/k) | [Khot, Naor 2008](https://arxiv.org/abs/0807.4626) | no (credited only through a same-release companion) |
+| F5 | same route | peripheral | Hardness of weighted Correlation Clustering inherited from Multicut hardness through the known equivalence of the two problems | [Chawla, Krauthgamer, Kumar, Rabani, Sivakumar 2005](https://doi.org/10.1007/s00037-006-0210-9) | for other content |
+| F6 | weaker result | peripheral | Earlier NP-hardness points, and conditional proofs, for the Unique Games problem | O'Donnell, Wright 2012 (STOC); [Håstad, Huang, Manokaran, O'Donnell, Wright 2015](https://doi.org/10.4086/toc.2017.v013a019); [Bhangale, Khot 2019](https://doi.org/10.4086/toc.2022.v018a005); [Martinsson 2024](https://arxiv.org/abs/2408.04832); Wiman 2018 (KTH thesis); [Feige, Reichman 2004](https://doi.org/10.1007/978-3-540-27821-4_11); Raghavendra, Steurer 2010 (STOC); [Eldan, Moshkovitz 2020](https://arxiv.org/abs/2006.13073); [Håstad 2001](https://doi.org/10.1145/502090.502098) | no (eight works); Håstad 2001 for other content |
+| F7 | weaker result | peripheral | Earlier unconditional ordering hardness from strong-left Unique Games | [Bhangale, Khot 2019](https://doi.org/10.4086/toc.2022.v018a005) | no |
 
+Two further candidates (the weight-rounding-and-duplication step and the path-subdivision step of Lemma 7.1) were judged routine material not worth a pointer and are recorded in the JSON only.
+
+**Terms:**
+- **Relationship** (between the preprint and the first earlier work listed, the one that holds the finding's most severe relationship): same result (one or more earlier papers prove essentially the same statement); same technique (reused essentially intact); adapted (structure followed, core changed); proof shortcut (a published result would replace much of the argument); same route (an earlier paper proposed the strategy); fragment (one piece reused); weaker result (weaker, special-case or partial-range version of a main result or of a statement presented as a significant contribution).
+- **Centrality** (best-effort judgment): how much of the main argument depends on the finding: main result (the earlier work covers the main result itself, or most of it), central, supporting or peripheral.
+- **Attribution gap:** relationship same technique, adapted or same result; centrality supporting or higher; and the principal earlier work not cited for this content anywhere in the preprint.
+- **Overstated novelty:** the earlier work is credited for this content, directly or through a cited location that credits it, but the abstract or framing presents it as new.
+
+**Other files:**
+- LaTeX source: [precedence-findings.tex](precedence-findings.tex)
+- Machine-readable findings: [precedence-findings.json](precedence-findings.json)
+- Statistics: [precedence-stats.json](precedence-stats.json)
+- Run telemetry (tokens and active time, by model, reasoning effort, pass and agent): [precedence-telemetry.json](precedence-telemetry.json)
+
+**Provenance:** generated by LLM agents (Claude Fable 5.1) running the [precedence-review](https://github.com/jnshi/math-lineage/tree/3499d47/.agents/skills/precedence-review) skill (commit 3499d47); makes no claim of completeness, and has not been vetted by a human. Run by JSS.
