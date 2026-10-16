@@ -1,0 +1,384 @@
+{
+  "format": "math-lineage/precedence-findings",
+  "format_version": 2,
+  "preprint": {
+    "id": "OAI:The-Unique-Games-Theorem-September-23-2026",
+    "title": "The Unique Games Theorem",
+    "date": "2026-09-23",
+    "path": "preprints/The-Unique-Games-Theorem-September-23-2026",
+    "companions": [
+      {"id": "OAI:Perfect-completeness-for-2-to-1-games-September-23-2026", "cited_as": "OpenAIPerfectTwoToOne2026"},
+      {"id": "OAI:Constant-factor-hardness-of-uniform-sparsest-cut-September-24-2026", "cited_as": "OpenAIUniformSparsest2026"},
+      {"id": "OAI:The-Gaussian-Propeller-Bound-in-Every-Dimension-September-24-2026", "cited_as": "OpenAIGaussianPropeller2026"}
+    ]
+  },
+  "review": {
+    "date": "2026-10-16",
+    "report_pdf": "precedence-findings.pdf",
+    "report_tex": "precedence-findings.tex",
+    "locator_convention": "Preprint locations use the compiled numbering and page numbers of paper.pdf (PDF page index = printed page). Source locators give printed page numbers of the version identified by the source's arXiv id or DOI; for Dinur, Khot, Kindler, Minzer and Safra the Theory of Computing 2025 numbering is used, with the December 2016 ECCC version named for the date."
+  },
+  "definitions": {
+    "relationship": {
+      "same technique": "The earlier technique, construction or theory is reused essentially intact, possibly in a new setting or with new ingredients around it.",
+      "adapted": "The earlier technique's structure is followed, with a change at its core: a different object, or a key step replaced.",
+      "fragment": "One identifiable piece of the earlier technique is reused.",
+      "same route": "An earlier paper proposed the proof strategy, even heuristically, and the preprint carries it out.",
+      "same result": "An earlier paper, or several earlier papers together, prove essentially the same statement.",
+      "weaker result": "An earlier paper proves a weaker, special-case or partial-range version of one of the preprint's main results, or of a statement it presents as a significant contribution.",
+      "proof shortcut": "A published result would replace or substantially shorten a large part of the argument."
+    },
+    "centrality": {
+      "main result": "Best-effort judgment: the earlier work covers the main result itself, or most of it. Never a weaker result.",
+      "central": "Best-effort judgment: much of the main argument depends on it.",
+      "supporting": "Best-effort judgment: the main argument depends on it, but less.",
+      "peripheral": "Best-effort judgment: little of the main argument depends on it."
+    },
+    "form_of_inclusion": {
+      "none": "As judged by the author-persona check: not worth a pointer, or for overstated novelty no change to the abstract or framing. Recorded here only, not in the report.",
+      "citation": "As judged by the author-persona check: a citation at the point of use.",
+      "sentence": "As judged by the author-persona check: a clause or a sentence; for overstated novelty, a clause or sentence changed in the abstract, statements of significant contributions or framing.",
+      "paragraph": "As judged by the author-persona check: a short paragraph; for overstated novelty, a larger revision of the abstract or framing."
+    },
+    "credit_status": {
+      "not_cited": "The work is not in the preprint's bibliography, and no location the preprint cites credits it for this content.",
+      "cited_for_other_content": "The work is in the preprint's bibliography but is not cited for this content.",
+      "credited_elsewhere": "The preprint credits the work for this content at other locations, directly or through a cited location that credits it, but not where the content is used, in a way that an expert reader who doesn't know the earlier work might not connect with it.",
+      "credited_in_part": "The preprint credits the work for part of this content only, directly or through a cited location that credits it.",
+      "credited": "The preprint credits the work for this content, directly or through a cited location that credits it. Allowed only in a finding with overstated novelty."
+    },
+    "flags": {
+      "attribution_gap": "True when the relationship is same technique, adapted or same result; the centrality is main result, central or supporting; and the principal earlier work (listed first among the sources) is not cited for this content anywhere (not_cited or cited_for_other_content).",
+      "overstated_novelty": "True when the preprint cites the earlier work for this content, but its abstract, a statement of its significant contributions, or the framing of a main result presents that content as new, explicitly or in the way a reader would reasonably take it. It is the one case in which content the preprint credits is reported. novelty_claim says where the claim is made."
+    }
+  },
+  "sources": {
+    "DinurEtAl2018-Towards2to1": {
+      "authors": ["Irit Dinur", "Subhash Khot", "Guy Kindler", "Dor Minzer", "Muli Safra"],
+      "title": "Towards a Proof of the 2-to-1 Games Conjecture?",
+      "year": 2016,
+      "venue": "ECCC TR16-198 (December 2016); STOC 2018; Theory of Computing 21(11) (2025) 1-50",
+      "arxiv": null,
+      "doi": "10.4086/toc.2025.v021a011",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "DKKMS25"
+    },
+    "KhotMinzerSafra2017-IndependentSets2to2Grassmann": {
+      "authors": ["Subhash Khot", "Dor Minzer", "Muli Safra"],
+      "title": "On Independent Sets, 2-to-2 Games and Grassmann Graphs",
+      "year": 2016,
+      "venue": "ECCC TR16-124; STOC 2017; Theory of Computing 21(10) (2025) 1-55",
+      "arxiv": null,
+      "doi": "10.4086/toc.2025.v021a010",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "KMS17"
+    },
+    "KhotNaor2008-ApproximateKernelClustering": {
+      "authors": ["Subhash Khot", "Assaf Naor"],
+      "title": "Approximate kernel clustering",
+      "year": 2008,
+      "venue": "FOCS 2008; Mathematika 55 (2009) 129-165",
+      "arxiv": "0807.4626",
+      "doi": "10.1112/S002557930000098X",
+      "in_preprint_bibliography": false
+    },
+    "ChawlaEtAl2006-HardnessMulticutSparsestCut": {
+      "authors": ["Shuchi Chawla", "Robert Krauthgamer", "Ravi Kumar", "Yuval Rabani", "D. Sivakumar"],
+      "title": "On the Hardness of Approximating Multicut and Sparsest-Cut",
+      "year": 2005,
+      "venue": "CCC 2005; Computational Complexity 15(2) (2006) 94-114",
+      "arxiv": null,
+      "doi": "10.1007/s00037-006-0210-9",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "CKKRS2006"
+    },
+    "ODonnellWright2012-NewPointNPHardnessUniqueGames": {
+      "authors": ["Ryan O'Donnell", "John Wright"],
+      "title": "A new point of NP-hardness for Unique Games",
+      "year": 2012,
+      "venue": "STOC 2012",
+      "arxiv": null,
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "HastadEtAl2015-ImprovedNPInapprox2LinearEquations": {
+      "authors": ["Johan Håstad", "Sangxia Huang", "Rajsekar Manokaran", "Ryan O'Donnell", "John Wright"],
+      "title": "Improved NP-Inapproximability for 2-Variable Linear Equations",
+      "year": 2015,
+      "venue": "APPROX 2015; Theory of Computing 13 (2017) 1-51",
+      "arxiv": null,
+      "doi": "10.4086/toc.2017.v013a019",
+      "in_preprint_bibliography": false
+    },
+    "BhangaleKhot2019-UGHardnessToNPHardnessByLosingHalf": {
+      "authors": ["Amey Bhangale", "Subhash Khot"],
+      "title": "UG-hardness to NP-hardness by Losing Half",
+      "year": 2019,
+      "venue": "CCC 2019; Theory of Computing 18(5) (2022) 1-28",
+      "arxiv": null,
+      "doi": "10.4086/toc.2022.v018a005",
+      "in_preprint_bibliography": false
+    },
+    "Martinsson2024-NPHardnessApproximationCurveMax2Lin2": {
+      "authors": ["Björn Martinsson"],
+      "title": "On the NP-Hardness Approximation Curve for Max-2Lin(2)",
+      "year": 2024,
+      "venue": "arXiv preprint",
+      "arxiv": "2408.04832",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "NL-Wiman2018": {
+      "authors": ["Mårten Wiman"],
+      "title": "Improved Inapproximability of Max-Cut through Min-Cut",
+      "year": 2018,
+      "venue": "Master's thesis, KTH Royal Institute of Technology (DiVA record diva2:1229467)",
+      "arxiv": null,
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "NL-FeigeReichman2004": {
+      "authors": ["Uriel Feige", "Daniel Reichman"],
+      "title": "On Systems of Linear Equations with Two Variables per Equation",
+      "year": 2004,
+      "venue": "APPROX-RANDOM 2004, LNCS 3122, 117-127",
+      "arxiv": null,
+      "doi": "10.1007/978-3-540-27821-4_11",
+      "in_preprint_bibliography": false
+    },
+    "RaghavendraSteurer2010-GraphExpansionUGC": {
+      "authors": ["Prasad Raghavendra", "David Steurer"],
+      "title": "Graph Expansion and the Unique Games Conjecture",
+      "year": 2010,
+      "venue": "STOC 2010",
+      "arxiv": null,
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "EldanMoshkovitz2020-NonUniqueToBooleanUniqueGames": {
+      "authors": ["Ronen Eldan", "Dana Moshkovitz"],
+      "title": "Reduction From Non-Unique Games To Boolean Unique Games",
+      "year": 2020,
+      "venue": "arXiv preprint",
+      "arxiv": "2006.13073",
+      "doi": null,
+      "in_preprint_bibliography": false
+    },
+    "Hastad2001-SomeOptimalInapproximability": {
+      "authors": ["Johan Håstad"],
+      "title": "Some optimal inapproximability results",
+      "year": 2001,
+      "venue": "Journal of the ACM 48 (2001) 798-859",
+      "arxiv": null,
+      "doi": "10.1145/502090.502098",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "Hastad01"
+    },
+    "CrescenziSilvestriTrevisan2001-WeightedVsUnweighted": {
+      "authors": ["Pierluigi Crescenzi", "Riccardo Silvestri", "Luca Trevisan"],
+      "title": "On Weighted vs Unweighted Versions of Combinatorial Optimization Problems",
+      "year": 1996,
+      "venue": "ISTCS 1996; Information and Computation 167(1) (2001) 10-26",
+      "arxiv": null,
+      "doi": "10.1006/inco.2000.3011",
+      "in_preprint_bibliography": false
+    },
+    "KhotRegev2008-VertexCoverHard2MinusEps": {
+      "authors": ["Subhash Khot", "Oded Regev"],
+      "title": "Vertex Cover Might be Hard to Approximate to within 2 - epsilon",
+      "year": 2003,
+      "venue": "CCC 2003; Journal of Computer and System Sciences 74(3) (2008) 335-349",
+      "arxiv": null,
+      "doi": "10.1016/j.jcss.2007.06.019",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "KhotRegev2008"
+    },
+    "Trevisan2008-ApproxAlgUG": {
+      "authors": ["Luca Trevisan"],
+      "title": "Approximation Algorithms for Unique Games",
+      "year": 2005,
+      "venue": "FOCS 2005; Theory of Computing 4 (2008) 111-128",
+      "arxiv": null,
+      "doi": "10.4086/toc.2008.v004a005",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "Trevisan08"
+    },
+    "BellareGoldreichSudan1998-FreeBitsPCPs": {
+      "authors": ["Mihir Bellare", "Oded Goldreich", "Madhu Sudan"],
+      "title": "Free Bits, PCPs and Non-Approximability - Towards Tight Results",
+      "year": 1998,
+      "venue": "SIAM Journal on Computing 27 (1998) 804-915",
+      "arxiv": null,
+      "doi": "10.1137/S0097539796302531",
+      "in_preprint_bibliography": true,
+      "preprint_bib_key": "BGS98"
+    }
+  },
+  "findings": [
+    {
+      "id": "F1",
+      "slug": "erasure-covering-argument",
+      "in_report": true,
+      "relationship": "same technique",
+      "centrality": "central",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": true,
+      "overstated_novelty": false,
+      "technique": "Re-randomizing a function on its structured pieces to show that random advice hits one",
+      "summary": "The covering half of Lemma 5.5 follows the erasure argument of Dinur, Khot, Kindler, Minzer and Safra (Lemma 3.7 with Claims 3.8-3.9), under their own name for it; the preprint cites that paper only in its survey, for the conditional 2-to-1 reduction, and nowhere in Section 5.4.",
+      "preprint_locations": ["Lemma 5.5 (pp. 26-27)", "§5.4 (p. 26)", "§1.4 (p. 5)"],
+      "credit_in_preprint": "Dinur, Khot, Kindler, Minzer and Safra are cited once, in §1.3 (p. 3), for their conditional reduction to a Grassmann agreement hypothesis; nothing is cited for the erasure argument (only Hoeffding's inequality, at p. 27).",
+      "sources": [
+        {"key": "DinurEtAl2018-Towards2to1", "locators": "Lemma 3.7 with Claims 3.8-3.9 (pp. 23-24); ECCC version Lemma 3.7 (pp. 14-16)", "role": "the erasure argument: re-randomize on the pieces found, concentration plus union bound, inverse statement gives a covering fraction", "credit_status": "cited_for_other_content"}
+      ]
+    },
+    {
+      "id": "F2",
+      "slug": "zoom-in-advice-zoom-out-extension",
+      "in_report": true,
+      "relationship": "adapted",
+      "centrality": "central",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": true,
+      "overstated_novelty": false,
+      "technique": "Decoding with a shared zoom-in sent as advice, a zoom-out each prover finds in its own table, and a uniformly random extension as the answer",
+      "summary": "The preprint's U-prover rule (advice fixes the zoom-in, the prover finds its zoom-out from its own table, the answer is a uniformly random extension) has the shape of the decoding rule of Dinur, Khot, Kindler, Minzer and Safra, whom the preprint cites only for their conditional reduction; the preprint credits Khot, Minzer and Safra for the shared advice but not the zoom-out and extension steps, and it replaces the list coordination by Fourier sampling.",
+      "preprint_locations": ["Definition 5.2 (p. 24)", "Lemma 5.5, (5.9) (pp. 26-27)", "§5.6 (p. 30)", "§1.4 (p. 5)"],
+      "credit_in_preprint": "Shared linear advice is credited to Khot, Minzer and Safra (§§3.3-3.4) at §5.5 (p. 27) and §1.4 (p. 5), with Minzer and Zheng named for later use; Dinur, Khot, Kindler, Minzer and Safra are cited only in §1.3 (p. 3) for their conditional reduction.",
+      "sources": [
+        {"key": "DinurEtAl2018-Towards2to1", "locators": "§1.4 (pp. 12-13); Definition 3.16 and Lemma 3.17 (pp. 30-31); §5 (p. 41); ECCC version p. 8, pp. 20-21, pp. 29-30", "role": "the decoding protocol: zoom-in as shared advice, prover-chosen zoom-out from its own list, random extension", "credit_status": "cited_for_other_content"},
+        {"key": "KhotMinzerSafra2017-IndependentSets2to2Grassmann", "locators": "§1.4.4 (pp. 11-12); Hypothesis 2.12 (p. 19); §§3.3-3.4 (pp. 20-21); §5.1 (pp. 28-29)", "role": "zoom-in sent as shared advice (the fragment the preprint credits)", "credit_status": "credited_in_part"}
+      ]
+    },
+    {
+      "id": "F3",
+      "slug": "folded-vertex-classes",
+      "in_report": true,
+      "relationship": "fragment",
+      "centrality": "central",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": false,
+      "overstated_novelty": false,
+      "technique": "A folding written out as a constraint graph: vertex classes, one representative per class, an unfolding rule and aggregated weighted constraints",
+      "summary": "The vertex set of the preprint's permutation instance packages Khot and Safra's identification and Bellare, Goldreich and Sudan's folding (both credited) as a folded constraint graph with classes, a representative, an unfolding rule and summed weights, the form written out by Dinur, Khot, Kindler, Minzer and Safra for the same outer game, whom the preprint cites only for their conditional reduction.",
+      "preprint_locations": ["§§4.3-4.4 (pp. 20-21)", "(4.4)-(4.6) (p. 21)", "§1.4 (p. 4)"],
+      "credit_in_preprint": "Khot and Safra's virtual tables (§1.1) are credited at §4.3 (p. 20) and §1.4 (p. 4), and Bellare, Goldreich and Sudan's folding (§3.3) at §4.3 (p. 21) and §1.4 (p. 4); Dinur, Khot, Kindler, Minzer and Safra are cited only in §1.3 (p. 3) for their conditional reduction.",
+      "sources": [
+        {"key": "DinurEtAl2018-Towards2to1", "locators": "§1.3.3 (pp. 9-10); §4.2 (pp. 33-35: Lemma 4.2, Definition 4.3, Claim 4.4); ECCC version §1.3.3 (p. 6), §4 (p. 24)", "role": "the folded constraint graph written out: equivalence classes, representative, unfolding rule, aggregated weighted constraints", "credit_status": "cited_for_other_content"}
+      ]
+    },
+    {
+      "id": "F4",
+      "slug": "kernel-clustering-khot-naor",
+      "in_report": true,
+      "relationship": "same result",
+      "centrality": "peripheral",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": false,
+      "overstated_novelty": false,
+      "technique": "The identity-target kernel clustering problem and the Gaussian rounding constant (8π/9)(1-1/k)",
+      "summary": "The kernel clustering problem and the constant (8π/9)(1-1/k) that the preprint's §8.3 states and calls the propeller rounding factor are Khot and Naor's; the preprint cites only the same-release companion's theorem, and Khot and Naor appear nowhere in it.",
+      "preprint_locations": ["§8.3, Kernel clustering paragraph (p. 43)", "§8 opening (p. 39)"],
+      "credit_in_preprint": "Only the Gaussian propeller companion's Theorem 6.1 is cited (p. 43); the companion itself credits Khot and Naor in full, but the preprint has no reference to them.",
+      "sources": [
+        {"key": "KhotNaor2008-ApproximateKernelClustering", "locators": "abstract (p. 1); p. 2; Theorem 1.1 (p. 4); p. 5; Theorem 2.1 (p. 8); §3.3 (pp. 26-28) (arXiv v2 numbering)", "role": "the problem definition and the rounding constant (8π/9)(1-1/k), and the Unique Games reduction the companion composes", "credit_status": "not_cited"}
+      ]
+    },
+    {
+      "id": "F5",
+      "slug": "correlation-clustering-via-multicut",
+      "in_report": true,
+      "relationship": "same route",
+      "centrality": "peripheral",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": false,
+      "overstated_novelty": false,
+      "technique": "Hardness of weighted Correlation Clustering inherited from Multicut hardness through the known equivalence of the two problems",
+      "summary": "Corollary 8.3's Correlation Clustering conclusion, presented as the preprint's addition to Chawla, Krauthgamer, Kumar, Rabani and Sivakumar's Multicut hardness, is already drawn by those authors on their page 2 through the known Multicut equivalence; the preprint cites their paper nearby for other content only.",
+      "preprint_locations": ["Corollary 8.3, fourth conclusion (p. 42)", "proof of Corollary 8.3 (pp. 42-43)"],
+      "credit_in_preprint": "Chawla et al. are cited in §8.3 for their definitions, Corollary 1.3, §1.3, §2.1 and Lemma 1.5, never for the Correlation Clustering extension; Demaine, Emanuel, Fiat and Immorlica are credited for the transformation used (Theorem 4.7, Corollary 4.8).",
+      "sources": [
+        {"key": "ChawlaEtAl2006-HardnessMulticutSparsestCut", "locators": "p. 2", "role": "states that the Multicut hardness extends to Correlation Clustering via the equivalence", "credit_status": "cited_for_other_content"}
+      ]
+    },
+    {
+      "id": "F6",
+      "slug": "earlier-unique-games-hardness-points",
+      "in_report": true,
+      "relationship": "weaker result",
+      "centrality": "peripheral",
+      "form_of_inclusion": "paragraph",
+      "attribution_gap": false,
+      "overstated_novelty": false,
+      "technique": "Earlier NP-hardness points, and conditional proofs, for the Unique Games problem",
+      "summary": "Theorem 1.1's problem had earlier unconditional NP-hardness points (O'Donnell and Wright; Håstad, Huang, Manokaran, O'Donnell and Wright; Wiman; Martinsson; Feige and Reichman; Bhangale and Khot; Håstad 2001) and conditional proofs of the conjecture (Raghavendra and Steurer; Eldan and Moshkovitz); the introduction's survey names only the completeness-1/2 consequence of the 2-to-2 line.",
+      "preprint_locations": ["Theorem 1.1 (p. 2)", "§§1.2-1.3 (pp. 2-3)", "§8.1 (p. 40) and Lemma A.1 (p. 43) for the strong-left form"],
+      "credit_in_preprint": "None of the listed works is cited for an earlier hardness point; Håstad 2001 is cited for the 3-variable parity gap and for Fourier decoding; Khot, Minzer and Safra and Dinur, Khot, Kindler, Minzer and Safra are credited for the completeness-1/2 consequence at §1.3 (p. 3).",
+      "sources": [
+        {"key": "ODonnellWright2012-NewPointNPHardnessUniqueGames", "locators": "abstract (p. 1); Main Theorem (p. 3)", "role": "NP-hardness of 1/2-satisfiable versus (3/8+ε)-satisfiable Unique Games", "credit_status": "not_cited"},
+        {"key": "HastadEtAl2015-ImprovedNPInapprox2LinearEquations", "locators": "abstract (p. 1); Theorem 1.7 (p. 4); Corollary 3.3 (p. 18)", "role": "binary 1-ε versus 1-Cε hardness for C < 11/8", "credit_status": "not_cited"},
+        {"key": "BhangaleKhot2019-UGHardnessToNPHardnessByLosingHalf", "locators": "Theorem 1.2 (p. 3)", "role": "left-regular strong-left Unique Games NP-hard at completeness 1/2-δ, the form of Lemma A.1", "credit_status": "not_cited"},
+        {"key": "Martinsson2024-NPHardnessApproximationCurveMax2Lin2", "locators": "Theorem 1 and Corollary 2 (p. 5)", "role": "the NP-hardness approximation curve for Max-2Lin(2)", "credit_status": "not_cited"},
+        {"key": "NL-Wiman2018", "locators": "Theorem 3.18 (p. 36); Theorem 1.5 (p. 3)", "role": "binary 1-ε versus 1-1.45685ε hardness", "credit_status": "not_cited"},
+        {"key": "NL-FeigeReichman2004", "locators": "as described by Khot, Kindler, Mossel and O'Donnell, §11.1 (p. 27)", "role": "constant-factor hardness of Max-2Lin(q) at low completeness", "credit_status": "not_cited"},
+        {"key": "RaghavendraSteurer2010-GraphExpansionUGC", "locators": "Theorem 1.4 (PDF p. 3)", "role": "the Small-Set Expansion conjecture implies the Unique Games Conjecture", "credit_status": "not_cited"},
+        {"key": "EldanMoshkovitz2020-NonUniqueToBooleanUniqueGames", "locators": "Theorem 1.4 (p. 2)", "role": "Boolean Unique Games 1-δ versus 1-Cδ NP-hard under the Subspaces Near-Intersection Conjecture", "credit_status": "not_cited"},
+        {"key": "Hastad2001-SomeOptimalInapproximability", "locators": "Theorem 5.14 (p. 35)", "role": "factor 12/11 hardness for Max-E2-Lin-2, the earliest binary point", "credit_status": "cited_for_other_content"}
+      ]
+    },
+    {
+      "id": "F7",
+      "slug": "strong-left-ordering-composition",
+      "in_report": true,
+      "relationship": "weaker result",
+      "centrality": "peripheral",
+      "form_of_inclusion": "sentence",
+      "attribution_gap": false,
+      "overstated_novelty": false,
+      "technique": "Earlier unconditional ordering hardness from strong-left Unique Games",
+      "summary": "Bhangale and Khot had already obtained an unconditional Maximum Acyclic Subgraph threshold (2/3+ε) by running the ordering reduction on a strong-left Unique Games theorem, a weaker version of the ordering threshold the preprint states in §8.2, and their Theorem 1.2 is the weaker form of Lemma A.1; the preprint does not cite them.",
+      "preprint_locations": ["Corollary 8.2 and §8.2 (pp. 41-42)", "Lemma A.1 (p. 43)", "Proposition A.2 (p. 46)"],
+      "credit_in_preprint": "Not cited; the strong-left form is credited to Khot and Regev and the ordering reduction to Guruswami, Håstad, Manokaran, Raghavendra and Charikar.",
+      "sources": [
+        {"key": "BhangaleKhot2019-UGHardnessToNPHardnessByLosingHalf", "locators": "Theorem 1.4 (p. 5); Theorem 1.2 (p. 3); §5 (pp. 21-23)", "role": "the earlier unconditional ordering bound and the strong-left Unique Games statement it rests on", "credit_status": "not_cited"}
+      ]
+    },
+    {
+      "id": null,
+      "slug": "weight-rounding-duplication",
+      "in_report": false,
+      "relationship": "fragment",
+      "centrality": "supporting",
+      "form_of_inclusion": "none",
+      "attribution_gap": false,
+      "overstated_novelty": false,
+      "technique": "Removing constraint weights by rounding them to integer multiplicities and duplicating constraints",
+      "summary": "Lemma 7.1's first half rounds weights to multiplicities and duplicates constraints, a device every source calls standard (Crescenzi, Silvestri and Trevisan; Håstad; Trevisan; Khot and Regev, whose per-vertex version the preprint credits in Appendix A); the author-persona check judged it a routine argument not worth a pointer, so it is recorded here only.",
+      "preprint_locations": ["Lemma 7.1, first half (p. 36)", "Lemma A.1 proof (pp. 44-45)"],
+      "credit_in_preprint": "Nothing is cited in §7; Khot and Regev's Lemma 3.4 is credited for the per-vertex form in Appendix A (p. 44) and §8.1 (p. 40); Håstad and Trevisan are cited for other content.",
+      "sources": [
+        {"key": "CrescenziSilvestriTrevisan2001-WeightedVsUnweighted", "locators": "p. 1; Theorem 4 (p. 6)", "role": "scaling and rounding of weights; duplication as polynomially bounded weights", "credit_status": "not_cited"},
+        {"key": "KhotRegev2008-VertexCoverHard2MinusEps", "locators": "Lemma 3.4 (p. 9)", "role": "the per-vertex floor-rounding unweighting transformation", "credit_status": "credited_elsewhere"},
+        {"key": "Hastad2001-SomeOptimalInapproximability", "locators": "p. 29", "role": "states that weights can be eliminated by duplication, without details", "credit_status": "cited_for_other_content"},
+        {"key": "Trevisan2008-ApproxAlgUG", "locators": "p. 117", "role": "states the standard scaling and rounding reduction, without details", "credit_status": "cited_for_other_content"}
+      ]
+    },
+    {
+      "id": null,
+      "slug": "path-subdivision-simple-bipartite",
+      "in_report": false,
+      "relationship": "fragment",
+      "centrality": "supporting",
+      "form_of_inclusion": "none",
+      "attribution_gap": false,
+      "overstated_novelty": false,
+      "technique": "Making a constraint graph simple and bipartite by replacing every edge with a path of fresh vertices",
+      "summary": "Lemma 7.1's second half replaces every edge by a four-edge path of fresh vertices, losing exactly the path length in the gap, a gadget Bellare, Goldreich and Sudan record in one sentence for Max-Cut; the author-persona check judged it folklore not worth a pointer, so it is recorded here only.",
+      "preprint_locations": ["Lemma 7.1, second half, (7.2) (p. 37)"],
+      "credit_in_preprint": "Nothing is cited in §7; Bellare, Goldreich and Sudan are cited only for the folding principle (§3.3).",
+      "sources": [
+        {"key": "BellareGoldreichSudan1998-FreeBitsPCPs", "locators": "remark after Theorem 4.14 (p. 54, author copy)", "role": "the path-of-three-edges reduction from multigraphs to simple graphs for Max-Cut", "credit_status": "cited_for_other_content"}
+      ]
+    }
+  ]
+}

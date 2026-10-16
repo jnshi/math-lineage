@@ -1,0 +1,73 @@
+{
+  "format": "math-lineage/precedence-stats",
+  "format_version": 2,
+  "preprint": "OAI:The-Unique-Games-Theorem-September-23-2026",
+  "generated_from": "precedence-findings.json",
+  "review_date": "2026-10-16",
+  "findings": {
+    "in_report": 7,
+    "json_only": [
+      "weight-rounding-duplication",
+      "path-subdivision-simple-bipartite"
+    ],
+    "by_relationship": {
+      "same technique": 1,
+      "adapted": 1,
+      "fragment": 1,
+      "same route": 1,
+      "same result": 1,
+      "weaker result": 2,
+      "proof shortcut": 0
+    },
+    "by_centrality": {
+      "main result": 0,
+      "central": 3,
+      "supporting": 0,
+      "peripheral": 4
+    },
+    "by_form_of_inclusion": {
+      "none": 2,
+      "citation": 0,
+      "sentence": 6,
+      "paragraph": 1
+    },
+    "attribution_gaps": [
+      "F1",
+      "F2"
+    ],
+    "overstated_novelty": [],
+    "ids_by_relationship": {
+      "same technique": [
+        "F1"
+      ],
+      "adapted": [
+        "F2"
+      ],
+      "fragment": [
+        "F3"
+      ],
+      "same route": [
+        "F5"
+      ],
+      "same result": [
+        "F4"
+      ],
+      "weaker result": [
+        "F6",
+        "F7"
+      ]
+    }
+  },
+  "earlier_works": {
+    "distinct": 13,
+    "not_in_preprint_bibliography": 9,
+    "in_preprint_bibliography": 4,
+    "finding_source_pairs_by_credit_status": {
+      "not_cited": 10,
+      "cited_for_other_content": 5,
+      "credited_elsewhere": 0,
+      "credited_in_part": 1,
+      "credited": 0
+    }
+  }
+}
