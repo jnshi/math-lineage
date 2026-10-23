@@ -140,15 +140,24 @@ The file carries its own definitions. It gives the tokens by kind (uncached inpu
 Show the user the file and get their yes before committing it, since it discloses the models and reasoning efforts they used, the agents' labels and your deviation estimates. Point out any unusual model names the script reports. If they don't want it published, leave it out, along with its line in the README.
 
 ## 6. Pull request against `jnshi/math-lineage`
+
+### Settle at the start
+Before the review starts (SKILL.md, "Before starting", item 5), agree with the user how the branch will reach GitHub and who opens the pull request, and record the plan in `TIMING.md`. Ask rather than assume, and use any way the user prefers, including ones not listed here. Never handle passwords or tokens yourself: when something needs a sign-in, the user does it.
+1. **Push access.** If `gh` is installed and signed in, `gh repo view jnshi/math-lineage --json viewerPermission -q .viewerPermission` shows it: `ADMIN`, `MAINTAIN` or `WRITE` means they can push branches there, with no fork. Otherwise ask.
+2. **The fork,** without push access.
+   - If they already have one, perhaps renamed or under an organization, use it.
+   - Otherwise, settle who creates it and how. You can run `gh repo fork`, but only with their OK, since it creates a repository on their account (`--org <org>` puts it under an organization). Or they create it themselves: on the website (`https://github.com/jnshi/math-lineage/fork`), in GitHub Desktop, in an editor's GitHub integration, or through a GitHub connector in this environment.
+   - If there is no clone yet, make the fork now and clone the fork (setup, step 0.1), not `jnshi/math-lineage`. An existing clone gets the fork as a remote.
+3. **The account and the push.** Settle which GitHub account owns the branch, and how git authenticates to it: over HTTPS through their credential manager or `gh` (`gh auth setup-git`), or over SSH, perhaps through a host alias for a second account. If the plan uses `gh` and it isn't installed or signed in, ask the user to install it and run `gh auth login` themselves.
+4. **The commit identity.** The author's name and email are published with the commit, so suggest a GitHub noreply address (`…@users.noreply.github.com`) if they don't have one set.
+5. **Who opens the pull request:** you, with `gh pr create`; the user, from a pre-filled link ("Without `gh`", below) or on the website; or another tool they use.
+6. **Test what can be tested now:** `gh auth status` if the plan uses `gh`, and `git ls-remote <url>` for the repository the branch will go to, once it exists. Some environments block pushes or SSH, and it is better to find out now than after the review.
+
+### At publishing
 **Ask the user before you create the branch, commit or push.** They may want to hold publication while checks are open.
 
-1. **Confirm the publishing setup before committing.**
-   - Ask which remote to push to, and which commit author to use. The author's name and email are published with the commit, so suggest a GitHub noreply address (`…@users.noreply.github.com`) if they don't have one set.
-   - Test the push with `git push --dry-run <remote> HEAD:refs/heads/<branch>`.
-   - Settle all this first: a commit made under the wrong identity has to be amended (`git commit --amend --reset-author`).
-2. **Check access.** Run `gh auth status`, then `gh repo view jnshi/math-lineage --json viewerPermission -q .viewerPermission`.
-   - **`ADMIN`, `MAINTAIN` or `WRITE`:** push branches to the remote that points at `jnshi/math-lineage`.
-   - **Anything else:** ask the user before forking, since a fork is created on their account. Then run `gh repo fork jnshi/math-lineage --remote`. This adds the fork as `origin` and keeps the original as `upstream`. Push to the fork.
+1. **Check the plan from the start** (`TIMING.md`) against the setup: the remote, the commit identity, and that `gh` is still signed in if the plan uses it. Test the push with `git push --dry-run <remote> HEAD:refs/heads/<branch>`. Do this before committing: a commit made under the wrong identity has to be amended (`git commit --amend --reset-author`).
+2. **Make the fork, if the plan has one and it doesn't exist yet,** in the way agreed. With `gh`: `gh repo fork jnshi/math-lineage --remote`, which adds the fork as `origin` and keeps the original as `upstream`. Push to the fork.
 3. **Branch from the current upstream default branch.**
    - `git fetch <remote-for-jnshi/math-lineage>`, then `git switch -c review/<review> <that-remote>/main`.
    - The deliverables are untracked files, so they carry over.
@@ -168,14 +177,14 @@ Show the user the file and get their yes before committing it, since it disclose
 8. **Report the PR link to the user.** If the environment provides PR or CI tools, use them to check the PR's status. Never enable auto-merge unless asked.
 
 ### Without `gh`
-If `gh` is not installed or not signed in, open the PR through the GitHub website instead. Never try to work around authentication. Steps 1 and 3–5 above (setup, branch, stage, commit) are the same. The push and the PR then depend on whether the user can push to `jnshi/math-lineage`. Ask them if you don't know. Otherwise, try the push: a "Permission … denied" or 403 error means they can't.
+If the plan doesn't use `gh`, or it stopped working, open the PR through the GitHub website instead. Never try to work around authentication. Steps 1 and 3–5 above (setup, branch, stage, commit) are the same. The push and the PR then depend on whether the user can push to `jnshi/math-lineage`, which the plan says. A "Permission … denied" or 403 error on the push means they can't.
 
 - **With push access:**
   1. Push the branch to the remote that points at `jnshi/math-lineage`.
   2. Give the user `https://github.com/jnshi/math-lineage/compare/main...<branch>?quick_pull=1&title=<title>&body=<body>`, with the title and body URL-encoded. The link opens the new-PR form pre-filled, and the user only clicks **Create pull request**. With the findings table, the URL gets too long (about 6,000 characters), so give the title-only link and point the user to `reviews/<review>/pr-body.md` to paste.
 - **Without push access, which is the usual case for anyone but the repository's owner:**
-  1. Ask the user to fork the repository on GitHub, at `https://github.com/jnshi/math-lineage/fork`. Without `gh` you can't fork for them.
+  1. If the fork doesn't exist yet, ask the user to create it as planned, for example at `https://github.com/jnshi/math-lineage/fork`.
   2. Add their fork as a remote and push the branch there: `git remote add fork https://github.com/<their-user>/math-lineage.git`, then `git push -u fork <branch>`. Use their fork's actual name if they renamed it. Their existing git credentials must allow the push; if they don't, stop and say so.
   3. Give them the cross-fork link `https://github.com/jnshi/math-lineage/compare/main...<their-user>:<branch>?quick_pull=1&title=<title>&body=<body>`, URL-encoded the same way.
 
-Users who know from the start that they have no push access can fork first and clone their fork instead (setup, step 0.1). In that case, add `jnshi/math-lineage` as `upstream` with `git remote add upstream https://github.com/jnshi/math-lineage.git`, and branch from `upstream/main` in step 3.
+If you cloned the fork at the start, add `jnshi/math-lineage` as `upstream` with `git remote add upstream https://github.com/jnshi/math-lineage.git`, and branch from `upstream/main` in step 3.
