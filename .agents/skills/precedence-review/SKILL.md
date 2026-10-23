@@ -20,12 +20,14 @@ You are the **coordinator**. Subagents do the reading, searching, drafting and c
 
 **Cost.** Counting every token processed, as the published telemetry does (97% of them cache reads), budget about 5–25M tokens per section, 40M for consolidation and 15M per finding (drafting, author check, applying the verdict), plus about a quarter of the whole for the coordinator. A 27-page preprint with 7 sections and 8 findings processed about 350M tokens over about 4 active hours; a 66-page preprint took about 5 hours. **Estimate again before any extra round** (re-checks, repeated runs, redrafts), from these figures: about 5–10M to draft or redraft a finding, 5M for an author check and 5M to apply a verdict.
 
+**Subagents are required:** fresh-context agents that can read and write files, run shell commands and search the web. Without them your context overflows and the author-persona check isn't blind. If you can't launch them here, don't start: tell the user the review won't run correctly in this environment, suggest opening their clone in a harness with subagents, and offer to answer a narrower question directly instead.
+
 **Before starting, settle five things with the user.**
 1. **That they want a full review.** Skip this only if they asked for a review and are set up for one: working in a jnshi/math-lineage checkout on a preprint from the release. Otherwise, say roughly what it will cost in hours and tokens, and offer the narrower alternative: answering their specific question about one claim, lemma or citation directly.
 2. **Which preprint,** if they haven't named it, and the estimate.
 3. **Whether they want to check the author-persona check's reasoning** before a finding is dropped on its say-so (default: no). If yes, you verify the reason behind each "none" or "Reject" verdict and put each to them (step 6).
 4. **Whether they want to decide merges and splits of findings** (default: no). Explain what these decisions are before asking. Each entry in the report covers one missing idea. When two candidates turn out to be the same idea, for example found in different sections or traced to different earlier papers, they are merged into one entry. When one candidate bundles distinct ideas that only share a source paper or a section, it is split. These decisions come up at consolidation, before drafting, and sometimes during drafting, when a drafter finds an overlap. They set how many entries the report has and what each one claims, not whether a citation is missing. If the user says no, the consolidation agent decides them, and you tell the user what was merged or split, and why. If yes, put the consolidation agent's recommendation for each to them as numbered options, and keep running the drafters the decision doesn't affect.
-5. **Where to publish the finished report.** Confirm that they want to publish it to the GitHub repository `jnshi/math-lineage`, and if not, where they would like to publish it.
+5. **Where to publish the finished report, and how.** Confirm that they want to publish it to the GitHub repository `jnshi/math-lineage`, and if not, where they would like to publish it. For `jnshi/math-lineage`, settle now how the branch will reach GitHub and who opens the pull request: whether they can push there or need a fork, and if a fork, how it is made and pushed to (`references/publish.md` §6, "Settle at the start"). A finished review that can't be pushed waits on the user.
 
 `<skill>` below means this skill's base directory. `<repo>` is the working copy of the reviews repository `jnshi/math-lineage`, and `<scratch>` is your session scratch directory. `<review>` is a short kebab-case name for the review, such as `sk-spectral-gap`. `<finding>` is a finding's slug.
 
@@ -200,7 +202,7 @@ The brief is in `references/skeptic.md`.
 ### 7. Publish and open a pull request
 These steps publish to `jnshi/math-lineage`. If the user chose another destination at the start, publish there instead, adapting them.
 1. **Ask the user before you create a branch, commit or push.** They may hold publication while checks are still open.
-2. **Confirm the publishing setup before the first commit:** which remote, and which commit identity (the author email becomes public). Test the push with `git push --dry-run`. A commit made under the wrong identity has to be amended.
+2. **Check the publishing plan settled at the start** (`TIMING.md`), and test the push with `git push --dry-run`. A commit made under the wrong identity has to be amended.
 3. **Draft the Provenance paragraph** (it is commented out in the template until now), asking the user how their name should appear. It discloses their name, the models they ran and their input, so show them the paragraph and the README's provenance line exactly as they will be published, and publish only wording they approved (`references/publish.md` §1). Then rebuild until `build.sh` passes.
 4. **Write `precedence-findings.json`**, then run `scripts/publish_prep.sh`. It requires a passing build; it flattens and checks the source, validates the JSON, and only then copies the deliverables into `preprints/<preprint>/`:
    - the PDF;
@@ -212,8 +214,7 @@ These steps publish to `jnshi/math-lineage`. If the user chose another destinati
 5. **Write the telemetry last, just before the pull request.** `scripts/run_telemetry.py` writes `precedence-telemetry.json` into the preprint folder: the run's tokens, cached and uncached, and its active time, by model, reasoning effort, pass and agent, from the transcripts of the sessions listed in `TIMING.md`. It also carries your estimate of the tokens that the deviations recorded there added or saved. Show the user the file before committing it, since it discloses the models and efforts they used, the agents' labels and your deviation estimates (`references/publish.md` §5).
 6. **Open a pull request against `jnshi/math-lineage`.**
    - Use a new branch holding only those files, plus `.gitignore` if it changed. In a sparse clone, stage them with `git add --sparse`.
-   - Push the branch and run `gh pr create`.
-   - Without push access, go through a fork, after asking. Without `gh`, use a pre-filled link to GitHub's website. Both paths are in `references/publish.md`.
+   - Push the branch, to `jnshi/math-lineage` or to the fork, and open the pull request as planned: with `gh pr create`, or through a pre-filled link to GitHub's website. Both paths are in `references/publish.md`.
    - Give the user the link.
 
 The schema, scripts, README template and PR steps are in `references/publish.md`.
